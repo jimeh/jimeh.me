@@ -2,7 +2,9 @@
 
 source 'https://rubygems.org/'
 
+gem 'csv'
 gem 'github-pages'
+gem 'logger'
 
 group :development do
   gem 'rake'
