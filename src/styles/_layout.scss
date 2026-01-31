@@ -1,3 +1,5 @@
+@use "setup" as *;
+
 .site-header {
   font-family: $heading-font-family;
   font-weight: bold;

@@ -1,4 +1,4 @@
-@charset "utf-8";
+@use "sass:color";
 
 // Our variables
 $base-font-family: "Open Sans", Helvetica, Arial, sans-serif;
@@ -13,17 +13,17 @@ $background-color: #fdfdfd;
 $text-color: #1a1a1a;
 
 $name-color: #172c37;
-$nickname-color: lighten($name-color, 75%);
+$nickname-color: color.adjust($name-color, $lightness: 75%);
 $sub-title-color: #7fbee9;
-$link-color: lighten($text-color, 65%);
+$link-color: color.adjust($text-color, $lightness: 65%);
 
 $brand-color: #5aa7dc;
-$brand-color-light: lighten($brand-color, 10%);
-$brand-color-dark: darken($brand-color, 10%);
+$brand-color-light: color.adjust($brand-color, $lightness: 10%);
+$brand-color-dark: color.adjust($brand-color, $lightness: -10%);
 
 $grey-color: #828282;
-$grey-color-light: lighten($grey-color, 40%);
-$grey-color-dark: darken($grey-color, 25%);
+$grey-color-light: color.adjust($grey-color, $lightness: 40%);
+$grey-color-dark: color.adjust($grey-color, $lightness: -25%);
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
