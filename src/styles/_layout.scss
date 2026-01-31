@@ -65,6 +65,13 @@
   font-size: 22px;
   padding: 6px 0px 0px 6px;
 
+  svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    fill: currentColor;
+  }
+
   a {
     float: left;
     color: $link-color;

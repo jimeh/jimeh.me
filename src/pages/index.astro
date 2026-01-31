@@ -1,19 +1,9 @@
 ---
+import { Icon } from "astro-icon/components";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { siteConfig, siteLinks } from "../data/site";
 
 const cacheBust = Date.now();
-
-// ROT13-encoded email link, matching the original Jekyll site's
-// anti-spam obfuscation. The encoded HTML string is decoded
-// client-side via ROT13 and injected into the DOM. The href
-// uses a mix of HTML entities and percent-encoding for
-// additional obfuscation. All values are hardcoded constants.
-const rot13Html =
-  `<n uers="${siteConfig.email.href}">` +
-  '<v pynff="sn-fbyvq sn-rairybcr"></v>' +
-  `<fcna pynff="yvax-grkg">${siteConfig.email.title}` +
-  "</fcna></n>";
 ---
 
 <BaseLayout>
@@ -36,13 +26,22 @@ const rot13Html =
             </span>
           </span>
           <div class="site-links" id="site-links">
+            <a
+              id="email-link"
+              href="#"
+              style="display:none"
+            ><Icon name="fa6-solid:envelope" /><span
+                class="link-text"
+                id="email-text"
+              ></span></a>
             <script
               is:inline
-              define:vars={{ rot13Html }}
+              define:vars={{
+                rot13Href: siteConfig.email.rot13Href,
+                rot13Text: siteConfig.email.rot13Text,
+              }}
             >
               // ROT13 decode for anti-spam email obfuscation.
-              // All values are hardcoded at build time from
-              // constants — safe by design.
               function rot13(s) {
                 return s.replace(/[a-zA-Z]/g, function (c) {
                   return String.fromCharCode(
@@ -53,20 +52,22 @@ const rot13Html =
                   );
                 });
               }
-              var decoded = rot13(rot13Html);
-              var el = document.getElementById("site-links");
-              var tpl = document.createElement("template");
-              tpl.innerHTML = decoded;
-              el.insertBefore(
-                tpl.content, el.firstChild
+              var link = document.getElementById(
+                "email-link"
               );
+              var text = document.getElementById(
+                "email-text"
+              );
+              link.href = rot13(rot13Href);
+              text.textContent = rot13(rot13Text);
+              link.style.display = "";
             </script>
             {siteLinks.map((item) => (
               <Fragment>
-                <a
+                {" "}<a
                   href={item.url}
                   rel={item.rel || undefined}
-                ><i class={item.class}></i><span class="link-text">{item.name}</span></a>
+                ><Icon name={item.icon} /><span class="link-text">{item.name}</span></a>
               </Fragment>
             ))}
           </div>

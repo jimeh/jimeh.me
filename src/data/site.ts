@@ -7,8 +7,10 @@ export interface SiteConfig {
     nickname: string;
   };
   email: {
-    title: string;
-    href: string;
+    // ROT13-encoded plaintext values for anti-spam obfuscation.
+    // Decoded client-side and applied to pre-rendered DOM elements.
+    rot13Href: string;
+    rot13Text: string;
   };
   social: {
     name: string;
@@ -19,7 +21,7 @@ export interface SiteConfig {
 export interface SiteLink {
   name: string;
   url: string;
-  class: string;
+  icon: string;
   rel?: string;
   id?: string;
   type?: string;
@@ -34,12 +36,10 @@ export const siteConfig: SiteConfig = {
     nickname: "jimeh",
   },
   email: {
-    // ROT13-encoded email display text. The @ and . are
-    // stored as-is since ROT13 only affects [a-zA-Z].
-    title: "pbagnpg@wvzru.zr",
-    // ROT13-encoded mailto href with HTML entity + percent
-    // encoding for additional obfuscation.
-    href: "&#109;&#97;&#105;&#108;&#116;&#111;&#58;%63%6s%6r%74%61%63%74@%6e%69%6d%65%68.%6d%65",
+    // ROT13 of "mailto:contact@jimeh.me"
+    rot13Href: "znvygb:pbagnpg@wvzru.zr",
+    // ROT13 of "contact@jimeh.me"
+    rot13Text: "pbagnpg@wvzru.zr",
   },
   social: {
     name: "Jim Myhrberg",
@@ -49,8 +49,8 @@ export const siteConfig: SiteConfig = {
       "https://mastodon.social/@jimeh",
       "https://twitter.com/jimeh",
       "https://jimeh.io/",
-      "http://www.linkedin.com/in/jimeh",
-      "http://www.last.fm/user/jimeh",
+      "https://www.linkedin.com/in/jimeh",
+      "https://www.last.fm/user/jimeh",
       "https://flickr.com/photos/jimeh/",
       "https://keybase.io/jimeh",
     ],
@@ -61,51 +61,51 @@ export const siteLinks: SiteLink[] = [
   {
     name: "github",
     url: "https://github.com/jimeh",
-    class: "fa-brands fa-github",
+    icon: "fa6-brands:github",
   },
   {
     name: "bluesky",
     url: "https://bsky.app/profile/jimeh.me",
-    class: "fa-brands fa-bluesky",
+    icon: "fa6-brands:bluesky",
   },
   {
     name: "mastodon",
     url: "https://mastodon.social/@jimeh",
-    class: "fa-brands fa-mastodon",
+    icon: "fa6-brands:mastodon",
     rel: "me",
   },
   {
     name: "blog",
     url: "https://jimeh.io/",
-    class: "fa-solid fa-newspaper",
+    icon: "fa6-solid:newspaper",
   },
   {
     name: "linkedin",
     url: "https://www.linkedin.com/in/jimeh",
-    class: "fa-brands fa-linkedin",
+    icon: "fa6-brands:linkedin",
   },
   {
     name: "last.fm",
     url: "https://www.last.fm/user/jimeh",
-    class: "fa-brands fa-square-lastfm",
+    icon: "fa6-brands:square-lastfm",
   },
   {
     name: "flickr",
     url: "https://flickr.com/photos/jimeh",
-    class: "fa-brands fa-flickr",
+    icon: "fa6-brands:flickr",
   },
   {
     name: "vcard",
     id: "vcard",
     type: "download",
     url: "https://assets.jimeh.me/jim-myhrberg.vcf",
-    class: "fa-solid fa-address-card",
+    icon: "fa6-solid:address-card",
   },
   {
     name: "cv (pdf)",
     id: "resume",
     type: "download",
     url: "https://jimeh.me/cv",
-    class: "fa-solid fa-file-pdf",
+    icon: "fa6-solid:file-pdf",
   },
 ];
