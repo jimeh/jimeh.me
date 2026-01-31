@@ -1,0 +1,77 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { siteConfig, siteLinks } from "../data/site";
+
+const cacheBust = Date.now();
+
+// ROT13-encoded email link, matching the original Jekyll site's
+// anti-spam obfuscation. The encoded HTML string is decoded
+// client-side via ROT13 and injected into the DOM. The href
+// uses a mix of HTML entities and percent-encoding for
+// additional obfuscation. All values are hardcoded constants.
+const rot13Html =
+  `<n uers="${siteConfig.email.href}">` +
+  '<v pynff="sn-fbyvq sn-rairybcr"></v>' +
+  `<fcna pynff="yvax-grkg">${siteConfig.email.title}` +
+  "</fcna></n>";
+---
+
+<BaseLayout>
+    <header class="site-header">
+      <div class="site-header-container">
+        <img
+          class="site-avatar"
+          src={`/img/jimeh-4.2.0.jpg?${cacheBust}`}
+        />
+        <span class="content">
+          <span class="site-title">
+            <span class="site-name">
+              {siteConfig.author.name}
+            </span>
+            <span class="site-nickname">
+              ({siteConfig.author.nickname})
+            </span>
+            <span class="site-description">
+              {siteConfig.description}
+            </span>
+          </span>
+          <div class="site-links" id="site-links">
+            <script
+              is:inline
+              define:vars={{ rot13Html }}
+            >
+              // ROT13 decode for anti-spam email obfuscation.
+              // All values are hardcoded at build time from
+              // constants — safe by design.
+              function rot13(s) {
+                return s.replace(/[a-zA-Z]/g, function (c) {
+                  return String.fromCharCode(
+                    (c <= "Z" ? 90 : 122) >=
+                      (c = c.charCodeAt(0) + 13)
+                      ? c
+                      : c - 26
+                  );
+                });
+              }
+              var decoded = rot13(rot13Html);
+              var el = document.getElementById("site-links");
+              var tpl = document.createElement("template");
+              tpl.innerHTML = decoded;
+              el.insertBefore(
+                tpl.content, el.firstChild
+              );
+            </script>
+            {siteLinks.map((item) => (
+              <a
+                href={item.url}
+                rel={item.rel || undefined}
+              >
+                <i class={item.class}></i>
+                <span class="link-text">{item.name}</span>
+              </a>
+            ))}
+          </div>
+        </span>
+      </div>
+    </header>
+</BaseLayout>

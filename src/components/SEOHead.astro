@@ -1,0 +1,39 @@
+---
+import { siteConfig } from "../data/site";
+
+const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
+---
+
+<meta name="description" content={siteConfig.description} />
+<link rel="canonical" href={canonicalURL.href} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={siteConfig.title} />
+<meta property="og:description" content={siteConfig.description} />
+<meta property="og:url" content={canonicalURL.href} />
+<meta property="og:site_name" content={siteConfig.title} />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={siteConfig.title} />
+<meta name="twitter:description" content={siteConfig.description} />
+
+<!-- JSON-LD -->
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteConfig.title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    author: {
+      "@type": "Person",
+      name: siteConfig.social.name,
+      url: siteConfig.url,
+      sameAs: siteConfig.social.links,
+    },
+  })}
+/>

@@ -1,3 +1,10 @@
-.PHONY: serve
-serve:
-	bundle exec jekyll serve --incremental
+.PHONY: dev build preview
+
+dev:
+	pnpm dev
+
+build:
+	pnpm build
+
+preview:
+	pnpm preview

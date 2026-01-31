@@ -1,0 +1,17 @@
+{
+  "name": "jimeh.me",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.17.1"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.7.0",
+    "sass": "^1.97.3"
+  }
+}
