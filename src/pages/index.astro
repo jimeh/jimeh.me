@@ -1,5 +1,4 @@
 ---
-import { Icon } from "astro-icon/components";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteLink from "../components/SiteLink.astro";
 import { siteConfig, siteLinks } from "../data/site";
@@ -37,38 +36,11 @@ import { siteConfig, siteLinks } from "../data/site";
           class="site-links pt-1.5 text-center text-[14px] sm:-ml-0.5 sm:text-left sm:text-base md:text-[22px] lg:ml-0 lg:pl-1.5"
           id="site-links"
         >
-          <a
-            id="email-link"
-            class="group text-link hover:text-brand-light mx-[5px] whitespace-nowrap sm:mx-0 sm:mr-2.5 sm:leading-[22px] lg:relative lg:float-left lg:mr-0 lg:px-[7px] lg:leading-normal"
-            href="#"
-            style="display:none"
-            ><Icon name="fa6-solid:envelope" /><span
-              class="link-text"
-              id="email-text"></span></a
-          >
-          <script
-            is:inline
-            define:vars={{
-              rot13Href: siteConfig.email.rot13Href,
-              rot13Text: siteConfig.email.rot13Text,
-            }}
-          >
-            // ROT13 decode for anti-spam email obfuscation.
-            function rot13(s) {
-              return s.replace(/[a-zA-Z]/g, function (c) {
-                return String.fromCharCode(
-                  (c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13)
-                    ? c
-                    : c - 26,
-                );
-              });
-            }
-            const link = document.getElementById("email-link");
-            const text = document.getElementById("email-text");
-            link.href = rot13(rot13Href);
-            text.textContent = rot13(rot13Text);
-            link.style.display = "";
-          </script>
+          <SiteLink
+            icon="fa6-solid:envelope"
+            rot13Href={siteConfig.email.rot13Href}
+            rot13Text={siteConfig.email.rot13Text}
+          />
           {
             siteLinks.map((item) => (
               <SiteLink
