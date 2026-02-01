@@ -174,7 +174,7 @@
 /* Nudge text up to vertically center with icons at md (616-768px) */
 @media (width >= 616px) and (width < 769px) {
   .link-text {
-    transform: translate(0%, -19%);
+    transform: translate(0%, -14%);
   }
 }
 
