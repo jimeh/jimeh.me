@@ -6,7 +6,7 @@ export default {
     "at-rule-no-unknown": [
       true,
       {
-        ignoreAtRules: ["theme", "layer", "apply", "utility"],
+        ignoreAtRules: ["theme", "custom-variant", "layer", "apply", "utility"],
       },
     ],
     "import-notation": null,

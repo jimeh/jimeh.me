@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { Font } from "astro:assets";
 import SEOHead from "../components/SEOHead.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 import { siteConfig } from "../data/site";
 
 interface Props {
@@ -40,8 +41,26 @@ const appleTouchHash = fileHash("../../public/apple-touch-icon.png");
       rel="apple-touch-icon"
       href={`/apple-touch-icon.png?v=${appleTouchHash}`}
     />
+    <script is:inline>
+      (function () {
+        let t = null;
+        try {
+          t = localStorage.getItem("theme");
+        } catch {
+          /* localStorage unavailable */
+        }
+        const d =
+          t === "dark" ||
+          (t !== "light" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        if (d) document.documentElement.classList.add("dark");
+      })();
+    </script>
   </head>
-  <body class="text-text bg-background h-full font-sans text-sm leading-normal">
+  <body
+    class="bg-surface text-on-surface h-full font-sans text-sm leading-normal"
+  >
+    <ThemeToggle />
     <slot />
   </body>
 </html>

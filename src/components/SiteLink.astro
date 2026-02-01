@@ -15,7 +15,7 @@ const isRot13 = !!(rot13Href && rot13Text);
 const resolvedHref = isRot13 ? "#" : url;
 const resolvedRel = [rel, "noopener", "noreferrer"].filter(Boolean).join(" ");
 const linkClass =
-  "group text-link hover:text-brand-light mx-[5px]" +
+  "group text-muted hover:text-accent mx-[5px]" +
   " whitespace-nowrap sm:mx-0 sm:mr-1.5 sm:leading-[22px]" +
   " lg:relative lg:float-left lg:mr-0 lg:px-[7px]" +
   " lg:leading-normal";
@@ -28,7 +28,10 @@ const linkClass =
   rel={resolvedRel}
   data-rot13-href={isRot13 ? rot13Href : undefined}
   data-rot13-text={isRot13 ? rot13Text : undefined}
-  ><Icon name={icon} /><span class="link-text">{isRot13 ? "" : name}</span></a
+  ><Icon name={icon} /><span
+    class="ml-1 inline-block text-sm sm:-translate-y-[14%] lg:invisible lg:absolute lg:top-[30px] lg:left-1/2 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0 lg:text-sm group-hover:lg:visible"
+    data-link-text>{isRot13 ? "" : name}</span
+  ></a
 >
 
 {/* ROT13 decode for anti-spam email obfuscation. */}
@@ -46,7 +49,7 @@ const linkClass =
     .querySelectorAll<HTMLAnchorElement>("[data-rot13-href]")
     .forEach((el) => {
       el.href = rot13(el.dataset.rot13Href!);
-      const text = el.querySelector(".link-text");
+      const text = el.querySelector("[data-link-text]");
       if (text) {
         text.textContent = rot13(el.dataset.rot13Text!);
       }
