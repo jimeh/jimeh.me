@@ -1,34 +1,12 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: var(--font-open-sans), helvetica, arial, sans-serif;
-  --color-background: #fdfdfd;
-  --color-text: #1a1a1a;
-  --color-name: #172c37;
-  --color-nickname: #dce9f0;
-  --color-subtitle: #7fbee9;
-  --color-link: #c0c0c0;
-  --color-brand: #5aa7dc;
-  --color-brand-light: #84bde5;
-  --color-brand-dark: #3091d3;
-  --color-grey: #828282;
-  --color-grey-light: #e8e8e8;
-  --color-grey-dark: #424242;
   --breakpoint-sm: 420px;
   --breakpoint-md: 616px;
   --breakpoint-lg: 769px;
-}
-
-/* Relative color syntax enhancement */
-@supports (color: hsl(from white h s l)) {
-  :root {
-    --color-nickname: hsl(from var(--color-name) h s calc(l + 75));
-    --color-link: hsl(from var(--color-text) h s calc(l + 65));
-    --color-brand-light: hsl(from var(--color-brand) h s calc(l + 10));
-    --color-brand-dark: hsl(from var(--color-brand) h s calc(l - 10));
-    --color-grey-light: hsl(from var(--color-grey) h s calc(l + 40));
-    --color-grey-dark: hsl(from var(--color-grey) h s calc(l - 25));
-  }
 }
 
 /*

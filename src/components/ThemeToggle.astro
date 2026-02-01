@@ -1,0 +1,117 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  class="fixed top-4 right-4 z-50 cursor-pointer rounded-full p-2 text-slate-400/60 hover:text-sky-500/70 dark:text-slate-600 dark:hover:text-sky-400/80"
+  aria-label="Toggle theme"
+>
+  <span id="theme-icon-system" class="hidden">
+    <Icon name="heroicons:computer-desktop" class="size-5" />
+  </span>
+  <span id="theme-icon-light" class="hidden">
+    <Icon name="heroicons:sun" class="size-5" />
+  </span>
+  <span id="theme-icon-dark" class="hidden">
+    <Icon name="heroicons:moon" class="size-5" />
+  </span>
+</button>
+
+<script is:inline>
+  (function () {
+    const STATES = ["system", "light", "dark"];
+    const LABELS = {
+      system: "Theme: system preference",
+      light: "Theme: light",
+      dark: "Theme: dark",
+    };
+
+    function getStoredTheme() {
+      try {
+        return localStorage.getItem("theme");
+      } catch {
+        return null;
+      }
+    }
+
+    function setStoredTheme(value) {
+      try {
+        if (value === null) {
+          localStorage.removeItem("theme");
+        } else {
+          localStorage.setItem("theme", value);
+        }
+      } catch {
+        // localStorage unavailable
+      }
+    }
+
+    function prefersDark() {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+
+    function applyTheme(state) {
+      const isDark = state === "dark" || (state === "system" && prefersDark());
+      document.documentElement.classList.toggle("dark", isDark);
+    }
+
+    function updateIcon(state) {
+      const ids = ["theme-icon-system", "theme-icon-light", "theme-icon-dark"];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.classList.toggle("hidden", id !== "theme-icon-" + state);
+        }
+      }
+    }
+
+    function updateLabel(state) {
+      const btn = document.getElementById("theme-toggle");
+      if (btn) {
+        btn.setAttribute("aria-label", LABELS[state]);
+      }
+    }
+
+    function init() {
+      const stored = getStoredTheme();
+      const state = stored === "light" || stored === "dark" ? stored : "system";
+
+      applyTheme(state);
+      updateIcon(state);
+      updateLabel(state);
+
+      const btn = document.getElementById("theme-toggle");
+      if (btn) {
+        btn.addEventListener("click", function () {
+          const current = getStoredTheme();
+          const idx = STATES.indexOf(
+            current === "light" || current === "dark" ? current : "system",
+          );
+          const next = STATES[(idx + 1) % STATES.length];
+          setStoredTheme(next === "system" ? null : next);
+          applyTheme(next);
+          updateIcon(next);
+          updateLabel(next);
+        });
+      }
+
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", function () {
+          const s = getStoredTheme();
+          if (s !== "light" && s !== "dark") {
+            applyTheme("system");
+          }
+        });
+    }
+
+    // Run init when DOM is ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+</script>
