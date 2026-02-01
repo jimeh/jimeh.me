@@ -7,71 +7,65 @@ const cacheBust = Date.now();
 ---
 
 <BaseLayout>
-    <header class="site-header">
-      <div class="site-header-container">
-        <img
-          class="site-avatar"
-          src={`/img/jimeh-4.2.0.jpg?${cacheBust}`}
-        />
-        <span class="content">
-          <span class="site-title">
-            <span class="site-name">
-              {siteConfig.author.name}
-            </span>
-            <span class="site-nickname">
-              ({siteConfig.author.nickname})
-            </span>
-            <span class="site-description">
-              {siteConfig.description}
-            </span>
+  <header class="site-header">
+    <div class="site-header-container">
+      <img class="site-avatar" src={`/img/jimeh-4.2.0.jpg?${cacheBust}`} />
+      <span class="content">
+        <span class="site-title">
+          <span class="site-name">
+            {siteConfig.author.name}
           </span>
-          <div class="site-links" id="site-links">
-            <a
-              id="email-link"
-              href="#"
-              style="display:none"
-            ><Icon name="fa6-solid:envelope" /><span
-                class="link-text"
-                id="email-text"
-              ></span></a>
-            <script
-              is:inline
-              define:vars={{
-                rot13Href: siteConfig.email.rot13Href,
-                rot13Text: siteConfig.email.rot13Text,
-              }}
-            >
-              // ROT13 decode for anti-spam email obfuscation.
-              function rot13(s) {
-                return s.replace(/[a-zA-Z]/g, function (c) {
-                  return String.fromCharCode(
-                    (c <= "Z" ? 90 : 122) >=
-                      (c = c.charCodeAt(0) + 13)
-                      ? c
-                      : c - 26
-                  );
-                });
-              }
-              var link = document.getElementById(
-                "email-link"
-              );
-              var text = document.getElementById(
-                "email-text"
-              );
-              link.href = rot13(rot13Href);
-              text.textContent = rot13(rot13Text);
-              link.style.display = "";
-            </script>
-            {siteLinks.map((item) => (
-              <Fragment>
-                {" "}<a
-                  href={item.url}
-                  rel={item.rel || undefined}
-                ><Icon name={item.icon} /><span class="link-text">{item.name}</span></a>
-              </Fragment>
-            ))}
-          </div>
+          <span class="site-nickname">
+            ({siteConfig.author.nickname})
+          </span>
+          <span class="site-description">
+            {siteConfig.description}
+          </span>
         </span>
-      </div>
-    </header>
+        <div class="site-links" id="site-links">
+          <a id="email-link" href="#" style="display:none"
+            ><Icon name="fa6-solid:envelope" /><span
+              class="link-text"
+              id="email-text"></span></a
+          >
+          <script
+            is:inline
+            define:vars={{
+              rot13Href: siteConfig.email.rot13Href,
+              rot13Text: siteConfig.email.rot13Text,
+            }}
+          >
+            // ROT13 decode for anti-spam email obfuscation.
+            function rot13(s) {
+              return s.replace(/[a-zA-Z]/g, function (c) {
+                return String.fromCharCode(
+                  (c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13)
+                    ? c
+                    : c - 26,
+                );
+              });
+            }
+            const link = document.getElementById("email-link");
+            const text = document.getElementById("email-text");
+            link.href = rot13(rot13Href);
+            text.textContent = rot13(rot13Text);
+            link.style.display = "";
+          </script>
+          {
+            siteLinks.map((item) => (
+              <Fragment>
+                {" "}
+                <a href={item.url} rel={item.rel || undefined}>
+                  <>
+                    <Icon name={item.icon} />
+                    <span class="link-text">{item.name}</span>
+                  </>
+                </a>
+              </Fragment>
+            ))
+          }
+        </div>
+      </span>
+    </div>
+  </header>
 </BaseLayout>

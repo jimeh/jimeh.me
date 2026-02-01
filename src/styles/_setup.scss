@@ -1,61 +1,21 @@
 @use "sass:color";
 
 // Our variables
-$base-font-family: "Open Sans", Helvetica, Arial, sans-serif;
+$base-font-family: "Open Sans", helvetica, arial, sans-serif;
 $base-font-size: 14px;
-$heading-font-family: "Open Sans Condensed", Helvetica, Arial, sans-serif;
+$heading-font-family: "Open Sans Condensed", helvetica, arial, sans-serif;
 $small-font-size: $base-font-size * 0.875;
 $base-line-height: 1.5;
-
 $spacing-unit: 30px;
-
 $background-color: #fdfdfd;
 $text-color: #1a1a1a;
-
 $name-color: #172c37;
 $nickname-color: color.adjust($name-color, $lightness: 75%);
 $sub-title-color: #7fbee9;
 $link-color: color.adjust($text-color, $lightness: 65%);
-
 $brand-color: #5aa7dc;
 $brand-color-light: color.adjust($brand-color, $lightness: 10%);
 $brand-color-dark: color.adjust($brand-color, $lightness: -10%);
-
 $grey-color: #828282;
 $grey-color-light: color.adjust($grey-color, $lightness: 40%);
 $grey-color-dark: color.adjust($grey-color, $lightness: -25%);
-
-@mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-  -moz-border-radius: $radius;
-  -ms-border-radius: $radius;
-  border-radius: $radius;
-}
-
-@mixin transform($transforms) {
-  -moz-transform: $transforms;
-  -o-transform: $transforms;
-  -ms-transform: $transforms;
-  -webkit-transform: $transforms;
-  transform: $transforms;
-}
-
-@mixin transition($transforms) {
-  -moz-transition: $transforms;
-  -o-transition: $transforms;
-  -ms-transition: $transforms;
-  -webkit-transition: $transforms;
-  transition: $transforms;
-}
-
-@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
-  @if $inset {
-    -webkit-box-shadow: inset $top $left $blur $color;
-    -moz-box-shadow: inset $top $left $blur $color;
-    box-shadow: inset $top $left $blur $color;
-  } @else {
-    -webkit-box-shadow: $top $left $blur $color;
-    -moz-box-shadow: $top $left $blur $color;
-    box-shadow: $top $left $blur $color;
-  }
-}

@@ -4,13 +4,25 @@
 /**
  * Reset some basic elements
  */
-body, h1, h2, h3, h4, h5, h6,
-p, blockquote, pre, hr,
-dl, dd, ol, ul, figure {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+hr,
+dl,
+dd,
+ol,
+ul,
+figure {
   margin: 0;
   padding: 0;
 }
-
 
 /**
  * Basic styling
@@ -27,20 +39,28 @@ body {
   font-weight: 400;
   color: $text-color;
   background-color: $background-color;
-  -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; /* stylelint-disable-line property-no-vendor-prefix */
 }
-
 
 /**
  * Set `margin-bottom` to maintain vertical rhythm
  */
-h1, h2, h3, h4, h5, h6,
-p, blockquote, pre,
-ul, ol, dl, figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+ul,
+ol,
+dl,
+figure,
 %vertical-rhythm {
   margin-bottom: math.div($spacing-unit, 2);
 }
-
 
 /**
  * Images
@@ -49,7 +69,6 @@ img {
   max-width: 100%;
   vertical-align: middle;
 }
-
 
 /**
  * Figures
@@ -62,11 +81,11 @@ figcaption {
   font-size: $small-font-size;
 }
 
-
 /**
  * Lists
  */
-ul, ol {
+ul,
+ol {
   margin-left: $spacing-unit;
 }
 
@@ -77,14 +96,17 @@ li {
   }
 }
 
-
 /**
  * Headings
  */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 300;
 }
-
 
 /**
  * Links
@@ -103,7 +125,6 @@ a {
   }
 }
 
-
 /**
  * Blockquotes
  */
@@ -119,7 +140,6 @@ blockquote {
     margin-bottom: 0;
   }
 }
-
 
 /**
  * Code formatting
@@ -147,13 +167,11 @@ pre {
   }
 }
 
-
 /**
  * Clearfix
  */
 %clearfix {
-
-  &:after {
+  &::after {
     content: "";
     display: table;
     clear: both;

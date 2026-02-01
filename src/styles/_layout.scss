@@ -4,10 +4,9 @@
   font-family: $heading-font-family;
   font-weight: bold;
   position: fixed;
-  top: 0px;
+  top: 0;
   text-align: center;
-
-  bottom: 0px;
+  bottom: 0;
   width: 100%;
 
   a:hover {
@@ -19,7 +18,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    @include transform(translate(-50%, -50%));
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -27,12 +26,12 @@
   width: 128px;
   height: 128px;
   float: left;
-  @include border-radius(400px);
+  border-radius: 400px;
 }
 
 .content {
   display: block;
-  padding: 9px 0px 0px 155px;
+  padding: 9px 0 0 155px;
   position: relative;
   text-align: left;
 }
@@ -63,20 +62,20 @@
 
 .site-links {
   font-size: 22px;
-  padding: 6px 0px 0px 6px;
+  padding: 6px 0 0 6px;
 
   svg {
     width: 1em;
     height: 1em;
     vertical-align: -0.125em;
-    fill: currentColor;
+    fill: currentcolor;
   }
 
   a {
     float: left;
     color: $link-color;
     position: relative;
-    padding: 0px 7px;
+    padding: 0 7px;
     white-space: nowrap;
 
     .link-text {
@@ -85,10 +84,12 @@
       position: absolute;
       top: 30px;
       left: 50%;
-      @include transform(translate(-50%, 0%));
+      transform: translate(-50%, 0%);
     }
+
     &:hover {
       color: $brand-color-light;
+
       .link-text {
         visibility: visible;
       }
@@ -96,29 +97,29 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (width <= 768px) {
   .site-links {
-    padding: 6px 0px 0px 0px;
+    padding: 6px 0 0;
     margin-left: -2px;
 
     a {
       float: none;
       line-height: 22px;
-      padding: 0px;
-      margin: 0px 10px 0px 0px;
+      padding: 0;
+      margin: 0 10px 0 0;
 
       .link-text {
         margin-left: 4px;
         visibility: visible;
         position: static;
         display: inline-block;
-        @include transform(translate(0%, -11%));
+        transform: translate(0%, -11%);
       }
     }
   }
 }
 
-@media screen and (max-width: 615px) {
+@media screen and (width <= 615px) {
   .site-header {
     .site-header-container {
       width: 410px;
@@ -131,7 +132,7 @@
   }
 
   .content {
-    padding: 4px 0px 0px 98px;
+    padding: 4px 0 0 98px;
   }
 
   .site-title {
@@ -148,13 +149,13 @@
 
     a {
       .link-text {
-        @include transform(translate(0%, 0%));
+        transform: translate(0%, 0%);
       }
     }
   }
 }
 
-@media screen and (max-width: 419px) {
+@media screen and (width <= 419px) {
   .site-header {
     .site-header-container {
       width: 320px;
@@ -168,7 +169,7 @@
   }
 
   .content {
-    padding: 0px 10px 0px 10px;
+    padding: 0 10px;
     text-align: center;
   }
 
@@ -183,16 +184,16 @@
 
   .site-links {
     font-size: 14px;
-    padding: 6px 0px 0px 0px;
-    margin-left: 0px;
+    padding: 6px 0 0;
+    margin-left: 0;
     text-align: center;
 
     a {
-      padding: 0px;
-      margin: 0px 5px;
+      padding: 0;
+      margin: 0 5px;
 
       .link-text {
-        @include transform(translate(0%, 0%));
+        transform: translate(0%, 0%);
       }
     }
   }
