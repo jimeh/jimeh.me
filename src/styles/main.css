@@ -1,3 +1,195 @@
-@import url("./setup.css");
-@import url("./base.css");
-@import url("./layout.css");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-open-sans), helvetica, arial, sans-serif;
+  --color-background: #fdfdfd;
+  --color-text: #1a1a1a;
+  --color-name: #172c37;
+  --color-nickname: #dce9f0;
+  --color-subtitle: #7fbee9;
+  --color-link: #c0c0c0;
+  --color-brand: #5aa7dc;
+  --color-brand-light: #84bde5;
+  --color-brand-dark: #3091d3;
+  --color-grey: #828282;
+  --color-grey-light: #e8e8e8;
+  --color-grey-dark: #424242;
+  --breakpoint-sm: 420px;
+  --breakpoint-md: 616px;
+  --breakpoint-lg: 769px;
+}
+
+/* Relative color syntax enhancement */
+@supports (color: hsl(from white h s l)) {
+  :root {
+    --color-nickname: hsl(from var(--color-name) h s calc(l + 75));
+    --color-link: hsl(from var(--color-text) h s calc(l + 65));
+    --color-brand-light: hsl(from var(--color-brand) h s calc(l + 10));
+    --color-brand-dark: hsl(from var(--color-brand) h s calc(l - 10));
+    --color-grey-light: hsl(from var(--color-grey) h s calc(l + 40));
+    --color-grey-dark: hsl(from var(--color-grey) h s calc(l - 25));
+  }
+}
+
+/*
+ * Base element styles
+ * Tailwind preflight handles most resets. These are additional
+ * element-level styles from the original base.css.
+ */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote,
+  pre,
+  ul,
+  ol,
+  dl,
+  figure {
+    margin-bottom: 15px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 300;
+  }
+
+  a {
+    color: var(--color-brand);
+    text-decoration: none;
+  }
+
+  a:visited {
+    color: var(--color-brand-dark);
+  }
+
+  a:hover {
+    color: var(--color-grey-dark);
+    text-decoration: underline;
+  }
+
+  img {
+    max-width: 100%;
+    vertical-align: middle;
+  }
+
+  figure > img {
+    display: block;
+  }
+
+  figcaption {
+    font-size: 12.25px;
+  }
+
+  ul,
+  ol {
+    margin-left: 30px;
+  }
+
+  li > ul,
+  li > ol {
+    margin-bottom: 0;
+  }
+
+  blockquote {
+    color: var(--color-grey);
+    border-left: 4px solid var(--color-grey-light);
+    padding-left: 15px;
+    font-size: 18px;
+    letter-spacing: -1px;
+    font-style: italic;
+  }
+
+  blockquote > :last-child {
+    margin-bottom: 0;
+  }
+
+  pre,
+  code {
+    font-size: 15px;
+    border: 1px solid var(--color-grey-light);
+    border-radius: 3px;
+    background-color: #eef;
+  }
+
+  code {
+    padding: 1px 5px;
+  }
+
+  pre {
+    padding: 8px 12px;
+    overflow-x: scroll;
+  }
+
+  pre > code {
+    border: 0;
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+/*
+ * Custom component styles for things Tailwind can't express
+ * as utility classes.
+ */
+
+/* Condensed font-stretch for header */
+.header-condensed {
+  font-stretch: 75%;
+}
+
+/* Override Tailwind preflight's display:block on SVGs in site links */
+.site-links svg {
+  display: inline;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentcolor;
+}
+
+/* Prevent text-decoration on header links */
+.site-header a:hover {
+  text-decoration: none;
+}
+
+/*
+ * Link-text hover-reveal behavior:
+ * - Mobile/small tablet: visible inline text
+ * - Desktop (lg+): hidden, revealed on hover via group
+ */
+.link-text {
+  margin-left: 4px;
+  font-size: 14px;
+  display: inline-block;
+}
+
+/* Nudge text up to vertically center with icons at md (616-768px) */
+@media (width >= 616px) and (width < 769px) {
+  .link-text {
+    transform: translate(0%, -14%);
+  }
+}
+
+@media (width >= 769px) {
+  .link-text {
+    visibility: hidden;
+    font-size: 14px;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    margin-left: 0;
+  }
+
+  .group:hover .link-text {
+    visibility: visible;
+  }
+}

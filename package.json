@@ -17,8 +17,10 @@
     "@fontsource-variable/open-sans": "^5.2.7",
     "@iconify-json/fa6-brands": "^1.2.6",
     "@iconify-json/fa6-solid": "^1.2.4",
+    "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.17.1",
-    "astro-icon": "^1.1.5"
+    "astro-icon": "^1.1.5",
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
@@ -29,6 +31,7 @@
     "eslint-plugin-astro": "^1.5.0",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "stylelint": "^17.1.0",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-prettier": "^5.0.3",

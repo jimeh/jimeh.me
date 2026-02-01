@@ -2,17 +2,53 @@
 import { Icon } from "astro-icon/components";
 
 interface Props {
-  name: string;
-  url: string;
   icon: string;
+  name?: string;
+  url?: string;
   rel?: string;
+  rot13Href?: string;
+  rot13Text?: string;
 }
 
-const { name, url, icon, rel } = Astro.props;
+const { icon, name, url, rel, rot13Href, rot13Text } = Astro.props;
+const isRot13 = !!(rot13Href && rot13Text);
+const resolvedHref = isRot13 ? "#" : url;
 const resolvedRel = [rel, "noopener", "noreferrer"].filter(Boolean).join(" ");
+const linkClass =
+  "group text-link hover:text-brand-light mx-[5px]" +
+  " whitespace-nowrap sm:mx-0 sm:mr-1.5 sm:leading-[22px]" +
+  " lg:relative lg:float-left lg:mr-0 lg:px-[7px]" +
+  " lg:leading-normal";
 ---
 
 {/* prettier-ignore */}
-<a href={url} rel={resolvedRel}
-  ><Icon name={icon} /><span class="link-text">{name}</span></a
+<a
+  class={linkClass}
+  href={resolvedHref}
+  rel={resolvedRel}
+  data-rot13-href={isRot13 ? rot13Href : undefined}
+  data-rot13-text={isRot13 ? rot13Text : undefined}
+  ><Icon name={icon} /><span class="link-text">{isRot13 ? "" : name}</span></a
 >
+
+{/* ROT13 decode for anti-spam email obfuscation. */}
+<script>
+  function rot13(s: string): string {
+    return s.replace(/[a-zA-Z]/g, (c) => {
+      const code = c.charCodeAt(0) + 13;
+      return String.fromCharCode(
+        (c <= "Z" ? 90 : 122) >= code ? code : code - 26,
+      );
+    });
+  }
+
+  document
+    .querySelectorAll<HTMLAnchorElement>("[data-rot13-href]")
+    .forEach((el) => {
+      el.href = rot13(el.dataset.rot13Href!);
+      const text = el.querySelector(".link-text");
+      if (text) {
+        text.textContent = rot13(el.dataset.rot13Text!);
+      }
+    });
+</script>

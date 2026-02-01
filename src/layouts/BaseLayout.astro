@@ -22,13 +22,11 @@ function fileHash(path: string): string {
 const { title } = Astro.props;
 const pageTitle = title || siteConfig.title;
 const faviconHash = fileHash("../../public/favicon.ico");
-const appleTouchHash = fileHash(
-  "../../public/apple-touch-icon.png",
-);
+const appleTouchHash = fileHash("../../public/apple-touch-icon.png");
 ---
 
 <!doctype html>
-<html>
+<html class="h-full">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -38,9 +36,12 @@ const appleTouchHash = fileHash(
     <SEOHead />
     <Font cssVariable="--font-open-sans" preload />
     <link rel="icon" href={`/favicon.ico?v=${faviconHash}`} />
-    <link rel="apple-touch-icon" href={`/apple-touch-icon.png?v=${appleTouchHash}`} />
+    <link
+      rel="apple-touch-icon"
+      href={`/apple-touch-icon.png?v=${appleTouchHash}`}
+    />
   </head>
-  <body>
+  <body class="text-text bg-background h-full font-sans text-sm leading-normal">
     <slot />
   </body>
 </html>
