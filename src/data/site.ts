@@ -23,8 +23,6 @@ export interface SiteLink {
   url: string;
   icon: string;
   rel?: string;
-  id?: string;
-  type?: string;
 }
 
 export const siteConfig: SiteConfig = {
@@ -96,15 +94,11 @@ export const siteLinks: SiteLink[] = [
   },
   {
     name: "vcard",
-    id: "vcard",
-    type: "download",
     url: "https://assets.jimeh.me/jim-myhrberg.vcf",
     icon: "fa6-solid:address-card",
   },
   {
     name: "cv (pdf)",
-    id: "resume",
-    type: "download",
     url: "https://jimeh.me/cv",
     icon: "fa6-solid:file-pdf",
   },

@@ -3,14 +3,12 @@ import { Icon } from "astro-icon/components";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteLink from "../components/SiteLink.astro";
 import { siteConfig, siteLinks } from "../data/site";
-
-const cacheBust = Date.now();
 ---
 
 <BaseLayout>
   <header class="site-header">
     <div class="site-header-container">
-      <img class="site-avatar" src={`/img/jimeh-4.2.0.jpg?${cacheBust}`} />
+      <img class="site-avatar" src="/img/jimeh-4.2.0.jpg" alt="Jim Myhrberg" />
       <span class="content">
         <span class="site-title">
           <span class="site-name">
@@ -54,15 +52,12 @@ const cacheBust = Date.now();
           </script>
           {
             siteLinks.map((item) => (
-              <Fragment>
-                {" "}
-                <SiteLink
-                  name={item.name}
-                  url={item.url}
-                  icon={item.icon}
-                  rel={item.rel}
-                />
-              </Fragment>
+              <SiteLink
+                name={item.name}
+                url={item.url}
+                icon={item.icon}
+                rel={item.rel}
+              />
             ))
           }
         </div>

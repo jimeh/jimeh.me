@@ -1,5 +1,7 @@
 ---
 import "../styles/main.css";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { Font } from "astro:assets";
 import SEOHead from "../components/SEOHead.astro";
 import { siteConfig } from "../data/site";
@@ -8,9 +10,21 @@ interface Props {
   title?: string;
 }
 
+/** Short content hash for cache busting a public/ asset. */
+function fileHash(path: string): string {
+  const data = readFileSync(new URL(path, import.meta.url));
+  return createHash("sha256")
+    .update(new Uint8Array(data))
+    .digest("hex")
+    .slice(0, 8);
+}
+
 const { title } = Astro.props;
 const pageTitle = title || siteConfig.title;
-const cacheBust = Date.now();
+const faviconHash = fileHash("../../public/favicon.ico");
+const appleTouchHash = fileHash(
+  "../../public/apple-touch-icon.png",
+);
 ---
 
 <!doctype html>
@@ -23,8 +37,8 @@ const cacheBust = Date.now();
 
     <SEOHead />
     <Font cssVariable="--font-open-sans" preload />
-    <link rel="shortcut icon" href={`/favicon.ico?${cacheBust}`} />
-    <link rel="apple-touch-icon" href={`/apple-touch-icon.png?${cacheBust}`} />
+    <link rel="icon" href={`/favicon.ico?v=${faviconHash}`} />
+    <link rel="apple-touch-icon" href={`/apple-touch-icon.png?v=${appleTouchHash}`} />
   </head>
   <body>
     <slot />

@@ -9,9 +9,10 @@ interface Props {
 }
 
 const { name, url, icon, rel } = Astro.props;
+const resolvedRel = [rel, "noopener", "noreferrer"].filter(Boolean).join(" ");
 ---
 
 {/* prettier-ignore */}
-<a href={url} rel={rel || undefined}
+<a href={url} rel={resolvedRel}
   ><Icon name={icon} /><span class="link-text">{name}</span></a
 >

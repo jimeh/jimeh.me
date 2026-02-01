@@ -24,9 +24,9 @@ pnpm and Node 24 managed via mise. No tests configured.
 - Icons: astro-icon with Iconify collections → grep `Icon`, `fa6-brands`, `fa6-solid`
 - Email: ROT13 obfuscation decoded client-side → grep `rot13`
 - CSS: Plain CSS with custom properties, no preprocessor
-- Fonts: Google Fonts (Open Sans, Open Sans Condensed) loaded via `<link>` tags in layout
+- Fonts: Open Sans variable font, self-hosted via Astro experimental fonts API (local provider)
 
 ## Domain Concepts
 
-- `SiteLink`: Typed entry for each link on the page (name, url, icon, optional rel/type)
+- `SiteLink`: Typed entry for each link on the page (name, url, icon, optional rel)
 - `SiteConfig`: Site metadata, author info, ROT13-encoded email, social profile URLs

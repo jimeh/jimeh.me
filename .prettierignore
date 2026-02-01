@@ -1,4 +1,7 @@
-dist/
+.agents/
 .astro/
+.claude/
+.vscode/
+dist/
 node_modules/
 pnpm-lock.yaml
