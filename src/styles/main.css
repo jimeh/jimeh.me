@@ -32,111 +32,6 @@
 }
 
 /*
- * Base element styles
- * Tailwind preflight handles most resets. These are additional
- * element-level styles from the original base.css.
- */
-@layer base {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  blockquote,
-  pre,
-  ul,
-  ol,
-  dl,
-  figure {
-    margin-bottom: 15px;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-weight: 300;
-  }
-
-  a {
-    color: var(--color-brand);
-    text-decoration: none;
-  }
-
-  a:visited {
-    color: var(--color-brand-dark);
-  }
-
-  a:hover {
-    color: var(--color-grey-dark);
-    text-decoration: underline;
-  }
-
-  img {
-    max-width: 100%;
-    vertical-align: middle;
-  }
-
-  figure > img {
-    display: block;
-  }
-
-  figcaption {
-    font-size: 12.25px;
-  }
-
-  ul,
-  ol {
-    margin-left: 30px;
-  }
-
-  li > ul,
-  li > ol {
-    margin-bottom: 0;
-  }
-
-  blockquote {
-    color: var(--color-grey);
-    border-left: 4px solid var(--color-grey-light);
-    padding-left: 15px;
-    font-size: 18px;
-    letter-spacing: -1px;
-    font-style: italic;
-  }
-
-  blockquote > :last-child {
-    margin-bottom: 0;
-  }
-
-  pre,
-  code {
-    font-size: 15px;
-    border: 1px solid var(--color-grey-light);
-    border-radius: 3px;
-    background-color: #eef;
-  }
-
-  code {
-    padding: 1px 5px;
-  }
-
-  pre {
-    padding: 8px 12px;
-    overflow-x: scroll;
-  }
-
-  pre > code {
-    border: 0;
-    padding-right: 0;
-    padding-left: 0;
-  }
-}
-
-/*
  * Custom component styles for things Tailwind can't express
  * as utility classes.
  */
@@ -153,11 +48,6 @@
   height: 1em;
   vertical-align: -0.125em;
   fill: currentcolor;
-}
-
-/* Prevent text-decoration on header links */
-.site-header a:hover {
-  text-decoration: none;
 }
 
 /*
