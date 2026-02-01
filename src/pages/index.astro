@@ -55,12 +55,11 @@ const cacheBust = Date.now();
             siteLinks.map((item) => (
               <Fragment>
                 {" "}
-                <a href={item.url} rel={item.rel || undefined}>
-                  <>
-                    <Icon name={item.icon} />
-                    <span class="link-text">{item.name}</span>
-                  </>
-                </a>
+                <a href={item.url} rel={item.rel || undefined}
+                  ><Icon name={item.icon} /><span
+                    class="link-text">{item.name}</span
+                  ></a
+                >
               </Fragment>
             ))
           }
