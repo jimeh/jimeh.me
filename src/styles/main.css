@@ -3,10 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: var(--font-open-sans), helvetica, arial, sans-serif;
-  --breakpoint-sm: 420px;
-  --breakpoint-md: 616px;
-  --breakpoint-lg: 769px;
+  --font-sans: var(--font-open-sans);
 }
 
 :root {
@@ -57,7 +54,7 @@
 
 /*
  * Link-text hover-reveal behavior:
- * - Mobile/small tablet: visible inline text
+ * - Mobile/small/medium: visible inline text
  * - Desktop (lg+): hidden, revealed on hover via group
  */
 .link-text {
@@ -66,14 +63,15 @@
   display: inline-block;
 }
 
-/* Nudge text up to vertically center with icons at md (616-768px) */
-@media (width >= 616px) and (width < 769px) {
+/* Nudge text up to vertically center with icons at sm-to-lg */
+/* stylelint-disable media-query-no-invalid */
+@media (width >= theme(--breakpoint-sm)) and (width < theme(--breakpoint-lg)) {
   .link-text {
     transform: translate(0%, -14%);
   }
 }
 
-@media (width >= 769px) {
+@media (width >= theme(--breakpoint-lg)) {
   .link-text {
     visibility: hidden;
     font-size: 14px;
