@@ -1,6 +1,7 @@
 .site-header {
   font-family: var(--heading-font-family);
   font-weight: bold;
+  font-stretch: 75%;
   position: fixed;
   top: 0;
   text-align: center;
