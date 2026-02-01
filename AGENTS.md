@@ -23,7 +23,7 @@ pnpm and Node 24 managed via mise. No tests configured.
 - Page content: Data-driven from typed exports → grep `siteConfig`, `siteLinks`
 - Icons: astro-icon with Iconify collections → grep `Icon`, `fa6-brands`, `fa6-solid`
 - Email: ROT13 obfuscation decoded client-side → grep `rot13`
-- CSS: Plain CSS with custom properties, no preprocessor
+- CSS: Tailwind CSS v4 via `@tailwindcss/vite`, custom theme in `src/styles/main.css`
 - Fonts: Open Sans variable font, self-hosted via Astro experimental fonts API (local provider)
 
 ## Domain Concepts

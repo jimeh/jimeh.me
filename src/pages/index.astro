@@ -6,23 +6,42 @@ import { siteConfig, siteLinks } from "../data/site";
 ---
 
 <BaseLayout>
-  <header class="site-header">
-    <div class="site-header-container">
-      <img class="site-avatar" src="/img/jimeh-4.2.0.jpg" alt="Jim Myhrberg" />
-      <span class="content">
-        <span class="site-title">
-          <span class="site-name">
+  <header
+    class="site-header header-condensed fixed inset-0 w-full text-center font-sans font-bold"
+  >
+    <div
+      class="absolute top-1/2 left-1/2 w-80 -translate-x-1/2 -translate-y-1/2 sm:w-[410px] md:w-[580px]"
+    >
+      <img
+        class="mx-auto size-32 rounded-full sm:float-left sm:mx-0 sm:size-20 md:size-32"
+        src="/img/jimeh-4.2.0.jpg"
+        alt="Jim Myhrberg"
+      />
+      <span
+        class="relative block px-2.5 text-center sm:px-0 sm:pt-1 sm:pl-[98px] sm:text-left md:pt-[9px] md:pl-[155px]"
+      >
+        <span class="relative text-[2.14em] sm:text-[2.43em] md:text-[3.36em]">
+          <span class="text-name uppercase">
             {siteConfig.author.name}
           </span>
-          <span class="site-nickname">
+          <span class="text-nickname lowercase">
             ({siteConfig.author.nickname})
           </span>
-          <span class="site-description">
+          <span
+            class="text-subtitle absolute top-8 left-[7px] text-[0.383em] uppercase sm:top-9 sm:left-[9px] md:top-[49px] md:left-[11px]"
+          >
             {siteConfig.description}
           </span>
         </span>
-        <div class="site-links" id="site-links">
-          <a id="email-link" href="#" style="display:none"
+        <div
+          class="site-links pt-1.5 text-center text-[14px] sm:-ml-0.5 sm:text-left sm:text-base md:text-[22px] lg:ml-0 lg:pl-1.5"
+          id="site-links"
+        >
+          <a
+            id="email-link"
+            class="group text-link hover:text-brand-light mx-[5px] whitespace-nowrap sm:mx-0 sm:mr-2.5 sm:leading-[22px] lg:relative lg:float-left lg:mr-0 lg:px-[7px] lg:leading-normal"
+            href="#"
+            style="display:none"
             ><Icon name="fa6-solid:envelope" /><span
               class="link-text"
               id="email-text"></span></a

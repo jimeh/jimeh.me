@@ -13,6 +13,8 @@ const resolvedRel = [rel, "noopener", "noreferrer"].filter(Boolean).join(" ");
 ---
 
 {/* prettier-ignore */}
-<a href={url} rel={resolvedRel}
-  ><Icon name={icon} /><span class="link-text">{name}</span></a
+<a
+  class="group text-link hover:text-brand-light mx-[5px] whitespace-nowrap sm:mx-0 sm:mr-2.5 sm:leading-[22px] lg:relative lg:float-left lg:mr-0 lg:px-[7px] lg:leading-normal"
+  href={url}
+  rel={resolvedRel}><Icon name={icon} /><span class="link-text">{name}</span></a
 >
