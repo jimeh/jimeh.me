@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@fontsource/open-sans-condensed':
+        specifier: ^4.5.5
+        version: 4.5.5
       '@iconify-json/fa6-brands':
         specifier: ^1.2.6
         version: 1.2.6
@@ -339,6 +342,9 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fontsource/open-sans-condensed@4.5.5':
+    resolution: {integrity: sha512-ah6DBSWgjWEG20tVJnvcUQ/8XTfnGpuOGK4HLTF91vtrGg7PyrdEMlao/O1+S4i+SzeuJCmf5Qbc3eWponBL3Q==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2878,6 +2884,8 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@fontsource/open-sans-condensed@4.5.5': {}
 
   '@humanfs/core@0.19.1': {}
 

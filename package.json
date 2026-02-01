@@ -13,6 +13,7 @@
     "check": "pnpm format:check && pnpm lint"
   },
   "dependencies": {
+    "@fontsource/open-sans-condensed": "^4.5.5",
     "@iconify-json/fa6-brands": "^1.2.6",
     "@iconify-json/fa6-solid": "^1.2.4",
     "astro": "^5.17.1",

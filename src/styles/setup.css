@@ -1,5 +1,5 @@
 :root {
-  --base-font-family: "Open Sans", helvetica, arial, sans-serif;
+  --base-font-family: var(--font-open-sans);
   --base-font-size: 14px;
   --heading-font-family: "Open Sans Condensed", helvetica, arial, sans-serif;
   --small-font-size: 12.25px;
