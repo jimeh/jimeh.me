@@ -15,8 +15,7 @@ const isRot13 = !!(rot13Href && rot13Text);
 const resolvedHref = isRot13 ? "#" : url;
 const resolvedRel = [rel, "noopener", "noreferrer"].filter(Boolean).join(" ");
 const linkClass =
-  "group text-slate-400/60 dark:text-slate-600" +
-  " hover:text-sky-500/70 dark:hover:text-sky-400/80 mx-[5px]" +
+  "group text-muted hover:text-accent mx-[5px]" +
   " whitespace-nowrap sm:mx-0 sm:mr-1.5 sm:leading-[22px]" +
   " lg:relative lg:float-left lg:mr-0 lg:px-[7px]" +
   " lg:leading-normal";

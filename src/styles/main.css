@@ -9,6 +9,33 @@
   --breakpoint-lg: 769px;
 }
 
+:root {
+  --surface: white;
+  --on-surface: var(--color-slate-900);
+  --heading: var(--color-slate-800);
+  --heading-muted: var(--color-slate-300);
+  --muted: oklch(from var(--color-slate-400) l c h / 60%);
+  --accent: oklch(from var(--color-sky-500) l c h / 70%);
+}
+
+.dark {
+  --surface: black;
+  --on-surface: var(--color-slate-100);
+  --heading: var(--color-slate-200);
+  --heading-muted: var(--color-slate-700);
+  --muted: var(--color-slate-600);
+  --accent: oklch(from var(--color-sky-400) l c h / 80%);
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-heading: var(--heading);
+  --color-heading-muted: var(--heading-muted);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+}
+
 /*
  * Custom component styles for things Tailwind can't express
  * as utility classes.
