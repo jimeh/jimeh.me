@@ -1,0 +1,20 @@
+:root {
+  --base-font-family: "Open Sans", helvetica, arial, sans-serif;
+  --base-font-size: 14px;
+  --heading-font-family: "Open Sans Condensed", helvetica, arial, sans-serif;
+  --small-font-size: 12.25px;
+  --base-line-height: 1.5;
+  --spacing-unit: 30px;
+  --background-color: #fdfdfd;
+  --text-color: #1a1a1a;
+  --name-color: #172c37;
+  --nickname-color: hsl(from var(--name-color) h s calc(l + 75));
+  --sub-title-color: #7fbee9;
+  --link-color: hsl(from var(--text-color) h s calc(l + 65));
+  --brand-color: #5aa7dc;
+  --brand-color-light: hsl(from var(--brand-color) h s calc(l + 10));
+  --brand-color-dark: hsl(from var(--brand-color) h s calc(l - 10));
+  --grey-color: #828282;
+  --grey-color-light: hsl(from var(--grey-color) h s calc(l + 40));
+  --grey-color-dark: hsl(from var(--grey-color) h s calc(l - 25));
+}

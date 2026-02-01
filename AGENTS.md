@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Personal portfolio landing page (jimeh.me). Astro 5, TypeScript, SCSS.
+Personal portfolio landing page (jimeh.me). Astro 5, TypeScript, CSS.
 Static site deployed to GitHub Pages.
 
 ## Commands
@@ -23,7 +23,7 @@ pnpm and Node 24 managed via mise. No tests configured.
 - Page content: Data-driven from typed exports → grep `siteConfig`, `siteLinks`
 - Icons: astro-icon with Iconify collections → grep `Icon`, `fa6-brands`, `fa6-solid`
 - Email: ROT13 obfuscation decoded client-side → grep `rot13`
-- SCSS: Modern module system (`@use` not `@import`), namespaced access (e.g. `setup.$brand-color`)
+- CSS: Plain CSS with custom properties, no preprocessor
 - Fonts: Google Fonts (Open Sans, Open Sans Condensed) loaded via `<link>` tags in layout
 
 ## Domain Concepts

@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteLink from "../components/SiteLink.astro";
 import { siteConfig, siteLinks } from "../data/site";
 
 const cacheBust = Date.now();
@@ -55,11 +56,12 @@ const cacheBust = Date.now();
             siteLinks.map((item) => (
               <Fragment>
                 {" "}
-                <a href={item.url} rel={item.rel || undefined}
-                  ><Icon name={item.icon} /><span
-                    class="link-text">{item.name}</span
-                  ></a
-                >
+                <SiteLink
+                  name={item.name}
+                  url={item.url}
+                  icon={item.icon}
+                  rel={item.rel}
+                />
               </Fragment>
             ))
           }

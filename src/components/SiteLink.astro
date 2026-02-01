@@ -1,0 +1,17 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  name: string;
+  url: string;
+  icon: string;
+  rel?: string;
+}
+
+const { name, url, icon, rel } = Astro.props;
+---
+
+{/* prettier-ignore */}
+<a href={url} rel={rel || undefined}
+  ><Icon name={icon} /><span class="link-text">{name}</span></a
+>

@@ -1,6 +1,3 @@
-@use "sass:math";
-@use "setup" as *;
-
 /**
  * Reset some basic elements
  */
@@ -33,12 +30,12 @@ html {
 
 body {
   height: 100%;
-  font-family: $base-font-family;
-  font-size: $base-font-size;
-  line-height: $base-line-height;
+  font-family: var(--base-font-family);
+  font-size: var(--base-font-size);
+  line-height: var(--base-line-height);
   font-weight: 400;
-  color: $text-color;
-  background-color: $background-color;
+  color: var(--text-color);
+  background-color: var(--background-color);
   -webkit-text-size-adjust: 100%; /* stylelint-disable-line property-no-vendor-prefix */
 }
 
@@ -57,9 +54,8 @@ pre,
 ul,
 ol,
 dl,
-figure,
-%vertical-rhythm {
-  margin-bottom: math.div($spacing-unit, 2);
+figure {
+  margin-bottom: calc(var(--spacing-unit) / 2);
 }
 
 /**
@@ -78,7 +74,7 @@ figure > img {
 }
 
 figcaption {
-  font-size: $small-font-size;
+  font-size: var(--small-font-size);
 }
 
 /**
@@ -86,14 +82,12 @@ figcaption {
  */
 ul,
 ol {
-  margin-left: $spacing-unit;
+  margin-left: var(--spacing-unit);
 }
 
-li {
-  > ul,
-  > ol {
-    margin-bottom: 0;
-  }
+li > ul,
+li > ol {
+  margin-bottom: 0;
 }
 
 /**
@@ -112,33 +106,33 @@ h6 {
  * Links
  */
 a {
-  color: $brand-color;
+  color: var(--brand-color);
   text-decoration: none;
+}
 
-  &:visited {
-    color: $brand-color-dark;
-  }
+a:visited {
+  color: var(--brand-color-dark);
+}
 
-  &:hover {
-    color: $grey-color-dark;
-    text-decoration: underline;
-  }
+a:hover {
+  color: var(--grey-color-dark);
+  text-decoration: underline;
 }
 
 /**
  * Blockquotes
  */
 blockquote {
-  color: $grey-color;
-  border-left: 4px solid $grey-color-light;
-  padding-left: math.div($spacing-unit, 2);
+  color: var(--grey-color);
+  border-left: 4px solid var(--grey-color-light);
+  padding-left: calc(var(--spacing-unit) / 2);
   font-size: 18px;
   letter-spacing: -1px;
   font-style: italic;
+}
 
-  > :last-child {
-    margin-bottom: 0;
-  }
+blockquote > :last-child {
+  margin-bottom: 0;
 }
 
 /**
@@ -147,7 +141,7 @@ blockquote {
 pre,
 code {
   font-size: 15px;
-  border: 1px solid $grey-color-light;
+  border: 1px solid var(--grey-color-light);
   border-radius: 3px;
   background-color: #eef;
 }
@@ -159,21 +153,10 @@ code {
 pre {
   padding: 8px 12px;
   overflow-x: scroll;
-
-  > code {
-    border: 0;
-    padding-right: 0;
-    padding-left: 0;
-  }
 }
 
-/**
- * Clearfix
- */
-%clearfix {
-  &::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+pre > code {
+  border: 0;
+  padding-right: 0;
+  padding-left: 0;
 }
