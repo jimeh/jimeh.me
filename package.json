@@ -11,7 +11,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "astro check",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck"
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck",
+    "import-medium": "tsx scripts/import-medium-posts.ts"
   },
   "dependencies": {
     "@fontsource-variable/open-sans": "^5.2.7",
@@ -27,15 +28,20 @@
     "@astrojs/sitemap": "^3.7.0",
     "@eslint/js": "^9.39.2",
     "@iconify-json/heroicons": "^1.2.3",
+    "@types/turndown": "^5.0.6",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.5.0",
+    "fast-xml-parser": "^5.3.6",
+    "linkedom": "^0.18.12",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "stylelint": "^17.1.0",
     "stylelint-config-standard": "^40.0.0",
     "stylelint-prettier": "^5.0.3",
+    "tsx": "^4.21.0",
+    "turndown": "^7.2.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.54.0"
   }

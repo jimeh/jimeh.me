@@ -14,5 +14,11 @@ export default {
         trailingComma: "none",
       },
     },
+    {
+      files: "*.md",
+      options: {
+        proseWrap: "always",
+      },
+    },
   ],
 };
