@@ -5,7 +5,7 @@ date: 2010-06-15
 tags: ["productivity", "brand-loyalty", "technology"]
 ---
 
-![](https://miro.medium.com/v2/resize:fit:2000/format:webp/1*7ZhGFhEHLxR4alsQ51_4RQ.jpeg)
+![](./1-7ZhGFhEHLxR4alsQ51_4RQ.webp)
 
 Fan Boys and Haters have been equally annoying me as of late. The most common
 claim is that their favorite company is good, while all others are evil. This is

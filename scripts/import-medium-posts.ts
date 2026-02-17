@@ -13,7 +13,14 @@
  */
 
 import { execSync } from "node:child_process";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdirSync,
+  readdirSync,
+  renameSync,
+  unlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -57,6 +64,140 @@ function curlFetch(url: string): string {
   } catch (err) {
     throw new Error(`Failed to fetch ${url}: ${err}`);
   }
+}
+
+// ---------------------------------------------------------------------------
+// Image downloading
+// ---------------------------------------------------------------------------
+
+/**
+ * Download a file via curl to a local path.
+ * Returns the content-type header from the response.
+ */
+function curlDownload(url: string, outPath: string): string {
+  try {
+    return execSync(`curl -sL -w '%{content_type}' -o '${outPath}' '${url}'`, {
+      encoding: "utf-8",
+      maxBuffer: 50 * 1024 * 1024,
+    }).trim();
+  } catch (err) {
+    throw new Error(`Failed to download ${url}: ${err}`);
+  }
+}
+
+/**
+ * Map HTTP content-type to file extension. Falls back to the
+ * extension from the URL path.
+ */
+function contentTypeToExt(contentType: string, urlFallback: string): string {
+  const ct = contentType.split(";")[0].trim().toLowerCase();
+  const map: Record<string, string> = {
+    "image/webp": ".webp",
+    "image/jpeg": ".jpg",
+    "image/png": ".png",
+    "image/gif": ".gif",
+    "image/svg+xml": ".svg",
+    "image/avif": ".avif",
+  };
+  if (map[ct]) return map[ct];
+
+  // Fallback: extract extension from URL path.
+  const match = urlFallback.match(/\.(\w+)$/);
+  return match ? `.${match[1]}` : ".jpg";
+}
+
+/**
+ * Extract a filesystem-safe base name from a Medium image URL.
+ * E.g. "1*lpZA2i6W3zTETJZiCCUFRA.jpeg" → "1-lpZA2i6W3zTETJZiCCUFRA"
+ */
+function imageBaseName(url: string): string {
+  const pathname = new URL(url).pathname;
+  const filename = pathname.split("/").pop() || "image";
+  // Strip extension and sanitize.
+  return filename.replace(/\.\w+$/, "").replace(/\*/g, "-");
+}
+
+/**
+ * Download all Medium images from HTML content into a local
+ * directory. Returns a map from original URL to relative path
+ * (e.g. "./1-lpZA2i6W3zTETJZiCCUFRA.webp").
+ */
+function downloadPostImages(
+  html: string,
+  postDir: string,
+  force: boolean,
+): Map<string, string> {
+  const urlMap = new Map<string, string>();
+  const { document } = parseHTML(`<div>${html}</div>`);
+  const images = document.querySelectorAll("img[src]");
+
+  for (const img of Array.from(images)) {
+    const src = img.getAttribute("src") || "";
+    if (!src.startsWith("https://")) continue;
+    if (urlMap.has(src)) continue;
+
+    // Skip tracking pixels (1x1).
+    if (
+      img.getAttribute("width") === "1" ||
+      img.getAttribute("height") === "1"
+    ) {
+      continue;
+    }
+
+    const baseName = imageBaseName(src);
+
+    // Download to a temp name first, then rename with detected
+    // extension.
+    const tmpPath = join(postDir, `${baseName}.tmp`);
+    mkdirSync(postDir, { recursive: true });
+
+    try {
+      // Check if we already have this image (any extension).
+      if (!force) {
+        const existing = readdirSync(postDir).find(
+          (f) => f.startsWith(`${baseName}.`) && !f.endsWith(".tmp"),
+        );
+        if (existing) {
+          const relPath = `./${existing}`;
+          urlMap.set(src, relPath);
+          console.log(`    Skipping (exists): ${existing}`);
+          continue;
+        }
+      }
+
+      console.log(`    Downloading: ${baseName}`);
+      const contentType = curlDownload(src, tmpPath);
+      const ext = contentTypeToExt(contentType, src);
+      const finalName = `${baseName}${ext}`;
+      const finalPath = join(postDir, finalName);
+      renameSync(tmpPath, finalPath);
+      urlMap.set(src, `./${finalName}`);
+    } catch (err) {
+      console.warn(`    Warning: failed to download ${src}: ${err}`);
+      // Clean up temp file if it exists.
+      try {
+        unlinkSync(tmpPath);
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+
+  return urlMap;
+}
+
+/**
+ * Replace external image URLs in markdown with local relative paths.
+ */
+function replaceImageUrls(
+  markdown: string,
+  urlMap: Map<string, string>,
+): string {
+  let result = markdown;
+  for (const [originalUrl, localPath] of urlMap) {
+    result = result.replaceAll(originalUrl, localPath);
+  }
+  return result;
 }
 
 // ---------------------------------------------------------------------------
@@ -551,16 +692,17 @@ function buildFrontmatter(meta: {
 // ---------------------------------------------------------------------------
 
 function writePost(slug: string, content: string, force: boolean): boolean {
-  const filePath = join(BLOG_DIR, `${slug}.md`);
+  const postDir = join(BLOG_DIR, slug);
+  const filePath = join(postDir, "index.md");
 
   if (existsSync(filePath) && !force) {
-    console.log(`  Skipping (exists): ${slug}.md`);
+    console.log(`  Skipping (exists): ${slug}/index.md`);
     return false;
   }
 
-  mkdirSync(BLOG_DIR, { recursive: true });
+  mkdirSync(postDir, { recursive: true });
   writeFileSync(filePath, content, "utf-8");
-  console.log(`  Written: ${slug}.md`);
+  console.log(`  Written: ${slug}/index.md`);
   return true;
 }
 
@@ -629,13 +771,20 @@ function main(): void {
     const filename = `${date}-${slug}`;
 
     // Skip early if file exists and not forcing.
-    if (existsSync(join(BLOG_DIR, `${filename}.md`)) && !force) {
-      console.log(`  Skipping (exists): ${filename}.md`);
+    const postDir = join(BLOG_DIR, filename);
+    if (existsSync(join(postDir, "index.md")) && !force) {
+      console.log(`  Skipping (exists): ${filename}/index.md`);
       skipped++;
       continue;
     }
 
-    const markdown = postProcessMarkdown(td.turndown(contentHtml));
+    // Download images to post directory before converting to
+    // markdown, so we can replace URLs in the output.
+    const imageMap = downloadPostImages(contentHtml, postDir, force);
+
+    let markdown = postProcessMarkdown(td.turndown(contentHtml));
+    markdown = replaceImageUrls(markdown, imageMap);
+
     title = normalizeQuotes(title);
     const description = normalizeQuotes(
       subtitle || extractFallbackDescription(markdown, title),

@@ -6,7 +6,7 @@ updatedDate: 2026-02-17
 tags: ["macos", "macos26", "macos-tahoe", "apple", "liquid-glass"]
 ---
 
-![Liquid Glass icon in Icon Composer](https://miro.medium.com/v2/resize:fit:2000/format:webp/1*jc9dyVFYfoIUGxJ8x54tuw.jpeg)
+![Liquid Glass icon in Icon Composer](./1-jc9dyVFYfoIUGxJ8x54tuw.webp)
 
 ## Overview
 

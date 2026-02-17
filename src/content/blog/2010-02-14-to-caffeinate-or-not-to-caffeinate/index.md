@@ -5,7 +5,7 @@ date: 2010-02-14
 tags: ["productivity", "quality-of-life", "caffeine"]
 ---
 
-![](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*nZV2-R2m4JbNPWz16s1rlA.jpeg)
+![](./1-nZV2-R2m4JbNPWz16s1rlA.webp)
 
 I used to be a caffeine junkie. My caffeinated poison of choice was Coke, the
 legal kind, not the illegal one.

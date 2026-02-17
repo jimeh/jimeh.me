@@ -6,7 +6,7 @@ updatedDate: 2015-10-20
 tags: ["blogging", "medium"]
 ---
 
-![](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*jSQuxs3q2sbXovB2h-99bA.png)
+![](./1-jSQuxs3q2sbXovB2h-99bA.webp)
 
 I have finally gotten around to updating my personal website. The new design is
 actually something I put together two years ago while bored. I was always too
@@ -50,13 +50,13 @@ had for years to some good use, rather than just redirect it to jimeh.me.
 Now let's finish off this rant of a post with a gallery of all versions from
 oldest to newest of my website:
 
-![](https://miro.medium.com/v2/resize:fit:1000/format:webp/1*skULgTYmHjTBmcF1a7SnuA.png)
+![](./1-skULgTYmHjTBmcF1a7SnuA.webp)
 
-![](https://miro.medium.com/v2/resize:fit:1000/format:webp/1*CI2TZe_faXtr7rXcDeYU-A.png)
+![](./1-CI2TZe_faXtr7rXcDeYU-A.webp)
 
-![](https://miro.medium.com/v2/resize:fit:1000/format:webp/1*Pd1TUMmzaQ5w9EgsX9mP4w.png)
+![](./1-Pd1TUMmzaQ5w9EgsX9mP4w.webp)
 
-![](https://miro.medium.com/v2/resize:fit:1000/format:webp/1*jSQuxs3q2sbXovB2h-99bA.png)
+![](./1-jSQuxs3q2sbXovB2h-99bA.webp)
 
 _jimeh.me: [v1.0](http://v1.jimeh.me/), [v2.0](http://v2.jimeh.me/),
 [v3.0](http://v3.jimeh.me/), [v4.0](http://jimeh.me/) (current)_

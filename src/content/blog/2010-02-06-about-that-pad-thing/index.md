@@ -7,7 +7,7 @@ date: 2010-02-06
 tags: ["technology", "ipad", "opinion"]
 ---
 
-![](https://miro.medium.com/v2/resize:fit:2000/format:webp/1*lpZA2i6W3zTETJZiCCUFRA.jpeg)
+![](./1-lpZA2i6W3zTETJZiCCUFRA.webp)
 
 So I was gonna write a post with my opinions about the iPad, but a cup of tea
 and staring at wall of wet paint is almost more tempting. If you don't get why

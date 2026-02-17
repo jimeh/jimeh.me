@@ -16,7 +16,7 @@ conference, five weeks in Palo Alto as part of Facebook's
 job in November for many different reasons, one of which to pursue a freelance
 career.
 
-![](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*GcZMkvvggpPQG7x_mSvNGQ.jpeg)
+![](./1-GcZMkvvggpPQG7x_mSvNGQ.webp)
 
 ### Right Now
 
