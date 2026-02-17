@@ -1,0 +1,32 @@
+---
+interface Props {
+  tags: string[];
+  /** Render as links (default) or plain text. */
+  linked?: boolean;
+}
+
+const { tags, linked = true } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-1.5" role="list" aria-label="Tags">
+  {
+    tags.map((tag) =>
+      linked ? (
+        <a
+          href={`/blog/tags/${tag}/`}
+          class="text-muted hover:text-accent bg-on-surface/5 rounded px-2 py-0.5 text-xs transition-colors"
+          role="listitem"
+        >
+          {tag}
+        </a>
+      ) : (
+        <span
+          class="text-muted bg-on-surface/5 rounded px-2 py-0.5 text-xs"
+          role="listitem"
+        >
+          {tag}
+        </span>
+      ),
+    )
+  }
+</div>

@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../layouts/BlogLayout.astro";
+
+const posts = await getCollection("blog");
+
+// Build tag counts
+const tagCounts = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags ?? []) {
+    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+  }
+}
+
+const sortedTags = [...tagCounts.entries()].sort((a, b) =>
+  a[0].localeCompare(b[0]),
+);
+---
+
+<BlogLayout title="Tags - Blog - Jim Myhrberg" description="All blog post tags">
+  <h1
+    class="text-heading text-4xl font-bold uppercase [font-stretch:75%] sm:text-5xl"
+  >
+    Tags
+  </h1>
+  <p class="text-muted mt-2 text-sm">
+    {sortedTags.length} tags
+  </p>
+
+  <div class="mt-8 flex flex-wrap gap-2">
+    {
+      sortedTags.map(([tag, count]) => (
+        <a
+          href={`/blog/tags/${tag}/`}
+          class="text-muted hover:text-accent bg-on-surface/5 rounded px-3 py-1.5 text-sm transition-colors"
+        >
+          {tag}
+          <span class="ml-1 text-xs opacity-60">{count}</span>
+        </a>
+      ))
+    }
+  </div>
+</BlogLayout>

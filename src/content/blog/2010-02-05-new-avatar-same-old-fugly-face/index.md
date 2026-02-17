@@ -1,6 +1,6 @@
 ---
-layout: post
 title: New Avatar, Same Old Fugly Face
+description: "Today marks the day I update my online avatar/profile picture."
 date: 2010-02-05
 tags: ["rant", "avatar"]
 ---

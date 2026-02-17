@@ -1,0 +1,22 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import BlogHeader from "../components/BlogHeader.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogType?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  tags?: string[];
+}
+
+const props = Astro.props;
+---
+
+<BaseLayout {...props}>
+  <BlogHeader />
+  <main class="mx-auto max-w-2xl px-6 pt-20 pb-16">
+    <slot />
+  </main>
+</BaseLayout>

@@ -1,0 +1,54 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import BlogPostCard from "../../components/BlogPostCard.astro";
+
+const posts = await getCollection("blog");
+
+// Sort newest first
+posts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
+
+// Group by year
+const postsByYear = new Map<number, typeof posts>();
+for (const post of posts) {
+  const year = new Date(post.data.date + "T00:00:00").getFullYear();
+  if (!postsByYear.has(year)) {
+    postsByYear.set(year, []);
+  }
+  postsByYear.get(year)!.push(post);
+}
+
+const years = [...postsByYear.keys()].sort((a, b) => b - a);
+---
+
+<BlogLayout
+  title="Blog - Jim Myhrberg"
+  description="Blog posts by Jim Myhrberg"
+>
+  <h1
+    class="text-heading text-4xl font-bold uppercase [font-stretch:75%] sm:text-5xl"
+  >
+    Blog
+  </h1>
+  <p class="text-muted mt-2 text-sm">
+    {posts.length} posts
+  </p>
+
+  {
+    years.map((year) => (
+      <section class="mt-12">
+        <h2 class="text-heading-muted text-2xl font-bold [font-stretch:75%]">
+          {year}
+        </h2>
+        <hr class="border-heading-muted/30 mt-2" />
+        <div class="mt-6 space-y-8">
+          {postsByYear.get(year)!.map((post) => (
+            <BlogPostCard post={post} />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</BlogLayout>

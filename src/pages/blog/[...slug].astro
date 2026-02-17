@@ -1,0 +1,99 @@
+---
+import { getCollection, render } from "astro:content";
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import BlogPostMeta from "../../components/BlogPostMeta.astro";
+import { readingTime } from "../../utils/reading-time";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { title, description, date, updatedDate, tags } = post.data;
+const readTime = readingTime(post.body ?? "");
+const { Content } = await render(post);
+
+// Sorted posts for prev/next navigation
+const allPosts = await getCollection("blog");
+allPosts.sort(
+  (a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime(),
+);
+const currentIndex = allPosts.findIndex((p) => p.id === post.id);
+const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+const nextPost =
+  currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+---
+
+<BlogLayout
+  title={`${title} - Jim Myhrberg`}
+  description={description}
+  ogType="article"
+  publishedTime={date}
+  modifiedTime={updatedDate}
+  tags={tags}
+>
+  <article>
+    <header>
+      <h1
+        class="text-heading text-3xl leading-tight font-bold uppercase [font-stretch:75%] sm:text-4xl"
+      >
+        {title}
+      </h1>
+      <div class="mt-4">
+        <BlogPostMeta
+          date={date}
+          updatedDate={updatedDate}
+          readingTime={readTime}
+          tags={tags}
+        />
+      </div>
+      <hr class="border-muted/30 mt-6" />
+    </header>
+
+    <div class="prose mt-8">
+      <Content />
+    </div>
+  </article>
+
+  <hr class="border-muted/30 mt-12" />
+
+  <nav
+    class="mt-6 flex justify-between gap-4 text-sm"
+    aria-label="Post navigation"
+  >
+    {
+      prevPost ? (
+        <a
+          href={`/blog/${prevPost.id}/`}
+          class="text-muted hover:text-accent flex-1 transition-colors"
+        >
+          <span class="text-xs tracking-wide uppercase">Previous</span>
+          <span class="mt-0.5 block leading-snug font-bold [font-stretch:75%]">
+            {prevPost.data.title}
+          </span>
+        </a>
+      ) : (
+        <div />
+      )
+    }
+    {
+      nextPost ? (
+        <a
+          href={`/blog/${nextPost.id}/`}
+          class="text-muted hover:text-accent flex-1 text-right transition-colors"
+        >
+          <span class="text-xs tracking-wide uppercase">Next</span>
+          <span class="mt-0.5 block leading-snug font-bold [font-stretch:75%]">
+            {nextPost.data.title}
+          </span>
+        </a>
+      ) : (
+        <div />
+      )
+    }
+  </nav>
+</BlogLayout>

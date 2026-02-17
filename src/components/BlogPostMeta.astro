@@ -1,0 +1,42 @@
+---
+import TagList from "./TagList.astro";
+
+interface Props {
+  date: string;
+  updatedDate?: string;
+  readingTime: number;
+  tags?: string[];
+}
+
+const { date, updatedDate, readingTime, tags } = Astro.props;
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<div class="text-muted flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+  <time datetime={date}>{formatDate(date)}</time>
+  {
+    updatedDate && (
+      <span>
+        (updated <time datetime={updatedDate}>{formatDate(updatedDate)}</time>)
+      </span>
+    )
+  }
+  <span aria-label={`${readingTime} minute read`}>
+    {readingTime} min read
+  </span>
+</div>
+{
+  tags && tags.length > 0 && (
+    <div class="mt-2">
+      <TagList tags={tags} />
+    </div>
+  )
+}

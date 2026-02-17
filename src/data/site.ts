@@ -46,7 +46,7 @@ export const siteConfig: SiteConfig = {
       "https://bsky.app/profile/jimeh.me",
       "https://mastodon.social/@jimeh",
       "https://twitter.com/jimeh",
-      "https://jimeh.io/",
+      "https://jimeh.me/blog/",
       "https://www.linkedin.com/in/jimeh",
       "https://www.last.fm/user/jimeh",
       "https://flickr.com/photos/jimeh/",
@@ -74,7 +74,7 @@ export const siteLinks: SiteLink[] = [
   },
   {
     name: "blog",
-    url: "https://jimeh.io/",
+    url: "/blog/",
     icon: "fa6-solid:newspaper",
   },
   {

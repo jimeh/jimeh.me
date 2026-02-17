@@ -15,12 +15,14 @@
     "import-medium": "tsx scripts/import-medium-posts.ts"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.15",
     "@fontsource-variable/open-sans": "^5.2.7",
     "@iconify-json/fa6-brands": "^1.2.6",
     "@iconify-json/fa6-solid": "^1.2.4",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.17.1",
     "astro-icon": "^1.1.5",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {

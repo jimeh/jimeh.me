@@ -1,0 +1,47 @@
+---
+import type { CollectionEntry } from "astro:content";
+import TagList from "./TagList.astro";
+import { readingTime } from "../utils/reading-time";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { title, description, date, tags } = post.data;
+const readTime = readingTime(post.body ?? "");
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<article class="group">
+  <a href={`/blog/${post.id}/`} class="block">
+    <h3
+      class="text-heading group-hover:text-accent text-lg leading-snug font-bold [font-stretch:75%] transition-colors"
+    >
+      {title}
+    </h3>
+  </a>
+  <div class="text-muted mt-1 flex items-center gap-2 text-sm">
+    <time datetime={date}>{formatDate(date)}</time>
+    <span>&middot;</span>
+    <span>{readTime} min read</span>
+  </div>
+  <p class="text-on-surface/80 mt-1.5 text-sm leading-relaxed">
+    {description}
+  </p>
+  {
+    tags && tags.length > 0 && (
+      <div class="mt-2">
+        <TagList tags={tags} />
+      </div>
+    )
+  }
+</article>

@@ -1,0 +1,25 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<nav
+  class="bg-surface/80 fixed top-0 left-0 z-40 w-full backdrop-blur-sm"
+  aria-label="Blog navigation"
+>
+  <div class="mx-auto flex max-w-2xl items-center px-6 py-4">
+    <a
+      href="/"
+      class="text-muted hover:text-accent flex items-center gap-1.5 text-sm font-bold uppercase [font-stretch:75%] transition-colors"
+    >
+      <Icon name="heroicons:arrow-left" class="size-3.5" />
+      jimeh.me
+    </a>
+    <span class="text-heading-muted mx-2 select-none">/</span>
+    <a
+      href="/blog/"
+      class="text-heading hover:text-accent text-sm font-bold uppercase [font-stretch:75%] transition-colors"
+    >
+      Blog
+    </a>
+  </div>
+</nav>
