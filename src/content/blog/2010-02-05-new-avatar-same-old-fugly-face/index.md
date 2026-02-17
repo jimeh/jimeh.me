@@ -1,0 +1,23 @@
+---
+layout: post
+title: New Avatar, Same Old Fugly Face
+date: 2010-02-05
+tags: ["rant", "avatar"]
+---
+
+<div align="center">
+
+![](./jimeh-1.0.jpg) ![](./jimeh-2.0.jpg)
+
+</div>
+
+Today marks the day I update my online avatar/profile picture. I’ve had the same
+sepia colored half-face avatar for 4 or 5 years now. So it was about time for a
+change. However, the biggest reason I changed it, was cause I cut my hair short
+in November, after having long hair for about 10 years.
+
+And incase you’re wondering, I’m 18 or 19 in the old photo, and 24 in the new
+one. If I shave though I can easily fool people into believing that I’m 17. In
+fact, some people think I am 17 :P
+
+I guess I’ll appreciate it more when I’m 30–40 and people think I’m 26, hehe.
