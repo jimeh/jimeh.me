@@ -8,6 +8,7 @@
 
 :root {
   --surface: white;
+  --surface-dim: var(--color-neutral-100);
   --on-surface: var(--color-slate-900);
   --heading: var(--color-slate-800);
   --heading-muted: var(--color-slate-300);
@@ -16,7 +17,8 @@
 }
 
 .dark {
-  --surface: black;
+  --surface: var(--color-neutral-950);
+  --surface-dim: black;
   --on-surface: var(--color-slate-100);
   --heading: var(--color-slate-200);
   --heading-muted: var(--color-slate-700);
@@ -26,6 +28,7 @@
 
 @theme inline {
   --color-surface: var(--surface);
+  --color-surface-dim: var(--surface-dim);
   --color-on-surface: var(--on-surface);
   --color-heading: var(--heading);
   --color-heading-muted: var(--heading-muted);
