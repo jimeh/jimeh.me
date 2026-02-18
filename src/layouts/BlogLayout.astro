@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import BlogHeader from "../components/BlogHeader.astro";
+import TableOfContents from "../components/TableOfContents.astro";
+import { Icon } from "astro-icon/components";
 
 interface Props {
   title?: string;
@@ -9,14 +11,64 @@ interface Props {
   publishedTime?: string;
   modifiedTime?: string;
   tags?: string[];
+  headings?: { depth: number; slug: string; text: string }[];
 }
 
 const props = Astro.props;
 ---
 
-<BaseLayout {...props}>
-  <BlogHeader />
-  <main class="mx-auto max-w-2xl px-6 pt-20 pb-16">
-    <slot />
-  </main>
+<BaseLayout {...props} bodyClass="bg-surface lg:bg-surface-dim">
+  {/* Mobile: fixed top nav bar */}
+  <div class="lg:hidden">
+    <BlogHeader />
+  </div>
+
+  {/* Centered flex container: sidebar + card move as a unit */}
+  <div
+    class="pt-16 pb-12 lg:mx-auto lg:flex lg:max-w-5xl lg:px-6 lg:pt-6 lg:pb-6"
+  >
+    {/* Desktop: sticky sidebar */}
+    <aside
+      class="hidden lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-64 lg:shrink-0 lg:flex-col lg:px-8 lg:pt-10"
+      aria-label="Blog navigation"
+    >
+      <nav class="flex items-center">
+        <a
+          href="/"
+          class="text-muted hover:text-accent flex items-center gap-1.5 text-sm font-bold uppercase [font-stretch:75%] transition-colors"
+        >
+          <Icon name="heroicons:arrow-left" class="size-3.5" />
+          jimeh.me
+        </a>
+        <span class="text-heading-muted mx-2 select-none">/</span>
+        <a
+          href="/blog/"
+          class="text-heading hover:text-accent text-sm font-bold uppercase [font-stretch:75%] transition-colors"
+        >
+          Blog
+        </a>
+      </nav>
+
+      {
+        props.headings && props.headings.length > 0 && (
+          <TableOfContents headings={props.headings} />
+        )
+      }
+    </aside>
+
+    {/* Main content card */}
+    <main
+      class:list={[
+        "mx-auto max-w-2xl px-6",
+        "lg:mx-0 lg:max-w-3xl lg:flex-1",
+        "lg:min-h-[calc(100vh-3rem)]",
+        "lg:bg-surface lg:rounded-lg lg:px-12 lg:py-10",
+        "lg:shadow-xl lg:ring-1 lg:ring-black/[0.04]",
+        "dark:lg:shadow-[0_4px_12px_0_rgb(0_0_0/0.4)]",
+        "dark:lg:ring-white/[0.06]",
+      ]}
+    >
+      <slot />
+    </main>
+  </div>
 </BaseLayout>

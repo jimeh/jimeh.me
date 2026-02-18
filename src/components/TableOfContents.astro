@@ -1,0 +1,107 @@
+---
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { headings } = Astro.props;
+
+// Only show h2–h4 headings
+const filtered = headings.filter((h) => h.depth >= 2 && h.depth <= 4);
+if (filtered.length === 0) return;
+
+const minDepth = Math.min(...filtered.map((h) => h.depth));
+---
+
+<nav
+  class="toc mt-8 max-h-[calc(100vh-10rem)] overflow-y-auto"
+  aria-label="Table of contents"
+>
+  <h2
+    class="text-muted mb-2 text-xs font-bold tracking-wider uppercase [font-stretch:75%]"
+  >
+    On this page
+  </h2>
+  <ul class="border-muted/30 space-y-1 border-l">
+    {
+      filtered.map((heading) => {
+        const indent = heading.depth - minDepth;
+        return (
+          <li>
+            <a
+              href={`#${heading.slug}`}
+              class="toc-link text-muted hover:text-accent block truncate border-l-2 border-transparent py-0.5 text-[0.8125rem] leading-snug transition-colors"
+              style={
+                indent > 0
+                  ? `padding-left: ${indent * 0.75 + 0.75}rem`
+                  : "padding-left: 0.75rem"
+              }
+              data-heading={heading.slug}
+            >
+              {heading.text}
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</nav>
+
+<script>
+  function initToc() {
+    const links = document.querySelectorAll<HTMLAnchorElement>(".toc-link");
+    if (links.length === 0) return;
+
+    const slugs = Array.from(links).map((l) => l.dataset.heading!);
+    const headingEls = slugs
+      .map((s) => document.getElementById(s))
+      .filter(Boolean) as HTMLElement[];
+
+    if (headingEls.length === 0) return;
+
+    let activeSlug: string | null = null;
+
+    function setActive(slug: string | null) {
+      if (slug === activeSlug) return;
+      activeSlug = slug;
+      links.forEach((link) => {
+        const isActive = link.dataset.heading === slug;
+        link.classList.toggle("!text-accent", isActive);
+        link.classList.toggle("!border-accent", isActive);
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find the topmost visible heading
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+        if (visible.length > 0) {
+          setActive(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "0px 0px -80% 0px",
+        threshold: 1.0,
+      },
+    );
+
+    headingEls.forEach((el) => observer.observe(el));
+
+    // Set initial active heading based on scroll position.
+    // Default to first heading when at or near the top of the page.
+    const scrollY = window.scrollY;
+    let closest: string | null = headingEls[0].id;
+    for (const el of headingEls) {
+      if (el.offsetTop <= scrollY + 100) {
+        closest = el.id;
+      }
+    }
+    setActive(closest);
+  }
+
+  // Run on initial load and on Astro page transitions
+  initToc();
+  document.addEventListener("astro:after-swap", initToc);
+</script>
