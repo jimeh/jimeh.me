@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { title, description, date, updatedDate, tags } = post.data;
 const readTime = readingTime(post.body ?? "");
-const { Content, headings } = await render(post);
+const { Content } = await render(post);
 
 // Sorted posts for prev/next navigation
 const allPosts = await getCollection("blog");
@@ -35,7 +35,6 @@ const nextPost =
   publishedTime={date}
   modifiedTime={updatedDate}
   tags={tags}
-  headings={headings}
 >
   <article>
     <header>

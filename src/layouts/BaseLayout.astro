@@ -14,7 +14,6 @@ interface Props {
   publishedTime?: string;
   modifiedTime?: string;
   tags?: string[];
-  bodyClass?: string;
 }
 
 /** Short content hash for cache busting a public/ asset. */
@@ -26,15 +25,8 @@ function fileHash(path: string): string {
     .slice(0, 8);
 }
 
-const {
-  title,
-  description,
-  ogType,
-  publishedTime,
-  modifiedTime,
-  tags,
-  bodyClass,
-} = Astro.props;
+const { title, description, ogType, publishedTime, modifiedTime, tags } =
+  Astro.props;
 const pageTitle = title || siteConfig.title;
 const faviconHash = fileHash("../../public/favicon.ico");
 const appleTouchHash = fileHash("../../public/apple-touch-icon.png");
@@ -87,7 +79,7 @@ const appleTouchHash = fileHash("../../public/apple-touch-icon.png");
   <body
     class:list={[
       "text-on-surface h-full font-sans text-sm leading-normal",
-      bodyClass ?? "bg-surface",
+      "bg-surface",
     ]}
   >
     <ThemeToggle />
