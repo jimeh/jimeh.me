@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import BlogLayout from "../../../layouts/BlogLayout.astro";
-import BlogPostCard from "../../../components/BlogPostCard.astro";
+import PostCard from "@components/blog/PostCard.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -44,6 +44,6 @@ const posts = allPosts
   </p>
 
   <div class="mt-8 space-y-8">
-    {posts.map((post) => <BlogPostCard post={post} />)}
+    {posts.map((post) => <PostCard post={post} />)}
   </div>
 </BlogLayout>

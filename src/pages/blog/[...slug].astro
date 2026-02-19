@@ -2,9 +2,10 @@
 import { getCollection, render } from "astro:content";
 import { getImage } from "astro:assets";
 import BlogLayout from "../../layouts/BlogLayout.astro";
-import { Figure, FancyboxInit } from "../../components/blog";
-import BlogPostMeta from "../../components/BlogPostMeta.astro";
-import { readingTime } from "../../utils/reading-time";
+import { Figure } from "@mdx/index";
+import PostMeta from "@components/blog/PostMeta.astro";
+import FancyboxInit from "@components/blog/FancyboxInit.astro";
+import { readingTime } from "@utils/reading-time";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -65,7 +66,7 @@ const nextPost =
         {title}
       </h1>
       <div class="mt-4">
-        <BlogPostMeta
+        <PostMeta
           date={date}
           updatedDate={updatedDate}
           readingTime={readTime}

@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import BlogLayout from "../../layouts/BlogLayout.astro";
-import BlogPostCard from "../../components/BlogPostCard.astro";
-import BlogPostFeatured from "../../components/BlogPostFeatured.astro";
+import PostCard from "@components/blog/PostCard.astro";
+import PostFeatured from "@components/blog/PostFeatured.astro";
 
 const posts = await getCollection("blog");
 
@@ -43,7 +43,7 @@ const years = [...postsByYear.keys()].sort((a, b) => b - a);
   </p>
 
   <section class="mt-8" aria-label="Latest post">
-    <BlogPostFeatured post={featuredPost} />
+    <PostFeatured post={featuredPost} />
   </section>
 
   {
@@ -55,7 +55,7 @@ const years = [...postsByYear.keys()].sort((a, b) => b - a);
         <hr class="border-heading-muted/30 mt-2" />
         <div class="mt-6 space-y-8">
           {postsByYear.get(year)!.map((post) => (
-            <BlogPostCard post={post} />
+            <PostCard post={post} />
           ))}
         </div>
       </section>
