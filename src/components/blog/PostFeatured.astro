@@ -31,8 +31,8 @@ function formatDate(dateStr: string): string {
             src={image.src}
             alt={image.alt}
             class="aspect-[2/1] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-            widths={[640, 768, 1024]}
-            sizes="(min-width: 768px) 768px, 100vw"
+            widths={[640, 960, 1440, 1920]}
+            sizes="(min-width: 1008px) 960px, calc(100vw - 3rem)"
           />
         </div>
       )

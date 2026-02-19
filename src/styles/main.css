@@ -341,7 +341,7 @@ a[data-fancybox]:hover img {
   --f-button-bg: oklch(from var(--color-slate-800) l c h / 60%);
   --f-button-hover-color: var(--color-slate-100);
   --f-button-hover-bg: oklch(from var(--color-slate-800) l c h / 80%);
-  --f-toolbar-bg: oklch(from var(--color-slate-950) l c h / 60%);
+  --f-toolbar-bg: transparent;
   --f-toolbar-color: var(--color-slate-300);
   --f-caption-color: var(--color-slate-400);
   --f-thumbs-bg: transparent;
