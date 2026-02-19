@@ -14,14 +14,14 @@ const { tags, linked = true } = Astro.props;
       linked ? (
         <a
           href={`/blog/tags/${tag}/`}
-          class="text-muted hover:text-accent bg-on-surface/5 rounded px-2 py-0.5 text-xs transition-colors"
+          class="text-muted hover:text-accent bg-surface-subtle rounded px-2 py-0.5 text-xs transition-colors"
           role="listitem"
         >
           {tag}
         </a>
       ) : (
         <span
-          class="text-muted bg-on-surface/5 rounded px-2 py-0.5 text-xs"
+          class="text-muted bg-surface-subtle rounded px-2 py-0.5 text-xs"
           role="listitem"
         >
           {tag}

@@ -48,10 +48,8 @@ const years = [...postsByYear.keys()].sort((a, b) => b - a);
   {
     years.map((year) => (
       <section class="mt-12">
-        <h2 class="text-heading-muted text-2xl font-bold [font-stretch:75%]">
-          {year}
-        </h2>
-        <hr class="border-heading-muted/30 mt-2" />
+        <h2 class="text-muted text-2xl font-bold [font-stretch:75%]">{year}</h2>
+        <hr class="border-border mt-2" />
         <div class="mt-6 space-y-8">
           {postsByYear.get(year)!.map((post) => (
             <PostCard post={post} />
