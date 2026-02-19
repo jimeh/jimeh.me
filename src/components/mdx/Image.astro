@@ -1,0 +1,93 @@
+---
+import { Image as AstroImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Figure from "./Figure.astro";
+
+interface Props {
+  src: ImageMetadata;
+  alt?: string;
+  caption?: string;
+  size?: "default" | "wide" | "full" | (string & {});
+  position?: "center" | "left" | "right";
+  /** Remove block margins so the figure sits flush with surrounding content. */
+  flush?: boolean;
+  /** Lightbox gallery group name. Images sharing the same gallery form a set. */
+  gallery?: string;
+  /** Disable the Fancybox lightbox for this image. */
+  noLightbox?: boolean;
+}
+
+const {
+  src,
+  caption,
+  size = "default",
+  position = "center",
+  flush,
+  gallery = "gallery",
+  noLightbox = false,
+} = Astro.props;
+
+const alt = Astro.props.alt ?? caption ?? "";
+
+const isPercentage = /^\d+%$/.test(size);
+
+const imgClasses = isPercentage
+  ? "block"
+  : `block ${
+      {
+        center: "mx-auto",
+        left: "mr-auto",
+        right: "ml-auto",
+      }[position]
+    }`;
+
+const sizes = isPercentage
+  ? `(min-width: 672px) ${size}, 100vw`
+  : size === "full"
+    ? "100vw"
+    : size === "wide"
+      ? "(min-width: 960px) 960px, 100vw"
+      : "(min-width: 672px) 672px, 100vw";
+---
+
+<Figure
+  class="blog-figure"
+  size={size}
+  position={position}
+  flush={flush}
+  caption={caption}
+>
+  {
+    noLightbox ? (
+      <AstroImage
+        src={src}
+        alt={alt}
+        class:list={[imgClasses]}
+        widths={[640, 960, 1280, 1600]}
+        sizes={sizes}
+      />
+    ) : (
+      <a
+        href={src.src}
+        data-fancybox={gallery}
+        data-caption={caption}
+        class="blog-fancybox-link"
+      >
+        <AstroImage
+          src={src}
+          alt={alt}
+          class:list={[imgClasses]}
+          widths={[640, 960, 1280, 1600]}
+          sizes={sizes}
+        />
+      </a>
+    )
+  }
+  {
+    Astro.slots.has("default") && (
+      <Fragment slot="caption">
+        <slot />
+      </Fragment>
+    )
+  }
+</Figure>

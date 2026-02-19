@@ -1,9 +1,14 @@
 ---
+import Figure from "./Figure.astro";
+
 interface Props {
   src: string;
   title?: string;
   caption?: string;
-  size?: "default" | "wide" | "full";
+  size?: "default" | "wide" | "full" | (string & {});
+  position?: "center" | "left" | "right";
+  /** Remove block margins so the figure sits flush with surrounding content. */
+  flush?: boolean;
 }
 
 function extractVideoId(src: string): string {
@@ -20,7 +25,14 @@ function extractVideoId(src: string): string {
   return src;
 }
 
-const { src, title = "YouTube video", caption, size = "default" } = Astro.props;
+const {
+  src,
+  title = "YouTube video",
+  caption,
+  size = "default",
+  position,
+  flush,
+} = Astro.props;
 
 const videoId = extractVideoId(src);
 if (!videoId) {
@@ -28,15 +40,15 @@ if (!videoId) {
 }
 
 const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
-
-const sizeClass = {
-  default: "",
-  wide: "blog-image-wide",
-  full: "blog-image-full",
-}[size];
 ---
 
-<figure class:list={["blog-figure", sizeClass]}>
+<Figure
+  class="blog-figure"
+  size={size}
+  position={position}
+  flush={flush}
+  caption={caption}
+>
   <iframe
     src={embedUrl}
     title={title}
@@ -45,10 +57,10 @@ const sizeClass = {
     allowfullscreen
     loading="lazy"></iframe>
   {
-    (Astro.slots.has("default") || caption) && (
-      <figcaption class="text-muted mt-2 text-center text-sm">
-        {Astro.slots.has("default") ? <slot /> : caption}
-      </figcaption>
+    Astro.slots.has("default") && (
+      <Fragment slot="caption">
+        <slot />
+      </Fragment>
     )
   }
-</figure>
+</Figure>

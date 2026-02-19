@@ -1,4 +1,6 @@
 ---
+import Figure from "./Figure.astro";
+
 interface Props {
   columns?: number;
   gap?: string;
@@ -18,31 +20,22 @@ const {
 
 const isPercentage = /^\d+%$/.test(size);
 
-const sizeClass = isPercentage
-  ? ""
-  : {
-      default: "",
-      wide: "blog-image-wide",
-      full: "blog-image-full",
-    }[size as "default" | "wide" | "full"];
-
-const figureStyle = isPercentage ? `width: ${size}` : undefined;
+const figureClasses = ["blog-image-grid", isPercentage && "mx-auto"]
+  .filter(Boolean)
+  .join(" ");
 
 const gridStyle = [`--grid-columns: ${columns}`, `gap: ${gap}`].join("; ");
 ---
 
-<figure
-  class:list={["blog-image-grid", sizeClass, isPercentage && "mx-auto"]}
-  style={figureStyle}
->
+<Figure class={figureClasses} size={size} caption={caption}>
   <div class="blog-image-grid-inner" style={gridStyle} data-gallery={gallery}>
     <slot />
   </div>
   {
-    (Astro.slots.has("caption") || caption) && (
-      <figcaption class="text-muted mt-2 text-center text-sm">
-        {Astro.slots.has("caption") ? <slot name="caption" /> : caption}
-      </figcaption>
+    Astro.slots.has("caption") && (
+      <Fragment slot="caption">
+        <slot name="caption" />
+      </Fragment>
     )
   }
-</figure>
+</Figure>
