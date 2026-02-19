@@ -1,0 +1,54 @@
+---
+interface Props {
+  src: string;
+  title?: string;
+  caption?: string;
+  size?: "default" | "wide" | "full";
+}
+
+function extractVideoId(src: string): string {
+  try {
+    const url = new URL(src);
+    if (url.hostname === "youtu.be") return url.pathname.slice(1);
+    const v = url.searchParams.get("v");
+    if (v) return v;
+    const match = url.pathname.match(/^\/(embed|shorts|v)\/([^/?&]+)/);
+    if (match) return match[2];
+  } catch {
+    // Not a URL — treat as bare video ID
+  }
+  return src;
+}
+
+const { src, title = "YouTube video", caption, size = "default" } = Astro.props;
+
+const videoId = extractVideoId(src);
+if (!videoId) {
+  throw new Error(`YouTube: could not extract video ID from "${src}"`);
+}
+
+const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
+
+const sizeClass = {
+  default: "",
+  wide: "blog-image-wide",
+  full: "blog-image-full",
+}[size];
+---
+
+<figure class:list={["blog-figure", sizeClass]}>
+  <iframe
+    src={embedUrl}
+    title={title}
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+    loading="lazy"></iframe>
+  {
+    (Astro.slots.has("default") || caption) && (
+      <figcaption class="text-muted mt-2 text-center text-sm">
+        {Astro.slots.has("default") ? <slot /> : caption}
+      </figcaption>
+    )
+  }
+</figure>
