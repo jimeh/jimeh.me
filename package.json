@@ -15,6 +15,7 @@
     "import-medium": "tsx scripts/import-medium-posts.ts"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
     "@astrojs/rss": "^4.0.15",
     "@fontsource-variable/open-sans": "^5.2.7",
     "@iconify-json/fa6-brands": "^1.2.6",

@@ -31,5 +31,5 @@ The later problem, trust, is definitely the biggest one. And I'm not sure you
 could overcome it unless the service is officially sponsored and/or operated by
 Google or somebody. I do think it could be a fun project to undertake, but I
 think it's pretty doomed right from the start unfortunately. Although if I
-updated my profile pictures more than once every 4–5 years, I might just build a
+updated my profile pictures more than once every 4-5 years, I might just build a
 prototype for myself at least.

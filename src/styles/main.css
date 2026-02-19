@@ -264,6 +264,49 @@
   border-radius: 0;
 }
 
+/* --- Blog figure (inline in content) --- */
+
+.blog-figure {
+  margin-block: 1.5rem;
+}
+
+.blog-figure img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+}
+
+.blog-figure-flush img {
+  margin: 0;
+}
+
+/* --- Blog image grid --- */
+
+.blog-image-grid {
+  margin-block: 1.5rem;
+}
+
+.blog-image-grid-inner {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns, 2), 1fr);
+}
+
+/* Collapse to single column on narrow viewports. */
+@media (width <= 480px) {
+  .blog-image-grid-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Figures inside a grid fill their cell without extra margins. */
+.blog-image-grid .blog-figure {
+  margin-block: 0;
+}
+
+.blog-image-grid .blog-figure img {
+  border-radius: 0.25rem;
+}
+
 /* Iframes (YouTube embeds) */
 
 .prose iframe {

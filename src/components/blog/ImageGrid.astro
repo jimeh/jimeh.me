@@ -1,0 +1,40 @@
+---
+interface Props {
+  columns?: number;
+  gap?: string;
+  size?: "default" | "wide" | "full" | (string & {});
+  caption?: string;
+}
+
+const { columns = 2, gap = "1rem", size = "default", caption } = Astro.props;
+
+const isPercentage = /^\d+%$/.test(size);
+
+const sizeClass = isPercentage
+  ? ""
+  : {
+      default: "",
+      wide: "blog-image-wide",
+      full: "blog-image-full",
+    }[(size as "default" | "wide" | "full")];
+
+const figureStyle = isPercentage ? `width: ${size}` : undefined;
+
+const gridStyle = [`--grid-columns: ${columns}`, `gap: ${gap}`].join("; ");
+---
+
+<figure
+  class:list={["blog-image-grid", sizeClass, isPercentage && "mx-auto"]}
+  style={figureStyle}
+>
+  <div class="blog-image-grid-inner" style={gridStyle}>
+    <slot />
+  </div>
+  {
+    caption && (
+      <figcaption class="text-muted mt-2 text-center text-sm">
+        {caption}
+      </figcaption>
+    )
+  }
+</figure>

@@ -8,7 +8,7 @@ const dateStr = z
   .transform((v) => (v instanceof Date ? v.toISOString().slice(0, 10) : v));
 
 const blog = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),

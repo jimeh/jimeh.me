@@ -9,6 +9,12 @@ image:
   size: wide
 ---
 
+import { Figure, ImageGrid } from "../../../components/blog";
+import website1 from "./1-skULgTYmHjTBmcF1a7SnuA.webp";
+import website2 from "./1-CI2TZe_faXtr7rXcDeYU-A.webp";
+import website3 from "./1-Pd1TUMmzaQ5w9EgsX9mP4w.webp";
+import website4 from "./1-jSQuxs3q2sbXovB2h-99bA.webp";
+
 I have finally gotten around to updating my personal website. The new design is
 actually something I put together two years ago while bored. I was always too
 lazy to actually do anything with it though.
@@ -51,13 +57,12 @@ had for years to some good use, rather than just redirect it to jimeh.me.
 Now let's finish off this rant of a post with a gallery of all versions from
 oldest to newest of my website:
 
-![](./1-skULgTYmHjTBmcF1a7SnuA.webp)
-
-![](./1-CI2TZe_faXtr7rXcDeYU-A.webp)
-
-![](./1-Pd1TUMmzaQ5w9EgsX9mP4w.webp)
-
-![](./1-jSQuxs3q2sbXovB2h-99bA.webp)
+<ImageGrid columns={2} size="wide">
+  <Figure src={website1} alt="Website 1" caption="v1.0" />
+  <Figure src={website2} alt="Website 2" caption="v2.0" />
+  <Figure src={website3} alt="Website 3" caption="v3.0" />
+  <Figure src={website4} alt="Website 4" caption="v4.0" />
+</ImageGrid>
 
 _jimeh.me: [v1.0](http://v1.jimeh.me/), [v2.0](http://v2.jimeh.me/),
 [v3.0](http://v3.jimeh.me/), [v4.0](http://jimeh.me/) (current)_

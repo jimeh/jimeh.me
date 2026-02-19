@@ -5,6 +5,7 @@ date: 2010-06-15
 tags: ["productivity", "brand-loyalty", "technology"]
 image:
   src: ./1-7ZhGFhEHLxR4alsQ51_4RQ.webp
+  size: wide
 ---
 
 Fan Boys and Haters have been equally annoying me as of late. The most common

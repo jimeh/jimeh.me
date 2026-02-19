@@ -11,10 +11,10 @@ I used to be a caffeine junkie. My caffeinated poison of choice was Coke, the
 legal kind, not the illegal one.
 
 When I say I was a junkie, I don't use those words lightly. At most, I was
-drinking about 3–4 liters **per day**. I kid you not. On average though it was
+drinking about 3-4 liters **per day**. I kid you not. On average though it was
 around 1.5 liters per day, seven days a week, 365 days a year. The recommended
 liquid intake per day for adults is 2 liters (of water). This had been going on
-roughly since I was 16 or 17 years old, or 7–8 years ago.
+roughly since I was 16 or 17 years old, or 7-8 years ago.
 
 ### Why Caffeinate?
 
@@ -75,7 +75,7 @@ Cause chances are, that you can at the very least save a decent pile of cash
 over the course of a year or so, without feeling any worse than we all naturally
 do in our fragile human condition.
 
-### P.S.
+### P.S
 
 I bought a bottle of Coke the other day, cause I felt like having some. After
 half a glass, I realized that I don't really like the taste of it anymore. So
