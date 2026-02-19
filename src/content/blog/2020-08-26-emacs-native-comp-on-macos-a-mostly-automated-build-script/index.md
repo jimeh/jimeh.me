@@ -26,13 +26,13 @@ make.
 After that, it's basically just:
 
 1. Ensure [Xcode](https://apps.apple.com/gb/app/xcode/id497799835?mt=12) and
-    [Homebrew](https://brew.sh/) are installed.
+   [Homebrew](https://brew.sh/) are installed.
 2. Clone the repo:
-    [github.com/jimeh/build-emacs-for-macos](https://github.com/jimeh/build-emacs-for-macos)
+   [github.com/jimeh/build-emacs-for-macos](https://github.com/jimeh/build-emacs-for-macos)
 3. Run: `brew bundle`
 4. Run: `./build-emacs-for-macos feature/native-comp`
 5. Check `builds` directory for a `*.tbz` archive containing the built
-    Emacs.app.
+   Emacs.app.
 
 ## The long version
 

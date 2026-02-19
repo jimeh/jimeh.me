@@ -17,6 +17,7 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/rss": "^4.0.15",
+    "@fancyapps/ui": "^6.1.11",
     "@fontsource-variable/open-sans": "^5.2.7",
     "@iconify-json/fa6-brands": "^1.2.6",
     "@iconify-json/fa6-solid": "^1.2.4",

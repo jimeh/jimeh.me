@@ -2,7 +2,7 @@
 import { getCollection, render } from "astro:content";
 import { getImage } from "astro:assets";
 import BlogLayout from "../../layouts/BlogLayout.astro";
-import BlogMainImage from "../../components/BlogMainImage.astro";
+import { Figure, FancyboxInit } from "../../components/blog";
 import BlogPostMeta from "../../components/BlogPostMeta.astro";
 import { readingTime } from "../../utils/reading-time";
 
@@ -77,12 +77,15 @@ const nextPost =
 
     {
       showImage && !imageFloats && (
-        <BlogMainImage
+        <Figure
           src={image.src}
           alt={image.alt}
           caption={image.caption}
           size={image.size}
           position={image.position}
+          flush={image.flush}
+          noLightbox={image.noLightbox ?? true}
+          gallery={image.gallery}
         />
       )
     }
@@ -90,17 +93,21 @@ const nextPost =
     <div class="prose mt-8">
       {
         showImage && imageFloats && (
-          <BlogMainImage
+          <Figure
             src={image.src}
             alt={image.alt}
             caption={image.caption}
             size={image.size}
             position={image.position}
+            flush={image.flush}
+            noLightbox={image.noLightbox ?? true}
+            gallery={image.gallery}
           />
         )
       }
       <Content />
     </div>
+    <FancyboxInit />
   </article>
 
   <hr class="border-muted/30 mt-12" />

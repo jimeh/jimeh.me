@@ -1,0 +1,33 @@
+---
+// Client-side Fancybox initialization for blog post images.
+// Binds lightbox behavior to all [data-fancybox] elements.
+---
+
+<script>
+  import { Fancybox } from "@fancyapps/ui/dist/fancybox/";
+  import "@fancyapps/ui/dist/fancybox/fancybox.css";
+
+  // Cascade data-gallery from ImageGrid containers down to
+  // child [data-fancybox] elements so they form separate groups.
+  const galleries = document.querySelectorAll<HTMLElement>("[data-gallery]");
+  for (const container of galleries) {
+    const gallery = container.dataset.gallery;
+    if (!gallery) continue;
+
+    // Only override children still using the default group name so that
+    // a Figure with an explicit gallery prop keeps its own value.
+    const items = container.querySelectorAll('[data-fancybox="gallery"]');
+    for (const el of items) {
+      el.setAttribute("data-fancybox", gallery);
+    }
+  }
+
+  Fancybox.bind("[data-fancybox]", {
+    Carousel: {
+      transition: "crossfade",
+      Thumbs: {
+        type: "classic",
+      },
+    },
+  });
+</script>

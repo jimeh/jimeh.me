@@ -28,6 +28,12 @@ const blog = defineCollection({
             ])
             .default("default"),
           position: z.enum(["center", "left", "right"]).default("center"),
+          /** Remove top margin so the image sits flush with content. */
+          flush: z.boolean().optional(),
+          /** Disable the Fancybox lightbox for this image. */
+          noLightbox: z.boolean().optional(),
+          /** Lightbox gallery group name. */
+          gallery: z.string().optional(),
           /** Hide from automatic rendering at the top of the post body. */
           hidden: z.boolean().default(false),
         })

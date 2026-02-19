@@ -10,6 +10,10 @@ interface Props {
   position?: "center" | "left" | "right";
   /** Remove block margins so the figure sits flush with surrounding content. */
   flush?: boolean;
+  /** Lightbox gallery group name. Images sharing the same gallery form a set. */
+  gallery?: string;
+  /** Disable the Fancybox lightbox for this image. */
+  noLightbox?: boolean;
 }
 
 const {
@@ -17,7 +21,9 @@ const {
   caption,
   size = "default",
   position = "center",
-  flush = false,
+  flush = position === "left" || position === "right",
+  gallery = "gallery",
+  noLightbox = false,
 } = Astro.props;
 
 const alt = Astro.props.alt ?? caption ?? "";
@@ -62,16 +68,40 @@ const sizes = isPercentage
 ---
 
 <figure
-  class:list={["blog-figure", sizeClass, figureClasses, flush && "blog-figure-flush"]}
+  class:list={[
+    "blog-figure",
+    sizeClass,
+    figureClasses,
+    flush && "blog-figure-flush",
+  ]}
   style={figureStyle}
 >
-  <Image
-    src={src}
-    alt={alt}
-    class:list={[imgClasses]}
-    widths={[640, 960, 1280, 1600]}
-    sizes={sizes}
-  />
+  {
+    noLightbox ? (
+      <Image
+        src={src}
+        alt={alt}
+        class:list={[imgClasses]}
+        widths={[640, 960, 1280, 1600]}
+        sizes={sizes}
+      />
+    ) : (
+      <a
+        href={src.src}
+        data-fancybox={gallery}
+        data-caption={caption}
+        class="blog-fancybox-link"
+      >
+        <Image
+          src={src}
+          alt={alt}
+          class:list={[imgClasses]}
+          widths={[640, 960, 1280, 1600]}
+          sizes={sizes}
+        />
+      </a>
+    )
+  }
   {
     caption && (
       <figcaption class="text-muted mt-2 text-center text-sm">

@@ -14,6 +14,9 @@ importers:
       '@astrojs/rss':
         specifier: ^4.0.15
         version: 4.0.15
+      '@fancyapps/ui':
+        specifier: ^6.1.11
+        version: 6.1.11
       '@fontsource-variable/open-sans':
         specifier: ^5.2.7
         version: 5.2.7
@@ -594,6 +597,9 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fancyapps/ui@6.1.11':
+    resolution: {integrity: sha512-6MrKw47k5vATlMewFj36TK3vZvpLyjcJ9wb0R+X8CH1QzG60rhqCC+llclnp85JhHIlw4pC7ILfh1hy7xDqNtA==}
 
   '@fontsource-variable/open-sans@5.2.7':
     resolution: {integrity: sha512-wzCLm2STuekK9Fz58DiuBnk4GgJpvvVtAU85a4b06ACNG/UsVjQcCvkUd6R/ETlHfsaykCUZamLRvSXg4KtWuA==}
@@ -3962,6 +3968,8 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@fancyapps/ui@6.1.11': {}
 
   '@fontsource-variable/open-sans@5.2.7': {}
 
