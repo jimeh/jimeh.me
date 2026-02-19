@@ -28,6 +28,8 @@ const blog = defineCollection({
             ])
             .default("default"),
           position: z.enum(["center", "left", "right"]).default("center"),
+          /** Hide from automatic rendering at the top of the post body. */
+          hidden: z.boolean().default(false),
         })
         .optional(),
     }),

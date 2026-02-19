@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import TagList from "./TagList.astro";
 import { readingTime } from "../utils/reading-time";
@@ -8,7 +9,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, date, tags } = post.data;
+const { title, description, date, tags, image } = post.data;
 const readTime = readingTime(post.body ?? "");
 
 function formatDate(dateStr: string): string {
@@ -22,26 +23,48 @@ function formatDate(dateStr: string): string {
 ---
 
 <article class="group">
-  <a href={`/blog/${post.id}/`} class="block">
-    <h3
-      class="text-heading group-hover:text-accent text-lg leading-snug font-bold [font-stretch:75%] transition-colors"
-    >
-      {title}
-    </h3>
-  </a>
-  <div class="text-muted mt-1 flex items-center gap-2 text-sm">
-    <time datetime={date}>{formatDate(date)}</time>
-    <span>&middot;</span>
-    <span>{readTime} min read</span>
-  </div>
-  <p class="text-on-surface/80 mt-1.5 text-sm leading-relaxed">
-    {description}
-  </p>
-  {
-    tags && tags.length > 0 && (
-      <div class="mt-2">
-        <TagList tags={tags} />
+  <div class:list={["flex gap-4", image && "sm:gap-5"]}>
+    {
+      image && (
+        <a
+          href={`/blog/${post.id}/`}
+          class="hidden shrink-0 sm:block"
+          aria-hidden="true"
+          tabindex="-1"
+        >
+          <Image
+            src={image.src}
+            alt={image.alt}
+            class="aspect-[3/2] w-40 rounded object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            widths={[160, 320]}
+            sizes="160px"
+          />
+        </a>
+      )
+    }
+    <div class="min-w-0 flex-1">
+      <a href={`/blog/${post.id}/`} class="block">
+        <h3
+          class="text-heading group-hover:text-accent text-lg leading-snug font-bold [font-stretch:75%] transition-colors"
+        >
+          {title}
+        </h3>
+      </a>
+      <p class="text-on-surface/80 mt-1.5 text-sm leading-relaxed">
+        {description}
+      </p>
+      <div class="text-muted mt-1 flex items-center gap-2 text-sm">
+        <time datetime={date}>{formatDate(date)}</time>
+        <span>&middot;</span>
+        <span>{readTime} min read</span>
       </div>
-    )
-  }
+      {
+        tags && tags.length > 0 && (
+          <div class="mt-2">
+            <TagList tags={tags} />
+          </div>
+        )
+      }
+    </div>
+  </div>
 </article>

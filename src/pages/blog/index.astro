@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import BlogPostCard from "../../components/BlogPostCard.astro";
+import BlogPostFeatured from "../../components/BlogPostFeatured.astro";
 
 const posts = await getCollection("blog");
 
@@ -10,9 +11,13 @@ posts.sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 
-// Group by year
-const postsByYear = new Map<number, typeof posts>();
-for (const post of posts) {
+// Featured post = newest
+const featuredPost = posts[0];
+const remainingPosts = posts.slice(1);
+
+// Group remaining by year
+const postsByYear = new Map<number, typeof remainingPosts>();
+for (const post of remainingPosts) {
   const year = new Date(post.data.date + "T00:00:00").getFullYear();
   if (!postsByYear.has(year)) {
     postsByYear.set(year, []);
@@ -26,6 +31,7 @@ const years = [...postsByYear.keys()].sort((a, b) => b - a);
 <BlogLayout
   title="Blog - Jim Myhrberg"
   description="Blog posts by Jim Myhrberg"
+  wide
 >
   <h1
     class="text-heading text-4xl font-bold uppercase [font-stretch:75%] sm:text-5xl"
@@ -35,6 +41,10 @@ const years = [...postsByYear.keys()].sort((a, b) => b - a);
   <p class="text-muted mt-2 text-sm">
     {posts.length} posts
   </p>
+
+  <section class="mt-8" aria-label="Latest post">
+    <BlogPostFeatured post={featuredPost} />
+  </section>
 
   {
     years.map((year) => (

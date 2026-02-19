@@ -1,0 +1,70 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import TagList from "./TagList.astro";
+import { readingTime } from "../utils/reading-time";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { title, description, date, tags, image } = post.data;
+const readTime = readingTime(post.body ?? "");
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<article class="group">
+  <a href={`/blog/${post.id}/`} class="block">
+    {
+      image && (
+        <div class="overflow-hidden rounded-t-lg">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            class="aspect-[2/1] w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            widths={[640, 768, 1024]}
+            sizes="(min-width: 768px) 768px, 100vw"
+          />
+        </div>
+      )
+    }
+    <div
+      class:list={[
+        "border-on-surface/8 dark:border-on-surface/10 border p-5",
+        image ? "rounded-b-lg border-t-0" : "rounded-lg",
+      ]}
+    >
+      <h3
+        class="text-heading group-hover:text-accent text-xl leading-snug font-bold [font-stretch:75%] transition-colors sm:text-2xl"
+      >
+        {title}
+      </h3>
+      <p
+        class="text-on-surface/80 mt-2 text-sm leading-relaxed sm:text-base sm:leading-relaxed"
+      >
+        {description}
+      </p>
+      <div class="text-muted mt-2 flex items-center gap-2 text-sm">
+        <time datetime={date}>{formatDate(date)}</time>
+        <span>&middot;</span>
+        <span>{readTime} min read</span>
+      </div>
+    </div>
+  </a>
+  {
+    tags && tags.length > 0 && (
+      <div class="mt-2.5 px-5">
+        <TagList tags={tags} />
+      </div>
+    )
+  }
+</article>

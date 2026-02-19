@@ -5,6 +5,8 @@ description:
   tell from this year than 2009."
 date: 2010-04-25
 tags: ["life", "moving-overseas", "work"]
+image:
+  src: ./1-GcZMkvvggpPQG7x_mSvNGQ.webp
 ---
 
 We're 4 months into this year, and somehow I've already got more stories to tell
@@ -15,8 +17,6 @@ conference, five weeks in Palo Alto as part of Facebook's
 [fbFund](http://fbfund.com/people/#Gameyola) seed fund, and finally quitting my
 job in November for many different reasons, one of which to pursue a freelance
 career.
-
-![](./1-GcZMkvvggpPQG7x_mSvNGQ.webp)
 
 ### Right Now
 

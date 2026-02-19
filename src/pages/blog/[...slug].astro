@@ -30,9 +30,12 @@ if (image) {
   ogImageUrl = new URL(optimized.src, Astro.site).href;
 }
 
+// Skip automatic image rendering when hidden (author places it manually).
+const showImage = image && !image.hidden;
+
 // Percentage-sized images float, so they must live inside the prose
 // flow context for text to wrap around them.
-const imageFloats = image && /^\d+%$/.test(image.size);
+const imageFloats = showImage && /^\d+%$/.test(image.size);
 
 // Sorted posts for prev/next navigation
 const allPosts = await getCollection("blog");
@@ -73,7 +76,7 @@ const nextPost =
     </header>
 
     {
-      image && !imageFloats && (
+      showImage && !imageFloats && (
         <BlogMainImage
           src={image.src}
           alt={image.alt}
@@ -86,7 +89,7 @@ const nextPost =
 
     <div class="prose mt-8">
       {
-        image && imageFloats && (
+        showImage && imageFloats && (
           <BlogMainImage
             src={image.src}
             alt={image.alt}

@@ -9,29 +9,12 @@ import { Icon } from "astro-icon/components";
     class="text-muted hover:text-accent cursor-pointer rounded-full p-2"
     aria-label="Toggle theme"
   >
-    <Icon
-      name="sun-moon"
-      data-theme-icon="system"
-      class="hidden size-5"
-    />
-    <Icon
-      name="heroicons:sun"
-      data-theme-icon="light"
-      class="hidden size-5"
-    />
-    <Icon
-      name="heroicons:moon"
-      data-theme-icon="dark"
-      class="hidden size-5"
-    />
+    <Icon name="sun-moon" data-theme-icon="system" class="hidden size-5" />
+    <Icon name="heroicons:sun" data-theme-icon="light" class="hidden size-5" />
+    <Icon name="heroicons:moon" data-theme-icon="dark" class="hidden size-5" />
   </button>
   <div
-    class="pointer-events-none absolute left-1/2 top-full
-      mt-2 -translate-x-1/2 rounded-md px-2 py-1
-      text-xs font-medium whitespace-nowrap shadow-sm
-      bg-on-surface text-surface
-      opacity-0 transition-opacity duration-200
-      group-hover:opacity-100"
+    class="bg-on-surface text-surface pointer-events-none absolute top-full left-1/2 mt-2 -translate-x-1/2 rounded-md px-2 py-1 text-xs font-medium whitespace-nowrap opacity-0 shadow-sm transition-opacity duration-200 group-hover:opacity-100"
   >
     <span data-tooltip-text="system" class="hidden">System</span>
     <span data-tooltip-text="light" class="hidden">Light</span>
@@ -71,31 +54,23 @@ import { Icon } from "astro-icon/components";
   }
 
   function prefersDark(): boolean {
-    return window.matchMedia("(prefers-color-scheme: dark)")
-      .matches;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
   }
 
   function applyTheme(mode: ThemeMode) {
-    const isDark =
-      mode === "dark" || (mode === "system" && prefersDark());
+    const isDark = mode === "dark" || (mode === "system" && prefersDark());
     document.documentElement.classList.toggle("dark", isDark);
   }
 
   function updateUI(mode: ThemeMode) {
     for (const el of document.querySelectorAll("[data-theme-icon]")) {
       const htmlEl = el as HTMLElement;
-      htmlEl.classList.toggle(
-        "hidden",
-        htmlEl.dataset.themeIcon !== mode,
-      );
+      htmlEl.classList.toggle("hidden", htmlEl.dataset.themeIcon !== mode);
     }
 
     for (const el of document.querySelectorAll("[data-tooltip-text]")) {
       const htmlEl = el as HTMLElement;
-      htmlEl.classList.toggle(
-        "hidden",
-        htmlEl.dataset.tooltipText !== mode,
-      );
+      htmlEl.classList.toggle("hidden", htmlEl.dataset.tooltipText !== mode);
     }
 
     for (const btn of document.querySelectorAll("[data-theme-toggle]")) {

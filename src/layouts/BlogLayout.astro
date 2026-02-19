@@ -10,9 +10,10 @@ interface Props {
   modifiedTime?: string;
   tags?: string[];
   ogImage?: string;
+  wide?: boolean;
 }
 
-const props = Astro.props;
+const { wide = false, ...props } = Astro.props;
 ---
 
 <BaseLayout {...props}>
@@ -33,7 +34,9 @@ const props = Astro.props;
     </a>
   </Fragment>
 
-  <div class="mx-auto max-w-2xl px-6 pt-16 pb-12">
+  <div
+    class:list={["mx-auto px-6 pt-16 pb-12", wide ? "max-w-3xl" : "max-w-2xl"]}
+  >
     <main>
       <slot />
     </main>

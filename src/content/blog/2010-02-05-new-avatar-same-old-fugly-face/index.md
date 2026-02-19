@@ -3,6 +3,9 @@ title: New Avatar, Same Old Fugly Face
 description: "Today marks the day I update my online avatar/profile picture."
 date: 2010-02-05
 tags: ["rant", "avatar"]
+image:
+  src: ./jimeh-2.0.jpg
+  hidden: true
 ---
 
 <div align="center">
