@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+  <!-- Circle outline -->
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"/>
+  <!-- Right half filled (dark/moon side) -->
+  <path fill="currentColor" d="M12 8.25a3.75 3.75 0 0 1 0 7.5z"/>
+  <!-- Left-side sun rays (top, top-left, left, bottom-left, bottom) -->
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v2.25M7.227 7.227 5.636 5.636M5.25 12H3M7.227 16.773l-1.591 1.591M12 18.75V21"/>
+</svg>
