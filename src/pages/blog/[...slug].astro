@@ -65,6 +65,13 @@ const nextPost =
       >
         {title}
       </h1>
+      {
+        description && (
+          <p class="text-muted mt-2 text-lg leading-snug italic">
+            {description}
+          </p>
+        )
+      }
       <div class="mt-4">
         <PostMeta
           date={date}
