@@ -3,9 +3,9 @@ title: "To Caffeinate, Or Not To Caffeinate?"
 description: "I used to be a caffeine junkie."
 date: 2010-02-14
 tags: ["productivity", "quality-of-life", "caffeine"]
+image:
+  src: ./1-nZV2-R2m4JbNPWz16s1rlA.webp
 ---
-
-![](./1-nZV2-R2m4JbNPWz16s1rlA.webp)
 
 I used to be a caffeine junkie. My caffeinated poison of choice was Coke, the
 legal kind, not the illegal one.

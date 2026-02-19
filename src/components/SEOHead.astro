@@ -14,6 +14,8 @@ interface Props {
   modifiedTime?: string;
   /** Article tags for meta keywords. */
   tags?: string[];
+  /** Absolute URL for og:image / twitter:image. */
+  ogImage?: string;
 }
 
 const {
@@ -23,6 +25,7 @@ const {
   publishedTime,
   modifiedTime,
   tags,
+  ogImage,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
@@ -43,6 +46,7 @@ const jsonLd =
           url: siteConfig.url,
         },
         keywords: tags?.join(", "),
+        ...(ogImage && { image: ogImage }),
       }
     : {
         "@context": "https://schema.org",
@@ -69,6 +73,7 @@ const jsonLd =
 <meta property="og:site_name" content={siteConfig.title} />
 <meta property="og:type" content={ogType} />
 <meta property="og:locale" content="en_US" />
+{ogImage && <meta property="og:image" content={ogImage} />}
 
 {
   ogType === "article" && (
@@ -88,9 +93,13 @@ const jsonLd =
 }
 
 <!-- Twitter Card -->
-<meta name="twitter:card" content="summary" />
+<meta
+  name="twitter:card"
+  content={ogImage ? "summary_large_image" : "summary"}
+/>
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}
 
 <!-- JSON-LD -->
 <script

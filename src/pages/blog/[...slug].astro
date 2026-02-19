@@ -1,6 +1,8 @@
 ---
 import { getCollection, render } from "astro:content";
+import { getImage } from "astro:assets";
 import BlogLayout from "../../layouts/BlogLayout.astro";
+import BlogMainImage from "../../components/BlogMainImage.astro";
 import BlogPostMeta from "../../components/BlogPostMeta.astro";
 import { readingTime } from "../../utils/reading-time";
 
@@ -13,9 +15,24 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { title, description, date, updatedDate, tags } = post.data;
+const { title, description, date, updatedDate, tags, image } = post.data;
 const readTime = readingTime(post.body ?? "");
 const { Content } = await render(post);
+
+// Resolve absolute URL for OG/Twitter image meta tags.
+let ogImageUrl: string | undefined;
+if (image) {
+  const optimized = await getImage({
+    src: image.src,
+    width: 1200,
+    format: "jpg",
+  });
+  ogImageUrl = new URL(optimized.src, Astro.site).href;
+}
+
+// Percentage-sized images float, so they must live inside the prose
+// flow context for text to wrap around them.
+const imageFloats = image && /^\d+%$/.test(image.size);
 
 // Sorted posts for prev/next navigation
 const allPosts = await getCollection("blog");
@@ -35,6 +52,7 @@ const nextPost =
   publishedTime={date}
   modifiedTime={updatedDate}
   tags={tags}
+  ogImage={ogImageUrl}
 >
   <article>
     <header>
@@ -54,7 +72,30 @@ const nextPost =
       <hr class="border-muted/30 mt-6" />
     </header>
 
+    {
+      image && !imageFloats && (
+        <BlogMainImage
+          src={image.src}
+          alt={image.alt}
+          caption={image.caption}
+          size={image.size}
+          position={image.position}
+        />
+      )
+    }
+
     <div class="prose mt-8">
+      {
+        image && imageFloats && (
+          <BlogMainImage
+            src={image.src}
+            alt={image.alt}
+            caption={image.caption}
+            size={image.size}
+            position={image.position}
+          />
+        )
+      }
       <Content />
     </div>
   </article>

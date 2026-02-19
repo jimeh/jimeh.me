@@ -9,13 +9,28 @@ const dateStr = z
 
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    date: dateStr,
-    updatedDate: dateStr.optional(),
-    tags: z.array(z.string()).optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      date: dateStr,
+      updatedDate: dateStr.optional(),
+      tags: z.array(z.string()).optional(),
+      image: z
+        .object({
+          src: image(),
+          alt: z.string().default(""),
+          caption: z.string().optional(),
+          size: z
+            .union([
+              z.enum(["default", "wide", "full"]),
+              z.string().regex(/^\d+%$/, "Must be a percentage like '50%'"),
+            ])
+            .default("default"),
+          position: z.enum(["center", "left", "right"]).default("center"),
+        })
+        .optional(),
+    }),
 });
 
 export const collections = { blog };

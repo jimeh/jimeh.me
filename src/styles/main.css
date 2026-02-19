@@ -231,6 +231,39 @@
   border-radius: 0.375rem;
 }
 
+/* --- Blog main image breakout sizes --- */
+
+.blog-main-image {
+  margin-top: 1.5rem;
+}
+
+/* When floated inside prose, remove top margin so it sits flush. */
+.prose > .blog-main-image:first-child {
+  margin-top: 0;
+}
+
+.blog-main-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+}
+
+.blog-image-wide {
+  --wide-max: 960px;
+
+  width: min(var(--wide-max), calc(100vw - 3rem));
+  margin-left: calc(50% - min(var(--wide-max), calc(100vw - 3rem)) / 2);
+}
+
+.blog-image-full {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+.blog-image-full img {
+  border-radius: 0;
+}
+
 /* Iframes (YouTube embeds) */
 
 .prose iframe {

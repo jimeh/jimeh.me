@@ -3,9 +3,9 @@ title: "Fan Boys & Haters, Seriously?"
 description: "Fan Boys and Haters have been equally annoying me as of late."
 date: 2010-06-15
 tags: ["productivity", "brand-loyalty", "technology"]
+image:
+  src: ./1-7ZhGFhEHLxR4alsQ51_4RQ.webp
 ---
-
-![](./1-7ZhGFhEHLxR4alsQ51_4RQ.webp)
 
 Fan Boys and Haters have been equally annoying me as of late. The most common
 claim is that their favorite company is good, while all others are evil. This is

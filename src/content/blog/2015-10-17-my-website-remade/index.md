@@ -4,9 +4,10 @@ description: "And why I moved my blog to Medium."
 date: 2015-10-17
 updatedDate: 2015-10-20
 tags: ["blogging", "medium"]
+image:
+  src: ./1-jSQuxs3q2sbXovB2h-99bA.webp
+  size: wide
 ---
-
-![](./1-jSQuxs3q2sbXovB2h-99bA.webp)
 
 I have finally gotten around to updating my personal website. The new design is
 actually something I put together two years ago while bored. I was always too

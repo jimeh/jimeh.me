@@ -1,0 +1,80 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  size?: "default" | "wide" | "full" | (string & {});
+  position?: "center" | "left" | "right";
+}
+
+const {
+  src,
+  alt,
+  caption,
+  size = "default",
+  position = "center",
+} = Astro.props;
+
+const isPercentage = /^\d+%$/.test(size);
+
+// Named size → CSS class for breakout; percentage → inline width.
+const sizeClass = isPercentage
+  ? ""
+  : { default: "", wide: "blog-image-wide", full: "blog-image-full" }[
+      size as "default" | "wide" | "full"
+    ];
+
+// Percentage + left/right → float with spacing for text wrap.
+// Named size or center → simple margin alignment on the img.
+const figureClasses = isPercentage
+  ? {
+      center: "mx-auto",
+      left: "float-left mr-6 mb-2",
+      right: "float-right ml-6 mb-2",
+    }[position]
+  : "";
+
+const imgClasses = isPercentage
+  ? "block"
+  : `block ${
+      {
+        center: "mx-auto",
+        left: "mr-auto",
+        right: "ml-auto",
+      }[position]
+    }`;
+
+const figureStyle = isPercentage ? `width: ${size}` : undefined;
+
+// Responsive sizes hint for the browser.
+const sizes = isPercentage
+  ? `(min-width: 672px) ${size}, 100vw`
+  : size === "full"
+    ? "100vw"
+    : size === "wide"
+      ? "(min-width: 960px) 960px, 100vw"
+      : "(min-width: 672px) 672px, 100vw";
+---
+
+<figure
+  class:list={["blog-main-image", sizeClass, figureClasses]}
+  style={figureStyle}
+>
+  <Image
+    src={src}
+    alt={alt}
+    class:list={[imgClasses]}
+    widths={[640, 960, 1280, 1600]}
+    sizes={sizes}
+  />
+  {
+    caption && (
+      <figcaption class="text-muted mt-2 text-center text-sm">
+        {caption}
+      </figcaption>
+    )
+  }
+</figure>

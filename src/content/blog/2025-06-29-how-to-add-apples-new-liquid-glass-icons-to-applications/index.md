@@ -4,9 +4,11 @@ description: "Without Xcode, almost."
 date: 2025-06-29
 updatedDate: 2026-02-17
 tags: ["macos", "macos26", "macos-tahoe", "apple", "liquid-glass"]
+image:
+  src: ./1-jc9dyVFYfoIUGxJ8x54tuw.webp
+  alt: "Liquid Glass icon in Icon Composer"
+  size: wide
 ---
-
-![Liquid Glass icon in Icon Composer](./1-jc9dyVFYfoIUGxJ8x54tuw.webp)
 
 ## Overview
 

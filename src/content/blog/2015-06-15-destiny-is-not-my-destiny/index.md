@@ -3,9 +3,10 @@ title: "Destiny is not my destiny"
 description: "How a prison for the elderly ruined a game."
 date: 2015-06-15
 tags: ["destiny", "videogames", "game-design"]
+image:
+  src: ./1-IOdswWdAfDs38B7kaRxdWg.webp
+  size: wide
 ---
-
-![](./1-IOdswWdAfDs38B7kaRxdWg.webp)
 
 Hi, my name is Jim, and I'm an addict. A
 [Destiny](http://www.destinythegame.com/) addict. I've played a lot of Destiny,
