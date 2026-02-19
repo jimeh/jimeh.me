@@ -92,6 +92,18 @@
   text-decoration-color: var(--accent);
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
+.prose figcaption a {
+  color: var(--muted);
+  text-decoration-color: transparent;
+  transition: color 0.2s;
+}
+
+.prose figcaption a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
 /* Text */
 
 .prose p {

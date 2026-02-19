@@ -103,9 +103,9 @@ const sizes = isPercentage
     )
   }
   {
-    caption && (
+    (Astro.slots.has("default") || caption) && (
       <figcaption class="text-muted mt-2 text-center text-sm">
-        {caption}
+        {Astro.slots.has("default") ? <slot /> : caption}
       </figcaption>
     )
   }

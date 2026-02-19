@@ -39,9 +39,9 @@ const gridStyle = [`--grid-columns: ${columns}`, `gap: ${gap}`].join("; ");
     <slot />
   </div>
   {
-    caption && (
+    (Astro.slots.has("caption") || caption) && (
       <figcaption class="text-muted mt-2 text-center text-sm">
-        {caption}
+        {Astro.slots.has("caption") ? <slot name="caption" /> : caption}
       </figcaption>
     )
   }
