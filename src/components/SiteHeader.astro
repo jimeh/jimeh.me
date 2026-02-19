@@ -1,0 +1,30 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface Props {
+  /** Show glass-morphism background (true when nav content present). */
+  hasNav?: boolean;
+}
+
+const { hasNav = false } = Astro.props;
+---
+
+<header
+  class:list={[
+    "fixed top-0 left-0 z-50 w-full",
+    hasNav && "bg-surface/80 backdrop-blur-sm",
+  ]}
+>
+  <div class="mx-auto flex max-w-2xl items-center px-6 py-4">
+    <nav
+      class="flex items-center text-sm font-bold uppercase [font-stretch:75%]"
+      aria-label="Site navigation"
+      aria-hidden={!hasNav}
+    >
+      {hasNav ? <slot /> : <span class="invisible">&nbsp;</span>}
+    </nav>
+  </div>
+  <div class="absolute top-1/2 right-4 -translate-y-1/2">
+    <ThemeToggle />
+  </div>
+</header>

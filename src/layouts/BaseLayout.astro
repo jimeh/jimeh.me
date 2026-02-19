@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { Font } from "astro:assets";
 import SEOHead from "../components/SEOHead.astro";
-import ThemeToggle from "../components/ThemeToggle.astro";
+import SiteHeader from "../components/SiteHeader.astro";
 import { siteConfig } from "../data/site";
 
 interface Props {
@@ -28,6 +28,7 @@ function fileHash(path: string): string {
 const { title, description, ogType, publishedTime, modifiedTime, tags } =
   Astro.props;
 const pageTitle = title || siteConfig.title;
+const hasHeaderNav = Astro.slots.has("header-nav");
 const faviconHash = fileHash("../../public/favicon.ico");
 const appleTouchHash = fileHash("../../public/apple-touch-icon.png");
 ---
@@ -82,7 +83,9 @@ const appleTouchHash = fileHash("../../public/apple-touch-icon.png");
       "bg-surface",
     ]}
   >
-    <ThemeToggle />
+    <SiteHeader hasNav={hasHeaderNav}>
+      <slot name="header-nav" />
+    </SiteHeader>
     <slot />
   </body>
 </html>
