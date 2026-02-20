@@ -5,6 +5,15 @@ description:
 date: 2020-08-26
 updatedDate: 2020-10-04
 tags: ["emacs", "text-editor", "macos", "gcc"]
+image:
+  src: ./EmacsLG1.png
+  alt: EmacsLG1 Icon
+  size: 40%
+  position: right
+  thumbnailFill: full
+  credit:
+    text: EmacsLG1 Icon
+    href: https://github.com/jimeh/emacs-liquid-glass-icons
 ---
 
 ## TL;DR

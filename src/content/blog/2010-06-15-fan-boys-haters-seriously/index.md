@@ -4,8 +4,11 @@ description: "Fan Boys and Haters have been equally annoying me as of late."
 date: 2010-06-15
 tags: ["productivity", "brand-loyalty", "technology"]
 image:
-  src: ./1-7ZhGFhEHLxR4alsQ51_4RQ.webp
+  src: ./anthony-delanoix-hzgs56Ze49s-unsplash.jpg
   size: wide
+  credit:
+    text: Photo by Anthony Delanoix on Unsplash
+    href: https://unsplash.com/photos/person-performing-heart-hand-gesture-hzgs56Ze49s
 ---
 
 Fan Boys and Haters have been equally annoying me as of late. The most common

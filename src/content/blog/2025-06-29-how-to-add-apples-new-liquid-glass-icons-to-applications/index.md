@@ -5,7 +5,7 @@ date: 2025-06-29
 updatedDate: 2026-02-17
 tags: ["macos", "macos26", "macos-tahoe", "apple", "liquid-glass"]
 image:
-  src: ./1-jc9dyVFYfoIUGxJ8x54tuw.webp
+  src: ./Apple-WWDC25-Liquid-Glass-Icon-Composer.jpg
   alt: "Liquid Glass icon in Icon Composer"
   size: wide
 ---

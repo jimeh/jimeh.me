@@ -6,7 +6,11 @@ description:
 date: 2010-02-06
 tags: ["technology", "ipad", "opinion"]
 image:
-  src: ./1-lpZA2i6W3zTETJZiCCUFRA.webp
+  src: ./firmbee-com-OP2EQ5g-Zkw-unsplash.jpg
+  size: wide
+  credit:
+    text: Photo by Firmbee on Unsplash
+    href: https://unsplash.com/photos/silver-ipad-on-top-of-macbook-pro-OP2EQ5g-Zkw
 ---
 
 So I was gonna write a post with my opinions about the iPad, but a cup of tea

@@ -4,6 +4,13 @@ description:
   "After I updated my profile picture today, a friend of mine responded with:"
 date: 2010-02-05
 tags: ["technology", "social-media", "avatar"]
+image:
+  src: ./luthfi-alfarizi-gEf9bOMTZtk-unsplash.jpg
+  size: 40%
+  position: right
+  credit:
+    text: Photo by Luthfi Alfarizi on Unsplash
+    href: https://unsplash.com/photos/gEf9bOMTZtk
 ---
 
 After I updated my

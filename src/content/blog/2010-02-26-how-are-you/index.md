@@ -3,9 +3,12 @@ title: "How Are You?"
 description: "How Are You?"
 date: 2010-02-26
 tags: ["geeking-out", "funny"]
+image:
+  src: ./how-are-you.png
+  hidden: true
 ---
 
-```
+```log
 *** Initializing analytics system.
 *** Initializing health check sub-system.
 *** Booting health check sensors.

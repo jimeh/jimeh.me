@@ -4,7 +4,11 @@ description: "I used to be a caffeine junkie."
 date: 2010-02-14
 tags: ["productivity", "quality-of-life", "caffeine"]
 image:
-  src: ./1-nZV2-R2m4JbNPWz16s1rlA.webp
+  src: ./yogesh-pedamkar-DZLJGd8V1mg-unsplash.jpg
+  size: wide
+  credit:
+    text: "Photo by Yogesh Pedamkar on Unsplash"
+    href: "https://unsplash.com/photos/coca-cola-door-DZLJGd8V1mg"
 ---
 
 I used to be a caffeine junkie. My caffeinated poison of choice was Coke, the

@@ -5,6 +5,14 @@ description:
   configuration and magically just works without a central server."
 date: 2011-01-06
 tags: ["vpn", "peer-to-peer", "technology"]
+image:
+  src: ./harvey-abayasiri-VpLemecHS-4-unsplash.jpg
+  size: wide
+  aspect: 16/9
+  objectPosition: top
+  credit:
+    text: Photo by Harvey Abayasiri on Unsplash
+    href: https://unsplash.com/photos/geometric-triangular-pattern-on-a-curved-surface-VpLemecHS-4
 ---
 
 Imagine a new kind of VPN service which doesn't require any kind of
