@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BlogLayout from "../../../layouts/BlogLayout.astro";
 import PostCard from "@components/blog/PostCard.astro";
+import { compareBlogPostsDesc } from "@utils/blog-sort";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -21,9 +22,7 @@ const { tag } = Astro.props;
 const allPosts = await getCollection("blog");
 const posts = allPosts
   .filter((p) => p.data.tags?.includes(tag))
-  .sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-  );
+  .sort(compareBlogPostsDesc);
 ---
 
 <BlogLayout

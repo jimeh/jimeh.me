@@ -63,3 +63,9 @@ Semantic tokens in `src/styles/main.css` using OKLCH color space:
 - Dark overrides via `.dark { ... }` block, exposed to Tailwind via
   `@theme inline`
 - Custom variant: `@custom-variant dark (&:where(.dark, .dark *))`
+
+## Discoveries
+
+- Blog post ordering must use shared comparators in `src/utils/blog-sort.ts`
+  (`date` + `id`) to keep tie behavior consistent across blog index, tag pages,
+  RSS, and prev/next navigation.

@@ -5,6 +5,7 @@ import BlogLayout from "../../layouts/BlogLayout.astro";
 import { Image } from "@mdx/index";
 import PostMeta from "@components/blog/PostMeta.astro";
 import FancyboxInit from "@components/blog/FancyboxInit.astro";
+import { compareBlogPostsAsc } from "@utils/blog-sort";
 import { readingTime } from "@utils/reading-time";
 
 export async function getStaticPaths() {
@@ -40,9 +41,7 @@ const imageFloats = showImage && /^\d+%$/.test(image.size);
 
 // Sorted posts for prev/next navigation
 const allPosts = await getCollection("blog");
-allPosts.sort(
-  (a, b) => new Date(a.data.date).getTime() - new Date(b.data.date).getTime(),
-);
+allPosts.sort(compareBlogPostsAsc);
 const currentIndex = allPosts.findIndex((p) => p.id === post.id);
 const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
 const nextPost =
