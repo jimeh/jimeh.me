@@ -32,6 +32,19 @@ pnpm and Node 24 managed via mise. No tests configured.
   (local provider)
 - SEO: Open Graph, Twitter Card, JSON-LD (WebSite schema) via `SEOHead.astro`
 
+## Blog Image Frontmatter
+
+Image options in blog post frontmatter (`image:` field in content schema):
+
+- `aspect`: CSS aspect-ratio string (e.g. `"16/9"`) — crops via
+  `object-fit: cover`, does not distort
+- `objectPosition`: CSS object-position (default `"center"`) — controls
+  visible region when cropped; applies to blog post display, PostCard, and
+  PostFeatured thumbnails
+- `thumbnailFill`: `"fill"` (default, crops to fill) or `"full"` (shows
+  entire image via `object-contain`) — only affects PostCard/PostFeatured
+  thumbnails
+
 ## Domain Concepts
 
 - `SiteConfig`: Site metadata, author info, ROT13-encoded email, social profile

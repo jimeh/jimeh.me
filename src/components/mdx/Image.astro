@@ -15,6 +15,10 @@ interface Props {
   };
   size?: "default" | "wide" | "full" | (string & {});
   position?: "center" | "left" | "right";
+  /** CSS aspect-ratio for the displayed image box (e.g. "16/9"). */
+  aspect?: string;
+  /** CSS object-position when aspect is set (e.g. "top", "center"). */
+  objectPosition?: string;
   /** Remove block margins so the figure sits flush with surrounding content. */
   flush?: boolean;
   /** Lightbox gallery group name. Images sharing the same gallery form a set. */
@@ -29,6 +33,8 @@ const {
   credit,
   size = "default",
   position = "center",
+  aspect,
+  objectPosition = "center",
   flush,
   gallery = "gallery",
   noLightbox = false,
@@ -55,6 +61,10 @@ const sizes = isPercentage
     : size === "wide"
       ? "(min-width: 960px) 960px, 100vw"
       : "(min-width: 672px) 672px, 100vw";
+
+const imgStyle = aspect
+  ? `aspect-ratio: ${aspect}; object-position: ${objectPosition}`
+  : undefined;
 ---
 
 <Figure
@@ -70,7 +80,8 @@ const sizes = isPercentage
       <AstroImage
         src={src}
         alt={alt}
-        class:list={[imgClasses]}
+        class:list={[imgClasses, aspect && "object-cover"]}
+        style={imgStyle}
         widths={[640, 960, 1280, 1600]}
         sizes={sizes}
       />
@@ -84,7 +95,8 @@ const sizes = isPercentage
         <AstroImage
           src={src}
           alt={alt}
-          class:list={[imgClasses]}
+          class:list={[imgClasses, aspect && "object-cover"]}
+          style={imgStyle}
           widths={[640, 960, 1280, 1600]}
           sizes={sizes}
         />

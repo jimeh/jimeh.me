@@ -34,14 +34,20 @@ const blog = defineCollection({
           noLightbox: z.boolean().optional(),
           /** Lightbox gallery group name. */
           gallery: z.string().optional(),
+          /** How the thumbnail fills the PostCard container. */
+          thumbnailFill: z
+            .enum(["fill", "full"])
+            .default("fill"),
+          /** CSS aspect-ratio for the displayed image box (e.g. "16/9"). */
+          aspect: z.string().optional(),
+          /** CSS object-position when aspect is set (e.g. "top", "center"). */
+          objectPosition: z.string().default("center"),
           /** Attribution / credit line shown below the caption. */
           credit: z
             .object({
               text: z.string(),
               href: z.string().url().optional(),
-              position: z
-                .enum(["left", "center", "right"])
-                .default("center"),
+              position: z.enum(["left", "center", "right"]).default("center"),
             })
             .optional(),
           /** Hide from automatic rendering at the top of the post body. */

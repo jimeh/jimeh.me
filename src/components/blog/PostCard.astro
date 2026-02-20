@@ -35,7 +35,13 @@ function formatDate(dateStr: string): string {
           <Image
             src={image.src}
             alt={image.alt}
-            class="aspect-[3/2] w-40 rounded object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            class:list={[
+              "aspect-[3/2] w-40 rounded transition-transform duration-300 group-hover:scale-[1.02]",
+              image.thumbnailFill === "full"
+                ? "object-contain"
+                : "object-cover",
+            ]}
+            style={`object-position: ${image.objectPosition}`}
             widths={[160, 320]}
             sizes="160px"
           />
