@@ -20,15 +20,20 @@ function formatDate(dateStr: string): string {
 }
 ---
 
-<div class="text-muted flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+<div class="text-muted flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
   <time datetime={date}>{formatDate(date)}</time>
   {
     updatedDate && (
-      <span>
-        (updated <time datetime={updatedDate}>{formatDate(updatedDate)}</time>)
-      </span>
+      <>
+        <span>&middot;</span>
+        <span>
+          updated{" "}
+          <time datetime={updatedDate}>{formatDate(updatedDate)}</time>
+        </span>
+      </>
     )
   }
+  <span>&middot;</span>
   <span aria-label={`${readingTime} minute read`}>
     {readingTime} min read
   </span>

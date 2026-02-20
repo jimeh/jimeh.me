@@ -7,27 +7,47 @@
 }
 
 :root {
+  /* surfaces */
   --surface: white;
   --surface-subtle: var(--color-slate-50);
-  --surface-code-inline: var(--color-zinc-100);
-  --surface-code-block: var(--color-zinc-100);
   --on-surface: var(--color-slate-900);
+
+  /* typography */
   --heading: var(--color-slate-800);
+  --subheading: var(--color-slate-600);
   --muted: var(--color-slate-500);
   --accent: var(--color-sky-600);
+
+  /* borders */
   --border: var(--color-slate-200);
+
+  /* code blocks */
+  --surface-code-inline: var(--color-zinc-100);
+  --surface-code-block: var(--color-zinc-100);
+  --border-code-inline: var(--border);
+  --border-code-block: var(--border);
 }
 
 .dark {
+  /* surfaces */
   --surface: var(--color-neutral-950);
   --surface-subtle: var(--color-zinc-900);
-  --surface-code-inline: var(--color-zinc-800);
-  --surface-code-block: var(--color-zinc-900);
   --on-surface: var(--color-slate-100);
+
+  /* typography */
   --heading: var(--color-slate-200);
+  --subheading: var(--color-slate-300);
   --muted: var(--color-slate-400);
   --accent: var(--color-sky-400);
-  --border: var(--color-slate-800);
+
+  /* borders */
+  --border: oklch(from var(--color-zinc-700) l c h / 80%);
+
+  /* code blocks */
+  --surface-code-inline: var(--color-zinc-800);
+  --surface-code-block: var(--color-zinc-900);
+  --border-code-inline: var(--color-zinc-600);
+  --border-code-block: var(--border);
 }
 
 /* Home page: original faded aesthetic for the splash screen. */
@@ -49,6 +69,7 @@
   --color-on-surface: var(--on-surface);
   --color-heading: var(--heading);
   --color-heading-muted: var(--heading-muted);
+  --color-subheading: var(--subheading);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-border: var(--border);
@@ -162,7 +183,7 @@
 
 .prose blockquote {
   margin-top: 1.5em;
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--border);
   padding-left: 1em;
   color: var(--muted);
   font-style: italic;
@@ -186,7 +207,7 @@
     ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
     monospace;
   background: var(--surface-code-inline);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-code-inline);
 }
 
 /* Code blocks */
@@ -196,7 +217,7 @@
   margin-bottom: 1.5em;
   padding: 1em 1.25em;
   border-radius: 0.5rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-code-block);
   overflow-x: auto;
   font-size: 0.875rem;
   line-height: 1.6;
