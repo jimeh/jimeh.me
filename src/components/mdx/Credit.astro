@@ -1,0 +1,31 @@
+---
+interface Props {
+  /** Attribution text. */
+  text: string;
+  /** URL to link the credit text to. */
+  href?: string;
+  /** Text alignment. */
+  position?: "left" | "center" | "right";
+  class?: string;
+}
+
+const { text, href, position = "center" } = Astro.props;
+
+const positionClass = {
+  left: "text-left",
+  center: "text-center",
+  right: "text-right",
+}[position];
+---
+
+<span class:list={["block text-xs opacity-70", positionClass, Astro.props.class]}>
+  {
+    href ? (
+      <a href={href} rel="noopener noreferrer">
+        {text}
+      </a>
+    ) : (
+      text
+    )
+  }
+</span>

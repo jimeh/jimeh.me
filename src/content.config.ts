@@ -34,6 +34,16 @@ const blog = defineCollection({
           noLightbox: z.boolean().optional(),
           /** Lightbox gallery group name. */
           gallery: z.string().optional(),
+          /** Attribution / credit line shown below the caption. */
+          credit: z
+            .object({
+              text: z.string(),
+              href: z.string().url().optional(),
+              position: z
+                .enum(["left", "center", "right"])
+                .default("center"),
+            })
+            .optional(),
           /** Hide from automatic rendering at the top of the post body. */
           hidden: z.boolean().default(false),
         })

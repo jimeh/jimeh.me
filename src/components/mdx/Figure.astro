@@ -1,10 +1,18 @@
 ---
+import Credit from "./Credit.astro";
+
 interface Props {
   size?: "default" | "wide" | "full" | (string & {});
   position?: "center" | "left" | "right";
   /** Remove block margins so the figure sits flush with surrounding content. */
   flush?: boolean;
   caption?: string;
+  /** Attribution / credit line shown below the caption. */
+  credit?: {
+    text: string;
+    href?: string;
+    position?: "left" | "center" | "right";
+  };
   class?: string;
 }
 
@@ -13,6 +21,7 @@ const {
   position = "center",
   flush = position === "left" || position === "right",
   caption,
+  credit,
 } = Astro.props;
 
 const isPercentage = /^\d+%$/.test(size);
@@ -56,9 +65,17 @@ const hasCaptionSlot = !!captionHtml?.trim();
 >
   <slot />
   {
-    (hasCaptionSlot || caption) && (
+    (hasCaptionSlot || caption || credit) && (
       <figcaption class="text-muted mt-2 text-center text-sm">
         {hasCaptionSlot ? <Fragment set:html={captionHtml} /> : caption}
+        {credit && (
+          <Credit
+            text={credit.text}
+            href={credit.href}
+            position={credit.position}
+            class={(hasCaptionSlot || caption) ? "mt-1" : undefined}
+          />
+        )}
       </figcaption>
     )
   }

@@ -7,6 +7,12 @@ interface Props {
   src: ImageMetadata;
   alt?: string;
   caption?: string;
+  /** Attribution / credit line shown below the caption. */
+  credit?: {
+    text: string;
+    href?: string;
+    position?: "left" | "center" | "right";
+  };
   size?: "default" | "wide" | "full" | (string & {});
   position?: "center" | "left" | "right";
   /** Remove block margins so the figure sits flush with surrounding content. */
@@ -20,6 +26,7 @@ interface Props {
 const {
   src,
   caption,
+  credit,
   size = "default",
   position = "center",
   flush,
@@ -56,6 +63,7 @@ const sizes = isPercentage
   position={position}
   flush={flush}
   caption={caption}
+  credit={credit}
 >
   {
     noLightbox ? (
