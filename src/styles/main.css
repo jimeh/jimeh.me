@@ -21,6 +21,13 @@
   /* borders */
   --border: var(--color-slate-200);
 
+  /* alerts */
+  --alert-note: var(--color-sky-600);
+  --alert-tip: var(--color-emerald-600);
+  --alert-important: var(--color-purple-600);
+  --alert-warning: var(--color-amber-600);
+  --alert-caution: var(--color-red-600);
+
   /* code blocks */
   --surface-code-inline: var(--color-zinc-100);
   --surface-code-block: var(--color-zinc-100);
@@ -42,6 +49,13 @@
 
   /* borders */
   --border: oklch(from var(--color-zinc-700) l c h / 80%);
+
+  /* alerts */
+  --alert-note: var(--color-sky-400);
+  --alert-tip: var(--color-emerald-400);
+  --alert-important: var(--color-purple-400);
+  --alert-warning: var(--color-amber-400);
+  --alert-caution: var(--color-red-400);
 
   /* code blocks */
   --surface-code-inline: var(--color-zinc-800);
@@ -195,6 +209,91 @@
 
 .prose blockquote p:first-child {
   margin-top: 0;
+}
+
+/* Alerts (GitHub-style admonitions) */
+
+.prose .markdown-alert {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  padding: 0.75em 1em;
+  border-left: 3px solid var(--border);
+  border-radius: 0.25rem;
+  background: oklch(from var(--border) l c h / 15%);
+  font-style: normal;
+  color: var(--on-surface);
+}
+
+.prose .markdown-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.prose .markdown-alert-title .octicon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  fill: currentcolor;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.prose .markdown-alert > p {
+  margin-top: 0.5em;
+}
+
+.prose .markdown-alert > p:first-child,
+.prose .markdown-alert > .markdown-alert-title {
+  margin-top: 0;
+}
+
+.prose .markdown-alert-note {
+  border-left-color: var(--alert-note);
+  background: oklch(from var(--alert-note) l c h / 8%);
+}
+
+.prose .markdown-alert-note .markdown-alert-title {
+  color: var(--alert-note);
+}
+
+.prose .markdown-alert-tip {
+  border-left-color: var(--alert-tip);
+  background: oklch(from var(--alert-tip) l c h / 8%);
+}
+
+.prose .markdown-alert-tip .markdown-alert-title {
+  color: var(--alert-tip);
+}
+
+.prose .markdown-alert-important {
+  border-left-color: var(--alert-important);
+  background: oklch(from var(--alert-important) l c h / 8%);
+}
+
+.prose .markdown-alert-important .markdown-alert-title {
+  color: var(--alert-important);
+}
+
+.prose .markdown-alert-warning {
+  border-left-color: var(--alert-warning);
+  background: oklch(from var(--alert-warning) l c h / 8%);
+}
+
+.prose .markdown-alert-warning .markdown-alert-title {
+  color: var(--alert-warning);
+}
+
+.prose .markdown-alert-caution {
+  border-left-color: var(--alert-caution);
+  background: oklch(from var(--alert-caution) l c h / 8%);
+}
+
+.prose .markdown-alert-caution .markdown-alert-title {
+  color: var(--alert-caution);
 }
 
 /* Inline code */

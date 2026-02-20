@@ -3,6 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
+import { remarkAlert } from "remark-github-blockquote-alert";
 
 export default defineConfig({
   site: "https://jimeh.me",
@@ -11,6 +12,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   markdown: {
+    remarkPlugins: [remarkAlert],
     shikiConfig: {
       themes: {
         light: "one-light",

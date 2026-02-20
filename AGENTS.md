@@ -31,6 +31,8 @@ pnpm and Node 24 managed via mise. No tests configured.
 - Fonts: Open Sans variable font, self-hosted via Astro experimental fonts API
   (local provider)
 - SEO: Open Graph, Twitter Card, JSON-LD (WebSite schema) via `SEOHead.astro`
+- Markdown alerts: GitHub-style `> [!NOTE]` / `> [!WARNING]` etc. via
+  `remark-github-blockquote-alert` remark plugin, styled in `main.css`
 
 ## Blog Image Frontmatter
 
@@ -60,6 +62,7 @@ Semantic tokens in `src/styles/main.css` using OKLCH color space:
 - `--heading` / `--heading-muted`: Heading colors
 - `--muted`: De-emphasized text (oklch alpha blending)
 - `--accent`: Interactive/highlight color (sky-based)
+- `--alert-{note,tip,important,warning,caution}`: Alert type colors
 - Dark overrides via `.dark { ... }` block, exposed to Tailwind via
   `@theme inline`
 - Custom variant: `@custom-variant dark (&:where(.dark, .dark *))`
