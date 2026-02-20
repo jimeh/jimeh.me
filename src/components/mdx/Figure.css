@@ -1,0 +1,30 @@
+.mdx-figure-wide {
+  --wide-max: 960px;
+
+  width: min(var(--wide-max), calc(100vw - 3rem));
+  margin-left: calc(50% - min(var(--wide-max), calc(100vw - 3rem)) / 2);
+}
+
+.mdx-figure-full {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+.mdx-figure-full img {
+  border-radius: 0;
+}
+
+/* Figure wrapper used by MDX components (Image, YouTube, ImageGrid). */
+.mdx-figure {
+  margin-block: 1.5rem;
+}
+
+.mdx-figure img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.375rem;
+}
+
+.mdx-figure-flush img {
+  margin-top: 0;
+}

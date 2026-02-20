@@ -24,15 +24,18 @@ pnpm and Node 24 managed via mise. No tests configured.
 - Page content: Data-driven from typed exports → grep `siteConfig`, `siteLinks`
 - Icons: astro-icon with Iconify collections (fa6-brands, fa6-solid, heroicons)
 - Email: ROT13 obfuscation decoded client-side in `SiteLink.astro`
-- CSS: Tailwind CSS v4 via `@tailwindcss/vite`, semantic color tokens in
-  `src/styles/main.css`
+- CSS: Tailwind CSS v4 via `@tailwindcss/vite`. `main.css` is a thin entry
+  point importing `tokens.css`, `prose.css`, and vendor styles. Component CSS
+  co-located as imports (e.g. `Figure.css` next to `Figure.astro`)
+- UI primitives: `src/components/ui/` — `PageHeading`, `MetaText`,
+  `NavTextLink` for consistent blog typography
 - Dark mode: System/light/dark toggle, `.dark` class on `<html>`, state in
   localStorage
 - Fonts: Open Sans variable font, self-hosted via Astro experimental fonts API
   (local provider)
 - SEO: Open Graph, Twitter Card, JSON-LD (WebSite schema) via `SEOHead.astro`
 - Markdown alerts: GitHub-style `> [!NOTE]` / `> [!WARNING]` etc. via
-  `remark-github-blockquote-alert` remark plugin, styled in `main.css`
+  `remark-github-blockquote-alert` remark plugin, styled in `prose.css`
 - Code highlighting: `rehype-pretty-code` (Shiki-based rehype plugin) with
   dual themes (`one-light` / `one-dark-pro`). Astro's built-in Shiki is
   disabled (`syntaxHighlight: false`). Supports inline highlighting
@@ -65,7 +68,7 @@ Image options in blog post frontmatter (`image:` field in content schema):
 
 ## CSS Theme
 
-Semantic tokens in `src/styles/main.css` using OKLCH color space:
+Semantic tokens in `src/styles/tokens.css` using OKLCH color space:
 
 - `--surface` / `--on-surface`: Background and text colors
 - `--heading` / `--heading-muted`: Heading colors

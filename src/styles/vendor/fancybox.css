@@ -1,0 +1,26 @@
+/* stylelint-disable-next-line no-descending-specificity */
+a[data-fancybox] img {
+  transition: transform 300ms;
+}
+
+a[data-fancybox]:hover img {
+  transform: scale(1.02);
+}
+
+/* stylelint-disable selector-class-pattern */
+.dark .fancybox__container {
+  --fancybox-color: var(--color-slate-100);
+  --f-button-color: var(--color-slate-300);
+  --f-button-bg: oklch(from var(--color-slate-800) l c h / 60%);
+  --f-button-hover-color: var(--color-slate-100);
+  --f-button-hover-bg: oklch(from var(--color-slate-800) l c h / 80%);
+  --f-toolbar-bg: transparent;
+  --f-toolbar-color: var(--color-slate-300);
+  --f-caption-color: var(--color-slate-400);
+  --f-thumbs-bg: transparent;
+}
+
+.dark .fancybox__backdrop {
+  --fancybox-backdrop-bg: rgb(0 0 0 / 92%);
+}
+/* stylelint-enable selector-class-pattern */

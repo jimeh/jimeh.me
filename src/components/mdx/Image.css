@@ -1,0 +1,10 @@
+.mdx-fancybox-link {
+  display: contents;
+  text-decoration: none;
+}
+
+.prose a.mdx-fancybox-link,
+.prose a.mdx-fancybox-link:hover {
+  color: inherit;
+  text-decoration: none;
+}

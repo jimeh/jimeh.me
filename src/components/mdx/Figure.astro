@@ -1,5 +1,6 @@
 ---
 import Credit from "./Credit.astro";
+import "./Figure.css";
 
 interface Props {
   size?: "default" | "wide" | "full" | (string & {});
@@ -30,8 +31,8 @@ const sizeClass = isPercentage
   ? ""
   : {
       default: "",
-      wide: "blog-figure-wide",
-      full: "blog-figure-full",
+      wide: "mdx-figure-wide",
+      full: "mdx-figure-full",
     }[size as "default" | "wide" | "full"];
 
 const positionClasses = isPercentage
@@ -59,7 +60,7 @@ const hasCaptionSlot = !!captionHtml?.trim();
     Astro.props.class,
     sizeClass,
     positionClasses,
-    flush && "blog-figure-flush",
+    flush && "mdx-figure-flush",
   ]}
   style={figureStyle}
 >
@@ -73,7 +74,7 @@ const hasCaptionSlot = !!captionHtml?.trim();
             text={credit.text}
             href={credit.href}
             position={credit.position}
-            class={(hasCaptionSlot || caption) ? "mt-1" : undefined}
+            class={hasCaptionSlot || caption ? "mt-1" : undefined}
           />
         )}
       </figcaption>

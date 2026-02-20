@@ -1,0 +1,116 @@
+/* rehype-pretty-code: use custom background, show light theme by default */
+
+[data-rehype-pretty-code-figure] pre {
+  background-color: var(--surface-code-block) !important;
+}
+
+[data-rehype-pretty-code-figure] code[data-theme*=" "] {
+  color: var(--shiki-light) !important;
+  background-color: transparent !important;
+}
+
+[data-rehype-pretty-code-figure] [data-line] > span,
+[data-rehype-pretty-code-figure] [data-highlighted-chars] span {
+  color: var(--shiki-light) !important;
+  background-color: transparent !important;
+}
+
+/* rehype-pretty-code: dark override via .dark class */
+
+.dark [data-rehype-pretty-code-figure] code[data-theme*=" "] {
+  color: var(--shiki-dark) !important;
+  background-color: transparent !important;
+}
+
+.dark [data-rehype-pretty-code-figure] [data-line] > span,
+.dark [data-rehype-pretty-code-figure] [data-highlighted-chars] span {
+  color: var(--shiki-dark) !important;
+  background-color: transparent !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+/* rehype-pretty-code: inline highlighted code */
+
+/* stylelint-disable-next-line no-descending-specificity */
+span[data-rehype-pretty-code-figure] > code {
+  padding: 0.15em 0.35em;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  background: var(--surface-code-inline);
+  border: 1px solid var(--border-code-inline);
+}
+
+/* rehype-pretty-code: code block title */
+
+[data-rehype-pretty-code-title] {
+  margin-top: 1.5em;
+  padding: 0.5em 1.25em;
+  font-size: 0.8rem;
+  font-family:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  color: var(--muted);
+  background: var(--surface-code-block);
+  border: 1px solid var(--border-code-block);
+  border-bottom: none;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+[data-rehype-pretty-code-title] + pre {
+  margin-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* rehype-pretty-code: highlighted lines */
+
+[data-rehype-pretty-code-figure] [data-highlighted-line] {
+  background-color: oklch(from var(--accent) l c h / 10%) !important;
+  border-left: 2px solid var(--accent);
+  margin: 0 -1.25em;
+  padding: 0 1.25em 0 calc(1.25em - 2px);
+}
+
+/* rehype-pretty-code: highlighted words/chars */
+
+[data-rehype-pretty-code-figure] [data-highlighted-chars] {
+  background-color: oklch(from var(--accent) l c h / 20%) !important;
+  border-radius: 0.25rem;
+  padding: 0.15em 0.05em;
+}
+
+.dark [data-rehype-pretty-code-figure] [data-highlighted-chars] {
+  background-color: oklch(from var(--accent) l c h / 35%) !important;
+}
+
+/* rehype-pretty-code: diff lines */
+
+[data-rehype-pretty-code-figure] [data-line].diff.add {
+  background-color: oklch(from green l c h / 12%) !important;
+}
+
+[data-rehype-pretty-code-figure] [data-line].diff.remove {
+  background-color: oklch(from red l c h / 12%) !important;
+}
+
+/* rehype-pretty-code: line numbers (opt-in via showLineNumbers) */
+
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: var(--muted);
+  opacity: 0.5;
+}

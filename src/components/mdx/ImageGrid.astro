@@ -1,5 +1,6 @@
 ---
 import Figure from "./Figure.astro";
+import "./ImageGrid.css";
 
 interface Props {
   columns?: number;
@@ -20,7 +21,7 @@ const {
 
 const isPercentage = /^\d+%$/.test(size);
 
-const figureClasses = ["blog-image-grid", isPercentage && "mx-auto"]
+const figureClasses = ["mdx-image-grid", isPercentage && "mx-auto"]
   .filter(Boolean)
   .join(" ");
 
@@ -28,7 +29,7 @@ const gridStyle = [`--grid-columns: ${columns}`, `gap: ${gap}`].join("; ");
 ---
 
 <Figure class={figureClasses} size={size} caption={caption}>
-  <div class="blog-image-grid-inner" style={gridStyle} data-gallery={gallery}>
+  <div class="mdx-image-grid-inner" style={gridStyle} data-gallery={gallery}>
     <slot />
   </div>
   {

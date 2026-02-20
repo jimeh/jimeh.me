@@ -14,16 +14,15 @@ const { icon, name, url, rel, rot13Href, rot13Text } = Astro.props;
 const isRot13 = !!(rot13Href && rot13Text);
 const resolvedHref = isRot13 ? "#" : url;
 const resolvedRel = [rel, "noopener", "noreferrer"].filter(Boolean).join(" ");
-const linkClass =
-  "group text-muted hover:text-accent mx-[5px]" +
-  " whitespace-nowrap sm:mx-0 sm:mr-1.5 sm:leading-[22px]" +
-  " lg:relative lg:float-left lg:mr-0 lg:px-[7px]" +
-  " lg:leading-normal";
 ---
 
 {/* prettier-ignore */}
 <a
-  class={linkClass}
+  class:list={[
+    "group text-muted hover:text-accent mx-[5px]",
+    "whitespace-nowrap sm:mx-0 sm:mr-1.5 sm:leading-[22px]",
+    "lg:relative lg:float-left lg:mr-0 lg:px-[7px] lg:leading-normal",
+  ]}
   href={resolvedHref}
   rel={resolvedRel}
   data-rot13-href={isRot13 ? rot13Href : undefined}

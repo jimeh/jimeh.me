@@ -2,6 +2,8 @@
 import { getCollection } from "astro:content";
 import BlogLayout from "../../../layouts/BlogLayout.astro";
 import PostCard from "@components/blog/PostCard.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
 import { compareBlogPostsDesc } from "@utils/blog-sort";
 
 export async function getStaticPaths() {
@@ -29,17 +31,13 @@ const posts = allPosts
   title={`"${tag}" posts - Blog - Jim Myhrberg`}
   description={`Blog posts tagged "${tag}"`}
 >
-  <h1
-    class="text-heading text-4xl font-bold uppercase [font-stretch:75%] sm:text-5xl"
-  >
-    {tag}
-  </h1>
-  <p class="text-muted mt-2 text-sm">
+  <PageHeading as="h1" size="page" uppercase>{tag}</PageHeading>
+  <MetaText>
     {posts.length}
     {posts.length === 1 ? "post" : "posts"}
     &middot;
     <a href="/blog/tags/" class="text-accent hover:underline"> all tags </a>
-  </p>
+  </MetaText>
 
   <div class="mt-8 space-y-8">
     {posts.map((post) => <PostCard post={post} />)}

@@ -1,0 +1,23 @@
+---
+interface Props {
+  href: string;
+  label: "Previous" | "Next";
+  title: string;
+  align?: "left" | "right";
+}
+
+const { href, label, title, align = "left" } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    "text-muted hover:text-accent flex-1 transition-colors",
+    align === "right" && "text-right",
+  ]}
+>
+  <span class="text-xs tracking-wide uppercase">{label}</span>
+  <span class="mt-0.5 block leading-snug font-bold [font-stretch:75%]">
+    {title}
+  </span>
+</a>

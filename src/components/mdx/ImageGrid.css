@@ -1,0 +1,24 @@
+.mdx-image-grid {
+  margin-block: 1.5rem;
+}
+
+.mdx-image-grid-inner {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns, 2), 1fr);
+}
+
+/* Collapse to single column on narrow viewports. */
+@media (width <= 480px) {
+  .mdx-image-grid-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Figures inside a grid fill their cell without extra margins. */
+.mdx-image-grid .mdx-figure {
+  margin-block: 0;
+}
+
+.mdx-image-grid .mdx-figure img {
+  border-radius: 0.25rem;
+}

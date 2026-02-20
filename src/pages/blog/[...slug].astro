@@ -3,9 +3,11 @@ import { getCollection, render } from "astro:content";
 import { getImage } from "astro:assets";
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import { Image } from "@mdx/index";
+import PostPagerLink from "@components/blog/PostPagerLink.astro";
 import PostMeta from "@components/blog/PostMeta.astro";
 import CodeCopyButton from "@components/blog/CodeCopyButton.astro";
 import FancyboxInit from "@components/blog/FancyboxInit.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
 import { compareBlogPostsAsc } from "@utils/blog-sort";
 import { readingTime } from "@utils/reading-time";
 
@@ -60,11 +62,7 @@ const nextPost =
 >
   <article>
     <header>
-      <h1
-        class="text-heading text-3xl leading-tight font-bold uppercase [font-stretch:75%] sm:text-4xl"
-      >
-        {title}
-      </h1>
+      <PageHeading as="h1" size="post" uppercase>{title}</PageHeading>
       {
         description && (
           <p class="text-subheading mt-2 text-lg leading-snug">{description}</p>
@@ -131,30 +129,23 @@ const nextPost =
   >
     {
       prevPost ? (
-        <a
+        <PostPagerLink
           href={`/blog/${prevPost.id}/`}
-          class="text-muted hover:text-accent flex-1 transition-colors"
-        >
-          <span class="text-xs tracking-wide uppercase">Previous</span>
-          <span class="mt-0.5 block leading-snug font-bold [font-stretch:75%]">
-            {prevPost.data.title}
-          </span>
-        </a>
+          label="Previous"
+          title={prevPost.data.title}
+        />
       ) : (
         <div />
       )
     }
     {
       nextPost ? (
-        <a
+        <PostPagerLink
           href={`/blog/${nextPost.id}/`}
-          class="text-muted hover:text-accent flex-1 text-right transition-colors"
-        >
-          <span class="text-xs tracking-wide uppercase">Next</span>
-          <span class="mt-0.5 block leading-snug font-bold [font-stretch:75%]">
-            {nextPost.data.title}
-          </span>
-        </a>
+          label="Next"
+          title={nextPost.data.title}
+          align="right"
+        />
       ) : (
         <div />
       )

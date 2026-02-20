@@ -1,0 +1,61 @@
+/* Code copy button (CodeCopyButton.astro). */
+.code-copy-btn {
+  position: absolute;
+  top: 0.6875rem;
+  right: 0.6875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.375rem;
+  border: 1px solid var(--border-copy-btn);
+  border-radius: 0.25rem;
+  background: var(--surface-code-block);
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 150ms,
+    color 150ms,
+    background-color 150ms;
+}
+
+.code-copy-btn:hover {
+  color: var(--on-surface);
+  background: var(--surface-subtle);
+}
+
+[data-rehype-pretty-code-figure]:hover > .code-copy-btn {
+  opacity: 1;
+}
+
+.code-copy-btn.copied {
+  color: var(--alert-tip);
+  opacity: 1;
+}
+
+.code-copy-tooltip {
+  pointer-events: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.375rem;
+  background: var(--on-surface);
+  color: var(--surface);
+  font-size: 0.75rem;
+  font-family: var(--font-sans), sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.code-copy-btn:hover .code-copy-tooltip {
+  opacity: 1;
+}
+
+.code-copy-btn.copied .code-copy-tooltip {
+  opacity: 1;
+}

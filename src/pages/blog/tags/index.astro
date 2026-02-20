@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import BlogLayout from "../../../layouts/BlogLayout.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
 
 const posts = await getCollection("blog");
 
@@ -18,14 +20,8 @@ const sortedTags = [...tagCounts.entries()].sort((a, b) =>
 ---
 
 <BlogLayout title="Tags - Blog - Jim Myhrberg" description="All blog post tags">
-  <h1
-    class="text-heading text-4xl font-bold uppercase [font-stretch:75%] sm:text-5xl"
-  >
-    Tags
-  </h1>
-  <p class="text-muted mt-2 text-sm">
-    {sortedTags.length} tags
-  </p>
+  <PageHeading as="h1" size="page" uppercase>Tags</PageHeading>
+  <MetaText>{sortedTags.length} tags</MetaText>
 
   <div class="mt-8 flex flex-wrap gap-2">
     {

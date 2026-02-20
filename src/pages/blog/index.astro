@@ -3,6 +3,8 @@ import { getCollection } from "astro:content";
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import PostCard from "@components/blog/PostCard.astro";
 import PostFeatured from "@components/blog/PostFeatured.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
 import { compareBlogPostsDesc } from "@utils/blog-sort";
 
 const posts = await getCollection("blog");
@@ -31,14 +33,8 @@ const years = [...postsByYear.keys()].sort((a, b) => b - a);
   title="Blog - Jim Myhrberg"
   description="Blog posts by Jim Myhrberg"
 >
-  <h1
-    class="text-heading text-4xl font-bold uppercase [font-stretch:75%] sm:text-5xl"
-  >
-    Blog
-  </h1>
-  <p class="text-muted mt-2 text-sm">
-    {posts.length} posts
-  </p>
+  <PageHeading as="h1" size="page" uppercase>Blog</PageHeading>
+  <MetaText>{posts.length} posts</MetaText>
 
   <section class="mt-8" aria-label="Latest post">
     <PostFeatured post={featuredPost} />
@@ -47,7 +43,9 @@ const years = [...postsByYear.keys()].sort((a, b) => b - a);
   {
     years.map((year) => (
       <section class="mt-12">
-        <h2 class="text-muted text-2xl font-bold [font-stretch:75%]">{year}</h2>
+        <PageHeading as="h2" size="section" class="text-muted">
+          {year}
+        </PageHeading>
         <hr class="border-border mt-2" />
         <div class="mt-6 space-y-8">
           {postsByYear.get(year)!.map((post) => (
