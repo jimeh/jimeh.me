@@ -201,6 +201,7 @@
   padding-left: 1em;
   color: var(--muted);
   font-style: italic;
+  overflow: hidden;
 }
 
 .prose blockquote p {
@@ -222,6 +223,7 @@
   background: oklch(from var(--border) l c h / 15%);
   font-style: normal;
   color: var(--on-surface);
+  overflow: hidden;
 }
 
 .prose .markdown-alert-title {
