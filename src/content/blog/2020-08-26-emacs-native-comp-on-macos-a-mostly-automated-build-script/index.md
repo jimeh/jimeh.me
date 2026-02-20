@@ -18,8 +18,10 @@ image:
 
 ## TL;DR
 
-**_Warning:_** _As of today (26th August, 2020), this works on my machine. Your
-luck may vary. Use at your own risk._
+> [!IMPORTANT]
+>
+> As of today (26th August, 2020), this works on my machine. Your luck may vary.
+> Use at your own risk.
 
 About ten days ago I got
 [native-comp/gccemacs](https://akrl.sdf.org/gccemacs.html) working in my

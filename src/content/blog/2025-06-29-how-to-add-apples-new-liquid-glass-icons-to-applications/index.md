@@ -66,7 +66,7 @@ You'll notice that each of the layers, colors, and other individual items from
 within your `*.icon` document. For example, here's the one of the `Icon Image`
 assets from the `Assets.car` file in my Emacs LG project:
 
-```json title="Icon Image asset in Assets.car" /RGB/
+```json
 {
   "AssetType": "Icon Image",
   "BitsPerComponent": 8,

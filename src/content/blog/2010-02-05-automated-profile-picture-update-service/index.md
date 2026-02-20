@@ -6,8 +6,11 @@ date: 2010-02-05
 tags: ["technology", "social-media", "avatar"]
 image:
   src: ./luthfi-alfarizi-gEf9bOMTZtk-unsplash.jpg
-  size: 40%
-  position: right
+  # size: 40%
+  # position: right
+  aspect: 32/9
+  size: wide
+  # objectPosition: bottom
   credit:
     text: Photo by Luthfi Alfarizi on Unsplash
     href: https://unsplash.com/photos/gEf9bOMTZtk

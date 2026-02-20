@@ -33,6 +33,7 @@
   --surface-code-block: var(--color-zinc-100);
   --border-code-inline: var(--border);
   --border-code-block: var(--border);
+  --border-copy-btn: var(--color-zinc-300);
 }
 
 .dark {
@@ -62,6 +63,7 @@
   --surface-code-block: var(--color-zinc-900);
   --border-code-inline: var(--color-zinc-600);
   --border-code-block: var(--border);
+  --border-copy-btn: var(--border-code-block);
 }
 
 /* Home page: original faded aesthetic for the splash screen. */
@@ -456,7 +458,7 @@ code[data-line-numbers] > [data-line]::before {
   align-items: center;
   justify-content: center;
   padding: 0.375rem;
-  border: 1px solid var(--border-code-block);
+  border: 1px solid var(--border-copy-btn);
   border-radius: 0.25rem;
   background: var(--surface-code-block);
   color: var(--muted);
