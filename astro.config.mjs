@@ -3,6 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
+import rehypePrettyCode from "rehype-pretty-code";
 import { remarkAlert } from "remark-github-blockquote-alert";
 
 export default defineConfig({
@@ -12,13 +13,17 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   markdown: {
+    syntaxHighlight: false,
     remarkPlugins: [remarkAlert],
-    shikiConfig: {
-      themes: {
-        light: "one-light",
-        dark: "one-dark-pro",
-      },
-    },
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          theme: { light: "one-light", dark: "one-dark-pro" },
+          keepBackground: false,
+        },
+      ],
+    ],
   },
   experimental: {
     fonts: [

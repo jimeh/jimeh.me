@@ -33,6 +33,15 @@ pnpm and Node 24 managed via mise. No tests configured.
 - SEO: Open Graph, Twitter Card, JSON-LD (WebSite schema) via `SEOHead.astro`
 - Markdown alerts: GitHub-style `> [!NOTE]` / `> [!WARNING]` etc. via
   `remark-github-blockquote-alert` remark plugin, styled in `main.css`
+- Code highlighting: `rehype-pretty-code` (Shiki-based rehype plugin) with
+  dual themes (`one-light` / `one-dark-pro`). Astro's built-in Shiki is
+  disabled (`syntaxHighlight: false`). Supports inline highlighting
+  (`` `code{:lang}` ``), line highlighting (` ```lang {1,3-5} `), word
+  highlighting (` ```lang /word/ `), titles (` ```lang title="file.js" `),
+  line numbers (` ```lang showLineNumbers `), and diff
+  (`// [!code ++]` / `// [!code --]`)
+- Code copy button: `CodeCopyButton.astro` client script adds a
+  copy-to-clipboard button with tooltip to all code blocks
 
 ## Blog Image Frontmatter
 

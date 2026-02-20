@@ -66,7 +66,7 @@ You'll notice that each of the layers, colors, and other individual items from
 within your `*.icon` document. For example, here's the one of the `Icon Image`
 assets from the `Assets.car` file in my Emacs LG project:
 
-```json
+```json title="Icon Image asset in Assets.car" /RGB/
 {
   "AssetType": "Icon Image",
   "BitsPerComponent": 8,
@@ -84,7 +84,7 @@ assets from the `Assets.car` file in my Emacs LG project:
   "Scale": 1,
   "SHA1Digest": "DC92383D751D5A42B24271D32C6414E6EECEDDFEA8BAD8DD6D004BC111DA87E5",
   "SizeOnDisk": 186738
-},
+}
 ```
 
 ## Using Xcode
