@@ -3,23 +3,38 @@
 ---
 
 <script>
+  const ICON_COPY =
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const ICON_CHECK =
+    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
   const figures = document.querySelectorAll<HTMLElement>(
-    "[data-rehype-pretty-code-figure] pre",
+    "figure[data-rehype-pretty-code-figure]",
   );
 
-  for (const pre of figures) {
-    const wrapper = pre.parentElement;
-    if (!wrapper) continue;
+  for (const figure of figures) {
+    const pre = figure.querySelector("pre");
+    if (!pre) continue;
 
-    // Ensure the figure wrapper is positioned for the absolute button.
-    wrapper.style.position = "relative";
+    figure.style.position = "relative";
 
     const button = document.createElement("button");
     button.type = "button";
     button.className = "code-copy-btn";
     button.setAttribute("aria-label", "Copy code");
-    button.innerHTML =
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+
+    // Position relative to the pre, accounting for any title bar.
+    const offset = 11; // 0.6875rem
+    button.style.top = `${pre.offsetTop + offset}px`;
+
+    const icon = document.createElement("span");
+    icon.innerHTML = ICON_COPY;
+
+    const tooltip = document.createElement("span");
+    tooltip.className = "code-copy-tooltip";
+    tooltip.textContent = "Copy";
+
+    button.append(icon, tooltip);
 
     button.addEventListener("click", async () => {
       const code = pre.querySelector("code");
@@ -27,17 +42,17 @@
 
       await navigator.clipboard.writeText(code.textContent ?? "");
 
-      button.innerHTML =
-        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      icon.innerHTML = ICON_CHECK;
+      tooltip.textContent = "Copied!";
       button.classList.add("copied");
 
       setTimeout(() => {
-        button.innerHTML =
-          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+        icon.innerHTML = ICON_COPY;
+        tooltip.textContent = "Copy";
         button.classList.remove("copied");
       }, 2000);
     });
 
-    wrapper.appendChild(button);
+    figure.appendChild(button);
   }
 </script>
