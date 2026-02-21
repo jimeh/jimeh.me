@@ -5,6 +5,7 @@ import BlogLayout from "../../layouts/BlogLayout.astro";
 import { Image } from "@mdx/index";
 import PostPagerLink from "@components/blog/PostPagerLink.astro";
 import PostMeta from "@components/blog/PostMeta.astro";
+import TagList from "@components/blog/TagList.astro";
 import CodeCopyButton from "@components/blog/CodeCopyButton.astro";
 import FancyboxInit from "@components/blog/FancyboxInit.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
@@ -73,7 +74,6 @@ const nextPost =
           date={date}
           updatedDate={updatedDate}
           readingTime={readTime}
-          tags={tags}
         />
       </div>
       <hr class="border-border mt-6" />
@@ -121,7 +121,15 @@ const nextPost =
     <CodeCopyButton />
   </article>
 
-  <hr class="border-border mt-12" />
+  {
+    tags && tags.length > 0 && (
+      <div class="mt-10">
+        <TagList tags={tags} />
+      </div>
+    )
+  }
+
+  <hr class="border-border mt-8" />
 
   <nav
     class="mt-6 flex justify-between gap-4 text-sm"

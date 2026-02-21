@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import TagList from "./TagList.astro";
 import { readingTime } from "@utils/reading-time";
 
 interface Props {
@@ -9,7 +8,7 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, date, tags, image } = post.data;
+const { title, description, date, image } = post.data;
 const readTime = readingTime(post.body ?? "");
 
 function formatDate(dateStr: string): string {
@@ -26,7 +25,7 @@ function formatDate(dateStr: string): string {
   <a href={`/blog/${post.id}/`} class="block">
     {
       image && (
-        <div class="overflow-hidden rounded-t-lg">
+        <div class="overflow-hidden rounded-lg">
           <Image
             src={image.src}
             alt={image.alt}
@@ -43,12 +42,7 @@ function formatDate(dateStr: string): string {
         </div>
       )
     }
-    <div
-      class:list={[
-        "border-border border p-5",
-        image ? "rounded-b-lg border-t-0" : "rounded-lg",
-      ]}
-    >
+    <div class={image ? "mt-4" : ""}>
       <h3
         class="text-heading group-hover:text-accent text-xl leading-snug font-bold [font-stretch:75%] transition-colors sm:text-2xl"
       >
@@ -66,11 +60,4 @@ function formatDate(dateStr: string): string {
       </div>
     </div>
   </a>
-  {
-    tags && tags.length > 0 && (
-      <div class="mt-2.5 px-5">
-        <TagList tags={tags} />
-      </div>
-    )
-  }
 </article>

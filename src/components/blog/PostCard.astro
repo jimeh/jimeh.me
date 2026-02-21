@@ -1,16 +1,12 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
-import TagList from "./TagList.astro";
-import { readingTime } from "@utils/reading-time";
-
 interface Props {
   post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
-const { title, description, date, tags, image } = post.data;
-const readTime = readingTime(post.body ?? "");
+const { title, description, date, image } = post.data;
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
@@ -56,21 +52,12 @@ function formatDate(dateStr: string): string {
           {title}
         </h3>
       </a>
-      <p class="text-subheading mt-1.5 text-sm leading-relaxed">
+      <p class="text-subheading mt-1.5 line-clamp-2 text-sm leading-relaxed">
         {description}
       </p>
-      <div class="text-muted mt-1 flex items-center gap-2 text-sm">
+      <div class="text-muted mt-1 text-sm">
         <time datetime={date}>{formatDate(date)}</time>
-        <span>&middot;</span>
-        <span>{readTime} min read</span>
       </div>
-      {
-        tags && tags.length > 0 && (
-          <div class="mt-2">
-            <TagList tags={tags} />
-          </div>
-        )
-      }
     </div>
   </div>
 </article>

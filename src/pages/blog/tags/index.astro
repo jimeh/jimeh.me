@@ -28,10 +28,10 @@ const sortedTags = [...tagCounts.entries()].sort((a, b) =>
       sortedTags.map(([tag, count]) => (
         <a
           href={`/blog/tags/${tag}/`}
-          class="text-muted hover:text-accent bg-on-surface/5 rounded px-3 py-1.5 text-sm transition-colors"
+          class="text-muted hover:text-accent border-border hover:border-accent rounded-full border px-3.5 py-1.5 text-sm transition-colors"
         >
           {tag}
-          <span class="ml-1 text-xs opacity-60">{count}</span>
+          <span class="ml-1 opacity-60">{count}</span>
         </a>
       ))
     }

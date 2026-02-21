@@ -1,14 +1,11 @@
 ---
-import TagList from "./TagList.astro";
-
 interface Props {
   date: string;
   updatedDate?: string;
   readingTime: number;
-  tags?: string[];
 }
 
-const { date, updatedDate, readingTime, tags } = Astro.props;
+const { date, updatedDate, readingTime } = Astro.props;
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
@@ -38,10 +35,3 @@ function formatDate(dateStr: string): string {
     {readingTime} min read
   </span>
 </div>
-{
-  tags && tags.length > 0 && (
-    <div class="mt-2">
-      <TagList tags={tags} />
-    </div>
-  )
-}
