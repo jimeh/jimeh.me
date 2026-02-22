@@ -2,8 +2,7 @@
 
 [data-rehype-pretty-code-figure] pre {
   background-color: var(--surface-code-block) !important;
-  border: 1px solid var(--border-code-block);
-  padding: 1em 1.25em; /* Fixed left-border of line highlights */
+  padding: 1em 1.2em; /* Fixed left-border of line highlights */
 }
 
 [data-rehype-pretty-code-figure] code[data-theme*=" "] {
@@ -59,8 +58,8 @@ span[data-rehype-pretty-code-figure] > code {
     monospace;
   color: var(--muted);
   background: var(--surface-code-block);
-  border: 1px solid var(--border-code-block);
-  border-bottom: none;
+  border: none;
+  border-bottom: 1px solid var(--border-code-block);
   border-radius: 0.5rem 0.5rem 0 0;
 }
 

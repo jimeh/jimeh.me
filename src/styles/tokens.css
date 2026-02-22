@@ -70,8 +70,8 @@
 
   /* copy button */
   --surface-code-block-hover: var(--color-zinc-800);
-  --color-copy-btn: var(--color-zinc-500);
-  --color-copy-btn-hover: var(--color-zinc-300);
+  --color-copy-btn: var(--color-zinc-600);
+  --color-copy-btn-hover: var(--color-zinc-400);
 }
 
 /* Home page: original faded aesthetic for the splash screen. */

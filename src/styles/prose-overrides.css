@@ -29,10 +29,8 @@
 .prose
   code:not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
   padding: 0.15em 0.35em;
-  border: 1px solid var(--border-code-inline);
   border-radius: 0.25rem;
   background: var(--surface-code-inline);
-  font-size: 0.875em;
   font-weight: 400;
   font-family:
     ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
@@ -40,22 +38,9 @@
   color: inherit;
 }
 
-.prose
-  code:not(
-    :where(pre code, [class~="not-prose"], [class~="not-prose"] *)
-  )::before,
-.prose
-  code:not(
-    :where(pre code, [class~="not-prose"], [class~="not-prose"] *)
-  )::after {
-  content: none;
-}
-
 /* Code blocks */
 
 .prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-  border: 1px solid var(--border-code-block);
-  background: var(--surface-code-block);
   scrollbar-width: thin;
   scrollbar-color: oklch(from var(--on-surface) l c h / 20%) transparent;
 }
