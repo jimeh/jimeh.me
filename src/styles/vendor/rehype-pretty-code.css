@@ -2,6 +2,8 @@
 
 [data-rehype-pretty-code-figure] pre {
   background-color: var(--surface-code-block) !important;
+  border: 1px solid var(--border-code-block);
+  padding: 1em 1.25em; /* Fixed left-border of line highlights */
 }
 
 [data-rehype-pretty-code-figure] code[data-theme*=" "] {
@@ -50,6 +52,7 @@ span[data-rehype-pretty-code-figure] > code {
 [data-rehype-pretty-code-title] {
   margin-top: 1.5em;
   padding: 0.5em 1.25em;
+  line-height: 1.7;
   font-size: 0.8rem;
   font-family:
     ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",

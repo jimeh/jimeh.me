@@ -66,6 +66,10 @@ const sizes = isPercentage
 const imgStyle = aspect
   ? `aspect-ratio: ${aspect}; object-position: ${objectPosition}`
   : undefined;
+
+// Figure.css owns spacing/caption layout for this component, so opt its image
+// out of Tailwind Typography's generic `.prose img` margins.
+const proseOptOutClass = "not-prose";
 ---
 
 <Figure
@@ -81,7 +85,7 @@ const imgStyle = aspect
       <AstroImage
         src={src}
         alt={alt}
-        class:list={[imgClasses, aspect && "object-cover"]}
+        class:list={[proseOptOutClass, imgClasses, aspect && "object-cover"]}
         style={imgStyle}
         widths={[640, 960, 1280, 1600]}
         sizes={sizes}
@@ -96,7 +100,7 @@ const imgStyle = aspect
         <AstroImage
           src={src}
           alt={alt}
-          class:list={[imgClasses, aspect && "object-cover"]}
+          class:list={[proseOptOutClass, imgClasses, aspect && "object-cover"]}
           style={imgStyle}
           widths={[640, 960, 1280, 1600]}
           sizes={sizes}

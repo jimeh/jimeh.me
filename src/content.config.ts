@@ -35,9 +35,7 @@ const blog = defineCollection({
           /** Lightbox gallery group name. */
           gallery: z.string().optional(),
           /** How the thumbnail fills the PostCard container. */
-          thumbnailFill: z
-            .enum(["fill", "full"])
-            .default("fill"),
+          thumbnailFill: z.enum(["fill", "full"]).default("fill"),
           /** CSS aspect-ratio for the displayed image box (e.g. "16/9"). */
           aspect: z.string().optional(),
           /** CSS object-position when aspect is set (e.g. "top", "center"). */

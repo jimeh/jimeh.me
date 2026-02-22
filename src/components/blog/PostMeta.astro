@@ -24,8 +24,7 @@ function formatDate(dateStr: string): string {
       <>
         <span>&middot;</span>
         <span>
-          updated{" "}
-          <time datetime={updatedDate}>{formatDate(updatedDate)}</time>
+          updated <time datetime={updatedDate}>{formatDate(updatedDate)}</time>
         </span>
       </>
     )

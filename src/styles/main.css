@@ -1,6 +1,10 @@
 @import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+
 @import "./tokens.css";
-@import "./prose.css";
+@import "./prose-overrides.css";
+@import "./vendor/remark-github-blockquote-alert.css";
 @import "./vendor/rehype-pretty-code.css";
 @import "./vendor/fancybox.css";
 

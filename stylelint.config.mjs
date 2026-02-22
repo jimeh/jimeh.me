@@ -6,7 +6,20 @@ export default {
     "at-rule-no-unknown": [
       true,
       {
-        ignoreAtRules: ["theme", "custom-variant", "layer", "apply", "utility"],
+        ignoreAtRules: [
+          "theme",
+          "custom-variant",
+          "layer",
+          "apply",
+          "utility",
+          "plugin",
+        ],
+      },
+    ],
+    "no-invalid-position-at-import-rule": [
+      true,
+      {
+        ignoreAtRules: ["plugin"],
       },
     ],
     "import-notation": null,

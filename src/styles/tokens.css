@@ -15,7 +15,7 @@
   --accent: var(--color-sky-600);
 
   /* borders */
-  --border: var(--color-slate-200);
+  --border: var(--color-zinc-200);
 
   /* alerts */
   --alert-note: var(--color-sky-600);
@@ -24,12 +24,16 @@
   --alert-warning: var(--color-amber-600);
   --alert-caution: var(--color-red-600);
 
-  /* code blocks */
+  /* inline code blocks */
   --surface-code-inline: var(--color-zinc-100);
-  --surface-code-block: var(--color-zinc-100);
   --border-code-inline: var(--border);
+
+  /* code blocks */
+  --surface-code-block: var(--color-zinc-100);
   --border-code-block: var(--border);
-  --border-copy-btn: var(--color-zinc-300);
+
+  /* copy button */
+  --border-copy-btn: var(--color-slate-200);
 }
 
 .dark {
@@ -54,11 +58,15 @@
   --alert-warning: var(--color-amber-400);
   --alert-caution: var(--color-red-400);
 
-  /* code blocks */
+  /* inline code blocks */
   --surface-code-inline: var(--color-zinc-800);
-  --surface-code-block: var(--color-zinc-900);
   --border-code-inline: var(--color-zinc-600);
+
+  /* code blocks */
+  --surface-code-block: var(--color-zinc-900);
   --border-code-block: var(--border);
+
+  /* copy button */
   --border-copy-btn: var(--border-code-block);
 }
 

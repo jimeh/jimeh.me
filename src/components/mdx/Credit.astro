@@ -18,10 +18,20 @@ const positionClass = {
 }[position];
 ---
 
-<span class:list={["block text-xs opacity-70", positionClass, Astro.props.class]}>
+<span
+  class:list={[
+    "not-prose block text-xs opacity-70",
+    positionClass,
+    Astro.props.class,
+  ]}
+>
   {
     href ? (
-      <a href={href} rel="noopener noreferrer">
+      <a
+        href={href}
+        rel="noopener noreferrer"
+        class="text-inherit no-underline"
+      >
         {text}
       </a>
     ) : (
