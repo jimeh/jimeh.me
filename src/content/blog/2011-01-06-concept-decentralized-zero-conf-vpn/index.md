@@ -18,7 +18,7 @@ image:
 Imagine a new kind of VPN service which doesn't require any kind of
 configuration and magically just works without a central server.
 
-### Who Am I?
+## Who Am I?
 
 Before I go on, I should point out that I have no background in network
 infrastructure, P2P network development, or pretty much any of the specific
@@ -27,7 +27,7 @@ is based on my understanding of these technologies. As such, please point out
 any errors, misconceptions or other issues you might find. But keep in mind,
 this is simply an idea of a potentially awesome technology.
 
-### The Idea
+## The Idea
 
 For a while now it's been bugging me how messy it can be to get a VPN up and
 running. Or just getting setup through any means to gain remote access to
@@ -45,7 +45,7 @@ different computers. Yesterday I had an idea somewhat based on
 > which in essence works a lot like Apple's Bonjour technology; Everybody talks
 > directly to everybody.
 
-### The Details
+## The Details
 
 I believe the concept is rather simple, but implementing it could be another
 story. From a functionality point of view, these are some of my initial
@@ -74,7 +74,7 @@ ideas/notes:
   BitTorrent users.
 - Everything should be open source. Cause really, what's the point otherwise? :)
 
-### Conclusion
+## Conclusion
 
 To me, the coolest and most interesting point is piggybacking on existing
 BitTorrent DHT nodes. If this is something BitTorrent client developers will

@@ -45,7 +45,7 @@ After that, it's basically just:
 5. Check `builds` directory for a `*.tbz` archive containing the built
    Emacs.app.
 
-## The long version
+## The Long Version
 
 I have a hacky build script which produces completely self-contained Emacs.app
 applications. Every few years I dust it off and update it whenever I start
@@ -78,7 +78,7 @@ loaded elisp code is now compiled natively.
 At the moment I see myself keeping the build script up to date and working for
 some time, probably even until native-comp hits a stable release for macOS.
 
-## Native comp, worth it?
+## Native Comp, Worth It?
 
 Personally I'm getting massive improvements to overall GUI performance, to the
 point I'm not sure I'd ever be able to go back to not having native-comp.

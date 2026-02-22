@@ -106,7 +106,7 @@ If you include multiple `*.icon` documents in the Xcode project, they will all
 be included in the `Assets.car` file, regardless of what you've set the App Icon
 option to.
 
-## Not using Xcode
+## Not Using Xcode
 
 If your application does not use Xcode for its build process, you can manually
 add a `Assets.car` file and set `CFBundleIconName` in `Contents/Info.plist`.
