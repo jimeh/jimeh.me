@@ -31,11 +31,7 @@ import "./CodeCopyButton.css";
     const icon = document.createElement("span");
     icon.innerHTML = ICON_COPY;
 
-    const tooltip = document.createElement("span");
-    tooltip.className = "code-copy-tooltip";
-    tooltip.textContent = "Copy";
-
-    button.append(icon, tooltip);
+    button.append(icon);
 
     button.addEventListener("click", async () => {
       const code = pre.querySelector("code");
@@ -44,12 +40,10 @@ import "./CodeCopyButton.css";
       await navigator.clipboard.writeText(code.textContent ?? "");
 
       icon.innerHTML = ICON_CHECK;
-      tooltip.textContent = "Copied!";
       button.classList.add("copied");
 
       setTimeout(() => {
         icon.innerHTML = ICON_COPY;
-        tooltip.textContent = "Copy";
         button.classList.remove("copied");
       }, 2000);
     });
