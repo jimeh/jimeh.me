@@ -22,7 +22,8 @@ pnpm and Node 24 managed via mise. No tests configured.
 ## Patterns
 
 - Page content: Data-driven from typed exports → grep `siteConfig`, `siteLinks`
-- Icons: astro-icon with Iconify collections (fa6-brands, fa6-solid, heroicons)
+- Icons: astro-icon with Iconify collections (fa6-brands, fa6-solid, heroicons,
+  octicon)
 - Email: ROT13 obfuscation decoded client-side in `SiteLink.astro`
 - CSS: Tailwind CSS v4 via `@tailwindcss/vite`. `main.css` is a thin entry point
   importing `tokens.css`, `@tailwindcss/typography`, and vendor styles. Legacy
@@ -44,8 +45,8 @@ pnpm and Node 24 managed via mise. No tests configured.
   highlighting (` ```lang /word/ `), titles (` ```lang title="file.js" `), line
   numbers (` ```lang showLineNumbers `), and diff (`// [!code ++]` /
   `// [!code --]`)
-- Code copy button: `CodeCopyButton.astro` client script adds a
-  copy-to-clipboard button with tooltip to all code blocks
+- Code copy button: `CodeCopyButton.astro` uses a `<template>` with astro-icon
+  (octicon) cloned per code block; always visible, no hover-to-show
 
 ## Blog Image Frontmatter
 

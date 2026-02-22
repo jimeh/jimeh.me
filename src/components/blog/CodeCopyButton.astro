@@ -1,13 +1,19 @@
 ---
 // Adds a copy-to-clipboard button to all rehype-pretty-code blocks.
+import { Icon } from "astro-icon/components";
 import "./CodeCopyButton.css";
 ---
 
+<template id="code-copy-btn-tpl">
+  <button type="button" class="code-copy-btn" aria-label="Copy code">
+    <Icon name="octicon:copy-16" class="size-4" data-icon="copy" />
+    <Icon name="octicon:check-16" class="hidden size-4" data-icon="check" />
+  </button>
+</template>
+
 <script>
-  const ICON_COPY =
-    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
-  const ICON_CHECK =
-    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  const tpl = document.querySelector<HTMLTemplateElement>("#code-copy-btn-tpl");
+  if (!tpl) throw new Error("Missing #code-copy-btn-tpl template");
 
   const figures = document.querySelectorAll<HTMLElement>(
     "figure[data-rehype-pretty-code-figure]",
@@ -19,19 +25,16 @@ import "./CodeCopyButton.css";
 
     figure.style.position = "relative";
 
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "code-copy-btn";
-    button.setAttribute("aria-label", "Copy code");
+    const button = tpl.content.firstElementChild!.cloneNode(
+      true,
+    ) as HTMLButtonElement;
 
     // Position relative to the pre, accounting for any title bar.
     const offset = 11; // 0.6875rem
     button.style.top = `${pre.offsetTop + offset}px`;
 
-    const icon = document.createElement("span");
-    icon.innerHTML = ICON_COPY;
-
-    button.append(icon);
+    const iconCopy = button.querySelector('[data-icon="copy"]')!;
+    const iconCheck = button.querySelector('[data-icon="check"]')!;
 
     button.addEventListener("click", async () => {
       const code = pre.querySelector("code");
@@ -39,11 +42,13 @@ import "./CodeCopyButton.css";
 
       await navigator.clipboard.writeText(code.textContent ?? "");
 
-      icon.innerHTML = ICON_CHECK;
+      iconCopy.classList.add("hidden");
+      iconCheck.classList.remove("hidden");
       button.classList.add("copied");
 
       setTimeout(() => {
-        icon.innerHTML = ICON_COPY;
+        iconCheck.classList.add("hidden");
+        iconCopy.classList.remove("hidden");
         button.classList.remove("copied");
       }, 2000);
     });
