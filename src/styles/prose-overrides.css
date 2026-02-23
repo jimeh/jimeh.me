@@ -28,7 +28,7 @@
 
 .prose
   code:not(:where(pre code, [class~="not-prose"], [class~="not-prose"] *)) {
-  padding: 0.15em 0.3em 0.15em 0.35em;
+  padding: 0.15em 0.35em;
   border-radius: 0.25rem;
   background: var(--surface-code-inline);
   font-weight: 400;
