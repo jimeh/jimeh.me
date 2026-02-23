@@ -2,12 +2,16 @@
 
 [data-rehype-pretty-code-figure] pre {
   background-color: var(--surface-code-block) !important;
-  padding: 1em 1.2em; /* Fixed left-border of line highlights */
+
+  /* Fixed left-side border of line highlights */
+  padding: 1em 1.2em;
 }
 
 [data-rehype-pretty-code-figure] code[data-theme*=" "] {
   color: var(--shiki-light) !important;
-  background-color: transparent !important;
+
+  /* Control background color for syntax-highlighted inline code */
+  background-color: var(--surface-code-inline) !important;
 }
 
 [data-rehype-pretty-code-figure] [data-line] > span,
@@ -19,6 +23,13 @@
 /* rehype-pretty-code: dark override via .dark class */
 
 .dark [data-rehype-pretty-code-figure] code[data-theme*=" "] {
+  color: var(--shiki-dark) !important;
+
+  /* Control background color for syntax-highlighted inline code */
+  background-color: var(--surface-code-inline) !important;
+}
+
+.dark [data-rehype-pretty-code-figure] pre code[data-theme*=" "] {
   color: var(--shiki-dark) !important;
   background-color: transparent !important;
 }
@@ -34,6 +45,18 @@
 
 /* rehype-pretty-code: inline highlighted code */
 
+span[data-rehype-pretty-code-figure] > code::before,
+span[data-rehype-pretty-code-figure] > code::after {
+  /* Control backticks for syntax-highlighted inline code */
+  content: "`" !important;
+}
+
+.prose code:not(pre code)::before,
+.prose code:not(pre code)::after {
+  /* Control for plain text inline code */
+  content: "`";
+}
+
 /* stylelint-disable-next-line no-descending-specificity */
 span[data-rehype-pretty-code-figure] > code {
   padding: 0.15em 0.35em;
@@ -43,7 +66,6 @@ span[data-rehype-pretty-code-figure] > code {
     ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
     monospace;
   background: var(--surface-code-inline);
-  border: 1px solid var(--border-code-inline);
 }
 
 /* rehype-pretty-code: code block title */
