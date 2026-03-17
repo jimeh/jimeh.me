@@ -25,12 +25,12 @@ function formatDate(dateStr: string): string {
   <a href={`/blog/${post.id}/`} class="block">
     {
       image && (
-        <div class="overflow-hidden rounded-lg">
+        <div class="overflow-hidden rounded-lg transition-transform duration-300 group-hover:scale-[1.015]">
           <Image
             src={image.src}
             alt={image.alt}
             class:list={[
-              "aspect-[2/1] w-full transition-transform duration-300 group-hover:scale-[1.02]",
+              "aspect-[2/1] w-full transition-transform duration-300 group-hover:scale-[1.015]",
               image.thumbnailFill === "full"
                 ? "object-contain"
                 : "object-cover",
