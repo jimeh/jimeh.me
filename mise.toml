@@ -1,0 +1,32 @@
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
+
+[tools]
+pnpm = "latest"
+
+[tasks.dev]
+run = "pnpm dev"
+
+[tasks.build]
+run = "pnpm build"
+
+[tasks.preview]
+run = "pnpm preview"
+
+[tasks.lint]
+run = "pnpm lint"
+
+[tasks.lint-fix]
+run = "pnpm lint:fix"
+
+[tasks.format]
+run = "pnpm format"
+
+[tasks.format-check]
+run = "pnpm format:check"
+
+[tasks.typecheck]
+run = "pnpm typecheck"
+
+[tasks.check]
+run = "pnpm check"
