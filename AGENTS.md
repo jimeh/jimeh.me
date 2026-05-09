@@ -1,105 +1,59 @@
 # AGENTS.md
 
-Personal portfolio landing page (jimeh.me). Astro 5, TypeScript, CSS. Static
+Personal portfolio landing page (jimeh.me). Astro 6, TypeScript, CSS. Static
 site deployed to GitHub Pages.
 
 ## Commands
 
 ```sh
-mise run dev          # Portless Astro dev server
-mise run build        # Production build
-mise run preview      # Preview build
-mise run lint         # ESLint + Stylelint
-mise run lint-fix     # Auto-fix lint issues
-pnpm lint:markdown    # markdownlint-cli2 for .md/.mdx files
-mise run format       # Prettier write
-mise run format-check # Prettier check
-mise run typecheck    # astro check (TypeScript)
-mise run check        # format:check + lint + typecheck
-mise run fix          # format + lint-fix
-mise run verify       # check + build
+mise run dev           # Portless Astro dev server
+mise run build         # Production build
+mise run preview       # Preview build
+mise run lint          # ESLint + Stylelint + Markdownlint
+mise run lint-fix      # Auto-fix lint issues
+mise run check-content # Blog content invariant checks
+mise run smoke         # Built-site smoke checks; run after build
+mise run format        # Prettier write
+mise run format-check  # Prettier check
+mise run typecheck     # astro check (TypeScript)
+mise run check         # format:check + lint + content + typecheck
+mise run fix           # format + lint-fix
+mise run verify        # check + build + smoke
 ```
 
 Husky runs `pnpm precommit` before commits. That executes `lint-staged` against
 staged files first, then `pnpm check` across the whole project.
 
 Node 24 and pnpm 11 are managed via mise. Prefer `mise run <task>` for common
-workflows; use `pnpm` directly when you need package-manager details. No tests
-configured.
+workflows; use `pnpm` directly when you need package-manager details. No unit
+tests are configured.
 
-`mise run dev` wraps `astro dev` with Portless on proxy port 1355, giving the
-site a stable `https://jimeh.me.localhost:1355` URL without a sudo prompt.
-Linked git worktrees get branch-prefixed subdomains automatically. To bypass
-Portless, run `PORTLESS=0 mise run dev`.
+## Project Map
+
+- Local development and validation: `docs/local-dev.md`
+- Blog/content authoring rules: `docs/blog-content.md`
+- Styling, theme tokens, and shared UI primitives: `docs/styling.md`
+- Harness checks and CI shape: `docs/harness.md`
 
 ## Patterns
 
-- Page content: Data-driven from typed exports → grep `siteConfig`, `siteLinks`
-- Blog URLs: Use `src/utils/blog-url.ts` helpers. Canonical post URLs are
-  `/blog/:year/:slug/`; year archives live at `/blog/:year/`; legacy full-date
-  URLs redirect via `astro.config.mjs`.
-- Icons: astro-icon with Iconify collections (fa6-brands, fa6-solid, heroicons,
-  octicon)
-- Email: ROT13 obfuscation decoded client-side in `SiteLink.astro`
-- CSS: Tailwind CSS v4 via `@tailwindcss/vite`. `main.css` is a thin entry point
-  importing `tokens.css`, `@tailwindcss/typography`, and vendor styles. Legacy
-  `src/styles/prose.css` is kept but not imported. Component CSS co-located as
-  imports (e.g. `Figure.css` next to `Figure.astro`)
-- UI primitives: `src/components/ui/` — `PageHeading`, `MetaText`, `NavTextLink`
-  for consistent blog typography
-- Dark mode: System/light/dark toggle, `.dark` class on `<html>`, state in
-  localStorage
-- Fonts: Open Sans variable font, self-hosted via Astro Fonts API (local
-  provider)
-- SEO: Open Graph, Twitter Card, JSON-LD (WebSite schema) via `SEOHead.astro`
-- Markdown alerts: GitHub-style `> [!NOTE]` / `> [!WARNING]` etc. via
-  `remark-github-blockquote-alert` remark plugin, rendered inside `.prose`
-- Code highlighting: `rehype-pretty-code` (Shiki-based rehype plugin) with dual
-  themes (`one-light` / `one-dark-pro`). Astro's built-in Shiki is disabled
-  (`syntaxHighlight: false`). Supports inline highlighting
-  (`` `code{:lang}` ``), line highlighting (` ```lang {1,3-5} `), word
-  highlighting (` ```lang /word/ `), titles (` ```lang title="file.js" `), line
-  numbers (` ```lang showLineNumbers `), and diff (`// [!code ++]` /
-  `// [!code --]`)
-- Code copy button: `CodeCopyButton.astro` uses a `<template>` with astro-icon
-  (octicon) cloned per code block; always visible, no hover-to-show
-- MDX media: percentage-sized `Figure`/`Image`/`YouTube` components can float
-  with `position="left"` / `"right"`; add `overhang="50%"` to hang half the
-  figure outside the content boundary on desktop. `overhang="outside"` or
-  `overhang="100%"` places the figure fully outside with the normal text gutter;
-  mobile ignores overhang.
-
-## Blog Image Frontmatter
-
-Image options in blog post frontmatter (`image:` field in content schema):
-
-- `aspect`: CSS aspect-ratio string (e.g. `"16/9"`) — crops via
-  `object-fit: cover`, does not distort
-- `objectPosition`: CSS object-position (default `"center"`) — controls visible
-  region when cropped; applies to blog post display, PostCard, and PostFeatured
-  thumbnails
-- `thumbnailFill`: `"fill"` (default, crops to fill) or `"full"` (shows entire
-  image via `object-contain`) — only affects PostCard/PostFeatured thumbnails
+- Page content: data-driven from typed exports. Grep `siteConfig`, `siteLinks`.
+- Blog URLs: use `src/utils/blog-url.ts` helpers.
+- Blog ordering: use `src/utils/blog-sort.ts` comparators.
+- Email: ROT13 obfuscation decoded client-side in `SiteLink.astro`.
+- SEO: Open Graph, Twitter Card, JSON-LD via `SEOHead.astro`.
+- Markdown alerts: GitHub-style `> [!NOTE]` / `> [!WARNING]` through
+  `remark-github-blockquote-alert`.
+- Code highlighting: `rehype-pretty-code`; Astro's built-in Shiki is disabled.
+- Code copy button: `CodeCopyButton.astro` clones an astro-icon template per
+  code block and is always visible.
 
 ## Domain Concepts
 
-- `SiteConfig`: Site metadata, author info, ROT13-encoded email, social profile
-  URLs
-- `SiteLink`: Typed entry for each link on the page (name, url, icon, optional
-  rel)
-
-## CSS Theme
-
-Semantic tokens in `src/styles/tokens.css` using OKLCH color space:
-
-- `--surface` / `--on-surface`: Background and text colors
-- `--heading` / `--heading-muted`: Heading colors
-- `--muted`: De-emphasized text (oklch alpha blending)
-- `--accent`: Interactive/highlight color (sky-based)
-- `--alert-{note,tip,important,warning,caution}`: Alert type colors
-- Dark overrides via `.dark { ... }` block, exposed to Tailwind via
-  `@theme inline`
-- Custom variant: `@custom-variant dark (&:where(.dark, .dark *))`
+- `SiteConfig`: site metadata, author info, ROT13-encoded email, social profile
+  URLs.
+- `SiteLink`: typed entry for each home page link: name, URL, icon, optional
+  `rel`.
 
 ## Discoveries
 

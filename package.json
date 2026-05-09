@@ -11,10 +11,13 @@
     "lint": "eslint . && stylelint 'src/**/*.css' && pnpm lint:markdown",
     "lint:fix": "eslint --fix . && stylelint --fix 'src/**/*.css'",
     "lint:markdown": "markdownlint-cli2",
+    "check:content": "tsx scripts/check-content.ts",
+    "smoke": "tsx scripts/check-site.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "astro check",
-    "check": "pnpm format:check && pnpm lint && pnpm typecheck",
+    "check": "pnpm format:check && pnpm lint && pnpm check:content && pnpm typecheck",
+    "verify": "pnpm check && pnpm build && pnpm smoke",
     "import-medium": "tsx scripts/import-medium-posts.ts"
   },
   "dependencies": {

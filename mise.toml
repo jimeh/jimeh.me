@@ -43,8 +43,12 @@ run = "pnpm format:check"
 description = "Run Astro type checks"
 run = "pnpm typecheck"
 
+[tasks.check-content]
+description = "Run custom blog content invariant checks"
+run = "pnpm check:content"
+
 [tasks.check]
-description = "Run format, lint, and type checks"
+description = "Run format, lint, content, and type checks"
 run = "pnpm check"
 
 [tasks.fix]
@@ -53,7 +57,11 @@ run = ["pnpm format", "pnpm lint:fix"]
 
 [tasks.verify]
 description = "Run all project verification"
-run = ["pnpm check", "pnpm build"]
+run = "pnpm verify"
+
+[tasks.smoke]
+description = "Run built-site smoke checks"
+run = "pnpm smoke"
 
 [tasks.ci]
 description = "Alias for full project verification"
