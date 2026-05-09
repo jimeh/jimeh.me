@@ -27,9 +27,9 @@ letter. Only she's written and explained herself much better than I most likely
 would have:
 
 > The iPad is not made for you and me, fellow geek. It's primarily targeted to
-> people that are still afraid of interacting with PCs, those that don't have
-> a clue about drivers and web apps and Wi-Fi setup. And this is exactly the
-> kind of people that **won't** buy a Linux netbook, dear Open Source zealots —
+> people that are still afraid of interacting with PCs, those that don't have a
+> clue about drivers and web apps and Wi-Fi setup. And this is exactly the kind
+> of people that **won't** buy a Linux netbook, dear Open Source zealots —
 > because as much as Ubuntu has made Linux user-friendly, there's still much
 > filling that shows between the seams.
 
