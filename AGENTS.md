@@ -112,3 +112,6 @@ Semantic tokens in `src/styles/tokens.css` using OKLCH color space:
 - pnpm 11 uses `strictDepBuilds: true` by default. Keep reviewed dependency
   build scripts in `pnpm-workspace.yaml` `allowBuilds`; otherwise clean installs
   fail with `ERR_PNPM_IGNORED_BUILDS`.
+- MDX `Image` accepts remote HTTPS URLs by passing `inferSize` to Astro's image
+  pipeline. Keep `astro.config.mjs` `image.remotePatterns` aligned with that;
+  non-remote string sources still need explicit `width` and `height`.

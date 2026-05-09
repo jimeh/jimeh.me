@@ -29,6 +29,9 @@ function blogPostRedirects() {
 export default defineConfig({
   site: "https://jimeh.me",
   redirects: blogPostRedirects(),
+  image: {
+    remotePatterns: [{ protocol: "https" }],
+  },
   integrations: [mdx(), sitemap(), icon()],
   vite: {
     plugins: [tailwindcss()],

@@ -5,7 +5,7 @@ import Figure from "./Figure.astro";
 import "./Image.css";
 
 interface Props {
-  src: ImageMetadata;
+  src: ImageMetadata | string;
   alt?: string;
   caption?: string;
   /** Attribution / credit line shown below the caption. */
@@ -22,6 +22,10 @@ interface Props {
   aspect?: string;
   /** CSS object-position when aspect is set (e.g. "top", "center"). */
   objectPosition?: string;
+  /** Intrinsic width for remote or public string image sources. */
+  width?: number | `${number}`;
+  /** Intrinsic height for remote or public string image sources. */
+  height?: number | `${number}`;
   /** Remove block margins so the figure sits flush with surrounding content. */
   flush?: boolean;
   /** Lightbox gallery group name. Images sharing the same gallery form a set. */
@@ -39,12 +43,34 @@ const {
   overhang,
   aspect,
   objectPosition = "center",
+  width,
+  height,
   flush,
   gallery = "gallery",
   noLightbox = false,
 } = Astro.props;
 
 const alt = Astro.props.alt ?? caption ?? "";
+const hasWidth = width !== undefined;
+const hasHeight = height !== undefined;
+const hasExplicitDimensions = hasWidth && hasHeight;
+const isStringSource = typeof src === "string";
+const isRemoteSource = isStringSource && /^https?:\/\//i.test(src);
+const imageHref = isStringSource ? src : src.src;
+
+if (hasWidth !== hasHeight) {
+  throw new Error("Image width and height must be provided together.");
+}
+
+if (isStringSource && !isRemoteSource && !hasExplicitDimensions) {
+  throw new Error("String image sources must provide width and height.");
+}
+
+const astroImageProps = isStringSource
+  ? hasExplicitDimensions
+    ? { src, width, height }
+    : { src, inferSize: true as const }
+  : { src };
 
 const isPercentage = /^\d+(?:\.\d+)?%$/.test(size);
 
@@ -87,7 +113,7 @@ const proseOptOutClass = "not-prose";
   {
     noLightbox ? (
       <AstroImage
-        src={src}
+        {...astroImageProps}
         alt={alt}
         class:list={[proseOptOutClass, imgClasses, aspect && "object-cover"]}
         style={imgStyle}
@@ -96,13 +122,13 @@ const proseOptOutClass = "not-prose";
       />
     ) : (
       <a
-        href={src.src}
+        href={imageHref}
         data-fancybox={gallery}
         data-caption={caption}
         class="mdx-fancybox-link"
       >
         <AstroImage
-          src={src}
+          {...astroImageProps}
           alt={alt}
           class:list={[proseOptOutClass, imgClasses, aspect && "object-cover"]}
           style={imgStyle}

@@ -15,7 +15,7 @@
 - [ ] Overall, add little nice animation flourishes and fancy little tweaks
       wherever it makes sense.
 - [x] Replace hard-coded copy icon svgs with astro-icon.
-- [ ] Image component: Remote URLs don't work due to AstroImage complaining that
+- [x] Image component: Remote URLs don't work due to AstroImage complaining that
       both width and height are required.
 
 ### Tailwind Typography
