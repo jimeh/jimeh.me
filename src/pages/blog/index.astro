@@ -6,6 +6,7 @@ import PostFeatured from "@components/blog/PostFeatured.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { compareBlogPostsDesc } from "@utils/blog-sort";
+import { blogPostYear } from "@utils/blog-url";
 
 const posts = await getCollection("blog");
 
@@ -17,16 +18,16 @@ const featuredPost = posts[0];
 const remainingPosts = posts.slice(1);
 
 // Group remaining by year
-const postsByYear = new Map<number, typeof remainingPosts>();
+const postsByYear = new Map<string, typeof remainingPosts>();
 for (const post of remainingPosts) {
-  const year = new Date(post.data.date + "T00:00:00").getFullYear();
+  const year = blogPostYear(post);
   if (!postsByYear.has(year)) {
     postsByYear.set(year, []);
   }
   postsByYear.get(year)!.push(post);
 }
 
-const years = [...postsByYear.keys()].sort((a, b) => b - a);
+const years = [...postsByYear.keys()].sort((a, b) => b.localeCompare(a));
 ---
 
 <BlogLayout
@@ -44,7 +45,12 @@ const years = [...postsByYear.keys()].sort((a, b) => b - a);
     years.map((year) => (
       <section class="mt-12">
         <PageHeading as="h2" size="section" class="text-muted mb-6 opacity-75">
-          {year}
+          <a
+            href={`/blog/${year}/`}
+            class="hover:text-accent transition-colors"
+          >
+            {year}
+          </a>
         </PageHeading>
         <div class="space-y-6">
           {postsByYear.get(year)!.map((post) => (

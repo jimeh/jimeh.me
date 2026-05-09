@@ -10,12 +10,13 @@ import CodeCopyButton from "@components/blog/CodeCopyButton.astro";
 import FancyboxInit from "@components/blog/FancyboxInit.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { compareBlogPostsAsc } from "@utils/blog-sort";
+import { blogPostRoute, blogPostUrl } from "@utils/blog-url";
 import { readingTime } from "@utils/reading-time";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
-    params: { slug: post.id },
+    params: { slug: blogPostRoute(post) },
     props: { post },
   }));
 }
@@ -138,7 +139,7 @@ const nextPost =
     {
       prevPost ? (
         <PostPagerLink
-          href={`/blog/${prevPost.id}/`}
+          href={blogPostUrl(prevPost)}
           label="Previous"
           title={prevPost.data.title}
         />
@@ -149,7 +150,7 @@ const nextPost =
     {
       nextPost ? (
         <PostPagerLink
-          href={`/blog/${nextPost.id}/`}
+          href={blogPostUrl(nextPost)}
           label="Next"
           title={nextPost.data.title}
           align="right"

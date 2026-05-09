@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import type { APIContext } from "astro";
 import { siteConfig } from "../data/site";
 import { compareBlogPostsDesc } from "@utils/blog-sort";
+import { blogPostUrl } from "@utils/blog-url";
 
 export async function GET(context: APIContext) {
   const posts = await getCollection("blog");
@@ -17,7 +18,7 @@ export async function GET(context: APIContext) {
       title: post.data.title,
       description: post.data.description,
       pubDate: new Date(post.data.date + "T00:00:00"),
-      link: `/blog/${post.id}/`,
+      link: blogPostUrl(post),
       categories: post.data.tags,
     })),
   });

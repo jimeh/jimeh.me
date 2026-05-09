@@ -1,12 +1,15 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { blogPostUrl } from "@utils/blog-url";
+
 interface Props {
   post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
 const { title, description, date, image } = post.data;
+const href = blogPostUrl(post);
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
@@ -23,7 +26,7 @@ function formatDate(dateStr: string): string {
     {
       image && (
         <a
-          href={`/blog/${post.id}/`}
+          href={href}
           class="hidden shrink-0 sm:block"
           aria-hidden="true"
           tabindex="-1"
@@ -45,7 +48,7 @@ function formatDate(dateStr: string): string {
       )
     }
     <div class="min-w-0 flex-1">
-      <a href={`/blog/${post.id}/`} class="block">
+      <a href={href} class="block">
         <h3
           class="text-heading group-hover:text-accent text-lg leading-snug font-bold [font-stretch:75%] transition-colors"
         >

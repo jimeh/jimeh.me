@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { blogPostUrl } from "@utils/blog-url";
 import { readingTime } from "@utils/reading-time";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 const { post } = Astro.props;
 const { title, description, date, image } = post.data;
 const readTime = readingTime(post.body ?? "");
+const href = blogPostUrl(post);
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
@@ -22,7 +24,7 @@ function formatDate(dateStr: string): string {
 ---
 
 <article class="group">
-  <a href={`/blog/${post.id}/`} class="block">
+  <a href={href} class="block">
     {
       image && (
         <div class="overflow-hidden rounded-lg transition-transform duration-300 group-hover:scale-[1.015]">

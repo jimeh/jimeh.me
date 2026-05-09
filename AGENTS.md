@@ -31,6 +31,9 @@ Portless, run `PORTLESS=0 mise run dev`.
 ## Patterns
 
 - Page content: Data-driven from typed exports → grep `siteConfig`, `siteLinks`
+- Blog URLs: Use `src/utils/blog-url.ts` helpers. Canonical post URLs are
+  `/blog/:year/:slug/`; year archives live at `/blog/:year/`; legacy full-date
+  URLs redirect via `astro.config.mjs`.
 - Icons: astro-icon with Iconify collections (fa6-brands, fa6-solid, heroicons,
   octicon)
 - Email: ROT13 obfuscation decoded client-side in `SiteLink.astro`
