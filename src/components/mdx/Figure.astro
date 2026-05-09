@@ -5,6 +5,8 @@ import "./Figure.css";
 interface Props {
   size?: "default" | "wide" | "full" | (string & {});
   position?: "center" | "left" | "right";
+  /** Percentage of the figure width that hangs outside a left/right float. */
+  overhang?: `${number}%` | "outside";
   /** Remove block margins so the figure sits flush with surrounding content. */
   flush?: boolean;
   caption?: string;
@@ -20,12 +22,28 @@ interface Props {
 const {
   size = "default",
   position = "center",
+  overhang,
   flush = position === "left" || position === "right",
   caption,
   credit,
 } = Astro.props;
 
-const isPercentage = /^\d+%$/.test(size);
+const sizeMatch = size.match(/^(\d+(?:\.\d+)?)%$/);
+const isPercentage = !!sizeMatch;
+const sizePercent = sizeMatch ? Number.parseFloat(sizeMatch[1]) : 0;
+const overhangMatch =
+  overhang === "outside" ? null : overhang?.match(/^(\d+(?:\.\d+)?)%$/);
+const overhangRatio =
+  overhang === "outside"
+    ? 1
+    : overhangMatch
+      ? Number.parseFloat(overhangMatch[1]) / 100
+      : 0;
+const hasOverhang =
+  isPercentage &&
+  overhangRatio > 0 &&
+  (position === "left" || position === "right");
+const hangsOutside = overhang === "outside" || overhangRatio >= 1;
 
 const sizeClass = isPercentage
   ? ""
@@ -38,12 +56,20 @@ const sizeClass = isPercentage
 const positionClasses = isPercentage
   ? {
       center: "mx-auto",
-      left: "float-left mr-6 mb-2",
-      right: "float-right ml-6 mb-2",
+      left: "mdx-figure-float-left",
+      right: "mdx-figure-float-right",
     }[position]
   : "";
 
-const figureStyle = isPercentage ? `width: ${size}` : undefined;
+const figureStyle = [
+  isPercentage && `width: ${size}`,
+  hasOverhang &&
+    `--mdx-figure-overhang: calc(-${sizePercent * overhangRatio}%${
+      hangsOutside ? " - var(--mdx-figure-float-gutter)" : ""
+    })`,
+]
+  .filter(Boolean)
+  .join("; ");
 
 /* Render caption slot eagerly so we can check whether it produced
    any actual content.  Astro registers named slots at compile time,
@@ -62,7 +88,7 @@ const hasCaptionSlot = !!captionHtml?.trim();
     positionClasses,
     flush && "mdx-figure-flush",
   ]}
-  style={figureStyle}
+  style={figureStyle || undefined}
 >
   <slot />
   {

@@ -7,6 +7,8 @@ interface Props {
   caption?: string;
   size?: "default" | "wide" | "full" | (string & {});
   position?: "center" | "left" | "right";
+  /** Percentage of the embed width that hangs outside a left/right float. */
+  overhang?: `${number}%` | "outside";
   /** Remove block margins so the figure sits flush with surrounding content. */
   flush?: boolean;
 }
@@ -31,6 +33,7 @@ const {
   caption,
   size = "default",
   position,
+  overhang,
   flush,
 } = Astro.props;
 
@@ -46,6 +49,7 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
   class="mdx-figure"
   size={size}
   position={position}
+  overhang={overhang}
   flush={flush}
   caption={caption}
 >

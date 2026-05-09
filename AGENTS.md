@@ -56,6 +56,11 @@ Portless, run `PORTLESS=0 mise run dev`.
   `// [!code --]`)
 - Code copy button: `CodeCopyButton.astro` uses a `<template>` with astro-icon
   (octicon) cloned per code block; always visible, no hover-to-show
+- MDX media: percentage-sized `Figure`/`Image`/`YouTube` components can float
+  with `position="left"` / `"right"`; add `overhang="50%"` to hang half the
+  figure outside the content boundary on desktop. `overhang="outside"` or
+  `overhang="100%"` places the figure fully outside with the normal text gutter;
+  mobile ignores overhang.
 
 ## Blog Image Frontmatter
 

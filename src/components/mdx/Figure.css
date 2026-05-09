@@ -16,6 +16,8 @@
 
 /* Figure wrapper used by MDX components (Image, YouTube, ImageGrid). */
 .mdx-figure {
+  --mdx-figure-float-gutter: 1.5rem;
+
   margin-block: 1.5rem;
 }
 
@@ -23,6 +25,28 @@
   max-width: 100%;
   height: auto;
   border-radius: 0.375rem;
+}
+
+.mdx-figure-float-left {
+  float: left;
+  margin-right: var(--mdx-figure-float-gutter);
+  margin-bottom: 0.5rem;
+}
+
+.mdx-figure-float-right {
+  float: right;
+  margin-bottom: 0.5rem;
+  margin-left: var(--mdx-figure-float-gutter);
+}
+
+@media (width >= 48rem) {
+  .mdx-figure-float-left {
+    margin-left: var(--mdx-figure-overhang, 0);
+  }
+
+  .mdx-figure-float-right {
+    margin-right: var(--mdx-figure-overhang, 0);
+  }
 }
 
 .mdx-figure-flush {

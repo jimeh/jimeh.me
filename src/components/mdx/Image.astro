@@ -16,6 +16,8 @@ interface Props {
   };
   size?: "default" | "wide" | "full" | (string & {});
   position?: "center" | "left" | "right";
+  /** Percentage of the image width that hangs outside a left/right float. */
+  overhang?: `${number}%` | "outside";
   /** CSS aspect-ratio for the displayed image box (e.g. "16/9"). */
   aspect?: string;
   /** CSS object-position when aspect is set (e.g. "top", "center"). */
@@ -34,6 +36,7 @@ const {
   credit,
   size = "default",
   position = "center",
+  overhang,
   aspect,
   objectPosition = "center",
   flush,
@@ -43,7 +46,7 @@ const {
 
 const alt = Astro.props.alt ?? caption ?? "";
 
-const isPercentage = /^\d+%$/.test(size);
+const isPercentage = /^\d+(?:\.\d+)?%$/.test(size);
 
 const imgClasses = isPercentage
   ? "block"
@@ -76,6 +79,7 @@ const proseOptOutClass = "not-prose";
   class="mdx-figure"
   size={size}
   position={position}
+  overhang={overhang}
   flush={flush}
   caption={caption}
   credit={credit}
