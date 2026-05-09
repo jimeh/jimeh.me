@@ -6,18 +6,27 @@ site deployed to GitHub Pages.
 ## Commands
 
 ```sh
-pnpm dev          # Dev server
-pnpm build        # Production build
-pnpm preview      # Preview build
-pnpm lint         # ESLint + Stylelint
-pnpm lint:fix     # Auto-fix lint issues
-pnpm format       # Prettier write
-pnpm format:check # Prettier check
-pnpm typecheck    # astro check (TypeScript)
-pnpm check        # format:check + lint + typecheck
+mise run dev          # Portless Astro dev server
+mise run build        # Production build
+mise run preview      # Preview build
+mise run lint         # ESLint + Stylelint
+mise run lint-fix     # Auto-fix lint issues
+mise run format       # Prettier write
+mise run format-check # Prettier check
+mise run typecheck    # astro check (TypeScript)
+mise run check        # format:check + lint + typecheck
+mise run fix          # format + lint-fix
+mise run verify       # check + build
 ```
 
-pnpm and Node 24 managed via mise. No tests configured.
+Node 24 and pnpm are managed via mise. Prefer `mise run <task>` for common
+workflows; use `pnpm` directly when you need package-manager details. No tests
+configured.
+
+`mise run dev` wraps `astro dev` with Portless on proxy port 1355, giving the
+site a stable `https://jimeh.me.localhost:1355` URL without a sudo prompt.
+Linked git worktrees get branch-prefixed subdomains automatically. To bypass
+Portless, run `PORTLESS=0 mise run dev`.
 
 ## Patterns
 

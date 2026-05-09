@@ -2,31 +2,63 @@
 idiomatic_version_file_enable_tools = ["node"]
 
 [tools]
-pnpm = "latest"
+pnpm = "10"
 
 [tasks.dev]
+description = "Start the Portless Astro dev server"
 run = "pnpm dev"
 
 [tasks.build]
+description = "Build the production site"
 run = "pnpm build"
 
 [tasks.preview]
+description = "Preview the production build"
 run = "pnpm preview"
 
+[tasks.install]
+description = "Install package dependencies"
+alias = "i"
+run = "pnpm install"
+
 [tasks.lint]
+description = "Run ESLint and Stylelint"
+alias = "l"
 run = "pnpm lint"
 
 [tasks.lint-fix]
+description = "Auto-fix lint issues"
 run = "pnpm lint:fix"
 
 [tasks.format]
+description = "Format the project with Prettier"
+alias = "fmt"
 run = "pnpm format"
 
 [tasks.format-check]
+description = "Check Prettier formatting"
 run = "pnpm format:check"
 
 [tasks.typecheck]
+description = "Run Astro type checks"
 run = "pnpm typecheck"
 
 [tasks.check]
+description = "Run format, lint, and type checks"
 run = "pnpm check"
+
+[tasks.fix]
+description = "Format and auto-fix lint issues"
+run = ["pnpm format", "pnpm lint:fix"]
+
+[tasks.verify]
+description = "Run all project verification"
+run = ["pnpm check", "pnpm build"]
+
+[tasks.ci]
+description = "Alias for full project verification"
+depends = ["verify"]
+
+[tasks.import-medium]
+description = "Import posts from Medium"
+run = "pnpm import-medium"

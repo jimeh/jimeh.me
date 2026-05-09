@@ -3,7 +3,7 @@ version = 1
 name = "jimeh.me"
 
 [setup]
-script = "mise trust . && pnpm install"
+script = "pnpm install"
 
 [[actions]]
 name = "Run"
