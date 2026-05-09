@@ -31,7 +31,7 @@ tests are configured.
 ## Project Map
 
 - Local development and validation: `docs/local-dev.md`
-- Blog/content authoring rules: `docs/blog-content.md`
+- Blog post writing guide and authoring features: `docs/blog-content.md`
 - Styling, theme tokens, and shared UI primitives: `docs/styling.md`
 - Harness checks and CI shape: `docs/harness.md`
 

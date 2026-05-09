@@ -1,4 +1,4 @@
-# Blog Content
+# Blog Writing Guide
 
 Blog posts live under `src/content/blog` as dated directories:
 
@@ -11,6 +11,9 @@ YYYY-MM-DD-post-slug/
 The directory date and frontmatter `date` must match. Canonical public URLs use
 `/blog/:year/:slug/`; legacy full-date URLs are still generated and redirected
 from `astro.config.mjs`.
+
+Use `.md` for normal Markdown posts. Use `.mdx` when the body needs imported
+media components such as `Image`, `ImageGrid`, or `YouTube`.
 
 ## Frontmatter
 
@@ -42,11 +45,151 @@ Image options:
 - `credit`: attribution object with `text`, optional `href`, and `position`.
 - `hidden`: prevents automatic rendering at the top of the post body.
 
-MDX posts can import media components from `@mdx/index`. Percentage-sized
-`Figure`/`Image`/`YouTube` components can float with `position="left"` or
-`position="right"`. Use `overhang="50%"` to hang half the figure outside the
-content boundary on desktop. `overhang="outside"` and `overhang="100%"` place
-the figure fully outside with the normal text gutter; mobile ignores overhang.
+Example:
+
+```yaml
+---
+title: "How to add Apple's new Liquid Glass icons to applications"
+description: "Without Xcode, almost."
+date: 2025-06-29
+updatedDate: 2026-02-17
+tags: ["macos", "macos26", "apple"]
+image:
+  src: ./hero.jpg
+  alt: "Liquid Glass icon in Icon Composer"
+  size: wide
+  aspect: "16/9"
+  objectPosition: center
+---
+```
+
+## Syntax Highlighting
+
+Code highlighting uses `rehype-pretty-code` with Shiki themes. Astro's built-in
+Shiki highlighting is disabled in `astro.config.mjs`.
+
+Use normal fenced code blocks with a language:
+
+````markdown
+```js
+function getStringLength(str) {
+  return str.length;
+}
+```
+````
+
+Inline code can also be syntax-highlighted by adding a language after the code
+span:
+
+```markdown
+The `getStringLength(str){:js}` function returns a string length.
+```
+
+Supported code block features:
+
+- Line highlighting: ` ```js {1,3-5} `.
+- Word highlighting: ` ```js /needle/ `.
+- Titles: ` ```js title="scripts/example.js" `.
+- Line numbers: ` ```js showLineNumbers `.
+- Diff lines: add `// [!code ++]` or `// [!code --]` on changed lines.
+
+## Markdown Features
+
+GitHub-style blockquote alerts are supported:
+
+```text
+> [!NOTE]
+> Useful context goes here.
+```
+
+Regular Markdown links, lists, headings, tables, and images work as expected.
+For local post assets that need layout control, prefer MDX media components over
+plain Markdown images.
+
+## MDX Components
+
+MDX media components are exported from `@mdx/index`:
+
+```mdx
+import { Image, ImageGrid, YouTube } from "@mdx/index";
+import hero from "./hero.webp";
+```
+
+The static import form is preferred for local image files because Astro can
+infer dimensions and optimize the image. String `src` values are allowed for
+remote HTTPS images and for public assets, but public string sources must
+include explicit `width` and `height`.
+
+### Image
+
+```mdx
+<Image
+  src={hero}
+  alt="Application icon preview"
+  caption="Rendered icon preview"
+  size="wide"
+/>
+```
+
+Useful props:
+
+- `size`: `default`, `wide`, `full`, or a percentage like `"50%"`.
+- `position`: `center`, `left`, or `right`.
+- `overhang`: percentage such as `"50%"`, or `"outside"` for floated media.
+- `aspect`: CSS aspect ratio such as `"16/9"`.
+- `objectPosition`: CSS object-position used when `aspect` crops the image.
+- `caption`: visible caption text.
+- `credit`: `{ text, href?, position? }`.
+- `flush`: remove block margins.
+- `gallery`: Fancybox gallery group.
+- `noLightbox`: disable Fancybox wrapping.
+
+Percentage-sized `Image` and `Figure` components can float with
+`position="left"` or `position="right"`. Use `overhang="50%"` to hang half the
+figure outside the content boundary on desktop. `overhang="outside"` and
+`overhang="100%"` place the figure fully outside with the normal text gutter;
+mobile ignores overhang.
+
+### ImageGrid
+
+Use `ImageGrid` for grouped galleries:
+
+```mdx
+import { Image, ImageGrid } from "@mdx/index";
+import v1 from "./v1.webp";
+import v2 from "./v2.webp";
+
+<ImageGrid columns={2} size="wide" caption="Website versions">
+  <Image src={v1} caption="v1.0" />
+  <Image src={v2} caption="v2.0" />
+</ImageGrid>
+```
+
+Useful props:
+
+- `columns`: number of grid columns; defaults to `2`.
+- `gap`: CSS gap value; defaults to `1rem`.
+- `size`: `default`, `wide`, `full`, or a percentage.
+- `caption`: grid-level caption.
+- `gallery`: Fancybox gallery group applied to child figures.
+
+### YouTube
+
+Use `YouTube` for responsive privacy-enhanced embeds:
+
+```mdx
+import { YouTube } from "@mdx/index";
+
+<YouTube
+  src="https://www.youtube.com/watch?v=ea6UuRTjkKs"
+  title="Extra Credits video"
+  caption="Extra Credits on reward schedules"
+  size="wide"
+/>
+```
+
+`src` can be a normal YouTube URL, `youtu.be` URL, embed URL, shorts URL, or a
+bare video ID. The component renders through `youtube-nocookie.com`.
 
 ## Checks
 

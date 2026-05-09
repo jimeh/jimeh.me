@@ -16,7 +16,7 @@ mise run verify        # Full local/CI verification
 site a stable URL:
 
 ```text
-https://jimeh.me.localhost:1355
+https://jimeh-me.localhost:1355
 ```
 
 Linked git worktrees get branch-prefixed subdomains automatically. To bypass
