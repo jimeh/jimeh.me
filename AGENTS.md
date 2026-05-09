@@ -11,6 +11,7 @@ mise run build        # Production build
 mise run preview      # Preview build
 mise run lint         # ESLint + Stylelint
 mise run lint-fix     # Auto-fix lint issues
+pnpm lint:markdown    # markdownlint-cli2 for .md/.mdx files
 mise run format       # Prettier write
 mise run format-check # Prettier check
 mise run typecheck    # astro check (TypeScript)
@@ -18,6 +19,9 @@ mise run check        # format:check + lint + typecheck
 mise run fix          # format + lint-fix
 mise run verify       # check + build
 ```
+
+Husky runs `pnpm precommit` before commits. That executes `lint-staged` against
+staged files first, then `pnpm check` across the whole project.
 
 Node 24 and pnpm 11 are managed via mise. Prefer `mise run <task>` for common
 workflows; use `pnpm` directly when you need package-manager details. No tests

@@ -1,6 +1,7 @@
 .agents/
 .astro/
 .claude/
+.husky/
 .vscode/
 dist/
 node_modules/
