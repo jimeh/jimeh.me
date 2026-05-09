@@ -44,7 +44,7 @@ const blog = defineCollection({
           credit: z
             .object({
               text: z.string(),
-              href: z.string().url().optional(),
+              href: z.url().optional(),
               position: z.enum(["left", "center", "right"]).default("center"),
             })
             .optional(),

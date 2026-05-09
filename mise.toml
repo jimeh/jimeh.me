@@ -2,7 +2,7 @@
 idiomatic_version_file_enable_tools = ["node"]
 
 [tools]
-pnpm = "10"
+pnpm = "11"
 
 [tasks.dev]
 description = "Start the Portless Astro dev server"

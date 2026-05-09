@@ -1,0 +1,4 @@
+allowBuilds:
+  "@parcel/watcher@2.5.6": true
+  esbuild@0.27.7: true
+  sharp@0.34.5: true

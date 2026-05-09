@@ -25,26 +25,24 @@ export default defineConfig({
       ],
     ],
   },
-  experimental: {
-    fonts: [
-      {
-        provider: fontProviders.local(),
-        name: "Open Sans",
-        cssVariable: "--font-open-sans",
-        fallbacks: ["helvetica", "arial", "sans-serif"],
-        options: {
-          variants: [
-            {
-              weight: "300 800",
-              style: "normal",
-              stretch: "75% 100%",
-              src: [
-                "@fontsource-variable/open-sans/files/open-sans-latin-wdth-normal.woff2",
-              ],
-            },
-          ],
-        },
+  fonts: [
+    {
+      provider: fontProviders.local(),
+      name: "Open Sans",
+      cssVariable: "--font-open-sans",
+      fallbacks: ["helvetica", "arial", "sans-serif"],
+      options: {
+        variants: [
+          {
+            weight: "300 800",
+            style: "normal",
+            stretch: "75% 100%",
+            src: [
+              "@fontsource-variable/open-sans/files/open-sans-latin-wdth-normal.woff2",
+            ],
+          },
+        ],
       },
-    ],
-  },
+    },
+  ],
 });

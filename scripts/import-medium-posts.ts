@@ -62,7 +62,7 @@ function curlFetch(url: string): string {
       maxBuffer: 10 * 1024 * 1024,
     });
   } catch (err) {
-    throw new Error(`Failed to fetch ${url}: ${err}`);
+    throw new Error(`Failed to fetch ${url}`, { cause: err });
   }
 }
 
@@ -81,7 +81,7 @@ function curlDownload(url: string, outPath: string): string {
       maxBuffer: 50 * 1024 * 1024,
     }).trim();
   } catch (err) {
-    throw new Error(`Failed to download ${url}: ${err}`);
+    throw new Error(`Failed to download ${url}`, { cause: err });
   }
 }
 

@@ -2,6 +2,7 @@
 import "../styles/main.css";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { Font } from "astro:assets";
 import SEOHead from "@components/SEOHead.astro";
 import SiteHeader from "@components/SiteHeader.astro";
@@ -19,7 +20,7 @@ interface Props {
 
 /** Short content hash for cache busting a public/ asset. */
 function fileHash(path: string): string {
-  const data = readFileSync(new URL(path, import.meta.url));
+  const data = readFileSync(join(process.cwd(), "public", path));
   return createHash("sha256")
     .update(new Uint8Array(data))
     .digest("hex")
@@ -37,8 +38,8 @@ const {
 } = Astro.props;
 const pageTitle = title || siteConfig.title;
 const hasHeaderNav = Astro.slots.has("header-nav");
-const faviconHash = fileHash("../../public/favicon.ico");
-const appleTouchHash = fileHash("../../public/apple-touch-icon.png");
+const faviconHash = fileHash("favicon.ico");
+const appleTouchHash = fileHash("apple-touch-icon.png");
 ---
 
 <!doctype html>

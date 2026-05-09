@@ -19,7 +19,7 @@ mise run fix          # format + lint-fix
 mise run verify       # check + build
 ```
 
-Node 24 and pnpm are managed via mise. Prefer `mise run <task>` for common
+Node 24 and pnpm 11 are managed via mise. Prefer `mise run <task>` for common
 workflows; use `pnpm` directly when you need package-manager details. No tests
 configured.
 
@@ -42,8 +42,8 @@ Portless, run `PORTLESS=0 mise run dev`.
   for consistent blog typography
 - Dark mode: System/light/dark toggle, `.dark` class on `<html>`, state in
   localStorage
-- Fonts: Open Sans variable font, self-hosted via Astro experimental fonts API
-  (local provider)
+- Fonts: Open Sans variable font, self-hosted via Astro Fonts API (local
+  provider)
 - SEO: Open Graph, Twitter Card, JSON-LD (WebSite schema) via `SEOHead.astro`
 - Markdown alerts: GitHub-style `> [!NOTE]` / `> [!WARNING]` etc. via
   `remark-github-blockquote-alert` remark plugin, rendered inside `.prose`
@@ -98,3 +98,9 @@ Semantic tokens in `src/styles/tokens.css` using OKLCH color space:
   for both `at-rule-no-unknown.ignoreAtRules` and
   `no-invalid-position-at-import-rule.ignoreAtRules`; otherwise CSS linting
   fails when `@plugin` appears between `@import` statements.
+- In Astro 6 prerender chunks, `import.meta.url` points into `dist/`, so
+  synchronous reads of `public/` assets from Astro components should resolve
+  from `process.cwd()` instead.
+- pnpm 11 uses `strictDepBuilds: true` by default. Keep reviewed dependency
+  build scripts in `pnpm-workspace.yaml` `allowBuilds`; otherwise clean installs
+  fail with `ERR_PNPM_IGNORED_BUILDS`.
