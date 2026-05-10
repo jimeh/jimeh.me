@@ -40,6 +40,8 @@ function formatDate(dateStr: string): string {
             style={`object-position: ${image.objectPosition}`}
             widths={[640, 960, 1440, 1920]}
             sizes="(min-width: 1008px) 960px, calc(100vw - 3rem)"
+            loading="eager"
+            fetchpriority="high"
           />
         </div>
       )

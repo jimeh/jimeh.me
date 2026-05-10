@@ -6,11 +6,13 @@ import { blogPostUrl } from "@utils/blog-url";
 
 interface Props {
   post: CollectionEntry<"blog">;
+  imageLoading?: "eager" | "lazy";
 }
 
-const { post } = Astro.props;
+const { post, imageLoading = "lazy" } = Astro.props;
 const { title, description, date, image } = post.data;
 const href = blogPostUrl(post);
+const linkLabel = `Read "${title}"`;
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
@@ -29,12 +31,12 @@ function formatDate(dateStr: string): string {
         <a
           href={href}
           class="hidden shrink-0 sm:block"
-          aria-hidden="true"
+          aria-label={linkLabel}
           tabindex="-1"
         >
           <Image
             src={image.src}
-            alt={image.alt}
+            alt=""
             class:list={[
               "aspect-[3/2] w-40 rounded transition-transform duration-300 group-hover:scale-[1.02]",
               image.thumbnailFill === "full"
@@ -44,16 +46,21 @@ function formatDate(dateStr: string): string {
             style={`object-position: ${image.objectPosition}`}
             widths={[160, 320]}
             sizes="160px"
+            loading={imageLoading}
           />
         </a>
       ) : (
         <a
           href={href}
           class="bg-surface-subtle border-border text-muted group-hover:text-accent hidden aspect-[3/2] w-40 shrink-0 place-items-center rounded border transition-colors duration-300 sm:grid"
-          aria-hidden="true"
+          aria-label={linkLabel}
           tabindex="-1"
         >
-          <Icon name="fa6-solid:newspaper" class="size-9 opacity-55" />
+          <Icon
+            name="fa6-solid:newspaper"
+            class="size-9 opacity-55"
+            aria-hidden="true"
+          />
         </a>
       )
     }

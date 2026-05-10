@@ -16,6 +16,10 @@ posts.sort(compareBlogPostsDesc);
 // Featured post = newest
 const featuredPost = posts[0];
 const remainingPosts = posts.slice(1);
+const eagerThumbnailCount = 6;
+const eagerThumbnailIds = new Set(
+  remainingPosts.slice(0, eagerThumbnailCount).map((post) => post.id),
+);
 
 // Group remaining by year
 const postsByYear = new Map<string, typeof remainingPosts>();
@@ -54,7 +58,10 @@ const years = [...postsByYear.keys()].sort((a, b) => b.localeCompare(a));
         </PageHeading>
         <div class="space-y-6">
           {postsByYear.get(year)!.map((post) => (
-            <PostCard post={post} />
+            <PostCard
+              post={post}
+              imageLoading={eagerThumbnailIds.has(post.id) ? "eager" : "lazy"}
+            />
           ))}
         </div>
       </section>

@@ -9,3 +9,11 @@
 @import "./vendor/fancybox.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  animation: none !important;
+  transition: none !important;
+}

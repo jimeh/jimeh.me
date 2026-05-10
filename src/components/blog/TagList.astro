@@ -8,25 +8,25 @@ interface Props {
 const { tags, linked = true } = Astro.props;
 ---
 
-<div class="flex flex-wrap gap-2" role="list" aria-label="Tags">
+<ul class="flex flex-wrap gap-2" aria-label="Tags">
   {
     tags.map((tag) =>
       linked ? (
-        <a
-          href={`/blog/tags/${tag}/`}
-          class="text-muted hover:text-accent border-border hover:border-accent rounded-full border px-3.5 py-1.5 text-sm transition-colors"
-          role="listitem"
-        >
-          {tag}
-        </a>
+        <li>
+          <a
+            href={`/blog/tags/${tag}/`}
+            class="text-muted hover:text-accent border-border hover:border-accent block rounded-full border px-3.5 py-1.5 text-sm transition-colors"
+          >
+            {tag}
+          </a>
+        </li>
       ) : (
-        <span
-          class="text-muted border-border rounded-full border px-3.5 py-1.5 text-sm"
-          role="listitem"
-        >
-          {tag}
-        </span>
+        <li>
+          <span class="text-muted border-border block rounded-full border px-3.5 py-1.5 text-sm">
+            {tag}
+          </span>
+        </li>
       ),
     )
   }
-</div>
+</ul>

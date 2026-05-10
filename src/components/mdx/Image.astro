@@ -32,6 +32,8 @@ interface Props {
   gallery?: string;
   /** Disable the Fancybox lightbox for this image. */
   noLightbox?: boolean;
+  /** Browser image loading behavior. */
+  loading?: "eager" | "lazy";
 }
 
 const {
@@ -48,6 +50,7 @@ const {
   flush,
   gallery = "gallery",
   noLightbox = false,
+  loading = "lazy",
 } = Astro.props;
 
 const alt = Astro.props.alt ?? caption ?? "";
@@ -119,6 +122,7 @@ const proseOptOutClass = "not-prose";
         style={imgStyle}
         widths={[640, 960, 1280, 1600]}
         sizes={sizes}
+        loading={loading}
       />
     ) : (
       <a
@@ -134,6 +138,7 @@ const proseOptOutClass = "not-prose";
           style={imgStyle}
           widths={[640, 960, 1280, 1600]}
           sizes={sizes}
+          loading={loading}
         />
       </a>
     )

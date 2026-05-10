@@ -62,6 +62,21 @@ import { Icon } from "astro-icon/components";
     document.documentElement.classList.toggle("dark", isDark);
   }
 
+  function applyThemeImmediately(mode: ThemeMode) {
+    const root = document.documentElement;
+    root.classList.add("theme-switching");
+    // Force the class to apply before changing theme-dependent styles.
+    root.getBoundingClientRect();
+
+    applyTheme(mode);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        root.classList.remove("theme-switching");
+      });
+    });
+  }
+
   function updateUI(mode: ThemeMode) {
     for (const el of document.querySelectorAll("[data-theme-icon]")) {
       const htmlEl = el as HTMLElement;
@@ -97,7 +112,7 @@ import { Icon } from "astro-icon/components";
       btn.addEventListener("click", () => {
         const next = cycleMode(getStoredMode());
         setStoredMode(next);
-        applyTheme(next);
+        applyThemeImmediately(next);
         updateUI(next);
       });
     }
@@ -106,7 +121,7 @@ import { Icon } from "astro-icon/components";
       .matchMedia("(prefers-color-scheme: dark)")
       .addEventListener("change", () => {
         if (getStoredMode() === "system") {
-          applyTheme("system");
+          applyThemeImmediately("system");
         }
       });
   }
