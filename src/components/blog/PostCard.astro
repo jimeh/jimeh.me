@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
 import { blogPostUrl } from "@utils/blog-url";
 
 interface Props {
@@ -22,9 +23,9 @@ function formatDate(dateStr: string): string {
 ---
 
 <article class="group">
-  <div class:list={["flex gap-4", image && "sm:gap-5"]}>
+  <div class="flex gap-4 sm:gap-5">
     {
-      image && (
+      image ? (
         <a
           href={href}
           class="hidden shrink-0 sm:block"
@@ -44,6 +45,15 @@ function formatDate(dateStr: string): string {
             widths={[160, 320]}
             sizes="160px"
           />
+        </a>
+      ) : (
+        <a
+          href={href}
+          class="bg-surface-subtle border-border text-muted group-hover:text-accent hidden aspect-[3/2] w-40 shrink-0 place-items-center rounded border transition-colors duration-300 sm:grid"
+          aria-hidden="true"
+          tabindex="-1"
+        >
+          <Icon name="fa6-solid:newspaper" class="size-9 opacity-55" />
         </a>
       )
     }
