@@ -1,6 +1,7 @@
 ---
 title: "To Caffeinate, Or Not To Caffeinate?"
-description: "I used to be a caffeine junkie."
+description: >-
+  I used to be a caffeine junkie.
 date: 2010-02-14
 tags: ["productivity", "quality-of-life", "caffeine"]
 image:

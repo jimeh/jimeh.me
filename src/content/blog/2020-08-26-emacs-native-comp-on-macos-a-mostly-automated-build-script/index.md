@@ -1,7 +1,8 @@
 ---
 title: "Emacs native-comp on macOS: A (mostly) automated build script"
-description:
-  "Warning: As of today (26th August, 2020), this works on my machine."
+description: >-
+  Notes from getting gccemacs/native-comp working on macOS.
+
 date: 2020-08-26
 updatedDate: 2020-10-04
 tags: ["emacs", "text-editor", "macos", "gcc"]

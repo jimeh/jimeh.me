@@ -1,7 +1,8 @@
 ---
 title: "Automated Profile Picture Update Service?"
-description:
-  "After I updated my profile picture today, a friend of mine responded with:"
+description: >-
+  A universal profile-picture updater sounds useful, but probably falls apart on
+  trust and platform quirks.
 date: 2010-02-05
 tags: ["technology", "social-media", "avatar"]
 image:

@@ -1,8 +1,7 @@
 ---
 title: 'About That "Pad" Thing'
-description:
-  "So I was gonna write a post with my opinions about the iPad, but a cup of tea
-  and staring at wall of wet paint is almost more tempting."
+description: >-
+  Why the iPad backlash missed the point: it was never really meant for geeks.
 date: 2010-02-06
 tags: ["technology", "ipad", "opinion"]
 image:
