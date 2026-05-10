@@ -137,7 +137,7 @@ plain Markdown images.
 MDX media components are exported from `@mdx/index`:
 
 ```mdx
-import { Image, ImageGrid, YouTube } from "@mdx/index";
+import { Figure, Image, ImageGrid, YouTube } from "@mdx/index";
 import hero from "./hero.webp";
 ```
 
@@ -174,7 +174,25 @@ Percentage-sized `Image` and `Figure` components can float with
 `position="left"` or `position="right"`. Use `overhang="50%"` to hang half the
 figure outside the content boundary on desktop. `overhang="outside"` and
 `overhang="100%"` place the figure fully outside with the normal text gutter;
-mobile ignores overhang.
+mobile ignores overhang. Centered percentages above `100%`, such as
+`size="120%"`, expand outside the content column like `wide`, capped to the
+viewport with the normal page gutter.
+
+Wrap a normal fenced code block in `Figure` when it needs the same layout
+controls. The code block still goes through `rehype-pretty-code` and keeps the
+standard syntax highlighting and copy button behavior:
+
+````mdx
+<Figure size="120%">
+
+```js
+function getStringLength(str) {
+  return str.length;
+}
+```
+
+</Figure>
+````
 
 ### ImageGrid
 

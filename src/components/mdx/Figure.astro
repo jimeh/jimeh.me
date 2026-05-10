@@ -31,6 +31,8 @@ const {
 const sizeMatch = size.match(/^(\d+(?:\.\d+)?)%$/);
 const isPercentage = !!sizeMatch;
 const sizePercent = sizeMatch ? Number.parseFloat(sizeMatch[1]) : 0;
+const isOversizeCentered =
+  isPercentage && sizePercent > 100 && position === "center";
 const overhangMatch =
   overhang === "outside" ? null : overhang?.match(/^(\d+(?:\.\d+)?)%$/);
 const overhangRatio =
@@ -55,14 +57,16 @@ const sizeClass = isPercentage
 
 const positionClasses = isPercentage
   ? {
-      center: "mx-auto",
+      center: isOversizeCentered ? "mdx-figure-oversize" : "mx-auto",
       left: "mdx-figure-float-left",
       right: "mdx-figure-float-right",
     }[position]
   : "";
 
 const figureStyle = [
-  isPercentage && `width: ${size}`,
+  isOversizeCentered
+    ? `--mdx-figure-width: min(${size}, calc(100vw - 3rem))`
+    : isPercentage && `width: ${size}`,
   hasOverhang &&
     `--mdx-figure-overhang: calc(-${sizePercent * overhangRatio}%${
       hangsOutside ? " - var(--mdx-figure-float-gutter)" : ""

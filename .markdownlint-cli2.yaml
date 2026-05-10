@@ -16,6 +16,8 @@ config:
     list_items: false
   MD033:
     allowed_elements:
+      - Credit
+      - Figure
       - Image
       - ImageGrid
       - YouTube
