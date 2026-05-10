@@ -11,6 +11,7 @@ import FancyboxInit from "@components/blog/FancyboxInit.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { compareBlogPostsAsc } from "@utils/blog-sort";
 import { blogPostRoute, blogPostUrl } from "@utils/blog-url";
+import { darkImage, lightImage } from "@utils/image-source";
 import { readingTime } from "@utils/reading-time";
 
 export async function getStaticPaths() {
@@ -25,15 +26,17 @@ const { post } = Astro.props;
 const { title, description, date, updatedDate, tags, image } = post.data;
 const readTime = readingTime(post.body ?? "");
 const { Content } = await render(post);
+const imageLight = image ? lightImage(image.src) : undefined;
+const imageDark = image ? darkImage(image.src) : undefined;
 
 // Resolve absolute URL for OG/Twitter image meta tags.
 let ogImageUrl: string | undefined;
-if (image) {
-  if (image.src.format === "svg") {
-    ogImageUrl = new URL(image.src.src, Astro.site).href;
+if (imageLight) {
+  if (imageLight.format === "svg") {
+    ogImageUrl = new URL(imageLight.src, Astro.site).href;
   } else {
     const optimized = await getImage({
-      src: image.src,
+      src: imageLight,
       width: 1200,
       format: "jpg",
     });
@@ -85,9 +88,9 @@ const nextPost =
     </header>
 
     {
-      showImage && !imageFloats && (
+      showImage && imageLight && !imageFloats && (
         <Image
-          src={image.src}
+          src={imageLight}
           alt={image.alt}
           caption={image.caption}
           credit={image.credit}
@@ -98,7 +101,7 @@ const nextPost =
           flush={image.flush}
           noLightbox={image.noLightbox ?? true}
           gallery={image.gallery}
-          darkSrc={image.darkSrc}
+          darkSrc={imageDark}
           loading="eager"
         />
       )
@@ -106,9 +109,9 @@ const nextPost =
 
     <div class="prose dark:prose-invert mt-8">
       {
-        showImage && imageFloats && (
+        showImage && imageLight && imageFloats && (
           <Image
-            src={image.src}
+            src={imageLight}
             alt={image.alt}
             caption={image.caption}
             credit={image.credit}
@@ -119,7 +122,7 @@ const nextPost =
             flush={image.flush}
             noLightbox={image.noLightbox ?? true}
             gallery={image.gallery}
-            darkSrc={image.darkSrc}
+            darkSrc={imageDark}
             loading="eager"
           />
         )

@@ -1,42 +1,22 @@
 ---
-import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
+import BlogThumbnail from "@components/blog/BlogThumbnail.astro";
 import { blogPostUrl } from "@utils/blog-url";
 import { readingTime } from "@utils/reading-time";
-import {
-  scaledResponsiveSize,
-  scaledThumbnailWidths,
-} from "@utils/thumbnail-size";
+import { lightImage } from "@utils/image-source";
 
 interface Props {
   post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
-const { title, description, date, image } = post.data;
+const { title, description, date, image, thumbnail } = post.data;
 const readTime = readingTime(post.body ?? "");
 const href = blogPostUrl(post);
-const thumbnailImageStyle = image
-  ? `height: ${image.thumbnailSize}; object-position: ${image.objectPosition}; width: ${image.thumbnailSize}`
+const thumbnailSource = thumbnail?.src ?? image?.src;
+const thumbnailLight = thumbnailSource
+  ? lightImage(thumbnailSource)
   : undefined;
-const thumbnailImageWidths = image
-  ? scaledThumbnailWidths(
-      [640, 960, 1440, 1920],
-      image.thumbnailSize,
-      image.src.width,
-    )
-  : undefined;
-const thumbnailImageSizes = image
-  ? scaledResponsiveSize(960, 100, 3, image.thumbnailSize)
-  : undefined;
-const imageClasses = [
-  "absolute top-1/2 left-1/2 max-w-none -translate-x-1/2 -translate-y-1/2",
-  image?.thumbnailFill === "full" ? "object-contain" : "object-cover",
-];
-const darkSvg =
-  image?.src.format === "svg" && image.darkSrc?.format === "svg"
-    ? image.darkSrc
-    : undefined;
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
@@ -50,50 +30,17 @@ function formatDate(dateStr: string): string {
 
 <article class="group">
   <a href={href} class="block">
-    {
-      image && (
-        <div class="relative aspect-[2/1] overflow-hidden rounded-lg transition-transform duration-300 group-hover:scale-[1.015]">
-          {image.src.format === "svg" ? (
-            <>
-              <img
-                src={image.src.src}
-                alt={image.alt}
-                class:list={[imageClasses, darkSvg && "dark:hidden"]}
-                style={thumbnailImageStyle}
-                width={image.src.width}
-                height={image.src.height}
-                loading="eager"
-                fetchpriority="high"
-              />
-              {darkSvg && (
-                <img
-                  src={darkSvg.src}
-                  alt={image.alt}
-                  class:list={[imageClasses, "hidden dark:block"]}
-                  style={thumbnailImageStyle}
-                  width={darkSvg.width}
-                  height={darkSvg.height}
-                  loading="eager"
-                  fetchpriority="high"
-                />
-              )}
-            </>
-          ) : (
-            <Image
-              src={image.src}
-              alt={image.alt}
-              class:list={imageClasses}
-              style={thumbnailImageStyle}
-              widths={thumbnailImageWidths}
-              sizes={thumbnailImageSizes}
-              loading="eager"
-              fetchpriority="high"
-            />
-          )}
-        </div>
-      )
-    }
-    <div class={image ? "mt-4" : ""}>
+    <BlogThumbnail
+      alt={image?.alt}
+      href={href}
+      label={`Read "${title}"`}
+      loading="eager"
+      objectPosition={image?.objectPosition}
+      source={thumbnailSource}
+      thumbnail={thumbnail}
+      variant="featured"
+    />
+    <div class={thumbnailLight ? "mt-4" : ""}>
       <h3
         class="text-heading group-hover:text-accent text-xl leading-snug font-bold [font-stretch:75%] transition-colors sm:text-2xl"
       >

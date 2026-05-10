@@ -10,12 +10,13 @@ image:
   alt: EmacsLG1 Icon
   size: 40%
   position: right
-  thumbnailFill: full
-  thumbnailFrame: true
-  thumbnailSize: 80%
   credit:
     text: EmacsLG1 Icon
     href: https://github.com/jimeh/emacs-liquid-glass-icons
+thumbnail:
+  fill: fit
+  frame: true
+  size: 80%
 ---
 
 ## TL;DR

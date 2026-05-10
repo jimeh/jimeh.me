@@ -31,7 +31,16 @@ Optional fields:
 
 Image options:
 
-- `src`: local relative image or supported remote HTTPS image.
+- `src`: local relative image or supported remote HTTPS image. Use either a
+  single source or a light/dark object:
+  ```yaml
+  src: ./hero.jpg
+  ```
+  ```yaml
+  src:
+    light: ./logo-light.svg
+    dark: ./logo.svg
+  ```
 - `alt`: accessible text. Empty string is allowed for decorative legacy images.
 - `caption`: visible caption.
 - `size`: `default`, `wide`, `full`, or a percentage like `"50%"`.
@@ -39,15 +48,22 @@ Image options:
 - `flush`: removes top margin so the image sits flush with content.
 - `noLightbox`: disables Fancybox for this image.
 - `gallery`: lightbox gallery group name.
-- `thumbnailFill`: `fill` crops thumbnails; `full` contains the full image.
-- `thumbnailSize`: image size inside thumbnail boxes, as a percentage. Values
-  below `100%` add inset space; values above `100%` zoom/crop and request larger
-  optimized image variants up to the source image width.
-- `thumbnailFrame`: draws the listing thumbnail inside a bordered background.
 - `aspect`: CSS aspect ratio string such as `"16/9"`.
 - `objectPosition`: CSS object-position when `aspect` crops an image.
 - `credit`: attribution object with `text`, optional `href`, and `position`.
 - `hidden`: prevents automatic rendering at the top of the post body.
+
+Thumbnail options:
+
+- `thumbnail`: optional listing thumbnail controls. If `thumbnail.src` is not
+  set, the thumbnail uses `image.src`.
+- `src`: optional thumbnail-specific source. Uses the same single-source or
+  light/dark object shape as `image.src`.
+- `fill`: `fill` crops thumbnails; `fit` contains the full image.
+- `size`: image size inside thumbnail boxes, as a percentage. Values below
+  `100%` add inset space; values above `100%` zoom/crop and request larger
+  optimized image variants up to the source image width.
+- `frame`: draws the listing thumbnail inside a bordered background.
 
 Example:
 
@@ -64,6 +80,9 @@ image:
   size: wide
   aspect: "16/9"
   objectPosition: center
+thumbnail:
+  fill: fit
+  size: 110%
 ---
 ```
 
@@ -204,4 +223,4 @@ mise run check-content
 ```
 
 The check verifies dated directory naming, required frontmatter, date matching,
-tag format, local `image.src` assets, and local MDX static imports.
+tag format, local image/thumbnail source assets, and local MDX static imports.

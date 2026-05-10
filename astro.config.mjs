@@ -30,6 +30,7 @@ export default defineConfig({
   site: "https://jimeh.me",
   redirects: blogPostRedirects(),
   image: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [{ protocol: "https" }],
   },
   integrations: [mdx(), sitemap(), icon()],

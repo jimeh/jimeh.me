@@ -1,6 +1,6 @@
 ---
-import { Image as AstroImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import AssetImage from "@components/ui/AssetImage.astro";
 import Figure from "./Figure.astro";
 import "./Image.css";
 
@@ -61,12 +61,7 @@ const hasHeight = height !== undefined;
 const hasExplicitDimensions = hasWidth && hasHeight;
 const isStringSource = typeof src === "string";
 const isRemoteSource = isStringSource && /^https?:\/\//i.test(src);
-const isSvgSource = !isStringSource && src.format === "svg";
-const hasDarkSvg =
-  isSvgSource &&
-  darkSrc !== undefined &&
-  typeof darkSrc !== "string" &&
-  darkSrc.format === "svg";
+const hasDarkSource = darkSrc !== undefined;
 const imageHref = isStringSource ? src : src.src;
 
 if (hasWidth !== hasHeight) {
@@ -76,12 +71,6 @@ if (hasWidth !== hasHeight) {
 if (isStringSource && !isRemoteSource && !hasExplicitDimensions) {
   throw new Error("String image sources must provide width and height.");
 }
-
-const astroImageProps = isStringSource
-  ? hasExplicitDimensions
-    ? { src, width, height }
-    : { src, inferSize: true as const }
-  : { src };
 
 const isPercentage = /^\d+(?:\.\d+)?%$/.test(size);
 
@@ -110,6 +99,18 @@ const imgStyle = aspect
 // Figure.css owns spacing/caption layout for this component, so opt its image
 // out of Tailwind Typography's generic `.prose img` margins.
 const proseOptOutClass = "not-prose";
+
+function imageProps(source: ImageMetadata | string) {
+  if (typeof source !== "string") {
+    return { src: source };
+  }
+
+  if (width !== undefined && height !== undefined) {
+    return { src: source, width, height };
+  }
+
+  return { src: source, inferSize: true as const };
+}
 ---
 
 <Figure
@@ -123,50 +124,38 @@ const proseOptOutClass = "not-prose";
 >
   {
     noLightbox ? (
-      isSvgSource ? (
-        <>
-          <img
-            src={src.src}
-            alt={alt}
-            class:list={[
-              proseOptOutClass,
-              imgClasses,
-              aspect && "object-cover",
-              hasDarkSvg && "dark:hidden",
-            ]}
-            style={imgStyle}
-            width={src.width}
-            height={src.height}
-            loading={loading}
-          />
-          {hasDarkSvg && (
-            <img
-              src={darkSrc.src}
-              alt={alt}
-              class:list={[
-                proseOptOutClass,
-                imgClasses,
-                aspect && "object-cover",
-                "hidden dark:block",
-              ]}
-              style={imgStyle}
-              width={darkSrc.width}
-              height={darkSrc.height}
-              loading={loading}
-            />
-          )}
-        </>
-      ) : (
-        <AstroImage
-          {...astroImageProps}
+      <>
+        <AssetImage
+          {...imageProps(src)}
           alt={alt}
-          class:list={[proseOptOutClass, imgClasses, aspect && "object-cover"]}
+          classList={[
+            proseOptOutClass,
+            imgClasses,
+            aspect && "object-cover",
+            hasDarkSource && "dark:hidden",
+          ]}
           style={imgStyle}
           widths={[640, 960, 1280, 1600]}
           sizes={sizes}
           loading={loading}
         />
-      )
+        {darkSrc && (
+          <AssetImage
+            {...imageProps(darkSrc)}
+            alt={alt}
+            classList={[
+              proseOptOutClass,
+              imgClasses,
+              aspect && "object-cover",
+              "hidden dark:block",
+            ]}
+            style={imgStyle}
+            widths={[640, 960, 1280, 1600]}
+            sizes={sizes}
+            loading={loading}
+          />
+        )}
+      </>
     ) : (
       <a
         href={imageHref}
@@ -174,47 +163,29 @@ const proseOptOutClass = "not-prose";
         data-caption={caption}
         class="mdx-fancybox-link"
       >
-        {isSvgSource ? (
-          <>
-            <img
-              src={src.src}
-              alt={alt}
-              class:list={[
-                proseOptOutClass,
-                imgClasses,
-                aspect && "object-cover",
-                hasDarkSvg && "dark:hidden",
-              ]}
-              style={imgStyle}
-              width={src.width}
-              height={src.height}
-              loading={loading}
-            />
-            {hasDarkSvg && (
-              <img
-                src={darkSrc.src}
-                alt={alt}
-                class:list={[
-                  proseOptOutClass,
-                  imgClasses,
-                  aspect && "object-cover",
-                  "hidden dark:block",
-                ]}
-                style={imgStyle}
-                width={darkSrc.width}
-                height={darkSrc.height}
-                loading={loading}
-              />
-            )}
-          </>
-        ) : (
-          <AstroImage
-            {...astroImageProps}
+        <AssetImage
+          {...imageProps(src)}
+          alt={alt}
+          classList={[
+            proseOptOutClass,
+            imgClasses,
+            aspect && "object-cover",
+            hasDarkSource && "dark:hidden",
+          ]}
+          style={imgStyle}
+          widths={[640, 960, 1280, 1600]}
+          sizes={sizes}
+          loading={loading}
+        />
+        {darkSrc && (
+          <AssetImage
+            {...imageProps(darkSrc)}
             alt={alt}
-            class:list={[
+            classList={[
               proseOptOutClass,
               imgClasses,
               aspect && "object-cover",
+              "hidden dark:block",
             ]}
             style={imgStyle}
             widths={[640, 960, 1280, 1600]}

@@ -121,6 +121,53 @@ export function frontmatterBlockScalar(
   return null;
 }
 
+/** Reads a scalar value from a nested object inside a top-level YAML-ish block. */
+export function frontmatterNestedBlockScalar(
+  frontmatterBody: string,
+  blockKey: string,
+  nestedKey: string,
+  key: string,
+): string | null {
+  const lines = frontmatterBody.split(/\r?\n/);
+  const blockStart = lines.findIndex((line) => line === `${blockKey}:`);
+
+  if (blockStart === -1) {
+    return null;
+  }
+
+  let nestedIndent: number | null = null;
+
+  for (const line of lines.slice(blockStart + 1)) {
+    if (/^\S/.test(line)) {
+      break;
+    }
+
+    if (nestedIndent === null) {
+      const match = line.match(
+        new RegExp(`^(?<indent>\\s+)${nestedKey}:\\s*$`),
+      );
+
+      if (match?.groups?.indent) {
+        nestedIndent = match.groups.indent.length;
+      }
+
+      continue;
+    }
+
+    const indent = line.match(/^\s*/)?.[0].length ?? 0;
+    if (indent <= nestedIndent) {
+      break;
+    }
+
+    const match = line.match(new RegExp(`^\\s+${key}:\\s*(?<value>.+?)\\s*$`));
+    if (match?.groups?.value) {
+      return stripQuotes(match.groups.value.trim());
+    }
+  }
+
+  return null;
+}
+
 /** Reads inline string-array frontmatter like `tags: ["a", "b"]`. */
 export function frontmatterStringArray(
   frontmatterBody: string,

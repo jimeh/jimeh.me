@@ -5,6 +5,13 @@ description:
   needs root access."
 date: 2010-02-22
 tags: ["ruby", "cli", "gist"]
+image:
+  src: ./gabriel-heinzer-4Mw7nkQDByk-unsplash.jpg
+  size: wide
+  aspect: 32/9
+  credit:
+    text: Photo by Gabriel Heinzer on Unsplash
+    href: https://unsplash.com/photos/text-4Mw7nkQDByk
 ---
 
 I was looking through [my gists][gists] today on GitHub, and decided I'd do a

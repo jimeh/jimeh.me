@@ -7,10 +7,22 @@ const dateStr = z
   .union([z.string(), z.date()])
   .transform((v) => (v instanceof Date ? v.toISOString().slice(0, 10) : v));
 
+const percentageStr = z
+  .string()
+  .regex(/^\d+(?:\.\d+)?%$/, "Must be a percentage like '90%'");
+
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
-  schema: ({ image }) =>
-    z.object({
+  schema: ({ image }) => {
+    const imageSource = z.union([
+      image(),
+      z.object({
+        light: image(),
+        dark: image().optional(),
+      }),
+    ]);
+
+    return z.object({
       title: z.string(),
       description: z.string(),
       date: dateStr,
@@ -18,16 +30,11 @@ const blog = defineCollection({
       tags: z.array(z.string()).optional(),
       image: z
         .object({
-          src: image(),
-          /** Optional image variant shown when the site is in dark mode. */
-          darkSrc: image().optional(),
+          src: imageSource,
           alt: z.string().default(""),
           caption: z.string().optional(),
           size: z
-            .union([
-              z.enum(["default", "wide", "full"]),
-              z.string().regex(/^\d+%$/, "Must be a percentage like '50%'"),
-            ])
+            .union([z.enum(["default", "wide", "full"]), percentageStr])
             .default("default"),
           position: z.enum(["center", "left", "right"]).default("center"),
           /** Remove top margin so the image sits flush with content. */
@@ -36,15 +43,6 @@ const blog = defineCollection({
           noLightbox: z.boolean().optional(),
           /** Lightbox gallery group name. */
           gallery: z.string().optional(),
-          /** How the thumbnail fills the PostCard container. */
-          thumbnailFill: z.enum(["fill", "full"]).default("fill"),
-          /** Image size within thumbnail boxes, as a percentage. */
-          thumbnailSize: z
-            .string()
-            .regex(/^\d+(?:\.\d+)?%$/, "Must be a percentage like '90%'")
-            .default("100%"),
-          /** Draw the PostCard thumbnail inside a placeholder-style frame. */
-          thumbnailFrame: z.boolean().optional(),
           /** CSS aspect-ratio for the displayed image box (e.g. "16/9"). */
           aspect: z.string().optional(),
           /** CSS object-position when aspect is set (e.g. "top", "center"). */
@@ -61,7 +59,19 @@ const blog = defineCollection({
           hidden: z.boolean().default(false),
         })
         .optional(),
-    }),
+      thumbnail: z
+        .object({
+          src: imageSource.optional(),
+          /** How the thumbnail fills the thumbnail container. */
+          fill: z.enum(["fill", "fit"]).default("fill"),
+          /** Draw the thumbnail inside a bordered background. */
+          frame: z.boolean().optional(),
+          /** Image size within thumbnail boxes, as a percentage. */
+          size: percentageStr.default("100%"),
+        })
+        .optional(),
+    });
+  },
 });
 
 export const collections = { blog };

@@ -6,6 +6,7 @@ import {
   displayPath,
   frontmatter,
   frontmatterBlockScalar,
+  frontmatterNestedBlockScalar,
   frontmatterScalar,
   frontmatterStringArray,
   getBlogDir,
@@ -90,11 +91,31 @@ for (const post of readBlogPostFiles()) {
     }
   }
 
-  const imageSrc = frontmatterBlockScalar(body, "image", "src");
-  if (imageSrc && !localPostAssetExists(post, imageSrc)) {
-    failures.push(
-      `${label}: image.src points at missing local asset ${imageSrc}.`,
-    );
+  const localImageSources = [
+    ["image.src", frontmatterBlockScalar(body, "image", "src")],
+    [
+      "image.src.light",
+      frontmatterNestedBlockScalar(body, "image", "src", "light"),
+    ],
+    [
+      "image.src.dark",
+      frontmatterNestedBlockScalar(body, "image", "src", "dark"),
+    ],
+    ["thumbnail.src", frontmatterBlockScalar(body, "thumbnail", "src")],
+    [
+      "thumbnail.src.light",
+      frontmatterNestedBlockScalar(body, "thumbnail", "src", "light"),
+    ],
+    [
+      "thumbnail.src.dark",
+      frontmatterNestedBlockScalar(body, "thumbnail", "src", "dark"),
+    ],
+  ] as const;
+
+  for (const [field, src] of localImageSources) {
+    if (src && !localPostAssetExists(post, src)) {
+      failures.push(`${label}: ${field} points at missing local asset ${src}.`);
+    }
   }
 
   for (const importPath of localStaticImports(post)) {

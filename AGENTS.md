@@ -73,3 +73,10 @@ tests are configured.
 - MDX `Image` accepts remote HTTPS URLs by passing `inferSize` to Astro's image
   pipeline. Keep `astro.config.mjs` `image.remotePatterns` aligned with that;
   non-remote string sources still need explicit `width` and `height`.
+- Astro frontmatter helpers should not return JSX/TSX. `astro check` can pass,
+  but `astro build` fails during Vite/esbuild parsing; keep render branches in
+  template markup or extract a component.
+- Imported SVGs can go through Astro's image pipeline when
+  `image.dangerouslyAllowSVG` is enabled, but first run `pnpm optimize:svg`. The
+  project SVGO plugin removes Illustrator fallback markup and both external and
+  embedded raster masks that can change SVG transparency/backgrounds.

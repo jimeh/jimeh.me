@@ -3,6 +3,12 @@ title: 'Was I Really "That" Social?'
 description: "Reducing IM distractions by disabling all notifications in Adium."
 date: 2010-02-10
 tags: ["productivity", "social-media"]
+image:
+  src: ./kuu-akura-pnK6Q-QTHM4-unsplash.jpg
+  size: wide
+  credit:
+    text: Photo by kuu akura on Unsplash
+    href: https://unsplash.com/photos/text-icon-pnK6Q-QTHM4
 ---
 
 As some of you might have noticed the last couple of days, I haven't been online

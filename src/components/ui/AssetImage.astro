@@ -1,0 +1,74 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+type ClassList = string | Record<string, boolean> | Iterable<unknown>;
+
+interface Props {
+  src: ImageMetadata | string;
+  alt?: string;
+  classList?: ClassList;
+  style?: string;
+  width?: number | `${number}`;
+  height?: number | `${number}`;
+  widths?: number[];
+  sizes?: string;
+  inferSize?: true;
+  loading?: "eager" | "lazy";
+  fetchpriority?: "high" | "low" | "auto";
+}
+
+const {
+  src,
+  alt = "",
+  classList,
+  style,
+  width,
+  height,
+  widths,
+  sizes,
+  inferSize,
+  loading,
+  fetchpriority,
+} = Astro.props;
+---
+
+{
+  typeof src === "string" && inferSize ? (
+    <Image
+      src={src}
+      alt={alt}
+      class:list={classList}
+      style={style}
+      widths={widths}
+      sizes={sizes}
+      inferSize
+      loading={loading}
+      fetchpriority={fetchpriority}
+    />
+  ) : typeof src === "string" ? (
+    <Image
+      src={src}
+      alt={alt}
+      class:list={classList}
+      style={style}
+      width={width as number | `${number}`}
+      height={height as number | `${number}`}
+      widths={widths}
+      sizes={sizes}
+      loading={loading}
+      fetchpriority={fetchpriority}
+    />
+  ) : (
+    <Image
+      src={src}
+      alt={alt}
+      class:list={classList}
+      style={style}
+      widths={widths}
+      sizes={sizes}
+      loading={loading}
+      fetchpriority={fetchpriority}
+    />
+  )
+}
