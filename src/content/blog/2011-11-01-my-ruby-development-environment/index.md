@@ -5,6 +5,13 @@ description:
   Homebrew."
 date: 2011-11-01
 tags: ["ruby", "development", "tooling"]
+image:
+  src: ./D19D9049-DA3F-4E52-8544-54203F80F099.jpg
+  size: wide
+  aspect: 3/2
+  # credit:
+  #   text: Photo by me
+  #   href: https://flickr.com/photos/jimeh/8287359798/in/photostream/
 ---
 
 Setting up your development environment is always a tedious task. My own

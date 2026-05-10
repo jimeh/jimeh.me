@@ -8,7 +8,7 @@ tags: ["ruby", "cli", "gist"]
 image:
   src: ./gabriel-heinzer-4Mw7nkQDByk-unsplash.jpg
   size: wide
-  aspect: 32/9
+  aspect: 32/10
   credit:
     text: Photo by Gabriel Heinzer on Unsplash
     href: https://unsplash.com/photos/text-4Mw7nkQDByk
@@ -46,7 +46,7 @@ Simply call `sudome` as early as possible in your code. If needed it will re-run
 your script with `sudo`, requiring the user to type his password, at which point
 your script then has full root access to the system.
 
-» [Original Gist on GitHub][gist]
+Source: [Original Gist on GitHub][gist]
 
 [gists]: http://gist.github.com/jimeh
 [fink]: http://www.finkproject.org/
