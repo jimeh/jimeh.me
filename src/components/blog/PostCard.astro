@@ -41,13 +41,13 @@ function formatDate(dateStr: string): string {
         >
           {title}
         </h3>
+        <p class="text-subheading mt-1.5 line-clamp-2 text-sm leading-relaxed">
+          {description}
+        </p>
+        <div class="text-muted mt-1 text-sm">
+          <time datetime={date}>{formatDate(date)}</time>
+        </div>
       </a>
-      <p class="text-subheading mt-1.5 line-clamp-2 text-sm leading-relaxed">
-        {description}
-      </p>
-      <div class="text-muted mt-1 text-sm">
-        <time datetime={date}>{formatDate(date)}</time>
-      </div>
     </div>
   </div>
 </article>
