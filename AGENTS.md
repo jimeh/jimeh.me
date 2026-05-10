@@ -80,3 +80,6 @@ tests are configured.
   `image.dangerouslyAllowSVG` is enabled, but first run `pnpm optimize:svg`. The
   project SVGO plugin removes Illustrator fallback markup and both external and
   embedded raster masks that can change SVG transparency/backgrounds.
+- Shared VS Code settings live in `.vscode/settings.shared.json`. Local
+  `.vscode/settings.json` may be ignored and should not be treated as the shared
+  source.
