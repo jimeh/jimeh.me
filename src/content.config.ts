@@ -64,6 +64,8 @@ const blog = defineCollection({
           src: imageSource.optional(),
           /** How the thumbnail fills the thumbnail container. */
           fill: z.enum(["fill", "fit"]).default("fill"),
+          /** CSS object-position for cropped thumbnail images. */
+          objectPosition: z.string().optional(),
           /** Draw the thumbnail inside a bordered background. */
           frame: z.boolean().optional(),
           /** Image size within thumbnail boxes, as a percentage. */

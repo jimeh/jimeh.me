@@ -8,6 +8,7 @@ image:
   src: ./luthfi-alfarizi-gEf9bOMTZtk-unsplash.jpg
   aspect: 32/9
   size: wide
+  objectPosition: 50% 40%
   credit:
     text: Photo by Luthfi Alfarizi on Unsplash
     href: https://unsplash.com/photos/gEf9bOMTZtk

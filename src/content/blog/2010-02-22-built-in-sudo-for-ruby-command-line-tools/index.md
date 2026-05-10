@@ -8,7 +8,8 @@ tags: ["ruby", "cli", "gist"]
 image:
   src: ./gabriel-heinzer-4Mw7nkQDByk-unsplash.jpg
   size: wide
-  aspect: 32/10
+  aspect: 32/9
+  objectPosition: 50% 53%
   credit:
     text: Photo by Gabriel Heinzer on Unsplash
     href: https://unsplash.com/photos/text-4Mw7nkQDByk

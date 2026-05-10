@@ -9,6 +9,7 @@ image:
   src: ./D19D9049-DA3F-4E52-8544-54203F80F099.jpg
   size: wide
   aspect: 3/2
+  objectPosition: 50% 62%
   # credit:
   #   text: Photo by me
   #   href: https://flickr.com/photos/jimeh/8287359798/in/photostream/
@@ -57,44 +58,46 @@ managed by Bundler. So obviously `bundler` needs to be installed:
 gem install bundler
 ```
 
-With rbenv this does not create the `bundle` executable however, so the next
-step is to run:
+With rbenv this does not create the `bundle{:sh}` executable however, so the
+next step is to run:
 
 ```bash
 rbenv rehash
 ```
 
-This creates the `bundle` executable in `~/.rbenv/shims`, and also any missing
-executables for other gems you have installed.
+This creates the `bundle{:sh}` executable in `~/.rbenv/shims`, and also any
+missing executables for other gems you have installed.
 
 ## Gem Management with Bundler
 
-[Bundler][] is fantastic, but if you just run `bundle install` as default, I
-would argue you're not actually using Bundler correctly as it installs the gems
-into your Ruby verion's gem path. One of Bundler's great features is that you
-can keep gems completely self-contained within a project. For that reason I use
-the `--path` option, to install gems into `vendor/bundle` relative to the
+[Bundler][] is fantastic, but if you just run `bundle install{:sh}` as default,
+I would argue you're not actually using Bundler correctly as it installs the
+gems into your Ruby verion's gem path. One of Bundler's great features is that
+you can keep gems completely self-contained within a project. For that reason I
+use the `--path` option, to install gems into `vendor/bundle` relative to the
 Gemfile.
 
-And because I'm lazy, I have a handy bash alias for my `bundle install` command.
+And because I'm lazy, I have a handy bash alias for my `bundle install{:sh}`
+command.
 
 ```bash
 alias bi="bundle install --path vendor/bundle --binstubs=vendor/bundle/bin"
 ```
 
-The `--binstubs` option there leads me into how I avoid typing `bundle exec`
-before every command. It tells Bundler to package binaries from all the
-installed gems into `vendor/bundle/bin` directory within the project. Simply add
-the following at the very end of your `~/.profile` or `~/.bash_profile`:
+The `--binstubs` option there leads me into how I avoid typing
+`bundle exec{:sh}` before every command. It tells Bundler to package binaries
+from all the installed gems into `vendor/bundle/bin` directory within the
+project. Simply add the following at the very end of your `~/.profile` or
+`~/.bash_profile`:
 
 ```bash
 export PATH="./vendor/bundle/bin:$PATH"
 ```
 
 This enables you to call all of the project's gem binaries like normal, but
-they're Bundler aware, as if they'd been called with `bundle exec`.
+they're Bundler aware, as if they'd been called with `bundle exec{:sh}`.
 
-I also have a few bash aliases for `bundle exec ...` which I find useful:
+I also have a few bash aliases for `bundle exec ...{:sh}` which I find useful:
 
 ```bash
 alias ru="bundle exec ruby"
@@ -113,7 +116,7 @@ BUNDLE_PATH: vendor/bundle
 BUNDLE_BIN: vendor/bundle/bin
 ```
 
-Run `bundle help config` for more information.
+Run `bundle help config{:sh}` for more information.
 
 ## Running Ruby Apps
 

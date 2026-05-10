@@ -60,6 +60,9 @@ Thumbnail options:
 - `src`: optional thumbnail-specific source. Uses the same single-source or
   light/dark object shape as `image.src`.
 - `fill`: `fill` crops thumbnails; `fit` contains the full image.
+- `objectPosition`: CSS object-position for cropped thumbnails. Supports anchors
+  like `top`, `bottom`, `left`, `right`, `center`, and percentages like
+  `"50% 30%"`.
 - `size`: image size inside thumbnail boxes, as a percentage. Values below
   `100%` add inset space; values above `100%` zoom/crop and request larger
   optimized image variants up to the source image width.

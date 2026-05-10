@@ -35,7 +35,7 @@ function formatDate(dateStr: string): string {
       href={href}
       label={`Read "${title}"`}
       loading="eager"
-      objectPosition={image?.objectPosition}
+      objectPosition={thumbnail?.objectPosition ?? image?.objectPosition}
       source={thumbnailSource}
       thumbnail={thumbnail}
       variant="featured"

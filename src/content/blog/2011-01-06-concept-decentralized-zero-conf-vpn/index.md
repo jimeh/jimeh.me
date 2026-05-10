@@ -8,7 +8,7 @@ tags: ["vpn", "peer-to-peer", "technology"]
 image:
   src: ./harvey-abayasiri-VpLemecHS-4-unsplash.jpg
   size: wide
-  aspect: 16/9
+  aspect: 32/9
   objectPosition: top
   credit:
     text: Photo by Harvey Abayasiri on Unsplash

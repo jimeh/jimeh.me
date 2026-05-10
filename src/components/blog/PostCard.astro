@@ -30,7 +30,7 @@ function formatDate(dateStr: string): string {
       href={href}
       label={linkLabel}
       loading={imageLoading}
-      objectPosition={image?.objectPosition}
+      objectPosition={thumbnail?.objectPosition ?? image?.objectPosition}
       source={thumbnailSource}
       thumbnail={thumbnail}
     />
