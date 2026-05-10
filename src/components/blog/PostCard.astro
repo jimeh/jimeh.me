@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import { Icon } from "astro-icon/components";
 import { blogPostUrl } from "@utils/blog-url";
+import { scaledPixelSize, scaledThumbnailWidths } from "@utils/thumbnail-size";
 
 interface Props {
   post: CollectionEntry<"blog">;
@@ -13,6 +14,33 @@ const { post, imageLoading = "lazy" } = Astro.props;
 const { title, description, date, image } = post.data;
 const href = blogPostUrl(post);
 const linkLabel = `Read "${title}"`;
+const hasThumbnailFrame = image?.thumbnailFrame === true;
+const thumbnailUsesFullImage = image?.thumbnailFill === "full";
+const thumbnailImageStyle = image
+  ? `height: ${image.thumbnailSize}; object-position: ${image.objectPosition}; width: ${image.thumbnailSize}`
+  : undefined;
+const thumbnailImageWidths = image
+  ? scaledThumbnailWidths([160, 320], image.thumbnailSize, image.src.width)
+  : undefined;
+const thumbnailImageSizes = image
+  ? scaledPixelSize(160, image.thumbnailSize)
+  : undefined;
+const thumbnailBoxClasses =
+  "group-hover:scale-[1.02] relative hidden aspect-[3/2] w-40 shrink-0 self-start overflow-hidden rounded transition duration-300";
+const thumbnailFrameClasses =
+  "bg-surface-subtle border-border text-muted group-hover:text-accent place-items-center border sm:grid";
+const imageLinkClasses = [
+  thumbnailBoxClasses,
+  hasThumbnailFrame ? thumbnailFrameClasses : "sm:block",
+];
+const imageClasses = [
+  "absolute top-1/2 left-1/2 max-w-none -translate-x-1/2 -translate-y-1/2",
+  thumbnailUsesFullImage ? "object-contain" : "object-cover",
+];
+const darkSvg =
+  image?.src.format === "svg" && image.darkSrc?.format === "svg"
+    ? image.darkSrc
+    : undefined;
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
@@ -30,29 +58,49 @@ function formatDate(dateStr: string): string {
       image ? (
         <a
           href={href}
-          class="hidden shrink-0 sm:block"
+          class:list={imageLinkClasses}
           aria-label={linkLabel}
           tabindex="-1"
         >
-          <Image
-            src={image.src}
-            alt=""
-            class:list={[
-              "aspect-[3/2] w-40 rounded transition-transform duration-300 group-hover:scale-[1.02]",
-              image.thumbnailFill === "full"
-                ? "object-contain"
-                : "object-cover",
-            ]}
-            style={`object-position: ${image.objectPosition}`}
-            widths={[160, 320]}
-            sizes="160px"
-            loading={imageLoading}
-          />
+          {image.src.format === "svg" ? (
+            <>
+              <img
+                src={image.src.src}
+                alt=""
+                class:list={[imageClasses, darkSvg && "dark:hidden"]}
+                style={thumbnailImageStyle}
+                width={image.src.width}
+                height={image.src.height}
+                loading={imageLoading}
+              />
+              {darkSvg && (
+                <img
+                  src={darkSvg.src}
+                  alt=""
+                  class:list={[imageClasses, "hidden dark:block"]}
+                  style={thumbnailImageStyle}
+                  width={darkSvg.width}
+                  height={darkSvg.height}
+                  loading={imageLoading}
+                />
+              )}
+            </>
+          ) : (
+            <Image
+              src={image.src}
+              alt=""
+              class:list={imageClasses}
+              style={thumbnailImageStyle}
+              widths={thumbnailImageWidths}
+              sizes={thumbnailImageSizes}
+              loading={imageLoading}
+            />
+          )}
         </a>
       ) : (
         <a
           href={href}
-          class="bg-surface-subtle border-border text-muted group-hover:text-accent hidden aspect-[3/2] w-40 shrink-0 place-items-center rounded border transition-colors duration-300 sm:grid"
+          class:list={[thumbnailBoxClasses, thumbnailFrameClasses]}
           aria-label={linkLabel}
           tabindex="-1"
         >

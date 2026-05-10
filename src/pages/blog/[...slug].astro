@@ -29,12 +29,16 @@ const { Content } = await render(post);
 // Resolve absolute URL for OG/Twitter image meta tags.
 let ogImageUrl: string | undefined;
 if (image) {
-  const optimized = await getImage({
-    src: image.src,
-    width: 1200,
-    format: "jpg",
-  });
-  ogImageUrl = new URL(optimized.src, Astro.site).href;
+  if (image.src.format === "svg") {
+    ogImageUrl = new URL(image.src.src, Astro.site).href;
+  } else {
+    const optimized = await getImage({
+      src: image.src,
+      width: 1200,
+      format: "jpg",
+    });
+    ogImageUrl = new URL(optimized.src, Astro.site).href;
+  }
 }
 
 // Skip automatic image rendering when hidden (author places it manually).
@@ -94,6 +98,7 @@ const nextPost =
           flush={image.flush}
           noLightbox={image.noLightbox ?? true}
           gallery={image.gallery}
+          darkSrc={image.darkSrc}
           loading="eager"
         />
       )
@@ -114,6 +119,7 @@ const nextPost =
             flush={image.flush}
             noLightbox={image.noLightbox ?? true}
             gallery={image.gallery}
+            darkSrc={image.darkSrc}
             loading="eager"
           />
         )

@@ -19,6 +19,8 @@ const blog = defineCollection({
       image: z
         .object({
           src: image(),
+          /** Optional image variant shown when the site is in dark mode. */
+          darkSrc: image().optional(),
           alt: z.string().default(""),
           caption: z.string().optional(),
           size: z
@@ -36,6 +38,13 @@ const blog = defineCollection({
           gallery: z.string().optional(),
           /** How the thumbnail fills the PostCard container. */
           thumbnailFill: z.enum(["fill", "full"]).default("fill"),
+          /** Image size within thumbnail boxes, as a percentage. */
+          thumbnailSize: z
+            .string()
+            .regex(/^\d+(?:\.\d+)?%$/, "Must be a percentage like '90%'")
+            .default("100%"),
+          /** Draw the PostCard thumbnail inside a placeholder-style frame. */
+          thumbnailFrame: z.boolean().optional(),
           /** CSS aspect-ratio for the displayed image box (e.g. "16/9"). */
           aspect: z.string().optional(),
           /** CSS object-position when aspect is set (e.g. "top", "center"). */

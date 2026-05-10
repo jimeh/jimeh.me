@@ -5,7 +5,18 @@ description:
   comments, and a typography-focused design."
 date: 2010-02-03
 tags: ["ruby", "jekyll", "git", "design"]
+image:
+  src: ./jekyll-logo-light.svg
+  darkSrc: ./jekyll-logo.svg
+  alt: Jekyll logo
+  thumbnailFill: full
+  thumbnailFrame: true
+  hidden: true
 ---
+
+import { Image } from "@mdx/index";
+import jekyllLogoLight from "./jekyll-logo-light.svg";
+import jekyllLogo from "./jekyll-logo.svg";
 
 I finally found some time to rebuild my site, and add a blog. I'm also working
 on a portfolio, which I will probably be putting up on [heartb.it][]. I haven't
@@ -28,6 +39,15 @@ incorporate a blog as well. My first choice was [WordPress][], as I've used it
 on my [previous][zydev] blog. But it's overkill for what I need, and keept
 getting hacked all the fucking time even when I was keeping WordPress decently
 up to date.
+
+<Image
+  src={jekyllLogoLight}
+  darkSrc={jekyllLogo}
+  alt="Jekyll logo"
+  size="25%"
+  position="left"
+  noLightbox
+/>
 
 So I'm using [Jekyll][] this time around. Jekyll is a small website framework
 written in [Ruby][] which generates static HTML files. It was created by one of

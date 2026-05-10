@@ -40,6 +40,10 @@ Image options:
 - `noLightbox`: disables Fancybox for this image.
 - `gallery`: lightbox gallery group name.
 - `thumbnailFill`: `fill` crops thumbnails; `full` contains the full image.
+- `thumbnailSize`: image size inside thumbnail boxes, as a percentage. Values
+  below `100%` add inset space; values above `100%` zoom/crop and request larger
+  optimized image variants up to the source image width.
+- `thumbnailFrame`: draws the listing thumbnail inside a bordered background.
 - `aspect`: CSS aspect ratio string such as `"16/9"`.
 - `objectPosition`: CSS object-position when `aspect` crops an image.
 - `credit`: attribution object with `text`, optional `href`, and `position`.
