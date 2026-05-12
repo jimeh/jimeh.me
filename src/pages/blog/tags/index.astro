@@ -3,8 +3,9 @@ import { getCollection } from "astro:content";
 import BlogLayout from "../../../layouts/BlogLayout.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
+import { isMainBlogPost } from "@utils/blog-archive";
 
-const posts = await getCollection("blog");
+const posts = (await getCollection("blog")).filter(isMainBlogPost);
 
 // Build tag counts
 const tagCounts = new Map<string, number>();

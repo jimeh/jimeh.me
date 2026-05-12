@@ -1,0 +1,97 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../layouts/BlogLayout.astro";
+import PostCard from "@components/blog/PostCard.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
+import { blogArchiveInfo } from "@utils/blog-archive";
+import { compareBlogPostsDesc } from "@utils/blog-sort";
+import { blogPostYear } from "@utils/blog-url";
+
+interface Props {
+  label: string;
+  slug: string;
+}
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  const archives = new Map<string, string>();
+
+  for (const post of posts) {
+    const archive = blogArchiveInfo(post);
+    if (archive && !archive.isGeneral) {
+      archives.set(archive.slug, archive.label);
+    }
+  }
+
+  return [...archives.entries()].map(([slug, label]) => ({
+    params: { archive: slug },
+    props: { label, slug },
+  }));
+}
+
+const { label, slug } = Astro.props;
+const breadcrumbs = [
+  { href: "/", label: "jimeh" },
+  { href: "/blog/", label: "Blog" },
+  { href: "/blog/archives/", label: "Archives" },
+  { href: `/blog/archives/${slug}/`, label },
+];
+const posts = (await getCollection("blog"))
+  .filter((post) => {
+    const archive = blogArchiveInfo(post);
+
+    return archive && !archive.isGeneral && archive.slug === slug;
+  })
+  .sort(compareBlogPostsDesc);
+const postsByYear = new Map<string, typeof posts>();
+for (const post of posts) {
+  const year = blogPostYear(post);
+  if (!postsByYear.has(year)) {
+    postsByYear.set(year, []);
+  }
+  postsByYear.get(year)!.push(post);
+}
+const years = [...postsByYear.keys()].sort((a, b) => b.localeCompare(a));
+
+function yearRange(): string {
+  const dates = posts.map((post) => post.data.date).sort();
+  const first = dates[0]!.slice(0, 4);
+  const last = dates[dates.length - 1]!.slice(0, 4);
+
+  return first === last ? first : `${first}-${last}`;
+}
+---
+
+<BlogLayout
+  title={`Archive: ${label} - Blog - Jim Myhrberg`}
+  description={`Archived ${label} blog posts by Jim Myhrberg`}
+  breadcrumbs={breadcrumbs}
+>
+  <PageHeading as="h1" size="page" uppercase>Archive: {label}</PageHeading>
+  <MetaText>
+    {posts.length}{" "}
+    {posts.length === 1 ? "post" : "posts"}
+    {" · "}
+    {yearRange()}
+    &middot;
+    <a href="/blog/archives/" class="text-accent hover:underline">
+      all archives
+    </a>
+  </MetaText>
+
+  {
+    years.map((year) => (
+      <section class="mt-12">
+        <PageHeading as="h2" size="section" class="text-muted mb-6 opacity-75">
+          {year}
+        </PageHeading>
+        <div class="space-y-6">
+          {postsByYear.get(year)!.map((post) => (
+            <PostCard post={post} />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</BlogLayout>

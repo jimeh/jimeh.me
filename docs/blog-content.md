@@ -137,7 +137,7 @@ plain Markdown images.
 MDX media components are exported from `@mdx/index`:
 
 ```mdx
-import { Figure, Image, ImageGrid, YouTube } from "@mdx/index";
+import { Download, Figure, Image, ImageGrid, YouTube } from "@mdx/index";
 import hero from "./hero.webp";
 ```
 
@@ -170,13 +170,16 @@ Useful props:
 - `gallery`: Fancybox gallery group.
 - `noLightbox`: disable Fancybox wrapping.
 
-Percentage-sized `Image` and `Figure` components can float with
-`position="left"` or `position="right"`. Use `overhang="50%"` to hang half the
-figure outside the content boundary on desktop. `overhang="outside"` and
-`overhang="100%"` place the figure fully outside with the normal text gutter;
-mobile ignores overhang. Centered percentages above `100%`, such as
-`size="120%"`, expand outside the content column like `wide`, capped to the
-viewport with the normal page gutter.
+`Image` and `Figure` components can float with `position="left"` or
+`position="right"`. Without a percentage `size`, the floated figure shrinks to
+the intrinsic width of its content, which works well for small icons and
+thumbnails. Use `size="50%"` for proportional floats.
+
+Use `overhang="50%"` to hang half a percentage-sized figure outside the content
+boundary on desktop. `overhang="outside"` and `overhang="100%"` place the figure
+fully outside with the normal text gutter; mobile ignores overhang. Centered
+percentages above `100%`, such as `size="120%"`, expand outside the content
+column like `wide`, capped to the viewport with the normal page gutter.
 
 Wrap a normal fenced code block in `Figure` when it needs the same layout
 controls. The code block still goes through `rehype-pretty-code` and keeps the
@@ -234,6 +237,24 @@ import { YouTube } from "@mdx/index";
 
 `src` can be a normal YouTube URL, `youtu.be` URL, embed URL, shorts URL, or a
 bare video ID. The component renders through `youtube-nocookie.com`.
+
+### Download
+
+Use `Download` for local post attachments that should be emitted by Astro's
+asset pipeline:
+
+```mdx
+import { Download } from "@mdx/index";
+import archive from "./archive.zip?url&no-inline";
+
+<Download href={archive} filename="archive.zip">
+  archive.zip
+</Download>
+```
+
+The `?url&no-inline` import returns the built asset URL, prevents tiny files
+from becoming `data:` URLs, and makes the build fail if the source file is
+missing. The `filename` prop is passed to the browser's `download` attribute.
 
 ## Checks
 

@@ -11,16 +11,38 @@ interface Props {
   modifiedTime?: string;
   tags?: string[];
   ogImage?: string;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
-const { ...props } = Astro.props;
+interface BreadcrumbItem {
+  href: string;
+  label: string;
+}
+
+const {
+  breadcrumbs = [
+    { href: "/", label: "jimeh" },
+    { href: "/blog/", label: "Blog" },
+  ],
+  ...props
+} = Astro.props;
 ---
 
 <BaseLayout {...props}>
   <Fragment slot="header-nav">
-    <NavTextLink href="/">jimeh</NavTextLink>
-    <Icon name="heroicons:chevron-right" class="text-muted mx-1.5 size-3.5" />
-    <NavTextLink href="/blog/">Blog</NavTextLink>
+    {
+      breadcrumbs.map((item, index) => (
+        <>
+          {index > 0 && (
+            <Icon
+              name="heroicons:chevron-right"
+              class="text-muted mx-1.5 size-3.5"
+            />
+          )}
+          <NavTextLink href={item.href}>{item.label}</NavTextLink>
+        </>
+      ))
+    }
   </Fragment>
 
   <div class="mx-auto max-w-2xl px-6 pt-16 pb-12">

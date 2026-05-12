@@ -5,6 +5,7 @@ import {
   blogPostRoute,
   displayPath,
   frontmatter,
+  frontmatterScalar,
   frontmatterStringArray,
   getRepoRoot,
   readBlogPostFiles,
@@ -35,6 +36,26 @@ function assertIncludes(path: string, value: string): void {
   }
 }
 
+function assertNotIncludes(path: string, value: string): void {
+  const fullPath = join(distDir, path);
+  if (!existsSync(fullPath)) {
+    failures.push(`${path}: cannot inspect missing file.`);
+    return;
+  }
+
+  const source = readFileSync(fullPath, "utf8");
+  if (source.includes(value)) {
+    failures.push(`${path}: expected to omit ${value}.`);
+  }
+}
+
+function archiveSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 assertFile("index.html");
 assertFile("blog/index.html");
 assertFile("blog/tags/index.html");
@@ -47,6 +68,8 @@ assertFile("img/jimeh-4.2.0.jpg");
 
 const years = new Set<string>();
 const tags = new Set<string>();
+const archives = new Set<string>();
+let archiveCount = 0;
 
 for (const post of readBlogPostFiles()) {
   const route = blogPostRoute(post.dirName);
@@ -54,12 +77,23 @@ for (const post of readBlogPostFiles()) {
     continue;
   }
 
-  years.add(route.year);
-
   const frontmatterBody = frontmatter(post.source);
-  if (frontmatterBody) {
-    for (const tag of frontmatterStringArray(frontmatterBody, "tags")) {
-      tags.add(tag);
+  const archive = frontmatterBody
+    ? frontmatterScalar(frontmatterBody, "archive")
+    : null;
+  const isArchived = archive !== null;
+
+  if (isArchived) {
+    archiveCount += 1;
+    if (archive !== "true") {
+      archives.add(archiveSlug(archive));
+    }
+  } else {
+    years.add(route.year);
+    if (frontmatterBody) {
+      for (const tag of frontmatterStringArray(frontmatterBody, "tags")) {
+        tags.add(tag);
+      }
     }
   }
 
@@ -69,12 +103,25 @@ for (const post of readBlogPostFiles()) {
 
   assertFile(canonicalPath);
   assertFile(legacyPath);
-  assertIncludes("rss.xml", canonicalUrl);
   assertIncludes("sitemap-0.xml", canonicalUrl);
+
+  if (isArchived) {
+    assertNotIncludes("rss.xml", canonicalUrl);
+  } else {
+    assertIncludes("rss.xml", canonicalUrl);
+  }
 }
 
 for (const year of years) {
   assertFile(`blog/${year}/index.html`);
+}
+
+if (archiveCount > 0) {
+  assertFile("blog/archives/index.html");
+}
+
+for (const archive of archives) {
+  assertFile(`blog/archives/${archive}/index.html`);
 }
 
 for (const tag of tags) {

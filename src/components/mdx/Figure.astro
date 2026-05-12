@@ -46,6 +46,9 @@ const hasOverhang =
   overhangRatio > 0 &&
   (position === "left" || position === "right");
 const hangsOutside = overhang === "outside" || overhangRatio >= 1;
+const canFloat =
+  (position === "left" || position === "right") &&
+  (isPercentage || size === "default");
 
 const sizeClass = isPercentage
   ? ""
@@ -55,13 +58,16 @@ const sizeClass = isPercentage
       full: "mdx-figure-full",
     }[size as "default" | "wide" | "full"];
 
-const positionClasses = isPercentage
+const positionClasses = canFloat
   ? {
-      center: isOversizeCentered ? "mdx-figure-oversize" : "mx-auto",
       left: "mdx-figure-float-left",
       right: "mdx-figure-float-right",
-    }[position]
-  : "";
+    }[position as "left" | "right"]
+  : isPercentage && position === "center"
+    ? isOversizeCentered
+      ? "mdx-figure-oversize"
+      : "mx-auto"
+    : "";
 
 const figureStyle = [
   isOversizeCentered

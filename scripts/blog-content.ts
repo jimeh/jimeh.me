@@ -222,6 +222,8 @@ export function localStaticImports(post: BlogPostFile): string[] {
 
   return [...imports]
     .map((match) => match.groups?.path)
+    .filter((path): path is string => Boolean(path))
+    .map((path) => path.split("?")[0])
     .filter((path): path is string => Boolean(path));
 }
 

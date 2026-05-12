@@ -2,11 +2,12 @@ import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import type { APIContext } from "astro";
 import { siteConfig } from "../data/site";
+import { isMainBlogPost } from "@utils/blog-archive";
 import { compareBlogPostsDesc } from "@utils/blog-sort";
 import { blogPostUrl } from "@utils/blog-url";
 
 export async function GET(context: APIContext) {
-  const posts = await getCollection("blog");
+  const posts = (await getCollection("blog")).filter(isMainBlogPost);
 
   posts.sort(compareBlogPostsDesc);
 

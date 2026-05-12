@@ -5,13 +5,21 @@ import PostCard from "@components/blog/PostCard.astro";
 import PostFeatured from "@components/blog/PostFeatured.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
+import {
+  blogArchiveInfo,
+  isArchivedPost,
+  isMainBlogPost,
+} from "@utils/blog-archive";
 import { compareBlogPostsDesc } from "@utils/blog-sort";
 import { blogPostYear } from "@utils/blog-url";
 
-const posts = await getCollection("blog");
+const allPosts = await getCollection("blog");
+const posts = allPosts.filter(isMainBlogPost);
+const archivePosts = allPosts.filter(isArchivedPost);
 
 // Sort newest first
 posts.sort(compareBlogPostsDesc);
+archivePosts.sort(compareBlogPostsDesc);
 
 // Featured post = newest
 const featuredPost = posts[0];
@@ -32,6 +40,18 @@ for (const post of remainingPosts) {
 }
 
 const years = [...postsByYear.keys()].sort((a, b) => b.localeCompare(a));
+const archiveNames = [
+  ...new Set(
+    archivePosts
+      .map((post) => blogArchiveInfo(post))
+      .filter((archive) => archive && !archive.isGeneral)
+      .map((archive) => archive!.label),
+  ),
+];
+const archiveSummary =
+  archiveNames.length > 0
+    ? `${archivePosts.length} older posts from ${archiveNames.join(", ")}`
+    : `${archivePosts.length} older posts`;
 ---
 
 <BlogLayout
@@ -41,9 +61,13 @@ const years = [...postsByYear.keys()].sort((a, b) => b.localeCompare(a));
   <PageHeading as="h1" size="page" uppercase>Blog</PageHeading>
   <MetaText>{posts.length} posts</MetaText>
 
-  <section class="mt-8" aria-label="Latest post">
-    <PostFeatured post={featuredPost} />
-  </section>
+  {
+    featuredPost && (
+      <section class="mt-8" aria-label="Latest post">
+        <PostFeatured post={featuredPost} />
+      </section>
+    )
+  }
 
   {
     years.map((year) => (
@@ -66,5 +90,19 @@ const years = [...postsByYear.keys()].sort((a, b) => b.localeCompare(a));
         </div>
       </section>
     ))
+  }
+
+  {
+    archivePosts.length > 0 && (
+      <nav class="border-border mt-14 border-t pt-6" aria-label="Archives">
+        <a
+          href="/blog/archives/"
+          class="text-heading hover:text-accent text-lg font-bold [font-stretch:75%] transition-colors"
+        >
+          Archives
+        </a>
+        <p class="text-muted mt-1 text-sm">{archiveSummary}</p>
+      </nav>
+    )
   }
 </BlogLayout>

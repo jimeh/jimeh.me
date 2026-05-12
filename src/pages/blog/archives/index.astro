@@ -1,0 +1,146 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../layouts/BlogLayout.astro";
+import PostCard from "@components/blog/PostCard.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
+import { blogArchiveInfo, isArchivedPost } from "@utils/blog-archive";
+import { compareBlogPostsDesc } from "@utils/blog-sort";
+import { blogPostYear } from "@utils/blog-url";
+
+const breadcrumbs = [
+  { href: "/", label: "jimeh" },
+  { href: "/blog/", label: "Blog" },
+  { href: "/blog/archives/", label: "Archives" },
+];
+
+const archivedPosts = (await getCollection("blog"))
+  .filter(isArchivedPost)
+  .sort(compareBlogPostsDesc);
+const generalPosts = archivedPosts.filter((post) => post.data.archive === true);
+
+const archiveGroups = new Map<
+  string,
+  {
+    label: string;
+    slug: string;
+    url: string;
+    posts: typeof archivedPosts;
+  }
+>();
+
+for (const post of archivedPosts) {
+  const archive = blogArchiveInfo(post);
+  if (!archive || archive.isGeneral) {
+    continue;
+  }
+
+  const group = archiveGroups.get(archive.slug) ?? {
+    label: archive.label,
+    slug: archive.slug,
+    url: archive.url,
+    posts: [],
+  };
+  group.posts.push(post);
+  archiveGroups.set(archive.slug, group);
+}
+
+const namedArchives = [...archiveGroups.values()].sort(
+  (a, b) =>
+    latestPostDate(b.posts).localeCompare(latestPostDate(a.posts)) ||
+    a.label.localeCompare(b.label),
+);
+const generalPostsByYear = groupPostsByYear(generalPosts);
+const generalYears = [...generalPostsByYear.keys()].sort((a, b) =>
+  b.localeCompare(a),
+);
+
+function groupPostsByYear(posts: typeof archivedPosts) {
+  const postsByYear = new Map<string, typeof archivedPosts>();
+
+  for (const post of posts) {
+    const year = blogPostYear(post);
+    if (!postsByYear.has(year)) {
+      postsByYear.set(year, []);
+    }
+    postsByYear.get(year)!.push(post);
+  }
+
+  return postsByYear;
+}
+
+function latestPostDate(posts: typeof archivedPosts): string {
+  return posts[0]?.data.date ?? "";
+}
+
+function yearRange(posts: typeof archivedPosts): string {
+  const dates = posts.map((post) => post.data.date).sort();
+  const first = dates[0]!.slice(0, 4);
+  const last = dates[dates.length - 1]!.slice(0, 4);
+
+  return first === last ? first : `${first}-${last}`;
+}
+---
+
+<BlogLayout
+  title="Archives - Blog - Jim Myhrberg"
+  description="Archived blog posts by Jim Myhrberg"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHeading as="h1" size="page" uppercase>Archives</PageHeading>
+  <MetaText>{archivedPosts.length} archived posts</MetaText>
+
+  {
+    generalPosts.length > 0 && (
+      <section class="mt-8">
+        <PageHeading as="h2" size="section" class="text-muted mb-6 opacity-75">
+          General
+        </PageHeading>
+        {generalYears.map((year) => (
+          <section class="mt-8">
+            <PageHeading
+              as="h2"
+              size="section"
+              class="text-muted mb-6 opacity-75"
+            >
+              {year}
+            </PageHeading>
+            <div class="space-y-6">
+              {generalPostsByYear.get(year)!.map((post) => (
+                <PostCard post={post} />
+              ))}
+            </div>
+          </section>
+        ))}
+      </section>
+    )
+  }
+
+  {
+    namedArchives.length > 0 && (
+      <section class="mt-10">
+        <PageHeading as="h2" size="section" class="text-muted mb-4 opacity-75">
+          Named Archives
+        </PageHeading>
+        <div class="border-border divide-border divide-y border-y">
+          {namedArchives.map((archive) => (
+            <a
+              href={archive.url}
+              class="group flex items-baseline justify-between gap-4 py-4"
+            >
+              <span class="text-heading group-hover:text-accent text-lg font-bold [font-stretch:75%] transition-colors">
+                {archive.label}
+              </span>
+              <span class="text-muted shrink-0 text-sm">
+                {archive.posts.length}{" "}
+                {archive.posts.length === 1 ? "post" : "posts"}
+                {" · "}
+                {yearRange(archive.posts)}
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BlogLayout>

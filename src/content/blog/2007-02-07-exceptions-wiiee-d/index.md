@@ -1,0 +1,28 @@
+---
+title: "Exceptions... wiiee :D"
+description:
+  "Ok, so this is gonna sound like i'm a complete n00b, but i've recently fallen
+  in love with Exception handling in PHP5 :$ ."
+date: 2007-02-07
+archive: zhuoqe.org
+updatedDate: 2008-07-23
+tags: ["development", "php"]
+---
+
+Ok, so this is gonna sound like i'm a complete n00b, but i've recently fallen in
+love with Exception handling in PHP5 :$ .
+
+The reason why i never even looked at it before, is cause i've always strived
+for PHP4 compatibility, but with this latest project (more on it at a later date
+;) ), PHP4 has gone out the window :D .
+
+As for updates, not much, but i did recently upload a new quick PHP function to
+[Code Yard](http://zhuoqe.org/svn/codeyard/). It's called
+[`dir_exists()`](http://zhuoqe.org/svn/codeyard/trunk/php/functions/dir_exists.func.php).
+It's useful for checking if a directory exists, and if not, it will create it
+recursively, and return true or false. It works in PHP 4 and 5, in 4 it simply
+loops to create all required dirs since mkdir() doesn't support the recursive
+argument.
+
+Thats it for now, more updates soon, i've just been really busy the last few
+weeks with shit... GRRR

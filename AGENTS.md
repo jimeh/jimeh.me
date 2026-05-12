@@ -83,3 +83,12 @@ tests are configured.
 - Shared VS Code settings live in `.vscode/settings.shared.json`. Local
   `.vscode/settings.json` may be ignored and should not be treated as the shared
   source.
+- Historical WordPress dump imports should prefer `zydev_blog` over
+  `zhuoqe_blog`: the zhuoqe published posts are duplicated by old post ID in
+  zydev, and some zhuoqe text has mojibake. Check imported HTML for hacked
+  WordPress residue; zydev published post ID 132 contains hidden spam/iframe
+  markup in the dump.
+- The historical `tmp/uploads` WordPress upload dump contains a malicious
+  obfuscated PHP web shell at `2009/09/827051.php`; never import executable
+  files from that tree. The legitimate post assets are images/zips referenced
+  through the SQLite `canonical_post_assets` view.

@@ -1,0 +1,62 @@
+---
+title: "reflection.js modification... fixed height... hehehe"
+description: >-
+  Reflections are all the buzz right now, if you don't have reflections, you're
+  just not cool.
+date: 2007-04-09
+archive: zhuoqe.org
+updatedDate: 2007-10-31
+tags: ["development"]
+image:
+  src: ./librarious-bookcase.jpg
+  alt: "librarious bookcase view"
+  hidden: true
+---
+
+import { Download, Image } from "@mdx/index";
+import librariousBookcase from "./librarious-bookcase.jpg";
+import reflectionZip from "./reflection-px-161.zip?url&no-inline";
+
+Reflections are all the buzz right now, if you don't have reflections, you're
+just not cool, and if you do have reflections, you're just plain stupid for
+making out like everyone else... hehe...
+
+Eitherway i'm a huge reflections addict — yes i admit it, i'm an addict — and i
+tend to use them a bit to much even sometimes, even in webdesign :D
+
+This brings us to an awesome javascript which generates reflections for images
+on the fly, many of you (two people who'll read this... lol) already know all
+about [Cow](http://cow.neondragon.net/)'s
+[reflection.js](http://cow.neondragon.net/stuff/reflection/) script. The one
+thing i've wanted from it tho, is being able to set fixed height reflections,
+rather than the reflections being X% the height of the image in question.
+
+Hence i spent this afternoon haxx0ring reflection.js to add a `rheightpx`
+option, which with a little logic, you'll figure what it does ;)... while i was
+at it, i also added a `rgap` option which puts a gap of X pixels between the
+image and the reflection.
+
+As for bugs, well, the `rheightpx` option works fine in all browsers except
+Opera, which for reasons thats completely beyond my understanding, causes some
+very weird effects... after 2 hours of testing and messing around, i can't find
+any reason for why it does it, but maybe Cow will know, and hopefully he'll
+implement my changes into his script \*hint\* :D
+
+Also, the `rgap` option is a bit sketchy between browsers unfortunately :P
+
+## Download
+
+<Download
+  href={reflectionZip}
+  filename="reflection-px-161.zip"
+  title="reflection.js 1.6.1 (rheightpx modification)"
+>
+  reflection-px-161.zip
+</Download>
+
+And if you're wondering about what you could possibly use a fixed height for,
+check this...
+
+<Image src={librariousBookcase} alt="librarious bookcase view" noLightbox />
+
+...which is the main reason i put effort into this modification today :D

@@ -3,9 +3,12 @@ interface Props {
   date: string;
   updatedDate?: string;
   readingTime: number;
+  archiveLabel?: string;
+  archiveHref?: string;
 }
 
-const { date, updatedDate, readingTime } = Astro.props;
+const { date, updatedDate, readingTime, archiveLabel, archiveHref } =
+  Astro.props;
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr + "T00:00:00");
@@ -33,4 +36,14 @@ function formatDate(dateStr: string): string {
   <span aria-label={`${readingTime} minute read`}>
     {readingTime} min read
   </span>
+  {
+    archiveLabel && archiveHref && (
+      <>
+        <span>&middot;</span>
+        <a href={archiveHref} class="hover:text-accent transition-colors">
+          {archiveLabel}
+        </a>
+      </>
+    )
+  }
 </div>

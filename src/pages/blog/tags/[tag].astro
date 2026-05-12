@@ -4,12 +4,13 @@ import BlogLayout from "../../../layouts/BlogLayout.astro";
 import PostCard from "@components/blog/PostCard.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
+import { isMainBlogPost } from "@utils/blog-archive";
 import { compareBlogPostsDesc } from "@utils/blog-sort";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   const tags = new Set<string>();
-  for (const post of posts) {
+  for (const post of posts.filter(isMainBlogPost)) {
     for (const tag of post.data.tags ?? []) {
       tags.add(tag);
     }
@@ -23,7 +24,7 @@ export async function getStaticPaths() {
 const { tag } = Astro.props;
 const allPosts = await getCollection("blog");
 const posts = allPosts
-  .filter((p) => p.data.tags?.includes(tag))
+  .filter((p) => isMainBlogPost(p) && p.data.tags?.includes(tag))
   .sort(compareBlogPostsDesc);
 ---
 

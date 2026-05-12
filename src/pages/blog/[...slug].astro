@@ -9,6 +9,7 @@ import TagList from "@components/blog/TagList.astro";
 import CodeCopyButton from "@components/blog/CodeCopyButton.astro";
 import FancyboxInit from "@components/blog/FancyboxInit.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
+import { blogArchiveInfo, sameBlogArchiveContext } from "@utils/blog-archive";
 import { compareBlogPostsAsc } from "@utils/blog-sort";
 import { blogPostRoute, blogPostUrl } from "@utils/blog-url";
 import { darkImage, lightImage } from "@utils/image-source";
@@ -24,6 +25,22 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { title, description, date, updatedDate, tags, image } = post.data;
+const archive = blogArchiveInfo(post);
+const breadcrumbs = [
+  { href: "/", label: "jimeh" },
+  { href: "/blog/", label: "Blog" },
+];
+if (archive) {
+  breadcrumbs.push({ href: "/blog/archives/", label: "Archives" });
+  if (!archive.isGeneral) {
+    breadcrumbs.push({ href: archive.url, label: archive.label });
+  }
+}
+const archiveMetaLabel = archive
+  ? archive.isGeneral
+    ? "archive"
+    : `${archive.label} archive`
+  : undefined;
 const readTime = readingTime(post.body ?? "");
 const { Content } = await render(post);
 const imageLight = image ? lightImage(image.src) : undefined;
@@ -53,11 +70,15 @@ const imageFloats = showImage && /^\d+%$/.test(image.size);
 
 // Sorted posts for prev/next navigation
 const allPosts = await getCollection("blog");
-allPosts.sort(compareBlogPostsAsc);
-const currentIndex = allPosts.findIndex((p) => p.id === post.id);
-const prevPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+const contextPosts = allPosts
+  .filter((candidate) => sameBlogArchiveContext(candidate, post))
+  .sort(compareBlogPostsAsc);
+const currentIndex = contextPosts.findIndex((p) => p.id === post.id);
+const prevPost = currentIndex > 0 ? contextPosts[currentIndex - 1] : null;
 const nextPost =
-  currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  currentIndex < contextPosts.length - 1
+    ? contextPosts[currentIndex + 1]
+    : null;
 ---
 
 <BlogLayout
@@ -68,6 +89,7 @@ const nextPost =
   modifiedTime={updatedDate}
   tags={tags}
   ogImage={ogImageUrl}
+  breadcrumbs={breadcrumbs}
 >
   <article>
     <header>
@@ -82,6 +104,8 @@ const nextPost =
           date={date}
           updatedDate={updatedDate}
           readingTime={readTime}
+          archiveLabel={archiveMetaLabel}
+          archiveHref={archive?.url}
         />
       </div>
       <hr class="border-border mt-6" />
