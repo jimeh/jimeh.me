@@ -85,12 +85,12 @@ const imgClasses = isPercentage
     }`;
 
 const sizes = isPercentage
-  ? `(min-width: 672px) ${size}, 100vw`
+  ? `(min-width: 680px) ${size}, 100vw`
   : size === "full"
     ? "100vw"
     : size === "wide"
-      ? "(min-width: 960px) 960px, 100vw"
-      : "(min-width: 672px) 672px, 100vw";
+      ? "(min-width: 1192px) 1192px, 100vw"
+      : "(min-width: 680px) 680px, 100vw";
 
 const imgStyle = aspect
   ? `aspect-ratio: ${aspect}; object-position: ${objectPosition}`
@@ -135,7 +135,7 @@ function imageProps(source: ImageMetadata | string) {
             hasDarkSource && "dark:hidden",
           ]}
           style={imgStyle}
-          widths={[640, 960, 1280, 1600]}
+          widths={[640, 960, 1192, 1280, 1600]}
           sizes={sizes}
           loading={loading}
         />
@@ -150,7 +150,7 @@ function imageProps(source: ImageMetadata | string) {
               "hidden dark:block",
             ]}
             style={imgStyle}
-            widths={[640, 960, 1280, 1600]}
+            widths={[640, 960, 1192, 1280, 1600]}
             sizes={sizes}
             loading={loading}
           />
@@ -173,7 +173,7 @@ function imageProps(source: ImageMetadata | string) {
             hasDarkSource && "dark:hidden",
           ]}
           style={imgStyle}
-          widths={[640, 960, 1280, 1600]}
+          widths={[640, 960, 1192, 1280, 1600]}
           sizes={sizes}
           loading={loading}
         />
@@ -188,7 +188,7 @@ function imageProps(source: ImageMetadata | string) {
               "hidden dark:block",
             ]}
             style={imgStyle}
-            widths={[640, 960, 1280, 1600]}
+            widths={[640, 960, 1192, 1280, 1600]}
             sizes={sizes}
             loading={loading}
           />

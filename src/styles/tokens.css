@@ -3,6 +3,8 @@
 }
 
 :root {
+  color-scheme: only light;
+
   /* surfaces */
   --surface: white;
   --surface-subtle: var(--color-slate-50);

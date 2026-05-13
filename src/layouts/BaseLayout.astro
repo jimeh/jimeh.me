@@ -43,11 +43,12 @@ const appleTouchHash = fileHash("apple-touch-icon.png");
 ---
 
 <!doctype html>
-<html class="h-full">
+<html class="bg-surface h-full">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="only light" />
     <title>{pageTitle}</title>
 
     <SEOHead
@@ -89,7 +90,7 @@ const appleTouchHash = fileHash("apple-touch-icon.png");
   </head>
   <body
     class:list={[
-      "text-on-surface h-full font-sans text-sm leading-normal",
+      "text-on-surface min-h-full font-sans text-sm leading-normal",
       "bg-surface",
     ]}
   >

@@ -92,3 +92,9 @@ tests are configured.
   obfuscated PHP web shell at `2009/09/827051.php`; never import executable
   files from that tree. The legitimate post assets are images/zips referenced
   through the SQLite `canonical_post_assets` view.
+- Chromium-family browsers can report dark CSS backgrounds correctly while
+  rendered pixels sample lighter. If macOS Digital Color Meter is set to sRGB
+  and Firefox/Safari show `#0a0a0a` while Chrome/Arc show `#0f0f0f`, suspect
+  Chromium content darkening or GPU/display color pipeline rather than app CSS:
+  a standalone static page with literal `#0a0a0a` panels and no Tailwind/Astro
+  classes also rendered as `#0f0f0f` in Chrome/Arc on affected displays.
