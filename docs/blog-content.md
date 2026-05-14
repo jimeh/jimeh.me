@@ -278,6 +278,13 @@ The `href` prop is kept only as build output metadata. It is not rendered as a
 clickable destination. Hovering or focusing the text shows the default dead-link
 message; pass `reason` to customize it.
 
+For inline prose where formatting would otherwise split the component awkwardly,
+use the Markdown-capable `text` prop:
+
+```mdx
+<DeadLink href="http://example.com/" text="`old-download.zip`" />
+```
+
 ## Checks
 
 Run content invariants with:

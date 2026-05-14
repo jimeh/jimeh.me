@@ -17,6 +17,7 @@ config:
   MD033:
     allowed_elements:
       - Credit
+      - DeadLink
       - Download
       - Figure
       - Image

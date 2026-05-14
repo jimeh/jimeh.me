@@ -109,3 +109,6 @@ tests are configured.
   width: `BlogLayout.astro` uses `max-w-3xl px-6`, making the content column
   720px at a 768px outer breakpoint. Update those constants if the blog layout
   width or horizontal padding changes.
+- Blog MDX components must be listed in `.markdownlint-cli2.yaml` under
+  `MD033.allowed_elements`; otherwise markdownlint treats component tags as
+  inline HTML.

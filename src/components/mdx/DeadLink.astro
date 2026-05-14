@@ -1,9 +1,12 @@
 ---
 import { parseHTML } from "linkedom";
+import { micromark } from "micromark";
 
 interface Props {
   /** Historical URL retained as metadata, but never rendered as a link. */
   href?: string;
+  /** Markdown label. Use this when an inline MDX slot would format poorly. */
+  text?: string;
   /** Tooltip and assistive text explaining why the link is inactive. */
   reason?: string;
   class?: string;
@@ -11,13 +14,17 @@ interface Props {
 
 const {
   href,
+  text,
   reason = "This link is dead and no longer works.",
   class: className,
 }: Props = Astro.props;
 const descriptionId = `dead-link-${crypto.randomUUID()}`;
-const content = Astro.slots.has("default")
-  ? inlineSlotContent(await Astro.slots.render("default"))
-  : "";
+const content =
+  text !== undefined
+    ? inlineSlotContent(micromark(text))
+    : Astro.slots.has("default")
+      ? inlineSlotContent(await Astro.slots.render("default"))
+      : "";
 
 function inlineSlotContent(html: string): string {
   const { document } = parseHTML(`<dead-link-root>${html}</dead-link-root>`);
