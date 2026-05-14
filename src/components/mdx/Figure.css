@@ -1,5 +1,5 @@
 .mdx-figure-wide {
-  --wide-max: 1192px;
+  --wide-max: 1200px;
 
   width: min(var(--wide-max), calc(100vw - 3rem));
   margin-left: calc(50% - min(var(--wide-max), calc(100vw - 3rem)) / 2);

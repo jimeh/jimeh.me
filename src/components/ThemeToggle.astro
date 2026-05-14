@@ -1,5 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
+
+const tooltipId = `theme-toggle-tooltip-${crypto.randomUUID()}`;
 ---
 
 <div class="group relative inline-block">
@@ -8,13 +10,16 @@ import { Icon } from "astro-icon/components";
     type="button"
     class="text-muted hover:text-accent cursor-pointer rounded-full p-2"
     aria-label="Toggle theme"
+    aria-describedby={tooltipId}
   >
     <Icon name="sun-moon" data-theme-icon="system" class="hidden size-5" />
     <Icon name="heroicons:sun" data-theme-icon="light" class="hidden size-5" />
     <Icon name="heroicons:moon" data-theme-icon="dark" class="hidden size-5" />
   </button>
   <div
-    class="bg-on-surface text-surface pointer-events-none absolute top-full left-1/2 mt-2 -translate-x-1/2 rounded-md px-2 py-1 text-xs font-medium whitespace-nowrap opacity-0 shadow-sm transition-opacity duration-200 group-hover:opacity-100"
+    id={tooltipId}
+    role="tooltip"
+    class="bg-on-surface text-surface pointer-events-none absolute top-full left-1/2 mt-2 -translate-x-1/2 rounded-md px-2 py-1 text-xs font-medium whitespace-nowrap opacity-0 shadow-sm transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100"
   >
     <span data-tooltip-text="system" class="hidden">System</span>
     <span data-tooltip-text="light" class="hidden">Light</span>

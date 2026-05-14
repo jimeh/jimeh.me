@@ -47,6 +47,13 @@ tests are configured.
 - Code highlighting: `rehype-pretty-code`; Astro's built-in Shiki is disabled.
 - Code copy button: `CodeCopyButton.astro` clones an astro-icon template per
   code block and is always visible.
+- UI styling: prefer existing Tailwind utilities, variants, and design tokens
+  before adding component-scoped CSS or hand-rolled selectors. Use built-in
+  utilities for layout behavior such as floats, clears, pseudo-elements,
+  spacing, and responsive states when they fit. For tooltip-like UI, follow the
+  `ThemeToggle.astro` / `DeadLink.astro` pattern: `group`, absolute tooltip,
+  `group-hover` + `group-focus-within`, `aria-describedby`, and
+  `role="tooltip"`; avoid native `title` when a custom tooltip is rendered.
 
 ## Domain Concepts
 
@@ -98,3 +105,7 @@ tests are configured.
   Chromium content darkening or GPU/display color pipeline rather than app CSS:
   a standalone static page with literal `#0a0a0a` panels and no Tailwind/Astro
   classes also rendered as `#0f0f0f` in Chrome/Arc on affected displays.
+- MDX `Image.astro` responsive `sizes` hints are coupled to the blog layout
+  width: `BlogLayout.astro` uses `max-w-3xl px-6`, making the content column
+  720px at a 768px outer breakpoint. Update those constants if the blog layout
+  width or horizontal padding changes.

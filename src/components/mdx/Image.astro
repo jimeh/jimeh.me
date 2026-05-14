@@ -56,6 +56,11 @@ const {
 } = Astro.props;
 
 const alt = Astro.props.alt ?? caption ?? "";
+const contentMaxWidth = 720;
+const contentBreakpoint = 768;
+const contentGutterRem = 3;
+const wideMaxWidth = 1200;
+const imageWidths = uniqueSortedWidths([640, 960, wideMaxWidth, 1280, 1600]);
 const hasWidth = width !== undefined;
 const hasHeight = height !== undefined;
 const hasExplicitDimensions = hasWidth && hasHeight;
@@ -72,7 +77,9 @@ if (isStringSource && !isRemoteSource && !hasExplicitDimensions) {
   throw new Error("String image sources must provide width and height.");
 }
 
-const isPercentage = /^\d+(?:\.\d+)?%$/.test(size);
+const sizeMatch = size.match(/^(\d+(?:\.\d+)?)%$/);
+const isPercentage = !!sizeMatch;
+const sizePercent = sizeMatch ? Number.parseFloat(sizeMatch[1]) : 0;
 
 const imgClasses = isPercentage
   ? "block"
@@ -85,12 +92,12 @@ const imgClasses = isPercentage
     }`;
 
 const sizes = isPercentage
-  ? `(min-width: 680px) ${size}, 100vw`
+  ? contentRelativeSizes(sizePercent)
   : size === "full"
     ? "100vw"
     : size === "wide"
-      ? "(min-width: 1192px) 1192px, 100vw"
-      : "(min-width: 680px) 680px, 100vw";
+      ? `(min-width: ${wideMaxWidth}px) ${wideMaxWidth}px, 100vw`
+      : contentRelativeSizes();
 
 const imgStyle = aspect
   ? `aspect-ratio: ${aspect}; object-position: ${objectPosition}`
@@ -110,6 +117,37 @@ function imageProps(source: ImageMetadata | string) {
   }
 
   return { src: source, inferSize: true as const };
+}
+
+function contentRelativeSizes(percent = 100): string {
+  const desktopWidth = contentMaxWidth * (percent / 100);
+  const mobileGutter = contentGutterRem * (percent / 100);
+
+  if (percent > 100 && position === "center") {
+    const breakpoint = desktopWidth + contentGutterRem * 16;
+
+    return [
+      `(min-width: ${formatSizeValue(breakpoint)}px)`,
+      `${formatSizeValue(desktopWidth)}px,`,
+      `calc(100vw - ${contentGutterRem}rem)`,
+    ].join(" ");
+  }
+
+  return [
+    `(min-width: ${contentBreakpoint}px)`,
+    `${formatSizeValue(desktopWidth)}px,`,
+    `calc(${formatSizeValue(percent)}vw - ${formatSizeValue(mobileGutter)}rem)`,
+  ].join(" ");
+}
+
+function formatSizeValue(value: number): string {
+  return Number.isInteger(value)
+    ? value.toString()
+    : value.toFixed(3).replace(/\.?0+$/, "");
+}
+
+function uniqueSortedWidths(widths: number[]): number[] {
+  return [...new Set(widths)].sort((a, b) => a - b);
 }
 ---
 
@@ -135,7 +173,7 @@ function imageProps(source: ImageMetadata | string) {
             hasDarkSource && "dark:hidden",
           ]}
           style={imgStyle}
-          widths={[640, 960, 1192, 1280, 1600]}
+          widths={imageWidths}
           sizes={sizes}
           loading={loading}
         />
@@ -150,7 +188,7 @@ function imageProps(source: ImageMetadata | string) {
               "hidden dark:block",
             ]}
             style={imgStyle}
-            widths={[640, 960, 1192, 1280, 1600]}
+            widths={imageWidths}
             sizes={sizes}
             loading={loading}
           />
@@ -173,7 +211,7 @@ function imageProps(source: ImageMetadata | string) {
             hasDarkSource && "dark:hidden",
           ]}
           style={imgStyle}
-          widths={[640, 960, 1192, 1280, 1600]}
+          widths={imageWidths}
           sizes={sizes}
           loading={loading}
         />
@@ -188,7 +226,7 @@ function imageProps(source: ImageMetadata | string) {
               "hidden dark:block",
             ]}
             style={imgStyle}
-            widths={[640, 960, 1192, 1280, 1600]}
+            widths={imageWidths}
             sizes={sizes}
             loading={loading}
           />

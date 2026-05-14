@@ -137,7 +137,14 @@ plain Markdown images.
 MDX media components are exported from `@mdx/index`:
 
 ```mdx
-import { Download, Figure, Image, ImageGrid, YouTube } from "@mdx/index";
+import {
+  DeadLink,
+  Download,
+  Figure,
+  Image,
+  ImageGrid,
+  YouTube,
+} from "@mdx/index";
 import hero from "./hero.webp";
 ```
 
@@ -255,6 +262,21 @@ import archive from "./archive.zip?url&no-inline";
 The `?url&no-inline` import returns the built asset URL, prevents tiny files
 from becoming `data:` URLs, and makes the build fail if the source file is
 missing. The `filename` prop is passed to the browser's `download` attribute.
+
+### DeadLink
+
+Use `DeadLink` for historical links that should read like the original link text
+but must not navigate anywhere because the target is gone:
+
+```mdx
+import { DeadLink } from "@mdx/index";
+
+<DeadLink href="http://example.com/old-download.zip">old download</DeadLink>
+```
+
+The `href` prop is kept only as build output metadata. It is not rendered as a
+clickable destination. Hovering or focusing the text shows the default dead-link
+message; pass `reason` to customize it.
 
 ## Checks
 
