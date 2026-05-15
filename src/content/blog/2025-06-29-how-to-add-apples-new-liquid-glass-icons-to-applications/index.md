@@ -2,7 +2,6 @@
 title: "How to add Apple's new Liquid Glass icons to applications"
 description: "Without Xcode, almost."
 date: 2025-06-29
-updatedDate: 2026-02-17
 tags: ["macos", "macos26", "macos-tahoe", "apple", "liquid-glass"]
 image:
   src: ./Apple-WWDC25-Liquid-Glass-Icon-Composer.jpg
