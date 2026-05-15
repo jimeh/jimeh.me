@@ -63,6 +63,10 @@ run = "pnpm verify"
 description = "Run built-site smoke checks"
 run = "pnpm smoke"
 
+[tasks.generate-blog-schema]
+description = "Generate blog frontmatter JSON Schema"
+run = "pnpm generate:blog-schema"
+
 [tasks.ci]
 description = "Alias for full project verification"
 depends = ["verify"]

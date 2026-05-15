@@ -13,6 +13,7 @@
     "lint:markdown": "markdownlint-cli2",
     "check:content": "tsx scripts/check-content.ts",
     "smoke": "tsx scripts/check-site.ts",
+    "generate:blog-schema": "tsx scripts/generate-blog-frontmatter-schema.ts",
     "optimize:svg": "svgo --config svgo.config.mjs --multipass --folder src --recursive",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

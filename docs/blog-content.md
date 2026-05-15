@@ -12,6 +12,13 @@ The directory date and frontmatter `date` must match. Canonical public URLs use
 `/blog/:year/:slug/`; legacy full-date URLs are still generated and redirected
 from `astro.config.mjs`.
 
+The blog frontmatter JSON Schema is generated from the shared Zod definition in
+`src/content/blog-schema.ts`:
+
+```sh
+mise run generate-blog-schema
+```
+
 Use `.md` for normal Markdown posts. Use `.mdx` when the body needs imported
 media components such as `Image`, `ImageGrid`, or `YouTube`.
 

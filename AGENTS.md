@@ -13,6 +13,7 @@ mise run lint          # ESLint + Stylelint + Markdownlint
 mise run lint-fix      # Auto-fix lint issues
 mise run check-content # Blog content invariant checks
 mise run smoke         # Built-site smoke checks; run after build
+mise run generate-blog-schema # Generate blog frontmatter JSON Schema
 mise run format        # Prettier write
 mise run format-check  # Prettier check
 mise run typecheck     # astro check (TypeScript)
