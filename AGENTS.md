@@ -106,10 +106,10 @@ tests are configured.
   Chromium content darkening or GPU/display color pipeline rather than app CSS:
   a standalone static page with literal `#0a0a0a` panels and no Tailwind/Astro
   classes also rendered as `#0f0f0f` in Chrome/Arc on affected displays.
-- MDX `Image.astro` responsive `sizes` hints are coupled to the blog layout
-  width: `BlogLayout.astro` uses `max-w-3xl px-6`, making the content column
-  720px at a 768px outer breakpoint. Update those constants if the blog layout
-  width or horizontal padding changes.
+- MDX `Image.astro` responsive `sizes` hints are coupled to the default blog
+  layout width: `BlogLayout.astro` defaults to `width="3xl"` with `px-6`, making
+  the content column 720px at a 768px outer breakpoint. Update those constants
+  if the default layout width or horizontal padding changes.
 - Blog MDX components must be listed in `.markdownlint-cli2.yaml` under
   `MD033.allowed_elements`; otherwise markdownlint treats component tags as
   inline HTML.
