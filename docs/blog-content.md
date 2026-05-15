@@ -8,9 +8,8 @@ YYYY-MM-DD-post-slug/
   image-or-local-assets.ext
 ```
 
-The directory date and frontmatter `date` must match. Canonical public URLs use
-`/blog/:year/:slug/`; legacy full-date URLs are still generated and redirected
-from `astro.config.mjs`.
+The directory date and frontmatter `date` must match. Public URLs use
+`/blog/:year/:slug/`.
 
 The blog frontmatter JSON Schema is generated from the shared Zod definition in
 `src/content/blog-schema.ts`:

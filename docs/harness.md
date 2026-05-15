@@ -45,6 +45,6 @@ The custom content check protects blog rules that are easy for agents to miss:
 The built-site smoke check protects the static deploy surface:
 
 - root, blog, tag, RSS, sitemap, favicon, and profile image outputs exist;
-- every post has canonical and legacy built pages;
+- every post has a canonical built page at `/blog/:year/:slug/`;
 - every post appears in RSS and sitemap with its canonical URL;
 - year and tag archive pages exist.

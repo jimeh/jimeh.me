@@ -23,6 +23,13 @@ function assertFile(path: string): void {
   }
 }
 
+function assertNoFile(path: string): void {
+  const fullPath = join(distDir, path);
+  if (existsSync(fullPath)) {
+    failures.push(`${path}: expected built file to be absent.`);
+  }
+}
+
 function assertIncludes(path: string, value: string): void {
   const fullPath = join(distDir, path);
   if (!existsSync(fullPath)) {
@@ -102,7 +109,7 @@ for (const post of readBlogPostFiles()) {
   const canonicalUrl = `${siteUrl}/blog/${route.year}/${route.slug}/`;
 
   assertFile(canonicalPath);
-  assertFile(legacyPath);
+  assertNoFile(legacyPath);
   assertIncludes("sitemap-0.xml", canonicalUrl);
 
   if (isArchived) {
