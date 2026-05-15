@@ -5,6 +5,7 @@ description:
   perfectionism-induced delays."
 date: 2010-02-25
 tags: ["php", "open-source"]
+archive: true
 ---
 
 So I finally bit off my own sense of perfection in regards to my Zynapse

@@ -51,10 +51,10 @@ After the weekend ended, I kept away from caffeine, and around day three or
 four, I started getting light headaches multiple times per day, everyday. And I
 **never** have headaches, except for when I'm dead sick with some flu so I can
 hardly stand on my own two feet. So I figured that the headaches were from
-caffeine
-[withdrawal](http://en.wikipedia.org/wiki/Caffeine#Tolerance_and_withdrawal).
-According to Wikipedia, withdrawal symptoms can last for one to five days. My
-headaches didn't let up for about two weeks.
+caffeine [withdrawal][]. According to Wikipedia, withdrawal symptoms can last
+for one to five days. My headaches didn't let up for about two weeks.
+
+[withdrawal]: https://en.wikipedia.org/wiki/Caffeine#Dependence_and_withdrawal
 
 ## The Aftermath
 

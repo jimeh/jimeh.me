@@ -10,10 +10,12 @@ image:
   size: wide
   aspect: 3/2
   objectPosition: 50% 62%
-  # credit:
-  #   text: Photo by me
-  #   href: https://flickr.com/photos/jimeh/8287359798/in/photostream/
+  credit:
+    text: Photo by me
+    href: https://www.instagram.com/p/MIOn6TN8x2/
 ---
+
+import { DeadLink } from "@mdx/index";
 
 Setting up your development environment is always a tedious task. My own
 environment has changed many times over the years. I've recently gotten my
@@ -34,9 +36,9 @@ thing that you'll miss is it's gemset feature, which won't be an issue if you
 use Bundler properly. There is however a [gemset][rbenv-gemset] plugin available
 for rbenv.
 
-To install rbenv, check the [ReadMe][rbenv] on the project page. I prefer the
-Git checkout method. [ruby-build][] has installation info on the project page
-too, but on OS X I prefer installing it with [Homebrew][].
+To install rbenv, check the [ReadMe][rbenv-installation] on the project page. I
+prefer the Git checkout method. [ruby-build][] has installation info on the
+project page too, but on OS X I prefer installing it with [Homebrew][].
 
 Once both are installed, you can install your Ruby version of choice, for
 example:
@@ -120,8 +122,9 @@ Run `bundle help config{:sh}` for more information.
 
 ## Running Ruby Apps
 
-For running web-based apps I use [Pow][] and/or [Foreman][]. Pow is my favorite
-of the two, but for certain projects Foreman is the better match.
+For running web-based apps I use <DeadLink text="Pow" href="http://pow.cx/" />
+and/or [Foreman][]. Pow is my favorite of the two, but for certain projects
+Foreman is the better match.
 
 I tend to go on a case-by-case basis. For example, some projects might need a
 few background workers, I tend to start all of them with Foreman, while I might
@@ -129,13 +132,14 @@ run the web-based frontend with Pow.
 
 ## MySQL, Redis, and More...
 
-Because I run Mac OS X, I use [Homebrew][] to install things liky [MySQL][],
+Because I run Mac OS X, I use [Homebrew][] to install things like [MySQL][],
 [Redis][], [Memcache][], and others. If you're not on OS X, you'll have to find
 your own preferred way to install these kinds of tools. But I'd imagine your
 operating system has some form of package management system you can use.
 
-[homebrew]: http://mxcl.github.com/homebrew/
+[homebrew]: https://brew.sh/
 [rbenv]: https://github.com/sstephenson/rbenv
+[rbenv-installation]: https://github.com/rbenv/rbenv#installation
 [ruby-build]: https://github.com/sstephenson/ruby-build
 [rbenv-gemset]: https://github.com/jamis/rbenv-gemset
 [bundler]: http://gembundler.com/
@@ -143,5 +147,4 @@ operating system has some form of package management system you can use.
 [redis]: http://redis.io/
 [memcache]: http://memcached.org/
 [rvm]: http://beginrescueend.com/
-[pow]: http://pow.cx/
 [foreman]: https://github.com/ddollar/foreman

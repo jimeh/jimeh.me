@@ -9,10 +9,6 @@ image:
   hidden: true
 ---
 
-import { Figure } from "@mdx/index";
-
-<Figure size="102%">
-
 ```log
 *** Initializing analytics system.
 *** Initializing health check sub-system.
@@ -34,5 +30,3 @@ import { Figure } from "@mdx/index";
 *** Status summary: Visually impaired anti-social Zombie with
                     corrupt sense of humor.
 ```
-
-</Figure>

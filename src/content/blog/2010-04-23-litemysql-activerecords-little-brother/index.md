@@ -5,6 +5,7 @@ description:
   queries are too tedious."
 date: 2010-04-23
 tags: ["php", "database", "open-source"]
+archive: true
 ---
 
 Ever needed a quick and lightweight MySQL PHP library for some small
@@ -61,7 +62,7 @@ documentation for the project.
 
 You can read more, and download the [LiteMySQL library][litemysql].
 
-[zynapse]: http://github.com/jimeh/zynapse
 [adodb]: http://adodb.sourceforge.net/
+[zynapse]: http://github.com/jimeh/zynapse
 [litemysql]: http://github.com/jimeh/litemysql
 [github]: http://github.com/

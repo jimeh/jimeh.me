@@ -3,6 +3,7 @@ title: "Fan Boys & Haters, Seriously?"
 description: "Fan Boys and Haters have been equally annoying me as of late."
 date: 2010-06-15
 tags: ["productivity", "brand-loyalty", "technology"]
+archive: true
 image:
   src: ./anthony-delanoix-hzgs56Ze49s-unsplash.jpg
   size: wide

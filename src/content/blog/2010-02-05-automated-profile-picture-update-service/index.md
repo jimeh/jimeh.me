@@ -5,6 +5,7 @@ description: >-
   trust and platform quirks.
 date: 2010-02-05
 tags: ["technology", "social-media", "avatar"]
+archive: true
 image:
   src: ./luthfi-alfarizi-gEf9bOMTZtk-unsplash.jpg
   aspect: 32/9
