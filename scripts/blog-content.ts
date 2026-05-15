@@ -168,6 +168,50 @@ export function frontmatterNestedBlockScalar(
   return null;
 }
 
+/** Reads a scalar value from a nested YAML-ish frontmatter object path. */
+export function frontmatterPathScalar(
+  frontmatterBody: string,
+  path: string[],
+): string | null {
+  if (path.length === 0) {
+    return null;
+  }
+
+  const lines = frontmatterBody.split(/\r?\n/);
+  const indents: number[] = [];
+
+  for (const line of lines) {
+    const valueMatch = line.match(
+      /^(?<indent>\s*)(?<key>[A-Za-z0-9_-]+):\s*(?<value>.+?)\s*$/,
+    );
+    const blockMatch = line.match(/^(?<indent>\s*)(?<key>[A-Za-z0-9_-]+):\s*$/);
+    const match = valueMatch ?? blockMatch;
+
+    if (!match?.groups?.key || match.groups.indent === undefined) {
+      continue;
+    }
+
+    const indent = match.groups.indent.length;
+    while (indents.length > 0 && indent <= indents[indents.length - 1]!) {
+      indents.pop();
+    }
+
+    if (match.groups.key !== path[indents.length]) {
+      continue;
+    }
+
+    if (indents.length === path.length - 1) {
+      return valueMatch?.groups?.value
+        ? stripQuotes(valueMatch.groups.value.trim())
+        : null;
+    }
+
+    indents.push(indent);
+  }
+
+  return null;
+}
+
 /** Reads inline string-array frontmatter like `tags: ["a", "b"]`. */
 export function frontmatterStringArray(
   frontmatterBody: string,

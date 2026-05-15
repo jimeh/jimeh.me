@@ -10,9 +10,10 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { title, description, date, image, thumbnail } = post.data;
+const { title, description, date, image } = post.data;
 const readTime = readingTime(post.body ?? "");
 const href = blogPostUrl(post);
+const thumbnail = image?.thumbnail;
 const thumbnailSource = thumbnail?.src ?? image?.src;
 const thumbnailLight = thumbnailSource
   ? lightImage(thumbnailSource)

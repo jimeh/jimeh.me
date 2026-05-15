@@ -103,31 +103,31 @@ export function createBlogFrontmatterSchema<ImageSchema extends z.ZodType>({
           .boolean()
           .default(false)
           .describe("Hide from automatic rendering at the top of the post."),
+        thumbnail: z
+          .strictObject({
+            src: imageSource
+              .optional()
+              .describe("Thumbnail-specific source; defaults to image.src."),
+            fill: z
+              .enum(["fill", "fit"])
+              .default("fill")
+              .describe("How the thumbnail fills the thumbnail container."),
+            objectPosition: z
+              .string()
+              .optional()
+              .describe("CSS object-position for cropped thumbnail images."),
+            frame: z
+              .boolean()
+              .optional()
+              .describe("Draw the thumbnail inside a bordered background."),
+            size: percentageStr
+              .default("100%")
+              .describe("Image size within thumbnail boxes."),
+          })
+          .optional()
+          .describe("Listing thumbnail controls."),
       })
       .optional()
       .describe("Primary image rendered above the post unless hidden."),
-    thumbnail: z
-      .strictObject({
-        src: imageSource
-          .optional()
-          .describe("Thumbnail-specific source; defaults to image.src."),
-        fill: z
-          .enum(["fill", "fit"])
-          .default("fill")
-          .describe("How the thumbnail fills the thumbnail container."),
-        objectPosition: z
-          .string()
-          .optional()
-          .describe("CSS object-position for cropped thumbnail images."),
-        frame: z
-          .boolean()
-          .optional()
-          .describe("Draw the thumbnail inside a bordered background."),
-        size: percentageStr
-          .default("100%")
-          .describe("Image size within thumbnail boxes."),
-      })
-      .optional()
-      .describe("Listing thumbnail controls."),
   });
 }

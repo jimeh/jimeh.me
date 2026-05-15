@@ -9,9 +9,10 @@ interface Props {
 }
 
 const { post, imageLoading = "lazy" } = Astro.props;
-const { title, description, date, image, thumbnail } = post.data;
+const { title, description, date, image } = post.data;
 const href = blogPostUrl(post);
 const linkLabel = `Read "${title}"`;
+const thumbnail = image?.thumbnail;
 const thumbnailSource = thumbnail?.src ?? image?.src;
 
 function formatDate(dateStr: string): string {

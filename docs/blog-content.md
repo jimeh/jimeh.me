@@ -59,11 +59,8 @@ Image options:
 - `objectPosition`: CSS object-position when `aspect` crops an image.
 - `credit`: attribution object with `text`, optional `href`, and `position`.
 - `hidden`: prevents automatic rendering at the top of the post body.
-
-Thumbnail options:
-
-- `thumbnail`: optional listing thumbnail controls. If `thumbnail.src` is not
-  set, the thumbnail uses `image.src`.
+- `thumbnail`: optional listing thumbnail controls nested under `image`. If
+  `image.thumbnail.src` is not set, the thumbnail uses `image.src`.
 - `src`: optional thumbnail-specific source. Uses the same single-source or
   light/dark object shape as `image.src`.
 - `fill`: `fill` crops thumbnails; `fit` contains the full image.
@@ -90,9 +87,9 @@ image:
   size: wide
   aspect: "16/9"
   objectPosition: center
-thumbnail:
-  fill: fit
-  size: 110%
+  thumbnail:
+    fill: fit
+    size: 110%
 ---
 ```
 

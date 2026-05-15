@@ -156,63 +156,63 @@
           "default": false,
           "description": "Hide from automatic rendering at the top of the post.",
           "type": "boolean"
-        }
-      },
-      "required": ["src"],
-      "additionalProperties": false
-    },
-    "thumbnail": {
-      "description": "Listing thumbnail controls.",
-      "type": "object",
-      "properties": {
-        "src": {
-          "description": "Thumbnail-specific source; defaults to image.src.",
-          "anyOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "description": "Local relative path or supported remote HTTPS image."
-            },
-            {
-              "type": "object",
-              "properties": {
-                "light": {
+        },
+        "thumbnail": {
+          "description": "Listing thumbnail controls.",
+          "type": "object",
+          "properties": {
+            "src": {
+              "description": "Thumbnail-specific source; defaults to image.src.",
+              "anyOf": [
+                {
                   "type": "string",
                   "minLength": 1,
                   "description": "Local relative path or supported remote HTTPS image."
                 },
-                "dark": {
-                  "type": "string",
-                  "minLength": 1,
-                  "description": "Local relative path or supported remote HTTPS image."
+                {
+                  "type": "object",
+                  "properties": {
+                    "light": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Local relative path or supported remote HTTPS image."
+                    },
+                    "dark": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "Local relative path or supported remote HTTPS image."
+                    }
+                  },
+                  "required": ["light"],
+                  "additionalProperties": false
                 }
-              },
-              "required": ["light"],
-              "additionalProperties": false
+              ]
+            },
+            "fill": {
+              "default": "fill",
+              "description": "How the thumbnail fills the thumbnail container.",
+              "type": "string",
+              "enum": ["fill", "fit"]
+            },
+            "objectPosition": {
+              "description": "CSS object-position for cropped thumbnail images.",
+              "type": "string"
+            },
+            "frame": {
+              "description": "Draw the thumbnail inside a bordered background.",
+              "type": "boolean"
+            },
+            "size": {
+              "default": "100%",
+              "description": "Image size within thumbnail boxes.",
+              "type": "string",
+              "pattern": "^\\d+(?:\\.\\d+)?%$"
             }
-          ]
-        },
-        "fill": {
-          "default": "fill",
-          "description": "How the thumbnail fills the thumbnail container.",
-          "type": "string",
-          "enum": ["fill", "fit"]
-        },
-        "objectPosition": {
-          "description": "CSS object-position for cropped thumbnail images.",
-          "type": "string"
-        },
-        "frame": {
-          "description": "Draw the thumbnail inside a bordered background.",
-          "type": "boolean"
-        },
-        "size": {
-          "default": "100%",
-          "description": "Image size within thumbnail boxes.",
-          "type": "string",
-          "pattern": "^\\d+(?:\\.\\d+)?%$"
+          },
+          "additionalProperties": false
         }
       },
+      "required": ["src"],
       "additionalProperties": false
     }
   },

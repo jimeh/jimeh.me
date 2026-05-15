@@ -7,6 +7,7 @@ import {
   frontmatter,
   frontmatterBlockScalar,
   frontmatterNestedBlockScalar,
+  frontmatterPathScalar,
   frontmatterScalar,
   frontmatterStringArray,
   getBlogDir,
@@ -94,21 +95,24 @@ for (const post of readBlogPostFiles()) {
   const localImageSources = [
     ["image.src", frontmatterBlockScalar(body, "image", "src")],
     [
+      "image.thumbnail.src",
+      frontmatterPathScalar(body, ["image", "thumbnail", "src"]),
+    ],
+    [
+      "image.thumbnail.src.light",
+      frontmatterPathScalar(body, ["image", "thumbnail", "src", "light"]),
+    ],
+    [
+      "image.thumbnail.src.dark",
+      frontmatterPathScalar(body, ["image", "thumbnail", "src", "dark"]),
+    ],
+    [
       "image.src.light",
       frontmatterNestedBlockScalar(body, "image", "src", "light"),
     ],
     [
       "image.src.dark",
       frontmatterNestedBlockScalar(body, "image", "src", "dark"),
-    ],
-    ["thumbnail.src", frontmatterBlockScalar(body, "thumbnail", "src")],
-    [
-      "thumbnail.src.light",
-      frontmatterNestedBlockScalar(body, "thumbnail", "src", "light"),
-    ],
-    [
-      "thumbnail.src.dark",
-      frontmatterNestedBlockScalar(body, "thumbnail", "src", "dark"),
     ],
   ] as const;
 
