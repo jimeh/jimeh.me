@@ -95,13 +95,12 @@ const archiveSummary =
   {
     archivePosts.length > 0 && (
       <nav class="border-border mt-14 border-t pt-6" aria-label="Archives">
-        <a
-          href="/blog/archives/"
-          class="text-heading hover:text-accent text-lg font-bold [font-stretch:75%] transition-colors"
-        >
-          Archives
+        <a href="/blog/archives/" class="group inline-block">
+          <span class="text-heading group-hover:text-accent block text-lg font-bold [font-stretch:75%] transition-colors">
+            Archives
+          </span>
+          <span class="text-muted mt-1 block text-sm">{archiveSummary}</span>
         </a>
-        <p class="text-muted mt-1 text-sm">{archiveSummary}</p>
       </nav>
     )
   }
