@@ -1,6 +1,4 @@
-import { readdirSync } from "node:fs";
-import { join } from "node:path";
-
+import { BLOG_POST_SLUG_PATTERN } from "../src/utils/blog-route.ts";
 import {
   blogPostRoute,
   displayPath,
@@ -19,35 +17,10 @@ import {
 
 const failures: string[] = [];
 const blogDir = getBlogDir();
-
-for (const entry of readdirSync(blogDir, { withFileTypes: true })) {
-  if (!entry.isDirectory()) {
-    continue;
-  }
-
-  const postDir = join(blogDir, entry.name);
-  const indexFiles = readdirSync(postDir).filter((file) =>
-    /^index\.mdx?$/.test(file),
-  );
-
-  if (indexFiles.length !== 1) {
-    failures.push(
-      `${entry.name}: expected exactly one index.md or index.mdx file, ` +
-        `found ${indexFiles.length}.`,
-    );
-  }
-}
+const routes = new Map<string, string>();
 
 for (const post of readBlogPostFiles()) {
   const label = postLabel(post);
-  const route = blogPostRoute(post.dirName);
-
-  if (!route) {
-    failures.push(
-      `${label}: blog directories must use YYYY-MM-DD-slug naming.`,
-    );
-    continue;
-  }
 
   const body = frontmatter(post.source);
   if (!body) {
@@ -66,10 +39,33 @@ for (const post of readBlogPostFiles()) {
   }
 
   const date = frontmatterScalar(body, "date");
-  if (date !== route.date) {
+  if (!date) {
+    failures.push(`${label}: frontmatter must include date.`);
+  } else if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    failures.push(`${label}: frontmatter date must use YYYY-MM-DD.`);
+  }
+
+  const slug = frontmatterScalar(body, "slug");
+  if (!slug) {
+    failures.push(`${label}: frontmatter must include slug.`);
+  } else if (!BLOG_POST_SLUG_PATTERN.test(slug)) {
     failures.push(
-      `${label}: frontmatter date must match directory date ${route.date}.`,
+      `${label}: slug must be lowercase URL segments separated by "/".`,
     );
+  }
+
+  const route = date && slug ? blogPostRoute(post, date, slug) : null;
+  if (!route && date && slug) {
+    failures.push(`${label}: could not derive a canonical blog route.`);
+  } else if (route) {
+    const previousLabel = routes.get(route.path);
+    if (previousLabel) {
+      failures.push(
+        `${label}: route /blog/${route.path}/ duplicates ${previousLabel}.`,
+      );
+    } else {
+      routes.set(route.path, label);
+    }
   }
 
   const updatedDate = frontmatterScalar(body, "updatedDate");

@@ -1,15 +1,17 @@
 # Blog Writing Guide
 
-Blog posts live under `src/content/blog` as dated directories:
+Blog posts live under `src/content/blog` as Markdown or MDX files:
 
 ```text
-YYYY-MM-DD-post-slug/
-  index.md
-  image-or-local-assets.ext
+post-slug.md
+post-slug/
+  index.mdx
+  image-or-local-asset.ext
 ```
 
-The directory date and frontmatter `date` must match. Public URLs use
-`/blog/:year/:slug/`.
+Public URLs use `/blog/:year/:slug/`. The year comes from frontmatter `date`.
+The slug comes from frontmatter `slug`, so files and folders can be reorganized
+without changing canonical URLs.
 
 The blog frontmatter JSON Schema is generated from the shared Zod definition in
 `src/content/blog-schema.ts`:
@@ -27,7 +29,8 @@ Required fields:
 
 - `title`: post title.
 - `description`: short summary for listings and metadata.
-- `date`: `YYYY-MM-DD`, matching the directory prefix.
+- `date`: `YYYY-MM-DD`.
+- `slug`: URL slug. Slash-separated lowercase segments are allowed.
 
 Optional fields:
 

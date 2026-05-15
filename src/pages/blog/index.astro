@@ -5,6 +5,7 @@ import PostCard from "@components/blog/PostCard.astro";
 import PostFeatured from "@components/blog/PostFeatured.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
+import { siteConfig } from "../../data/site";
 import {
   blogArchiveInfo,
   isArchivedPost,
@@ -40,14 +41,18 @@ for (const post of remainingPosts) {
 }
 
 const years = [...postsByYear.keys()].sort((a, b) => b.localeCompare(a));
-const archiveNames = [
+const archiveNames = [];
+if (archivePosts.some((post) => blogArchiveInfo(post)?.isGeneral)) {
+  archiveNames.push(new URL(siteConfig.url).hostname);
+}
+archiveNames.push(
   ...new Set(
     archivePosts
       .map((post) => blogArchiveInfo(post))
       .filter((archive) => archive && !archive.isGeneral)
       .map((archive) => archive!.label),
   ),
-];
+);
 const archiveSummary =
   archiveNames.length > 0
     ? `${archivePosts.length} older posts from ${archiveNames.join(", ")}`

@@ -1,0 +1,46 @@
+---
+title: "Safari doesn't always like bz2 compressed DMG files"
+description:
+  "I noticed something weird this morning about the recent SimpleDock project I
+  released last night. The DMG is compressed using bz2 rather than the default
+  zli..."
+date: 2007-12-03
+slug: safari-doesnt-always-like-bz2-compressed-dmg-files
+archive: zydev.info
+updatedDate: 2007-12-13
+tags: ["mac-os-x"]
+---
+
+import { DeadLink } from "@mdx/index";
+
+I noticed something weird this morning about the recent <DeadLink
+text="SimpleDock" href="http://zydev.info/simpledock/" /> project I released
+last night. The DMG is compressed using bz2 rather than the default zlib
+compression used by default when creating compressed disk images.
+
+Turns out Safari gets confused and guesses wrong a lot of the time with bz2
+compressed disk images, and renames the downloaded file to `file.dmg.bz2`
+when the server doesn't give a DMG specific MIME type. The end result is that
+you have to remove the `.bz2` extension at the end or the file will be unusable.
+For that you actually have to know of this issue tho, which not all end-users
+do.
+
+This problem is easily fixed however if you use Apache by simply adding the
+following to your `.htaccess` file:
+
+```apache
+AddType application/x-apple-diskimage .dmg
+```
+
+With this fixed, i still decided to upload a new copy of SimpleDock which is
+compressed with zlib instead of bz2, simply cause the size difference was 14.23
+KB, and Safari doesn't have any problems with zlib compressed disk images
+regardless of MIME types. And also cause I wanted to make a minor change to the
+uninstall info file :)
+
+The only strange thing though is that the SimpleDock download worked fine last
+night when i tested it, but this morning when I was testing some other stuff, I
+noticed it didn't work properly anymore.
+
+But oh well, it's all fixed and working now, and I don't feel like doing any
+P.I. work today... lol

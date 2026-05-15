@@ -35,9 +35,10 @@ mise run smoke
 
 The custom content check protects blog rules that are easy for agents to miss:
 
-- post directories use `YYYY-MM-DD-slug`;
-- each post has exactly one `index.md` or `index.mdx`;
-- frontmatter has `title`, `description`, and matching `date`;
+- blog posts are discovered from all `.md` and `.mdx` files under
+  `src/content/blog`;
+- frontmatter has `title`, `description`, `date`, and `slug`;
+- derived canonical routes are unique;
 - `updatedDate` is not earlier than `date`;
 - tags are inline arrays of lowercase slugs;
 - local frontmatter images and MDX static imports exist.

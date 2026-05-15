@@ -1,4 +1,5 @@
 import { z } from "astro/zod";
+import { BLOG_POST_SLUG_PATTERN } from "../utils/blog-route";
 
 /** Accepts string or YAML-parsed Date, normalizes to YYYY-MM-DD. */
 export const blogRuntimeDate = z
@@ -19,6 +20,11 @@ const tagSlug = z
   .string()
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
   .describe("Lowercase slug string.");
+
+const postSlug = z
+  .string()
+  .regex(BLOG_POST_SLUG_PATTERN)
+  .describe("Lowercase post slug. Slash-separated segments are allowed.");
 
 interface BlogFrontmatterSchemaOptions<ImageSchema extends z.ZodType> {
   date: z.ZodType<string>;
@@ -45,6 +51,7 @@ export function createBlogFrontmatterSchema<ImageSchema extends z.ZodType>({
       .string()
       .describe("Short summary for listings and metadata."),
     date,
+    slug: postSlug.describe("Canonical URL slug."),
     updatedDate: date
       .optional()
       .describe("Later revision date; must not be earlier than date."),

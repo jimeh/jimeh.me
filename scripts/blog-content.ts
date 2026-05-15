@@ -1,24 +1,30 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { basename, dirname, join, relative } from "node:path";
+import { dirname, extname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+
+import {
+  blogRoutePath,
+  blogRouteSlug,
+  blogRouteYear,
+  blogSourceSlug,
+} from "../src/utils/blog-route.ts";
 
 const repoRoot = join(fileURLToPath(new URL(".", import.meta.url)), "..");
 const blogDir = join(repoRoot, "src", "content", "blog");
-const datedBlogDirRe =
-  /^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})-(?<slug>.+)$/;
 
 export interface BlogPostFile {
-  dirName: string;
   dirPath: string;
   fileName: string;
   filePath: string;
+  id: string;
   source: string;
 }
 
 export interface BlogPostRoute {
   date: string;
-  dirName: string;
+  path: string;
   slug: string;
+  sourceSlug: string;
   year: string;
 }
 
@@ -37,37 +43,9 @@ export function displayPath(path: string): string {
   return relative(repoRoot, path);
 }
 
-/** Reads all blog post index files from dated post directories. */
+/** Reads all Markdown and MDX blog post files. */
 export function readBlogPostFiles(): BlogPostFile[] {
-  return readdirSync(blogDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => {
-      const dirPath = join(blogDir, entry.name);
-      const indexFiles = readdirSync(dirPath).filter((file) =>
-        /^index\.mdx?$/.test(file),
-      );
-
-      if (indexFiles.length !== 1) {
-        return null;
-      }
-
-      const fileName = indexFiles[0];
-      if (!fileName) {
-        return null;
-      }
-
-      const filePath = join(dirPath, fileName);
-
-      return {
-        dirName: entry.name,
-        dirPath,
-        fileName,
-        filePath,
-        source: readFileSync(filePath, "utf8"),
-      };
-    })
-    .filter((post): post is BlogPostFile => post !== null)
-    .sort((a, b) => a.dirName.localeCompare(b.dirName));
+  return readBlogPostFilesIn(blogDir).sort((a, b) => a.id.localeCompare(b.id));
 }
 
 /** Extracts the raw frontmatter block from a markdown or MDX file. */
@@ -229,23 +207,24 @@ export function frontmatterStringArray(
     .filter(Boolean);
 }
 
-/** Derives canonical blog route parts from the dated directory name. */
-export function blogPostRoute(dirName: string): BlogPostRoute | null {
-  const match = dirName.match(datedBlogDirRe);
-  if (!match?.groups) {
+/** Derives canonical blog route parts from a post file and frontmatter. */
+export function blogPostRoute(
+  post: BlogPostFile,
+  date: string,
+  slug: string,
+): BlogPostRoute | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     return null;
   }
 
-  const { year, month, day, slug } = match.groups;
-  if (!year || !month || !day || !slug) {
-    return null;
-  }
+  const routeInput = { date, slug };
 
   return {
-    date: `${year}-${month}-${day}`,
-    dirName,
-    slug,
-    year,
+    date,
+    path: blogRoutePath(routeInput),
+    slug: blogRouteSlug(routeInput),
+    sourceSlug: blogSourceSlug(post.id),
+    year: blogRouteYear(date),
   };
 }
 
@@ -273,7 +252,35 @@ export function localStaticImports(post: BlogPostFile): string[] {
 
 /** Returns a stable label for a blog post source file. */
 export function postLabel(post: BlogPostFile): string {
-  return join(basename(dirname(post.filePath)), post.fileName);
+  return displayPath(post.filePath);
+}
+
+function readBlogPostFilesIn(dirPath: string): BlogPostFile[] {
+  return readdirSync(dirPath, { withFileTypes: true }).flatMap((entry) => {
+    const entryPath = join(dirPath, entry.name);
+
+    if (entry.isDirectory()) {
+      return readBlogPostFilesIn(entryPath);
+    }
+
+    if (!entry.isFile() || !/^\.mdx?$/.test(extname(entry.name))) {
+      return [];
+    }
+
+    const id = relative(blogDir, entryPath)
+      .slice(0, -extname(entry.name).length)
+      .replaceAll("\\", "/");
+
+    return [
+      {
+        dirPath: dirname(entryPath),
+        fileName: entry.name,
+        filePath: entryPath,
+        id,
+        source: readFileSync(entryPath, "utf8"),
+      },
+    ];
+  });
 }
 
 function stripQuotes(value: string): string {

@@ -79,12 +79,18 @@ const archives = new Set<string>();
 let archiveCount = 0;
 
 for (const post of readBlogPostFiles()) {
-  const route = blogPostRoute(post.dirName);
-  if (!route) {
+  const frontmatterBody = frontmatter(post.source);
+  const date = frontmatterBody
+    ? frontmatterScalar(frontmatterBody, "date")
+    : null;
+  const slug = frontmatterBody
+    ? frontmatterScalar(frontmatterBody, "slug")
+    : null;
+  const route = date && slug ? blogPostRoute(post, date, slug) : null;
+  if (!frontmatterBody || !route) {
     continue;
   }
 
-  const frontmatterBody = frontmatter(post.source);
   const archive = frontmatterBody
     ? frontmatterScalar(frontmatterBody, "archive")
     : null;
@@ -104,12 +110,14 @@ for (const post of readBlogPostFiles()) {
     }
   }
 
-  const canonicalPath = `blog/${route.year}/${route.slug}/index.html`;
-  const legacyPath = `blog/${route.dirName}/index.html`;
-  const canonicalUrl = `${siteUrl}/blog/${route.year}/${route.slug}/`;
+  const canonicalPath = `blog/${route.path}/index.html`;
+  const sourcePath = `blog/${route.sourceSlug}/index.html`;
+  const canonicalUrl = `${siteUrl}/blog/${route.path}/`;
 
   assertFile(canonicalPath);
-  assertNoFile(legacyPath);
+  if (sourcePath !== canonicalPath) {
+    assertNoFile(sourcePath);
+  }
   assertIncludes("sitemap-0.xml", canonicalUrl);
 
   if (isArchived) {
