@@ -11,19 +11,16 @@ updatedDate: 2007-12-13
 tags: ["mac-os-x"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
-I noticed something weird this morning about the recent <DeadLink
-text="SimpleDock" href="http://zydev.info/simpledock/" /> project I released
-last night. The DMG is compressed using bz2 rather than the default zlib
-compression used by default when creating compressed disk images.
+I noticed something weird this morning about the recent
+[SimpleDock](dead+http://zydev.info/simpledock/) project I released last night.
+The DMG is compressed using bz2 rather than the default zlib compression used by
+default when creating compressed disk images.
 
 Turns out Safari gets confused and guesses wrong a lot of the time with bz2
-compressed disk images, and renames the downloaded file to `file.dmg.bz2`
-when the server doesn't give a DMG specific MIME type. The end result is that
-you have to remove the `.bz2` extension at the end or the file will be unusable.
-For that you actually have to know of this issue tho, which not all end-users
-do.
+compressed disk images, and renames the downloaded file to `file.dmg.bz2` when
+the server doesn't give a DMG specific MIME type. The end result is that you
+have to remove the `.bz2` extension at the end or the file will be unusable. For
+that you actually have to know of this issue tho, which not all end-users do.
 
 This problem is easily fixed however if you use Apache by simply adding the
 following to your `.htaccess` file:

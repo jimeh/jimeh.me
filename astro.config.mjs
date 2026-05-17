@@ -5,6 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 import rehypePrettyCode from "rehype-pretty-code";
 import { remarkAlert } from "remark-github-blockquote-alert";
+import { rehypeDeadLinks } from "./src/plugins/rehype-dead-links.mjs";
 
 export default defineConfig({
   site: "https://jimeh.me",
@@ -20,6 +21,7 @@ export default defineConfig({
     syntaxHighlight: false,
     remarkPlugins: [remarkAlert],
     rehypePlugins: [
+      rehypeDeadLinks,
       [
         rehypePrettyCode,
         {

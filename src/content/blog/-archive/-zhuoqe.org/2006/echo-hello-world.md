@@ -10,8 +10,6 @@ updatedDate: 2006-11-09
 tags: ["announcements"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
 So, the domain and SVN repositories have been up and running for a few weeks
 now, so here's a blog, which probably nobody will be reading for some time to
 come I believe...
@@ -30,22 +28,21 @@ that will soon be featured. Namely sxtxixtxcxh (at zhuoqe dot org).
 Oh, and don't forget to check his projects (which are actually online and
 working, unlike my own projects :P).
 
-- <DeadLink href="http://lib.rario.us/">lib.rario.us</DeadLink>
-- <DeadLink href="http://endignorance.com/">endignorace.com</DeadLink>
+- [lib.rario.us](dead+http://lib.rario.us/)
+- [endignorace.com](dead+http://endignorance.com/)
 
-Currently, the only public svn repository is <DeadLink
-href="http://zhuoqe.org/svn/adiumlogs/trunk/">Adiumlogs</DeadLink>, which is PHP
-log parser for the popular [Adium](https://adium.im/) chat client for Mac OS X.
+Currently, the only public svn repository is
+[Adiumlogs](dead+http://zhuoqe.org/svn/adiumlogs/trunk/), which is PHP log
+parser for the popular [Adium](https://adium.im/) chat client for Mac OS X.
 Adium stores logs in a neat html format, so its easy to read from external
-sources. A demo of Adiumlogs is available at <DeadLink
-  href="http://adiumlogs.zhuoqe.org/">http://adiumlogs.zhuoqe.org/</DeadLink>
-(note that the directory listing is not part of Adiumlogs, its part of dList,
-another project which is almost ready for its first public release).
+sources. A demo of Adiumlogs is available at
+[http://adiumlogs.zhuoqe.org/](dead+http://adiumlogs.zhuoqe.org/) (note that the
+directory listing is not part of Adiumlogs, its part of dList, another project
+which is almost ready for its first public release).
 
-A log viewer/manager for <DeadLink
-href="http://www.proteusx.org/">Proteus</DeadLink>, my own favorite OS X chat
-client is on my todo list, specially since the built-in log viewer doesn't work
-properly :P.
+A log viewer/manager for [Proteus](dead+http://www.proteusx.org/), my own
+favorite OS X chat client is on my todo list, specially since the built-in log
+viewer doesn't work properly :P.
 
 That will be zee all for now, if you have any questions, well just don't!...
 cause i will answer them, and you could get brain damage ;).

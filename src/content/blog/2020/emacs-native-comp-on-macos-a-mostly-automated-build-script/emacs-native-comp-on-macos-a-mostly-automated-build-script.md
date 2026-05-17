@@ -21,8 +21,6 @@ image:
     size: 80%
 ---
 
-import { DeadLink } from "@mdx/index";
-
 ## TL;DR
 
 > [!IMPORTANT]
@@ -30,10 +28,10 @@ import { DeadLink } from "@mdx/index";
 > As of today (26th August, 2020), this works on my machine. Your luck may vary.
 > Use at your own risk.
 
-About ten days ago I got <DeadLink text="native-comp/gccemacs"
-href="https://akrl.sdf.org/gccemacs.html" /> working in my personal [build
-script](https://github.com/jimeh/build-emacs-for-macos) which produces a
-self-contained Emacs.app macOS application.
+About ten days ago I got
+[native-comp/gccemacs](dead+https://akrl.sdf.org/gccemacs.html) working in my
+personal [build script](https://github.com/jimeh/build-emacs-for-macos) which
+produces a self-contained Emacs.app macOS application.
 
 I highly recommend reading the
 [Native Comp](https://github.com/jimeh/build-emacs-for-macos#native-comp)

@@ -10,13 +10,9 @@ updatedDate: 2008-12-20
 tags: ["development", "modern-bubbling", "steve-jobs-facts"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
-<DeadLink text="Dave" href="http://prototypecreative.com/blog/" />, the
-co-creator of our
-<DeadLink text="Steve Jobs Facts" href="http://stevejobsfacts.com/" /> project
-has just launched
-<DeadLink text="IE Death March" href="http://iedeathmarch.org/" />.
+[Dave](dead+http://prototypecreative.com/blog/), the co-creator of our
+[Steve Jobs Facts](dead+http://stevejobsfacts.com/) project has just launched
+[IE Death March](dead+http://iedeathmarch.org/).
 
 > Internet Explorer 6 will be SEVEN years old on August 27th. It came out a few
 > weeks before the Twin Towers fell. It came out before the Nintendo GameCube.

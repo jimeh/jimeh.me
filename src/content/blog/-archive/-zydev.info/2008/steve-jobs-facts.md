@@ -8,23 +8,21 @@ updatedDate: 2008-09-04
 tags: ["announcements", "design", "development", "projects", "steve-jobs-facts"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
-Yepp, its what it sounds like, its <DeadLink text="stevejobsfacts.com"
-href="http://stevejobsfacts.com/" />.
+Yepp, its what it sounds like, its
+[stevejobsfacts.com](dead+http://stevejobsfacts.com/).
 
 And with that I'm ending my six months of silence. It's been a crazy, tiring and
 exhausting six months. But I'm not gonna go for months again without a word
 here.
 
-Anyway, to get back on topic. <DeadLink text="Steve Jobs Facts"
-href="http://stevejobsfacts.com/" /> is pretty much what it sounds like. It's a
-satirical fact index about [Steve
-Jobs](http://en.wikipedia.org/wiki/Steve_Jobs). You vote on your favorite facts,
-and submit your own. Think of it as the bastard child of <DeadLink text="Chuck
-Norris Facts" href="http://chucknorrisfacts.com/" /> and <DeadLink
-text="bash.org" href="http://bash.org/" /> with fancy sexiness sprinkled on top
-like fairy dust.
+Anyway, to get back on topic.
+[Steve Jobs Facts](dead+http://stevejobsfacts.com/) is pretty much what it
+sounds like. It's a satirical fact index about
+[Steve Jobs](http://en.wikipedia.org/wiki/Steve_Jobs). You vote on your favorite
+facts, and submit your own. Think of it as the bastard child of
+[Chuck Norris Facts](dead+http://chucknorrisfacts.com/) and
+[bash.org](dead+http://bash.org/) with fancy sexiness sprinkled on top like
+fairy dust.
 
 SJF is a project me and Dave ([@sxtxixtxcxh](http://twitter.com/sxtxixtxcxh))
 started last summer. Yes, I did say last summer. But due to circumstances,

@@ -52,10 +52,11 @@ I believe the concept is rather simple, but implementing it could be another
 story. From a functionality point of view, these are some of my initial
 ideas/notes:
 
-- The networks you are connected to are managed by "key files", containing 1) a
-  random unique hash string which identifies the network when the client
-  searches for peers via DHT, and 2) an encryption key (or a set of encryption
-  keys), which are used to encrypt all traffic between peers.
+- The networks you are connected to are managed by "key files", containing:
+  - A random unique hash string which identifies the network when the client
+    searches for peers via DHT.
+  - An encryption key (or a set of encryption keys), which are used to encrypt
+    all traffic between peers.
 - Create a network: You generate a new key file which is populated with a random
   hash signature and encryption keys for you automatically. Somewhat like how
   SSH keys are generated.

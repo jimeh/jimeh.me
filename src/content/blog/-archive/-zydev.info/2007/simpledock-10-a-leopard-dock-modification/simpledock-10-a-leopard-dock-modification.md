@@ -14,16 +14,13 @@ image:
   size: wide
 ---
 
-import { DeadLink } from "@mdx/index";
-
 Do you not like the new default dock style of Leopard? Do you think the 3D style
 attracts to much attention and distracts your eye-line by not really fitting
 into any and almost all wallpapers? Do you find the white line around the flat
 style insanely annoying and ugly?
 
 Myself I answered yes to all of these questions, which was what got me started
-on <DeadLink text="SimpleDock" href="http://zydev.info/simpledock/" /> a few
-weeks ago.
+on [SimpleDock](dead+http://zydev.info/simpledock/) a few weeks ago.
 
 From the beginning it was just supposed to replace the flat dock style, but
 along the way I came across [Rev. Mitchz](http://mitcz.com/)' Dark Glass mod for

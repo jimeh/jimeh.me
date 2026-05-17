@@ -24,7 +24,9 @@ const content =
     ? inlineSlotContent(micromark(text))
     : Astro.slots.has("default")
       ? inlineSlotContent(await Astro.slots.render("default"))
-      : "";
+      : href !== undefined
+        ? inlineSlotContent(micromark(href))
+        : "";
 
 function inlineSlotContent(html: string): string {
   const { document } = parseHTML(`<dead-link-root>${html}</dead-link-root>`);

@@ -8,7 +8,7 @@
 - [x] Improve styling of nav bar header on blog.
 - [ ] Add some kind of details about myself at the bottom of blog posts.
 - [x] Consider moving tags to the bottom of the blog post body.
-- [ ] Figure out what to display on the list page for posts that don't have an
+- [x] Figure out what to display on the list page for posts that don't have an
       image.
 - [x] Decide what to do with post slugs, because I'm not a fan of the current
       long ones that include the full date.

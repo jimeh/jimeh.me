@@ -16,8 +16,6 @@ image:
     href: https://www.instagram.com/p/MIOn6TN8x2/
 ---
 
-import { DeadLink } from "@mdx/index";
-
 Setting up your development environment is always a tedious task. My own
 environment has changed many times over the years. I've recently gotten my
 Ruby-related setup to the point I'm finally really happy with it.
@@ -123,9 +121,9 @@ Run `bundle help config{:sh}` for more information.
 
 ## Running Ruby Apps
 
-For running web-based apps I use <DeadLink text="Pow" href="http://pow.cx/" />
-and/or [Foreman][]. Pow is my favorite of the two, but for certain projects
-Foreman is the better match.
+For running web-based apps I use [Pow](dead+http://pow.cx/) and/or [Foreman][].
+Pow is my favorite of the two, but for certain projects Foreman is the better
+match.
 
 I tend to go on a case-by-case basis. For example, some projects might need a
 few background workers, I tend to start all of them with Foreman, while I might

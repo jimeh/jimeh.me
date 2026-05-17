@@ -12,7 +12,7 @@ image:
   hidden: true
 ---
 
-import { Image, DeadLink } from "@mdx/index";
+import { Image } from "@mdx/index";
 import browserJsTestChart from "./browser-js-test-chart.png";
 
 Today I've been playing with Google's new web browser, [Google
@@ -23,16 +23,14 @@ leaves [WebKit](http://webkit.org/)'s new
 eating dust.
 
 Here's the results from my most likely very-unscientific JS performance tests
-using <DeadLink href="http://dromaeo.com/">Dromaeo</DeadLink>. All tests were
-done within minutes of each other, during equal system loads on a 1.8 GHz Core 2
-Duo machine running XP SP2 (work machine, as I only have Macs myself).
+using [Dromaeo](dead+http://dromaeo.com/). All tests were done within minutes of
+each other, during equal system loads on a 1.8 GHz Core 2 Duo machine running XP
+SP2 (work machine, as I only have Macs myself).
 
 <Image src={browserJsTestChart} alt="Browser JS Performance Chart" noLightbox />
 
-<DeadLink
-  text="Here's the detailed test results"
-  href="http://dromaeo.com/?id=31749,31679,31717,31597,31599"
-/>
+[Here's the detailed test
+results](dead+http://dromaeo.com/?id=31749,31679,31717,31597,31599)
 
 Google Chrome registers as "Safari/525.13" since they both use the WebKit
 rendering engine.

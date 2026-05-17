@@ -17,8 +17,6 @@ image:
     objectPosition: 0% 50%
 ---
 
-import { DeadLink } from "@mdx/index";
-
 As some of you might have noticed the last couple of days, I haven't been online
 much on IM networks. I'm not sure what originally kept me from launching Adium
 the other day, but along the way I've come to a realization.
@@ -31,9 +29,9 @@ tsunami of Growl notifications, bouncing and flashing Dock icons, plinging
 sounds, and more that almost all IM clients spew out in one form or another
 whenever you receive a message.
 
-A friend of mine <DeadLink text="gave up"
-href="http://blog.sugarenia.com/archives/productivity/why-i-gave-up-on-instant-messaging"
-/> on IM networks almost a year ago, for pretty much same reasons. — Yes, I'm
+A friend of mine
+[gave up](dead+http://blog.sugarenia.com/archives/productivity/why-i-gave-up-on-instant-messaging)
+on IM networks almost a year ago, for pretty much same reasons. — Yes, I'm
 linking to Sugarenia again. She always seems to have the same opinions as me,
 just days/months before me. _Dammit!_
 

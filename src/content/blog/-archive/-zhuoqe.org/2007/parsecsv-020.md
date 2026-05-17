@@ -11,22 +11,18 @@ updatedDate: 2007-04-11
 tags: ["development", "php"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
 I have to get some real work done, that i can post about, cause this is starting
 to feel like i'm a broken record player just, cause all i've posted about lately
-is <DeadLink text="`parseCSV{}`"
-href="http://zhuoqe.org/svn/codeyard/trunk/php/classes/parseCSV/" />... lol
+is [`parseCSV{}`][parsecsv]... lol
 
 Obviously having major hard drive problems haven't helped :P
 
-Anyway, i spent the most part of today updating <DeadLink text="`parseCSV{}`"
-href="http://zhuoqe.org/svn/codeyard/trunk/php/classes/parseCSV/" />,
-finishing an automatic delimiter character detection, cause the original
-project i created it for, requires such a function. The reason being so users
-don't really have to know what a delimiter character is, or which one the file
-their attempting to upload uses. Eitherway, its a very handy function, and
-hardly slows down the script at all.
+Anyway, i spent the most part of today updating [`parseCSV{}`][parsecsv],
+finishing an automatic delimiter character detection, cause the original project
+i created it for, requires such a function. The reason being so users don't
+really have to know what a delimiter character is, or which one the file their
+attempting to upload uses. Eitherway, its a very handy function, and hardly
+slows down the script at all.
 
 The original reason i started working on it cause i realized some versions of MS
 Excel for Windows uses `;` instead of `,` as a delimiter no matter which CSV
@@ -42,3 +38,5 @@ Rarely will any other character than the actual delimiter get past this stage of
 elimination, but if more then one character does, the script goes on to further
 analyze details to choose which character is the most likely to be the
 delimiter.
+
+[parsecsv]: dead+http://zhuoqe.org/svn/codeyard/trunk/php/classes/parseCSV/

@@ -13,6 +13,7 @@ export default [
   {
     files: ["**/*.{md,mdx}"],
     rules: {
+      "mdx/remark": "off",
       "@typescript-eslint/no-unused-vars": "off",
     },
   },

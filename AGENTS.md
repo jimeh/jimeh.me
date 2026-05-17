@@ -9,15 +9,17 @@ site deployed to GitHub Pages.
 mise run dev           # Portless Astro dev server
 mise run build         # Production build
 mise run preview       # Preview build
-mise run lint          # ESLint + Stylelint + Markdownlint
+mise run test          # Unit tests
+mise run lint          # ESLint + Stylelint + Markdownlint + mdxlint
 mise run lint-fix      # Auto-fix lint issues
+mise run lint-mdx      # MDX-aware lint checks via mdxlint
 mise run check-content # Blog content invariant checks
 mise run smoke         # Built-site smoke checks; run after build
 mise run generate-blog-schema # Generate blog frontmatter JSON Schema
 mise run format        # Prettier write
-mise run format-check  # Prettier check
+mise run format-check  # Prettier check + MDX lint
 mise run typecheck     # astro check (TypeScript)
-mise run check         # format:check + lint + content + typecheck
+mise run check         # format:check + test + lint + content + typecheck
 mise run fix           # format + lint-fix
 mise run verify        # check + build + smoke
 ```
@@ -48,6 +50,10 @@ tests are configured.
 - Code highlighting: `rehype-pretty-code`; Astro's built-in Shiki is disabled.
 - Code copy button: `CodeCopyButton.astro` clones an astro-icon template per
   code block and is always visible.
+- Dead links: prefer Markdown links with the `dead+` scheme, e.g.
+  `[label](dead+https://example.com/)`; use a Markdown title for custom tooltip
+  text. If the original URL is unknown, use `dead+missing://slug`.
+  `rehypeDeadLinks` renders these as inert dead-link spans.
 - UI styling: prefer existing Tailwind utilities, variants, and design tokens
   before adding component-scoped CSS or hand-rolled selectors. Use built-in
   utilities for layout behavior such as floats, clears, pseudo-elements,
@@ -78,6 +84,9 @@ tests are configured.
 - pnpm 11 uses `strictDepBuilds: true` by default. Keep reviewed dependency
   build scripts in `pnpm-workspace.yaml` `allowBuilds`; otherwise clean installs
   fail with `ERR_PNPM_IGNORED_BUILDS`.
+- `pnpm-workspace.yaml` sets `minimumReleaseAge: 10080`, so pnpm will avoid
+  resolving package versions published less than seven days ago as a
+  supply-chain hardening measure.
 - MDX `Image` accepts remote HTTPS URLs by passing `inferSize` to Astro's image
   pipeline. Keep `astro.config.mjs` `image.remotePatterns` aligned with that;
   non-remote string sources still need explicit `width` and `height`.
@@ -110,6 +119,16 @@ tests are configured.
   layout width: `BlogLayout.astro` defaults to `width="3xl"` with `px-6`, making
   the content column 720px at a 768px outer breakpoint. Update those constants
   if the default layout width or horizontal padding changes.
-- Blog MDX components must be listed in `.markdownlint-cli2.yaml` under
-  `MD033.allowed_elements`; otherwise markdownlint treats component tags as
-  inline HTML.
+- If markdownlint is re-enabled for `.mdx`, blog MDX components must be listed
+  in `.markdownlint-cli2.yaml` under `MD033.allowed_elements`; otherwise
+  markdownlint treats component tags as inline HTML.
+- Markdown and MDX linting are split: `markdownlint-cli2` handles `.md` only,
+  while `mdxlint` handles `.mdx` with MDX-aware JSX rules. Prettier formats
+  `.mdx`; do not use mdxlint or remark-stringify as a formatter because they can
+  collapse multiline MDX components and rewrite historical imported posts.
+- `mdxlint` emits 80-character line-length warnings but currently runs without
+  `--frail`, so historical archive line-width warnings are advisory until those
+  posts are intentionally wrapped.
+- After renaming content files between `.mdx` and `.md`, clear both `.astro` and
+  `node_modules/.astro`; Astro's content data store can otherwise keep stale
+  deferred module paths and break `astro build`.

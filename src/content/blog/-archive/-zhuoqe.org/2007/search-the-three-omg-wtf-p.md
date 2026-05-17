@@ -11,8 +11,6 @@ updatedDate: 2007-05-18
 tags: ["announcements", "projects", "search-the-three"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
 ...so, here i am two days later after i felt like making some uber-combined
 search thing... lol... its uber-alpha/beta/omega/malaka/whatever, so don't
 complain if it doesn't work... lol
@@ -30,5 +28,4 @@ the weird... lol
 
 but but... check it out for yourself and see what you think...
 
-— <DeadLink text="http://www.searchthethree.com/"
-href="http://www.searchthethree.com/" />
+— [http://www.searchthethree.com/](dead+http://www.searchthethree.com/)

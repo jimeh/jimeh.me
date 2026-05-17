@@ -27,7 +27,7 @@ config:
 
 gitignore: true
 globs:
-  - "**/*.{md,mdx}"
+  - "**/*.md"
 ignores:
   - ".astro/**"
   - ".claude/**"

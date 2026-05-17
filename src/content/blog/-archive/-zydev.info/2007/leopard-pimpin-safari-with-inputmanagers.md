@@ -11,8 +11,6 @@ updatedDate: 2007-11-07
 tags: ["mac-os-x"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
 We all heard the rumors that InputManagers were completely removed from Leopard.
 But thankfully as Allan Odgaard of [Macromates](http://www.macromates.com/)
 points out in his
@@ -26,13 +24,12 @@ exists it seems that all InputManagers are ignored, but not in all cases.
 
 My own personal favorites when it comes to pimpin' Safari are
 
-<DeadLink text="Inquisitor" href="http://www.inquisitorx.com/" />,
-<DeadLink text="SafariStand" href="http://hetima.com/safari/stand-e.html" /> and
-<DeadLink text="Saft" href="http://haoli.dnsalias.com/Saft/index.html" />.
-Inquisitor and SafariStand are completely free to download and use, Saft you
-have to pay for tho (which I've been meaning to get around to for a few months
-now). All of these three Safari extensions are available and work under Leopard
-now.
+[Inquisitor](dead+http://www.inquisitorx.com/),
+[SafariStand](dead+http://hetima.com/safari/stand-e.html) and
+[Saft](dead+http://haoli.dnsalias.com/Saft/index.html). Inquisitor and
+SafariStand are completely free to download and use, Saft you have to pay for
+tho (which I've been meaning to get around to for a few months now). All of
+these three Safari extensions are available and work under Leopard now.
 
 **Inquisitor** has been updated to automatically install directly into
 _/Library/InputManagers/_. If it doesn't load after install, check if
@@ -40,9 +37,9 @@ _~/Library/InputManagers/_ exists in your home folder and trash it if it does.
 
 **SafariStand** has a Leopard specific release, which for better or worse drops
 support for the InputManager's loading technique, and instead relies solely on
-[SIMBL](https://github.com/msolo/simbl/wiki). Previous versions
-could be used as an InputManager directly, or loaded via SIMBL. Personally I
-hope that InputManager support returns soon.
+[SIMBL](https://github.com/msolo/simbl/wiki). Previous versions could be used as
+an InputManager directly, or loaded via SIMBL. Personally I hope that
+InputManager support returns soon.
 
 With Safari 3, SafariStand can replace one of the two features I like the most
 from Saft. Automatically restore all open windows and tabs from previous
@@ -69,9 +66,9 @@ up and running for their customers who have upgraded to Leopard. I'm hoping for
 a future release which works like a normal InputManager, or in worst case, uses
 SIMBL.
 
-**\*UPDATE:** With the release of <DeadLink text="Saft 10.0.1"
-href="http://haoli.dnsalias.com/Saft/Download/index.html" /> it can now be used
-as an InputManager, or a launcher.\*
+**\*UPDATE:** With the release of
+[Saft 10.0.1](dead+http://haoli.dnsalias.com/Saft/Download/index.html) it can
+now be used as an InputManager, or a launcher.\*
 
 I'd just like to clear up that I don't hate SIMBL. I just find it unnecessary to
 use one InputManager to load one that you actually want, while the one you

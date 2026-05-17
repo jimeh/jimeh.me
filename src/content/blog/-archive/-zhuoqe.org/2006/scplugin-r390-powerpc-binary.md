@@ -8,20 +8,18 @@ updatedDate: 2007-05-18
 tags: ["mac-os-x"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
 Download: **\[link removed, binary out of date and very buggy\]**
 
 A lot of you probably use Subversion, and a quite useful little thing for OSX
-users is <DeadLink href="http://scplugin.tigris.org/">SCPlugin</DeadLink>. Its a
-finder plugin which offers quite a lot of svn features directly in the finder.
-But its only available from source, or some quite outdated binaries, so I went
-about to build my own binary from the latest svn revision.
+users is [SCPlugin](dead+http://scplugin.tigris.org/). Its a finder plugin which
+offers quite a lot of svn features directly in the finder. But its only
+available from source, or some quite outdated binaries, so I went about to build
+my own binary from the latest svn revision.
 
 Personally I use SCPlugin solely for its small icon badges on files in the
 finder indicating their current status, which I find quite useful. As for actual
-svn actions, I mainly use <DeadLink
-href="http://www.lachoseinteractive.net/en/community/subversion/svnx/features/">svnX</DeadLink>,
+svn actions, I mainly use
+[svnX](dead+http://www.lachoseinteractive.net/en/community/subversion/svnx/features/),
 which is a very nice, simple but yet advanced Subversion client. It gets rid of
 some of headache you can have using the shell command :)
 
@@ -32,9 +30,7 @@ really do, nor know much about...
 
 So if you're looking for an Intel binary, best i can do is refer you here:
 
-<DeadLink href="http://funkatron.com/wp/archives/os-x/binary-build-of-scplugin/">
-  http://funkatron.com/wp/archives/os-x/binary-build-of-scplugin/
-</DeadLink>
+[http://funkatron.com/wp/archives/os-x/binary-build-of-scplugin/](dead+http://funkatron.com/wp/archives/os-x/binary-build-of-scplugin/)
 
 **I would like to point out that I'm not fully sure how good this build works.**
 Myself I tested updating a working dir, which didn't really work as expected,

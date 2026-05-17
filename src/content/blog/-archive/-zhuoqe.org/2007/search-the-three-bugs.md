@@ -11,11 +11,9 @@ updatedDate: 2007-04-15
 tags: ["development", "projects", "search-the-three"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
-If you've had a chance to check out my 48 hour <DeadLink text="search project"
-href="http://www.searchthethree.com/" title="Search The Three" /> from about 2-3
-weeks ago (i don't really remember, and i'm to lazy to double check, live with
+If you've had a chance to check out my 48 hour
+[search project](dead+http://www.searchthethree.com/) from about 2-3 weeks ago
+(i don't really remember, and i'm to lazy to double check, live with
 it...hehehe), you might have noticed that the results from Google and/or Windows
 Live Search isn't always correct. And if you've used Internet Explorer to
 attempt to view the site, well shit, i haven't even dared doing that cause of

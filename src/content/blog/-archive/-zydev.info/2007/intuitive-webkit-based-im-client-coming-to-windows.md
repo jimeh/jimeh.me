@@ -9,16 +9,14 @@ archive: zydev.info
 tags: ["modern-bubbling", "software"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
 Last night I was contacted by one of the developers from a new multi-protocol IM
-client called <DeadLink text="Digsby" href="http://www.digsby.com/" />.
+client called [Digsby](dead+http://www.digsby.com/).
 
 If you're an avid reader of my blog (for reasons that are beyond me... lol), you
 probably already know why they contacted me. They asked to bundle my
 [Modern Bubbling](http://www.adiumxtras.com/index.php?a=xtras&xtra_id=3629)
-message style I created for [Adium](https://adium.im/) along with a few
-other of they're favorites.
+message style I created for [Adium](https://adium.im/) along with a few other of
+they're favorites.
 
 Here's where things start to get interesting. Modern Bubbling wont need to be
 ported to their client, as they're using the [WebKit](http://webkit.org/) HTML
@@ -44,5 +42,5 @@ fix. :)
 I'm eagerly awaiting to get my hands on the first beta to see if I wont have to
 be in pain anymore when using an IM client on Windows. :D
 
-Head over to <DeadLink text="www.digsby.com" href="http://www.digsby.com/" />
-and signup for the beta mailing list.
+Head over to [www.digsby.com](dead+http://www.digsby.com/) and signup for the
+beta mailing list.

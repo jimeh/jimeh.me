@@ -11,8 +11,6 @@ updatedDate: 2007-05-07
 tags: ["development", "mac-os-x", "php"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
 Mac OS X is an excellent web-development platform if you ask most (except if you
 ask Windows fanatics). It's UNIX based, comes with Apache 1.3 pre-installed and
 ready to rock 'n' roll basically. But the default factory settings for Apache
@@ -32,26 +30,23 @@ quite easy just lifting it all from one system to another.
 What I'm gonna outline here is installing PHP 5, MySQL and additional tools, and
 reconfiguring apache the way I've done it.
 
-So lets start by downloading PHP 5 for your system from here: <DeadLink
-text="http://www.entropy.ch/software/macosx/php/"
-href="http://www.entropy.ch/software/macosx/php/" />
+So lets start by downloading PHP 5 for your system from here:
+<dead+http://www.entropy.ch/software/macosx/php/>
 
 It's a no brainer, just extract the `tar.gz` archive and double click the `.pkg`
 installer package and follow instructions. This will leave you with a working
 PHP install located in `/usr/local/php5/`.
 
-Then lets move on to MySQL, download the package for your system here: <DeadLink
-text="http://mysql.org/downloads/mysql/5.0.html#Mac_OS_X_(package_format)"
-href="http://mysql.org/downloads/mysql/5.0.html#Mac_OS_X_(package_format)" />
+Then lets move on to MySQL, download the package for your system here:
+<dead+http://mysql.org/downloads/mysql/5.0.html#Mac*OS_X*(package_format)>
 
 Again, its an easy `.pkg` installation. Optionally, you can install the
 preference pane which is an easy way to start and stop MySQL. If you want the
 MySQL daemon to run at system startup, use the `.pkg` startup item installer, as
 the option in the preference pane doesn't seem to work at all :P
 
-The MySQL GUI Tools are very useful, and are available here: <DeadLink
-text="http://mysql.org/downloads/gui-tools/5.0.html#OSX"
-href="http://mysql.org/downloads/gui-tools/5.0.html#OSX" />
+The MySQL GUI Tools are very useful, and are available here:
+<dead+http://mysql.org/downloads/gui-tools/5.0.html#OSX>
 
 As for Apache, there's a few things to do, first of all you should make sure
 you've turned on “Personal Web Sharing” under the Sharing preference panel in
@@ -140,9 +135,8 @@ host configured, and a entry in the hosts file so I can also access from
 
 Then of course, I use [TextMate](http://www.macromates.com/), and I've got a
 TextMate project with all the Apache and PHP configuration files, which I can
-quickly open using <DeadLink text="Quicksilver"
-href="http://quicksilver.blacktree.com" /> by pressing cmd+space and typing
-`httpd` and pressing return cause the project file is called `httpd`. But the
-rest of my workflow is a story for another time ;)
+quickly open using [Quicksilver](dead+http://quicksilver.blacktree.com) by
+pressing cmd+space and typing `httpd` and pressing return cause the project file
+is called `httpd`. But the rest of my workflow is a story for another time ;)
 
 I hope some of you have found this useful, saionara fili moy...

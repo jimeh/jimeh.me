@@ -143,14 +143,7 @@ plain Markdown images.
 MDX media components are exported from `@mdx/index`:
 
 ```mdx
-import {
-  DeadLink,
-  Download,
-  Figure,
-  Image,
-  ImageGrid,
-  YouTube,
-} from "@mdx/index";
+import { Download, Figure, Image, ImageGrid, YouTube } from "@mdx/index";
 import hero from "./hero.webp";
 ```
 
@@ -269,27 +262,32 @@ The `?url&no-inline` import returns the built asset URL, prevents tiny files
 from becoming `data:` URLs, and makes the build fail if the source file is
 missing. The `filename` prop is passed to the browser's `download` attribute.
 
-### DeadLink
+### Dead Links
 
-Use `DeadLink` for historical links that should read like the original link text
-but must not navigate anywhere because the target is gone:
+Use the `dead+` URL scheme for historical links that should read like the
+original link text but must not navigate anywhere because the target is gone:
 
-```mdx
-import { DeadLink } from "@mdx/index";
-
-<DeadLink href="http://example.com/old-download.zip">old download</DeadLink>
+```md
+[old download](dead+http://example.com/old-download.zip)
 ```
 
-The `href` prop is kept only as build output metadata. It is not rendered as a
-clickable destination. Hovering or focusing the text shows the default dead-link
-message; pass `reason` to customize it.
+For URL-as-label prose, angle-bracket autolinks work too. The rendered text
+omits the `dead+` prefix:
 
-For inline prose where formatting would otherwise split the component awkwardly,
-use the Markdown-capable `text` prop:
-
-```mdx
-<DeadLink href="http://example.com/" text="`old-download.zip`" />
+```md
+<dead+http://example.com/old-download.zip>
 ```
+
+The original `href` is kept only as build output metadata. It is not rendered as
+a clickable destination. Hovering or focusing the text shows the default
+dead-link message; use the Markdown link title to customize it:
+
+```md
+[old download](dead+http://example.com/old-download.zip "This archive is gone.")
+```
+
+If the original URL is unknown, use a `dead+missing://` placeholder with a short
+slug, for example `[details](dead+missing://details)`.
 
 ## Checks
 

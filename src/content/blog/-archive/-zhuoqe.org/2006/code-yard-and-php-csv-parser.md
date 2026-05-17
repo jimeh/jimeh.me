@@ -11,19 +11,17 @@ updatedDate: 2007-06-05
 tags: ["development", "php"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
-Today i've setup a new project, called <DeadLink
-href="http://zhuoqe.org/svn/codeyard/trunk/">Code Yard</DeadLink>. All it really
-is, is a Subversion repository for me to collect all my small random pieces of
-code (classes, functions, etc.) which i reuse every now and then. It's purpose
-is to let me more easily manage all the small pieces of code currently spread
-out a bit all over the place in old and current projects, and to allow others
-who might find my code useful, or just save them 5 minutes of work :)
+Today i've setup a new project, called
+[Code Yard](dead+http://zhuoqe.org/svn/codeyard/trunk/). All it really is, is a
+Subversion repository for me to collect all my small random pieces of code
+(classes, functions, etc.) which i reuse every now and then. It's purpose is to
+let me more easily manage all the small pieces of code currently spread out a
+bit all over the place in old and current projects, and to allow others who
+might find my code useful, or just save them 5 minutes of work :)
 
 And with that explained, the first piece of code i've added is a PHP class
-called <DeadLink
-href="http://zhuoqe.org/svn/codeyard/trunk/php/classes/parseCSV/">parseCSV</DeadLink>.
+called
+[parseCSV](dead+http://zhuoqe.org/svn/codeyard/trunk/php/classes/parseCSV/).
 I've recently written this class for a small project i'm working on, i was quite
 surprised to find that there was a quite lack of CSV support in PHP, and an even
 larger vacuum of 3rd party classes available that fully supports the most common

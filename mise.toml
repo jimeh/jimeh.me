@@ -16,13 +16,17 @@ run = "pnpm build"
 description = "Preview the production build"
 run = "pnpm preview"
 
+[tasks.test]
+description = "Run unit tests"
+run = "pnpm test"
+
 [tasks.install]
 description = "Install package dependencies"
 alias = "i"
 run = "pnpm install"
 
 [tasks.lint]
-description = "Run ESLint and Stylelint"
+description = "Run ESLint, Stylelint, Markdownlint, and mdxlint"
 alias = "l"
 run = "pnpm lint"
 
@@ -30,13 +34,17 @@ run = "pnpm lint"
 description = "Auto-fix lint issues"
 run = "pnpm lint:fix"
 
+[tasks.lint-mdx]
+description = "Run MDX-aware lint checks"
+run = "pnpm lint:mdx"
+
 [tasks.format]
 description = "Format the project with Prettier"
 alias = "fmt"
 run = "pnpm format"
 
 [tasks.format-check]
-description = "Check Prettier formatting"
+description = "Check Prettier formatting and MDX lint"
 run = "pnpm format:check"
 
 [tasks.typecheck]

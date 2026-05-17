@@ -9,11 +9,10 @@ updatedDate: 2007-12-03
 tags: ["mac-os-x"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
-**\*UPDATE:** If you're using Proteron's <DeadLink text="LiteSwitch X"
-href="http://www.proteron.com/liteswitchx/" /> you wont be effected by this bug.
-Hopefully Apple will fix this issue in the upcoming 10.5.1 update.\*
+**\*UPDATE:** If you're using Proteron's
+[LiteSwitch X](dead+http://www.proteron.com/liteswitchx/) you wont be effected
+by this bug. Hopefully Apple will fix this issue in the upcoming 10.5.1
+update.\*
 
 **\*UPDATE 2:** I just installed the 10.5.1 update, and it seems like this bug
 has been fixed, as far as I can tell so far, I'll update further in a few days
@@ -24,12 +23,11 @@ fixed, just improved a bit, it happens less than half the time when switching to
 apps with windows on multiple desktops now, rather than the 80-90%? of the time
 it did before.\*
 
-I've been running <DeadLink text="Mac OS X 10.5 Leopard"
-href="http://www.apple.com/macosx/" /> now for 3-4 days and surprise surprise,
-I'm (mostly) loving it :)
+I've been running [Mac OS X 10.5 Leopard](dead+http://www.apple.com/macosx/) now
+for 3-4 days and surprise surprise, I'm (mostly) loving it :)
 
-One thing that's been annoying me though, is a bug in <DeadLink text="Spaces"
-href="http://www.apple.com/macosx/features/spaces.html" />. When you've got
+One thing that's been annoying me though, is a bug in
+[Spaces](dead+http://www.apple.com/macosx/features/spaces.html). When you've got
 multiple windows from a single application you can get some very unwanted space
 switching when using cmd+tab application switching.
 

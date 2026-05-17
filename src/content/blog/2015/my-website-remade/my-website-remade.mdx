@@ -13,6 +13,12 @@ image:
     objectPosition: 50% 60%
 ---
 
+import { Image, ImageGrid } from "@mdx/index";
+import v1 from "./jimeh.me-v1.webp";
+import v2 from "./jimeh.me-v2.webp";
+import v3 from "./jimeh.me-v3.webp";
+import v4 from "./jimeh.me-v4.webp";
+
 I have finally gotten around to updating my personal website. The new design is
 actually something I put together two years ago while bored. I was always too
 lazy to actually do anything with it though.
@@ -54,12 +60,6 @@ had for years to some good use, rather than just redirect it to jimeh.me.
 
 Now let's finish off this rant of a post with a gallery of all versions from
 oldest to newest of my website:
-
-import { Image, ImageGrid } from "@mdx/index";
-import v1 from "./jimeh.me-v1.webp";
-import v2 from "./jimeh.me-v2.webp";
-import v3 from "./jimeh.me-v3.webp";
-import v4 from "./jimeh.me-v4.webp";
 
 <ImageGrid columns={2} size="wide">
   <Image src={v1} caption="v1.0" />

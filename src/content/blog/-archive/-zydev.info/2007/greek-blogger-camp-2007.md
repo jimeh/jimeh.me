@@ -10,14 +10,10 @@ archive: zydev.info
 tags: ["other"]
 ---
 
-import { DeadLink } from "@mdx/index";
-
 As probably none of you (poor souls) who read this blog know, i'm of Swedish
 origin, but i've lived on the island of Ios in Greece the past 10 years. And
-today i found myself in an interesting event, namely the <DeadLink
-  text="Greek Blogger Camp 2007"
-  href="http://www.greekbloggercamp.gr/"
-/>.
+today i found myself in an interesting event, namely the
+[Greek Blogger Camp 2007](dead+http://www.greekbloggercamp.gr/).
 
 My day job is basically being a technician for anything and everything computer
 related on this little island, and i was setting up a WDS wireless network today

@@ -8,7 +8,8 @@ mise run install       # Install dependencies
 mise run dev           # Portless Astro dev server
 mise run build         # Production build
 mise run preview       # Preview build
-mise run check         # Format, lint, content, and type checks
+mise run test          # Unit tests
+mise run check         # Format, test, lint, content, and type checks
 mise run verify        # Full local/CI verification
 ```
 
