@@ -17,9 +17,9 @@ image:
     href: https://unsplash.com/photos/gEf9bOMTZtk
 ---
 
-After I updated my
-[profile picture](/new-avatar-same-old-fugly-face-2010-17e912cefb21) today, a
-friend of mine [responded](http://twitter.com/jonromero/status/8655908664) with:
+After I updated my [profile picture](/blog/2010/new-avatar-same-old-fugly-face/)
+today, a friend of mine
+[responded](http://twitter.com/jonromero/status/8655908664) with:
 
 > Build a service that changes your profile picture in all social networks!
 
