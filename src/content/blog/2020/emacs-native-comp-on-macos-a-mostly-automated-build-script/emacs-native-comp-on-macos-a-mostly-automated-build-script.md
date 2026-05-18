@@ -10,7 +10,7 @@ tags: ["emacs", "text-editor", "macos", "gcc"]
 image:
   src: ./EmacsLG1.png
   alt: EmacsLG1 Icon
-  size: 40%
+  size: 25%
   position: right
   credit:
     text: EmacsLG1 Icon
