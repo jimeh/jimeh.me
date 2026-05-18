@@ -10,7 +10,15 @@ export async function renderComponent(
   props: ComponentProps = {},
   slots: ComponentSlots = {},
 ): Promise<Document> {
-  const container = await AstroContainer.create();
+  const container = await AstroContainer.create({
+    astroConfig: {
+      image: {
+        dangerouslyProcessSVG: true,
+        domains: ["example.com"],
+        remotePatterns: [{ protocol: "https" }],
+      },
+    },
+  });
   const html = await container.renderToString(component, { props, slots });
 
   return parseHTML(html).document;

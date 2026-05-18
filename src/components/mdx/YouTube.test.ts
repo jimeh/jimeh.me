@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import YouTube from "./YouTube.astro";
-import { renderComponent } from "./test-utils";
+import { renderComponent } from "../test-utils";
 
 describe("YouTube", () => {
   test("renders privacy-enhanced embeds from standard watch URLs", async () => {

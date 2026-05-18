@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import ImageGrid from "./ImageGrid.astro";
-import { renderComponent } from "./test-utils";
+import { renderComponent } from "../test-utils";
 
 describe("ImageGrid", () => {
   test("renders default grid styles", async () => {

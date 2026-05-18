@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import Credit from "./Credit.astro";
-import { renderComponent } from "./test-utils";
+import { renderComponent } from "../test-utils";
 
 describe("Credit", () => {
   test("renders plain credit text with the default center alignment", async () => {

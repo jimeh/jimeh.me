@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import Image from "./Image.astro";
-import { renderComponent } from "./test-utils";
+import { renderComponent } from "../test-utils";
 
 describe("Image", () => {
   test("requires width and height together for string sources", async () => {

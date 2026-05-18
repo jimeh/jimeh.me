@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import Download from "./Download.astro";
-import { renderComponent } from "./test-utils";
+import { renderComponent } from "../test-utils";
 
 describe("Download", () => {
   test("renders a download link with optional filename and title", async () => {

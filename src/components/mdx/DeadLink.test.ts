@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import DeadLink from "./DeadLink.astro";
-import { renderComponent } from "./test-utils";
+import { renderComponent } from "../test-utils";
 
 describe("DeadLink", () => {
   test("renders markdown text as inert link content", async () => {

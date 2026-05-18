@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import Figure from "./Figure.astro";
-import { renderComponent } from "./test-utils";
+import { renderComponent } from "../test-utils";
 
 describe("Figure", () => {
   test("renders default content, caption, and credit", async () => {
