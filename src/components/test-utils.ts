@@ -15,6 +15,7 @@ export async function renderComponent(
 ): Promise<Document> {
   const container = await AstroContainer.create({
     astroConfig: {
+      site: "https://jimeh.me",
       image: {
         dangerouslyProcessSVG: true,
         domains: ["example.com"],

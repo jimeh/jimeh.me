@@ -6,57 +6,18 @@ import PostFeatured from "@components/blog/PostFeatured.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { siteConfig } from "../../data/site";
-import {
-  blogArchiveInfo,
-  isArchivedPost,
-  isMainBlogPost,
-} from "@utils/blog-archive";
-import { compareBlogPostsDesc } from "@utils/blog-sort";
-import { blogPostYear } from "@utils/blog-url";
+import { blogIndexData } from "./page-data";
 
 const allPosts = await getCollection("blog");
-const posts = allPosts.filter(isMainBlogPost);
-const archivePosts = allPosts.filter(isArchivedPost);
-
-// Sort newest first
-posts.sort(compareBlogPostsDesc);
-archivePosts.sort(compareBlogPostsDesc);
-
-// Featured post = newest
-const featuredPost = posts[0];
-const remainingPosts = posts.slice(1);
-const eagerThumbnailCount = 6;
-const eagerThumbnailIds = new Set(
-  remainingPosts.slice(0, eagerThumbnailCount).map((post) => post.id),
-);
-
-// Group remaining by year
-const postsByYear = new Map<string, typeof remainingPosts>();
-for (const post of remainingPosts) {
-  const year = blogPostYear(post);
-  if (!postsByYear.has(year)) {
-    postsByYear.set(year, []);
-  }
-  postsByYear.get(year)!.push(post);
-}
-
-const years = [...postsByYear.keys()].sort((a, b) => b.localeCompare(a));
-const archiveNames = [];
-if (archivePosts.some((post) => blogArchiveInfo(post)?.isGeneral)) {
-  archiveNames.push(new URL(siteConfig.url).hostname);
-}
-archiveNames.push(
-  ...new Set(
-    archivePosts
-      .map((post) => blogArchiveInfo(post))
-      .filter((archive) => archive && !archive.isGeneral)
-      .map((archive) => archive!.label),
-  ),
-);
-const archiveSummary =
-  archiveNames.length > 0
-    ? `${archivePosts.length} older posts from ${archiveNames.join(", ")}`
-    : `${archivePosts.length} older posts`;
+const {
+  archivePosts,
+  archiveSummary,
+  eagerThumbnailIds,
+  featuredPost,
+  posts,
+  postsByYear,
+  years,
+} = blogIndexData(allPosts, new URL(siteConfig.url).hostname);
 ---
 
 <BlogLayout

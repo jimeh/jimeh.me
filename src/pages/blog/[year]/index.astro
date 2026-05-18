@@ -4,29 +4,18 @@ import BlogLayout from "../../../layouts/BlogLayout.astro";
 import PostCard from "@components/blog/PostCard.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
-import { isMainBlogPost } from "@utils/blog-archive";
-import { compareBlogPostsDesc } from "@utils/blog-sort";
-import { blogPostYear } from "@utils/blog-url";
+import { blogYearPosts, blogYearStaticPaths } from "../page-data";
 
 interface Props {
   year: string;
 }
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
-  const years = new Set(posts.filter(isMainBlogPost).map(blogPostYear));
-
-  return [...years].map((year) => ({
-    params: { year },
-    props: { year },
-  }));
+  return blogYearStaticPaths(await getCollection("blog"));
 }
 
 const { year } = Astro.props;
-const allPosts = await getCollection("blog");
-const posts = allPosts
-  .filter((post) => isMainBlogPost(post) && blogPostYear(post) === year)
-  .sort(compareBlogPostsDesc);
+const posts = blogYearPosts(await getCollection("blog"), year);
 ---
 
 <BlogLayout

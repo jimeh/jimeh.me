@@ -136,3 +136,7 @@ tests are configured.
   scripts that expose helper functions for tests should guard `main()` with an
   `import.meta.url` / `pathToFileURL(process.argv[1])` check so importing them
   does not start network, SQLite, or filesystem import work.
+- Astro container page tests do not reliably provide `Astro.site` for every
+  route context. For post-page render tests, use a fixture post that avoids
+  image-derived OG URL generation, or cover the URL-building branch through a
+  smaller helper.

@@ -3,21 +3,9 @@ import { getCollection } from "astro:content";
 import BlogLayout from "../../../layouts/BlogLayout.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
-import { isMainBlogPost } from "@utils/blog-archive";
+import { sortedTagCounts } from "../page-data";
 
-const posts = (await getCollection("blog")).filter(isMainBlogPost);
-
-// Build tag counts
-const tagCounts = new Map<string, number>();
-for (const post of posts) {
-  for (const tag of post.data.tags ?? []) {
-    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
-  }
-}
-
-const sortedTags = [...tagCounts.entries()].sort((a, b) =>
-  a[0].localeCompare(b[0]),
-);
+const sortedTags = sortedTagCounts(await getCollection("blog"));
 ---
 
 <BlogLayout title="Tags - Blog - Jim Myhrberg" description="All blog post tags">
