@@ -35,22 +35,7 @@ const resolvedRel = [rel, "noopener", "noreferrer"].filter(Boolean).join(" ");
 
 {/* ROT13 decode for anti-spam email obfuscation. */}
 <script>
-  function rot13(s: string): string {
-    return s.replace(/[a-zA-Z]/g, (c) => {
-      const code = c.charCodeAt(0) + 13;
-      return String.fromCharCode(
-        (c <= "Z" ? 90 : 122) >= code ? code : code - 26,
-      );
-    });
-  }
+  import { initRot13Links } from "./site-link";
 
-  document
-    .querySelectorAll<HTMLAnchorElement>("[data-rot13-href]")
-    .forEach((el) => {
-      el.href = rot13(el.dataset.rot13Href!);
-      const text = el.querySelector("[data-link-text]");
-      if (text) {
-        text.textContent = rot13(el.dataset.rot13Text!);
-      }
-    });
+  initRot13Links(document);
 </script>

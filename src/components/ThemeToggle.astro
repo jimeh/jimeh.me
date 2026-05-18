@@ -28,113 +28,14 @@ const tooltipId = `theme-toggle-tooltip-${crypto.randomUUID()}`;
 </div>
 
 <script>
-  type ThemeMode = "system" | "light" | "dark";
-
-  const LABELS: Record<ThemeMode, string> = {
-    system: "Theme: system preference",
-    light: "Theme: light",
-    dark: "Theme: dark",
-  };
-
-  function getStoredMode(): ThemeMode {
-    try {
-      const stored = localStorage.getItem("theme");
-      if (stored === "light" || stored === "dark") return stored;
-    } catch {
-      // localStorage unavailable
-    }
-    return "system";
-  }
-
-  function setStoredMode(mode: ThemeMode) {
-    try {
-      if (mode === "system") {
-        localStorage.removeItem("theme");
-      } else {
-        localStorage.setItem("theme", mode);
-      }
-    } catch {
-      // localStorage unavailable
-    }
-  }
-
-  function prefersDark(): boolean {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  }
-
-  function applyTheme(mode: ThemeMode) {
-    const isDark = mode === "dark" || (mode === "system" && prefersDark());
-    document.documentElement.classList.toggle("dark", isDark);
-  }
-
-  function applyThemeImmediately(mode: ThemeMode) {
-    const root = document.documentElement;
-    root.classList.add("theme-switching");
-    // Force the class to apply before changing theme-dependent styles.
-    root.getBoundingClientRect();
-
-    applyTheme(mode);
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        root.classList.remove("theme-switching");
-      });
-    });
-  }
-
-  function updateUI(mode: ThemeMode) {
-    for (const el of document.querySelectorAll("[data-theme-icon]")) {
-      const htmlEl = el as HTMLElement;
-      htmlEl.classList.toggle("hidden", htmlEl.dataset.themeIcon !== mode);
-    }
-
-    for (const el of document.querySelectorAll("[data-tooltip-text]")) {
-      const htmlEl = el as HTMLElement;
-      htmlEl.classList.toggle("hidden", htmlEl.dataset.tooltipText !== mode);
-    }
-
-    for (const btn of document.querySelectorAll("[data-theme-toggle]")) {
-      btn.setAttribute("aria-label", LABELS[mode]);
-    }
-  }
-
-  function cycleMode(current: ThemeMode): ThemeMode {
-    if (current === "system") return "light";
-    if (current === "light") return "dark";
-    return "system";
-  }
-
-  function init() {
-    const mode = getStoredMode();
-    applyTheme(mode);
-    updateUI(mode);
-
-    for (const btn of document.querySelectorAll("[data-theme-toggle]")) {
-      const htmlBtn = btn as HTMLElement;
-      if (htmlBtn.dataset.initialized) continue;
-      htmlBtn.dataset.initialized = "true";
-
-      btn.addEventListener("click", () => {
-        const next = cycleMode(getStoredMode());
-        setStoredMode(next);
-        applyThemeImmediately(next);
-        updateUI(next);
-      });
-    }
-
-    window
-      .matchMedia("(prefers-color-scheme: dark)")
-      .addEventListener("change", () => {
-        if (getStoredMode() === "system") {
-          applyThemeImmediately("system");
-        }
-      });
-  }
+  import { initThemeToggle } from "./theme-toggle";
 
   // Run on initial load
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("DOMContentLoaded", () => {
+      initThemeToggle(document, window, localStorage);
+    });
   } else {
-    init();
+    initThemeToggle(document, window, localStorage);
   }
 </script>
