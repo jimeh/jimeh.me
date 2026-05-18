@@ -204,8 +204,28 @@
               "type": "string"
             },
             "frame": {
-              "description": "Draw the thumbnail inside a bordered background.",
-              "type": "boolean"
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "light": {
+                      "default": false,
+                      "description": "Draw the thumbnail frame in light mode.",
+                      "type": "boolean"
+                    },
+                    "dark": {
+                      "default": false,
+                      "description": "Draw the thumbnail frame in dark mode.",
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ],
+              "description": "Draw the thumbnail inside a bordered background. Use a boolean for both themes, or light/dark keys for color-mode-specific framing."
             },
             "size": {
               "default": "100%",

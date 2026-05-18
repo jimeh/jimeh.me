@@ -72,7 +72,9 @@ Image options:
 - `size`: image size inside thumbnail boxes, as a percentage. Values below
   `100%` add inset space; values above `100%` zoom/crop and request larger
   optimized image variants up to the source image width.
-- `frame`: draws the listing thumbnail inside a bordered background.
+- `frame`: draws the listing thumbnail inside a bordered background. Use `true`
+  for both themes, or `{ light: true, dark: false }` /
+  `{ light: false, dark: true }` to control light and dark mode independently.
 
 Example:
 

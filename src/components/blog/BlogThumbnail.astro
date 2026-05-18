@@ -3,6 +3,8 @@ import { Icon } from "astro-icon/components";
 import AssetImage from "@components/ui/AssetImage.astro";
 import type { ImageSource } from "@utils/image-source";
 import { darkImage, lightImage } from "@utils/image-source";
+import { resolveThumbnailFrame } from "@utils/thumbnail-frame";
+import type { ThumbnailFrame } from "@utils/thumbnail-frame";
 import {
   scaledPixelSize,
   scaledResponsiveSize,
@@ -20,7 +22,7 @@ interface Props {
   source?: ImageSource;
   thumbnail?: {
     fill: "fill" | "fit";
-    frame?: boolean;
+    frame?: ThumbnailFrame;
     size: string;
   };
   variant?: Variant;
@@ -56,17 +58,27 @@ const widths = light
 const sizes = isCard
   ? scaledPixelSize(160, size)
   : scaledResponsiveSize(960, 100, 3, size);
-const hasCardFrame = thumbnail?.frame === true || light === undefined;
+const frame = resolveThumbnailFrame(
+  light === undefined ? true : thumbnail?.frame,
+);
+const frameClasses = [
+  frame.light && "bg-surface-subtle border-border border",
+  frame.dark && "dark:bg-surface-subtle dark:border-border dark:border",
+  frame.light && !frame.dark && "dark:bg-transparent dark:border-0",
+];
+const cardFrameClasses = [
+  frame.light && "text-muted group-hover:text-accent",
+  frame.dark && "dark:text-muted dark:group-hover:text-accent",
+  ...frameClasses,
+];
 const boxClasses = isCard
   ? [
       "group-hover:scale-[1.02] relative hidden aspect-[3/2] w-40 shrink-0 self-start overflow-hidden rounded transition duration-300",
-      hasCardFrame
-        ? "bg-surface-subtle border-border text-muted group-hover:text-accent place-items-center border sm:grid"
-        : "sm:block",
+      frame.any ? ["place-items-center sm:grid", cardFrameClasses] : "sm:block",
     ]
   : [
       "relative aspect-[2/1] overflow-hidden rounded-lg transition-transform duration-300 group-hover:scale-[1.015]",
-      thumbnail?.frame && "bg-surface-subtle border-border border",
+      frameClasses,
     ];
 const imageClasses = [
   "absolute top-1/2 left-1/2 max-w-none -translate-x-1/2 -translate-y-1/2",

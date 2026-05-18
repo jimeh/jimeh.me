@@ -15,6 +15,24 @@ const percentageStr = z
   .string()
   .regex(/^\d+(?:\.\d+)?%$/, "Must be a percentage like '90%'")
   .describe("Percentage value like '90%'.");
+const thumbnailFrame = z
+  .union([
+    z.boolean(),
+    z.strictObject({
+      light: z
+        .boolean()
+        .default(false)
+        .describe("Draw the thumbnail frame in light mode."),
+      dark: z
+        .boolean()
+        .default(false)
+        .describe("Draw the thumbnail frame in dark mode."),
+    }),
+  ])
+  .describe(
+    "Draw the thumbnail inside a bordered background. Use a boolean for " +
+      "both themes, or light/dark keys for color-mode-specific framing.",
+  );
 
 const tagSlug = z
   .string()
@@ -123,10 +141,7 @@ export function createBlogFrontmatterSchema<ImageSchema extends z.ZodType>({
               .string()
               .optional()
               .describe("CSS object-position for cropped thumbnail images."),
-            frame: z
-              .boolean()
-              .optional()
-              .describe("Draw the thumbnail inside a bordered background."),
+            frame: thumbnailFrame.optional(),
             size: percentageStr
               .default("100%")
               .describe("Image size within thumbnail boxes."),
