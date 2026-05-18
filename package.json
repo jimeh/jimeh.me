@@ -8,7 +8,7 @@
     "preview": "astro preview",
     "prepare": "husky",
     "precommit": "lint-staged && pnpm check",
-    "test": "tsx --test src/plugins/*.test.ts",
+    "test": "vitest run",
     "lint": "eslint . && stylelint 'src/**/*.css' && pnpm lint:markdown && pnpm lint:mdx",
     "lint:fix": "eslint --fix . && stylelint --fix 'src/**/*.css'",
     "lint:markdown": "markdownlint-cli2",
@@ -76,6 +76,7 @@
     "tsx": "^4.21.0",
     "turndown": "^7.2.4",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.2"
+    "typescript-eslint": "^8.59.2",
+    "vitest": "^4.1.5"
   }
 }

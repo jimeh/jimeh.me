@@ -1,5 +1,4 @@
-import assert from "node:assert/strict";
-import test from "node:test";
+import { expect, test } from "vitest";
 
 import { rehypeDeadLinks } from "./rehype-dead-links";
 
@@ -29,25 +28,24 @@ test("converts dead+ links into inert dead-link markup", () => {
   const deadLinkProperties = propertiesOf(deadLink);
   const tooltipProperties = propertiesOf(tooltip);
 
-  assert.equal(wrapper.tagName, "span");
-  assert.deepEqual(wrapperProperties.className, [
+  expect(wrapper.tagName).toBe("span");
+  expect(wrapperProperties.className).toEqual([
     "group",
     "relative",
     "inline-block",
   ]);
-  assert.equal(deadLink.tagName, "span");
-  assert.equal(deadLinkProperties.role, "link");
-  assert.equal(deadLinkProperties.ariaDisabled, "true");
-  assert.equal(deadLinkProperties.tabIndex, 0);
-  assert.equal(
-    deadLinkProperties.dataDeadLinkHref,
+  expect(deadLink.tagName).toBe("span");
+  expect(deadLinkProperties.role).toBe("link");
+  expect(deadLinkProperties.ariaDisabled).toBe("true");
+  expect(deadLinkProperties.tabIndex).toBe(0);
+  expect(deadLinkProperties.dataDeadLinkHref).toBe(
     "https://example.com/old-page",
   );
-  assert.deepEqual(deadLink.children, [text("old page")]);
-  assert.equal(tooltip.tagName, "span");
-  assert.equal(tooltipProperties.role, "tooltip");
-  assert.equal(deadLinkProperties.ariaDescribedBy, tooltipProperties.id);
-  assert.deepEqual(tooltip.children, [text("Archived elsewhere.")]);
+  expect(deadLink.children).toEqual([text("old page")]);
+  expect(tooltip.tagName).toBe("span");
+  expect(tooltipProperties.role).toBe("tooltip");
+  expect(deadLinkProperties.ariaDescribedBy).toBe(tooltipProperties.id);
+  expect(tooltip.children).toEqual([text("Archived elsewhere.")]);
 });
 
 test("strips dead+ from autolink text that falls back to href", () => {
@@ -59,11 +57,10 @@ test("strips dead+ from autolink text that falls back to href", () => {
   const deadLink = childAt(childAt(tree, 0), 0);
   const deadLinkProperties = propertiesOf(deadLink);
 
-  assert.equal(
-    deadLinkProperties.dataDeadLinkHref,
+  expect(deadLinkProperties.dataDeadLinkHref).toBe(
     "http://zhuoqe.org/svn/adiumlogs/trunk/",
   );
-  assert.deepEqual(deadLink.children, [
+  expect(deadLink.children).toEqual([
     text("http://zhuoqe.org/svn/adiumlogs/trunk/"),
   ]);
 });
@@ -79,7 +76,7 @@ test("keeps explicit link text for dead+ links", () => {
 
   const deadLink = childAt(childAt(tree, 0), 0);
 
-  assert.deepEqual(deadLink.children, [text("Adium logs repository")]);
+  expect(deadLink.children).toEqual([text("Adium logs repository")]);
 });
 
 test("uses the default tooltip reason when no title is present", () => {
@@ -91,7 +88,7 @@ test("uses the default tooltip reason when no title is present", () => {
 
   const tooltip = childAt(childAt(tree, 0), 1);
 
-  assert.deepEqual(tooltip.children, [text(DEFAULT_REASON)]);
+  expect(tooltip.children).toEqual([text(DEFAULT_REASON)]);
 });
 
 test("ignores non-dead links and dead+ values without a URL scheme", () => {
@@ -101,8 +98,8 @@ test("ignores non-dead links and dead+ values without a URL scheme", () => {
 
   transform(tree);
 
-  assert.equal(childAt(tree, 0), regular);
-  assert.equal(childAt(tree, 1), invalidDead);
+  expect(childAt(tree, 0)).toBe(regular);
+  expect(childAt(tree, 1)).toBe(invalidDead);
 });
 
 function transform(tree: TestNode) {
@@ -142,13 +139,13 @@ function text(value: string): TestNode {
 function childAt(node: TestNode, index: number): TestNode {
   const child = node.children?.[index];
 
-  assert.ok(child);
+  expect(child).toBeDefined();
 
-  return child;
+  return child as TestNode;
 }
 
 function propertiesOf(node: TestNode): Record<string, unknown> {
-  assert.ok(node.properties);
+  expect(node.properties).toBeDefined();
 
-  return node.properties;
+  return node.properties as Record<string, unknown>;
 }
