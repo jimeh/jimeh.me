@@ -98,7 +98,7 @@ image:
 ## Syntax Highlighting
 
 Code highlighting uses `rehype-pretty-code` with Shiki themes. Astro's built-in
-Shiki highlighting is disabled in `astro.config.mjs`.
+Shiki highlighting is disabled in `astro.config.ts`.
 
 Use normal fenced code blocks with a language:
 

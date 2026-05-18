@@ -8,7 +8,7 @@
     "preview": "astro preview",
     "prepare": "husky",
     "precommit": "lint-staged && pnpm check",
-    "test": "node --test src/plugins/*.test.mjs",
+    "test": "tsx --test src/plugins/*.test.ts",
     "lint": "eslint . && stylelint 'src/**/*.css' && pnpm lint:markdown && pnpm lint:mdx",
     "lint:fix": "eslint --fix . && stylelint --fix 'src/**/*.css'",
     "lint:markdown": "markdownlint-cli2",

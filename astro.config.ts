@@ -5,12 +5,12 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 import rehypePrettyCode from "rehype-pretty-code";
 import { remarkAlert } from "remark-github-blockquote-alert";
-import { rehypeDeadLinks } from "./src/plugins/rehype-dead-links.mjs";
+import { rehypeDeadLinks } from "./src/plugins/rehype-dead-links";
 
 export default defineConfig({
   site: "https://jimeh.me",
   image: {
-    dangerouslyAllowSVG: true,
+    dangerouslyProcessSVG: true,
     remotePatterns: [{ protocol: "https" }],
   },
   integrations: [mdx(), sitemap(), icon()],

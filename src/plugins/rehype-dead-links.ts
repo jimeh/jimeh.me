@@ -13,13 +13,26 @@ const TOOLTIP_CLASS =
   "font-medium whitespace-normal opacity-0 shadow-sm transition-opacity " +
   "duration-200 group-focus-within:opacity-100 group-hover:opacity-100";
 
+interface HastNode {
+  type?: string;
+  tagName?: string;
+  properties?: Record<string, unknown>;
+  children?: HastNode[];
+  value?: string;
+}
+
+interface VFileLike {
+  path?: string;
+  history?: string[];
+}
+
 /**
  * Converts Markdown links with a dead+ URL scheme into inert dead-link markup.
  *
  * Example: [old site](dead+https://example.com/ "Gone")
  */
 export function rehypeDeadLinks() {
-  return (tree, file) => {
+  return (tree: HastNode, file: VFileLike) => {
     let count = 0;
     const fileId = deadLinkFileId(file);
 
@@ -30,7 +43,7 @@ export function rehypeDeadLinks() {
       const match = href.match(DEAD_LINK_PATTERN);
       if (!match) return;
 
-      const originalHref = match[1];
+      const originalHref = match[1] ?? "";
       const reason =
         typeof node.properties?.title === "string" && node.properties.title
           ? node.properties.title
@@ -74,13 +87,13 @@ export function rehypeDeadLinks() {
   };
 }
 
-function deadLinkFileId(file) {
+function deadLinkFileId(file: VFileLike) {
   const value = file.path || file.history?.[0] || "content";
 
   return hashString(value).toString(36);
 }
 
-function hashString(value) {
+function hashString(value: string) {
   let hash = 5381;
 
   for (let index = 0; index < value.length; index++) {
@@ -90,19 +103,22 @@ function hashString(value) {
   return hash >>> 0;
 }
 
-function textContent(children) {
+function textContent(children: HastNode[] | undefined): string {
   if (!Array.isArray(children)) return "";
 
   return children.map((child) => childTextContent(child)).join("");
 }
 
-function childTextContent(node) {
-  if (node?.type === "text") return node.value;
+function childTextContent(node: HastNode | undefined): string {
+  if (node?.type === "text") return node.value ?? "";
 
   return textContent(node?.children);
 }
 
-function visitElements(node, callback) {
+function visitElements(
+  node: HastNode | undefined,
+  callback: (node: HastNode) => void,
+) {
   if (node?.type === "element") {
     callback(node);
   }
