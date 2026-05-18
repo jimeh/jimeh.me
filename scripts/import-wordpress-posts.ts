@@ -16,7 +16,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { basename, extname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { parseHTML } from "linkedom";
 import TurndownService from "turndown";
@@ -26,7 +26,7 @@ const ROOT_DIR = join(__dirname, "..");
 const BLOG_DIR = join(ROOT_DIR, "src", "content", "blog");
 const DB_PATH = join(ROOT_DIR, "tmp", "wordpress-posts.sqlite");
 
-interface ImportPost {
+export interface ImportPost {
   source: string;
   old_id: number;
   post_date: string;
@@ -38,13 +38,13 @@ interface ImportPost {
   content_html: string;
 }
 
-interface PostAsset {
+export interface PostAsset {
   old_id: number;
   upload_path: string;
   local_path: string;
 }
 
-interface MarkdownContent {
+export interface MarkdownContent {
   body: string;
   imports: Map<string, string>;
 }
@@ -86,15 +86,15 @@ function loadAssets(): Map<number, PostAsset[]> {
   return byPost;
 }
 
-function dateOnly(dateTime: string): string {
+export function dateOnly(dateTime: string): string {
   return dateTime.slice(0, 10);
 }
 
-function datedSlug(post: ImportPost): string {
+export function datedSlug(post: ImportPost): string {
   return `${dateOnly(post.post_date)}-${post.slug}`;
 }
 
-function slugTag(value: string): string {
+export function slugTag(value: string): string {
   return value
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -104,7 +104,7 @@ function slugTag(value: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-function postTags(post: ImportPost): string[] {
+export function postTags(post: ImportPost): string[] {
   const values = post.categories
     .split(",")
     .map((part) => slugTag(part.trim()))
@@ -113,7 +113,7 @@ function postTags(post: ImportPost): string[] {
   return [...new Set(values)].sort();
 }
 
-function assetNameMap(assets: PostAsset[]): Map<string, string> {
+export function assetNameMap(assets: PostAsset[]): Map<string, string> {
   const used = new Set<string>();
   const result = new Map<string, string>();
 
@@ -143,7 +143,10 @@ function copyAssets(
   }
 }
 
-function rewriteUploadUrls(html: string, names: Map<string, string>): string {
+export function rewriteUploadUrls(
+  html: string,
+  names: Map<string, string>,
+): string {
   let result = html;
 
   for (const [uploadPath, filename] of names) {
@@ -161,7 +164,7 @@ function rewriteUploadUrls(html: string, names: Map<string, string>): string {
   return result;
 }
 
-function sanitizeHtml(html: string): string {
+export function sanitizeHtml(html: string): string {
   const { document } = parseHTML(`<main>${html}</main>`);
   const root = document.querySelector("main");
   if (!root) return html;
@@ -218,7 +221,7 @@ function sanitizeHtml(html: string): string {
   return root.innerHTML;
 }
 
-function wpAutop(html: string): string {
+export function wpAutop(html: string): string {
   const blockTags = [
     "address",
     "blockquote",
@@ -229,6 +232,7 @@ function wpAutop(html: string): string {
     "form",
     "h[1-6]",
     "hr",
+    "li",
     "ol",
     "p",
     "pre",
@@ -248,7 +252,7 @@ function wpAutop(html: string): string {
     .map((part) => part.trim())
     .filter(Boolean)
     .map((part) => {
-      if (new RegExp(`^<(${blockTags})[\\s>]`, "i").test(part)) {
+      if (new RegExp(`^</?(${blockTags})(?:\\s|>|/)`, "i").test(part)) {
         return part;
       }
       return `<p>${part.replace(/\n/g, "<br />\n")}</p>`;
@@ -257,7 +261,7 @@ function wpAutop(html: string): string {
   return paragraphs.join("\n\n");
 }
 
-function decodeHtmlEntities(text: string): string {
+export function decodeHtmlEntities(text: string): string {
   return text
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -268,7 +272,7 @@ function decodeHtmlEntities(text: string): string {
     .replace(/&#x2F;/g, "/");
 }
 
-function detectCodeLanguage(code: string): string {
+export function detectCodeLanguage(code: string): string {
   const trimmed = code.trim();
   if (/^(AddType|DocumentRoot|Include|Listen|<VirtualHost)\s/i.test(trimmed)) {
     return "apache";
@@ -285,10 +289,11 @@ function detectCodeLanguage(code: string): string {
   return "";
 }
 
-function elementTextWithBreaks(node: HTMLElement): string {
+export function elementTextWithBreaks(node: HTMLElement): string {
   return (node.innerHTML ?? "")
     .replace(/\r\n?/g, "\n")
     .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<(?:div|h[1-6]|p)(?:\s[^>]*)?>/gi, "\n")
     .replace(/<\/(?:div|h[1-6]|p)>/gi, "\n")
     .replace(/<[^>]+>/g, "")
     .replace(/\u00a0/g, " ")
@@ -299,13 +304,13 @@ function elementTextWithBreaks(node: HTMLElement): string {
     .trim();
 }
 
-function isCodeLikeBlockquote(text: string): boolean {
+export function isCodeLikeBlockquote(text: string): boolean {
   return /^(?:sudo|Include|DocumentRoot|Listen|127\.0\.0\.1\b|<VirtualHost\b)/m.test(
     text,
   );
 }
 
-function createTurndown(): TurndownService {
+export function createTurndown(): TurndownService {
   const td = new TurndownService({
     headingStyle: "atx",
     bulletListMarker: "-",
@@ -389,13 +394,16 @@ function createTurndown(): TurndownService {
   return td;
 }
 
-function isLocalImagePath(value: string): boolean {
+export function isLocalImagePath(value: string): boolean {
   return (
     value.startsWith("./") && /\.(?:avif|gif|jpe?g|png|svg|webp)$/i.test(value)
   );
 }
 
-function importNameFor(filename: string, usedNames: Set<string>): string {
+export function importNameFor(
+  filename: string,
+  usedNames: Set<string>,
+): string {
   const base = filename
     .replace(/\.[^.]+$/, "")
     .replace(/[^A-Za-z0-9]+/g, " ")
@@ -417,7 +425,7 @@ function importNameFor(filename: string, usedNames: Set<string>): string {
   return name;
 }
 
-function imageImport(
+export function imageImport(
   imports: Map<string, string>,
   usedNames: Set<string>,
   imagePath: string,
@@ -431,11 +439,11 @@ function imageImport(
   return name;
 }
 
-function imageComponent(name: string, alt: string): string {
+export function imageComponent(name: string, alt: string): string {
   return `<Image src={${name}} alt=${JSON.stringify(alt)} />`;
 }
 
-function convertLocalImages(markdown: string): MarkdownContent {
+export function convertLocalImages(markdown: string): MarkdownContent {
   const imports = new Map<string, string>();
   const usedNames = new Set<string>();
   const placeholders = new Map<string, string>();
@@ -490,7 +498,7 @@ function convertLocalImages(markdown: string): MarkdownContent {
   return { body, imports };
 }
 
-function mdxImportBlock(imports: Map<string, string>): string {
+export function mdxImportBlock(imports: Map<string, string>): string {
   if (imports.size === 0) return "";
 
   const lines = ['import { Image } from "@mdx/index";'];
@@ -501,7 +509,7 @@ function mdxImportBlock(imports: Map<string, string>): string {
   return `${lines.join("\n")}\n\n`;
 }
 
-function normalizeOrderedLists(markdown: string): string {
+export function normalizeOrderedLists(markdown: string): string {
   const lines = markdown.split("\n");
   let counter = 1;
   let inList = false;
@@ -517,6 +525,8 @@ function normalizeOrderedLists(markdown: string): string {
       }
 
       if (!line.trim()) {
+        counter = 1;
+        inList = false;
         return line;
       }
 
@@ -532,7 +542,7 @@ function normalizeOrderedLists(markdown: string): string {
     .join("\n");
 }
 
-function wrapWords(text: string, width = 80): string[] {
+export function wrapWords(text: string, width = 80): string[] {
   const lines: string[] = [];
   let current = "";
 
@@ -557,11 +567,11 @@ function wrapWords(text: string, width = 80): string[] {
   return lines.length > 0 ? lines : [""];
 }
 
-function listMarker(line: string): string | undefined {
+export function listMarker(line: string): string | undefined {
   return line.match(/^(\s*(?:[-*+]|\d+\.)\s+)\S/)?.[1];
 }
 
-function isStandaloneBlockLine(line: string): boolean {
+export function isStandaloneBlockLine(line: string): boolean {
   const trimmed = line.trim();
 
   return (
@@ -575,7 +585,7 @@ function isStandaloneBlockLine(line: string): boolean {
   );
 }
 
-function wrapListItem(line: string, marker: string): string[] {
+export function wrapListItem(line: string, marker: string): string[] {
   const content = line.slice(marker.length).trim();
   const firstWidth = 80 - marker.length;
   const wrapped = wrapWords(content, Math.max(firstWidth, 20));
@@ -586,7 +596,7 @@ function wrapListItem(line: string, marker: string): string[] {
   );
 }
 
-function wrapHeading(line: string): string[] {
+export function wrapHeading(line: string): string[] {
   const match = line.match(/^(#{1,6})\s+(.+)$/);
   if (!match || line.length <= 80) return [line];
 
@@ -601,7 +611,7 @@ function wrapHeading(line: string): string[] {
   );
 }
 
-function wrapMarkdownProse(markdown: string): string {
+export function wrapMarkdownProse(markdown: string): string {
   const lines = markdown.split("\n");
   const result: string[] = [];
   let paragraph: string[] = [];
@@ -652,14 +662,14 @@ function wrapMarkdownProse(markdown: string): string {
   return result.join("\n");
 }
 
-function normalizeListSpacing(markdown: string): string {
+export function normalizeListSpacing(markdown: string): string {
   return markdown.replace(
     /^(\s*(?:[-*+]|\d+\.)\s+.+)\n\n(?=\s*(?:[-*+]|\d+\.)\s+)/gm,
     "$1\n",
   );
 }
 
-function normalizeMarkdown(markdown: string): string {
+export function normalizeMarkdown(markdown: string): string {
   const result = normalizeOrderedLists(markdown)
     .replace(/\r\n/g, "\n")
     .replace(/\u00a0/g, " ")
@@ -683,7 +693,7 @@ function normalizeMarkdown(markdown: string): string {
   );
 }
 
-function summarizeDescription(text: string): string {
+export function summarizeDescription(text: string): string {
   const plain = text
     .replace(/\[!\[[^\]]*]\([^)]+\)]\([^)]+\)/g, "")
     .replace(/!\[[^\]]*]\([^)]+\)/g, "")
@@ -696,7 +706,7 @@ function summarizeDescription(text: string): string {
   return `${plain.slice(0, 157).trim()}...`;
 }
 
-function plainDescription(markdown: string, title: string): string {
+export function plainDescription(markdown: string, title: string): string {
   let inCode = false;
   let paragraph: string[] = [];
 
@@ -740,7 +750,7 @@ function plainDescription(markdown: string, title: string): string {
   return flushParagraph() || title;
 }
 
-function frontmatter(post: ImportPost, description: string): string {
+export function frontmatter(post: ImportPost, description: string): string {
   const tags = postTags(post);
   const lines = [
     "---",
@@ -836,4 +846,9 @@ function main(): void {
   console.log(`Done. Wrote ${written} posts, skipped ${skipped}.`);
 }
 
-main();
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
+  main();
+}

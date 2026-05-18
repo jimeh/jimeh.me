@@ -22,7 +22,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import { XMLParser } from "fast-xml-parser";
 import { parseHTML } from "linkedom";
@@ -40,7 +40,7 @@ const BLOG_DIR = join(__dirname, "..", "src", "content", "blog");
 // Types
 // ---------------------------------------------------------------------------
 
-interface FeedItem {
+export interface FeedItem {
   title: string;
   link: string;
   guid: { "#text": string } | string;
@@ -89,7 +89,10 @@ function curlDownload(url: string, outPath: string): string {
  * Map HTTP content-type to file extension. Falls back to the
  * extension from the URL path.
  */
-function contentTypeToExt(contentType: string, urlFallback: string): string {
+export function contentTypeToExt(
+  contentType: string,
+  urlFallback: string,
+): string {
   const ct = contentType.split(";")[0].trim().toLowerCase();
   const map: Record<string, string> = {
     "image/webp": ".webp",
@@ -110,7 +113,7 @@ function contentTypeToExt(contentType: string, urlFallback: string): string {
  * Extract a filesystem-safe base name from a Medium image URL.
  * E.g. "1*lpZA2i6W3zTETJZiCCUFRA.jpeg" → "1-lpZA2i6W3zTETJZiCCUFRA"
  */
-function imageBaseName(url: string): string {
+export function imageBaseName(url: string): string {
   const pathname = new URL(url).pathname;
   const filename = pathname.split("/").pop() || "image";
   // Strip extension and sanitize.
@@ -189,7 +192,7 @@ function downloadPostImages(
 /**
  * Replace external image URLs in markdown with local relative paths.
  */
-function replaceImageUrls(
+export function replaceImageUrls(
   markdown: string,
   urlMap: Map<string, string>,
 ): string {
@@ -204,7 +207,7 @@ function replaceImageUrls(
 // RSS parsing (metadata only)
 // ---------------------------------------------------------------------------
 
-function parseItems(xml: string): FeedItem[] {
+export function parseItems(xml: string): FeedItem[] {
   const parser = new XMLParser({
     ignoreAttributes: false,
     processEntities: true,
@@ -219,7 +222,7 @@ function parseItems(xml: string): FeedItem[] {
 // Article page scraping
 // ---------------------------------------------------------------------------
 
-interface ScrapedContent {
+export interface ScrapedContent {
   html: string;
   subtitle: string | null;
   originalDate: string | null;
@@ -327,7 +330,7 @@ function scrapeArticle(url: string): ScrapedContent {
  * and lazy-loaded images. We extract the best image URL and the
  * figcaption text.
  */
-function buildFigureHtml(figure: Element): string {
+export function buildFigureHtml(figure: Element): string {
   // Try to get image URL from <source srcSet> or <img src>.
   let imgSrc = "";
   const source = figure.querySelector("source");
@@ -367,7 +370,7 @@ function buildFigureHtml(figure: Element): string {
 // Slug derivation
 // ---------------------------------------------------------------------------
 
-function deriveSlug(link: string, guid: string): string {
+export function deriveSlug(link: string, guid: string): string {
   const url = new URL(link);
   let slug = url.pathname.replace(/^\//, "");
 
@@ -384,7 +387,7 @@ function deriveSlug(link: string, guid: string): string {
 // HTML entity decoding (for <pre> blocks)
 // ---------------------------------------------------------------------------
 
-function decodeHtmlEntities(text: string): string {
+export function decodeHtmlEntities(text: string): string {
   return text
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
@@ -402,7 +405,7 @@ function decodeHtmlEntities(text: string): string {
 /**
  * Remove common leading whitespace from all lines of a code block.
  */
-function dedentCode(code: string): string {
+export function dedentCode(code: string): string {
   const lines = code.split("\n");
   // Find minimum indentation of non-empty lines.
   let minIndent = Infinity;
@@ -419,7 +422,7 @@ function dedentCode(code: string): string {
 // Code language detection
 // ---------------------------------------------------------------------------
 
-function detectCodeLanguage(code: string): string {
+export function detectCodeLanguage(code: string): string {
   const trimmed = code.trim();
 
   // JSON: starts with { or [ and looks like valid JSON structure.
@@ -449,7 +452,7 @@ function detectCodeLanguage(code: string): string {
 // Turndown setup
 // ---------------------------------------------------------------------------
 
-function createTurndown(): TurndownService {
+export function createTurndown(): TurndownService {
   const td = new TurndownService({
     headingStyle: "atx",
     hr: "---",
@@ -572,11 +575,11 @@ function createTurndown(): TurndownService {
 /**
  * Replace smart/curly quotes with straight ASCII equivalents.
  */
-function normalizeQuotes(text: string): string {
+export function normalizeQuotes(text: string): string {
   return text.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"');
 }
 
-function postProcessMarkdown(md: string): string {
+export function postProcessMarkdown(md: string): string {
   let result = md;
 
   result = normalizeQuotes(result);
@@ -591,7 +594,10 @@ function postProcessMarkdown(md: string): string {
 // Fallback description extraction
 // ---------------------------------------------------------------------------
 
-function extractFallbackDescription(markdown: string, title: string): string {
+export function extractFallbackDescription(
+  markdown: string,
+  title: string,
+): string {
   const lines = markdown.split("\n");
   let inCodeBlock = false;
 
@@ -637,7 +643,7 @@ function extractFallbackDescription(markdown: string, title: string): string {
 // Date helpers
 // ---------------------------------------------------------------------------
 
-function formatDate(dateStr: string): string {
+export function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
   const yyyy = d.getFullYear();
   const mm = String(d.getMonth() + 1).padStart(2, "0");
@@ -645,7 +651,10 @@ function formatDate(dateStr: string): string {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-function getUpdatedDate(pubDate: string, atomUpdated: string): string | null {
+export function getUpdatedDate(
+  pubDate: string,
+  atomUpdated: string,
+): string | null {
   const pub = formatDate(pubDate);
   const updated = formatDate(atomUpdated);
   return updated !== pub ? updated : null;
@@ -655,7 +664,7 @@ function getUpdatedDate(pubDate: string, atomUpdated: string): string | null {
 // Tags extraction
 // ---------------------------------------------------------------------------
 
-function extractTags(category: string | string[] | undefined): string[] {
+export function extractTags(category: string | string[] | undefined): string[] {
   if (!category) return [];
   if (Array.isArray(category)) return category;
   return [category];
@@ -665,7 +674,7 @@ function extractTags(category: string | string[] | undefined): string[] {
 // Frontmatter
 // ---------------------------------------------------------------------------
 
-function buildFrontmatter(meta: {
+export function buildFrontmatter(meta: {
   title: string;
   description: string;
   date: string;
@@ -710,7 +719,7 @@ function writePost(slug: string, content: string, force: boolean): boolean {
 // Guid extraction helper
 // ---------------------------------------------------------------------------
 
-function getGuidText(guid: { "#text": string } | string): string {
+export function getGuidText(guid: { "#text": string } | string): string {
   if (typeof guid === "string") return guid;
   return guid["#text"];
 }
@@ -813,4 +822,9 @@ function main(): void {
   }
 }
 
-main();
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
+  main();
+}

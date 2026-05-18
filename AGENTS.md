@@ -132,3 +132,7 @@ tests are configured.
 - After renaming content files between `.mdx` and `.md`, clear both `.astro` and
   `node_modules/.astro`; Astro's content data store can otherwise keep stale
   deferred module paths and break `astro build`.
+- Vitest covers both `src/**/*.test.ts` and `scripts/**/*.test.ts`. Import
+  scripts that expose helper functions for tests should guard `main()` with an
+  `import.meta.url` / `pathToFileURL(process.argv[1])` check so importing them
+  does not start network, SQLite, or filesystem import work.
