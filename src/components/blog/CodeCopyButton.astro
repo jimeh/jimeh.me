@@ -25,45 +25,7 @@ import { Icon } from "astro-icon/components";
 </template>
 
 <script>
-  const tpl = document.querySelector<HTMLTemplateElement>("#code-copy-btn-tpl");
-  if (!tpl) throw new Error("Missing #code-copy-btn-tpl template");
+  import { initCodeCopyButtons } from "./code-copy-button";
 
-  const figures = document.querySelectorAll<HTMLElement>(
-    "figure[data-rehype-pretty-code-figure]",
-  );
-
-  for (const figure of figures) {
-    const pre = figure.querySelector("pre");
-    if (!pre) continue;
-
-    figure.style.position = "relative";
-
-    const button = tpl.content.firstElementChild!.cloneNode(
-      true,
-    ) as HTMLButtonElement;
-
-    // Position relative to the pre, accounting for any title bar.
-    const offset = 10; // 0.6875rem
-    button.style.top = `${pre.offsetTop + offset}px`;
-
-    const iconCopy = button.querySelector('[data-icon="copy"]')!;
-    const iconCheck = button.querySelector('[data-icon="check"]')!;
-
-    button.addEventListener("click", async () => {
-      const code = pre.querySelector("code");
-      if (!code) return;
-
-      await navigator.clipboard.writeText(code.textContent ?? "");
-
-      iconCopy.classList.add("hidden");
-      iconCheck.classList.remove("hidden");
-
-      setTimeout(() => {
-        iconCheck.classList.add("hidden");
-        iconCopy.classList.remove("hidden");
-      }, 2000);
-    });
-
-    figure.appendChild(button);
-  }
+  initCodeCopyButtons(document, navigator.clipboard);
 </script>
