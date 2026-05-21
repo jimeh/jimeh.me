@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../../layouts/BlogLayout.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
+import { sortedArchiveTagCounts } from "@utils/blog-page-data";
+
+const sortedTags = sortedArchiveTagCounts(await getCollection("blog"));
+const breadcrumbs = [
+  { href: "/", label: "jimeh" },
+  { href: "/blog/", label: "Blog" },
+  { href: "/blog/archives/", label: "Archives" },
+  { href: "/blog/archives/tags/", label: "Tags" },
+];
+---
+
+<BlogLayout
+  title="Archive Tags - Blog - Jim Myhrberg"
+  description="Tags for archived blog posts"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHeading as="h1" size="page" uppercase>Archive Tags</PageHeading>
+  <MetaText>
+    {sortedTags.length} tags &middot;
+    <a href="/blog/archives/" class="text-accent hover:underline">
+      all archives
+    </a>
+  </MetaText>
+
+  <div class="mt-8 flex flex-wrap gap-2">
+    {
+      sortedTags.map(([tag, count]) => (
+        <a
+          href={`/blog/archives/tags/${tag}/`}
+          class="text-muted hover:text-accent border-border hover:border-accent rounded-full border px-3.5 py-1.5 text-sm transition-colors"
+        >
+          {tag}
+          <span class="ml-1 opacity-60">{count}</span>
+        </a>
+      ))
+    }
+  </div>
+</BlogLayout>

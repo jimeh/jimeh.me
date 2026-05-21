@@ -1,4 +1,5 @@
 import { z } from "astro/zod";
+import { isReservedBlogArchiveSlug } from "../utils/blog-archive";
 import { BLOG_POST_SLUG_PATTERN } from "../utils/blog-route";
 
 /** Accepts string or YAML-parsed Date, normalizes to YYYY-MM-DD. */
@@ -75,7 +76,15 @@ export function createBlogFrontmatterSchema<ImageSchema extends z.ZodType>({
       .describe("Later revision date; must not be earlier than date."),
     tags: z.array(tagSlug).optional().describe("Blog tag slugs."),
     archive: z
-      .union([z.boolean(), z.string().min(1)])
+      .union([
+        z.boolean(),
+        z
+          .string()
+          .min(1)
+          .refine((archive) => !isReservedBlogArchiveSlug(archive), {
+            message: "Archive name uses a reserved route slug.",
+          }),
+      ])
       .optional()
       .describe("Archive marker, or archive source name."),
     image: z

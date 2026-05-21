@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 
 import { renderComponent } from "../components/test-utils";
 import { siteConfig, siteLinks } from "../data/site";
-import HomePage from "./index.astro";
+import HomePage from "../pages/index.astro";
 
 describe("home page", () => {
   test("renders profile identity and configured links", async () => {

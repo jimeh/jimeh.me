@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import BlogLayout from "../../../layouts/BlogLayout.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
-import { sortedTagCounts } from "../page-data";
+import { sortedTagCounts } from "@utils/blog-page-data";
 
 const sortedTags = sortedTagCounts(await getCollection("blog"));
 ---

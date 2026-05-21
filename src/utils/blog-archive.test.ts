@@ -4,6 +4,7 @@ import {
   blogArchiveInfo,
   blogArchiveSlug,
   blogArchiveUrl,
+  isReservedBlogArchiveSlug,
   isArchivedPost,
   isGeneralArchivePost,
   isMainBlogPost,
@@ -35,6 +36,11 @@ describe("archive route details", () => {
   test("slugifies archive names for routes", () => {
     expect(blogArchiveSlug("Zydev.info")).toBe("zydev-info");
     expect(blogArchiveSlug(" Old WordPress Dump! ")).toBe("old-wordpress-dump");
+  });
+
+  test("identifies reserved archive route slugs", () => {
+    expect(isReservedBlogArchiveSlug("Tags!")).toBe(true);
+    expect(isReservedBlogArchiveSlug("Zydev.info")).toBe(false);
   });
 
   test("builds canonical archive URLs", () => {

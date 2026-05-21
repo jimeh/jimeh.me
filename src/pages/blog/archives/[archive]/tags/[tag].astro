@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../../../layouts/BlogLayout.astro";
+import PostCard from "@components/blog/PostCard.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
+import {
+  namedArchiveTagPosts,
+  namedArchiveTagStaticPaths,
+} from "@utils/blog-page-data";
+
+interface Props {
+  label: string;
+  slug: string;
+  tag: string;
+}
+
+export async function getStaticPaths() {
+  return namedArchiveTagStaticPaths(await getCollection("blog"));
+}
+
+const { label, slug, tag } = Astro.props;
+const posts = namedArchiveTagPosts(await getCollection("blog"), slug, tag);
+const breadcrumbs = [
+  { href: "/", label: "jimeh" },
+  { href: "/blog/", label: "Blog" },
+  { href: "/blog/archives/", label: "Archives" },
+  { href: `/blog/archives/${slug}/`, label },
+  { href: `/blog/archives/${slug}/tags/`, label: "Tags" },
+  { href: `/blog/archives/${slug}/tags/${tag}/`, label: tag },
+];
+---
+
+<BlogLayout
+  title={`Archive "${tag}" posts: ${label} - Blog - Jim Myhrberg`}
+  description={`Archived ${label} blog posts tagged "${tag}"`}
+  breadcrumbs={breadcrumbs}
+>
+  <PageHeading as="h1" size="page" uppercase>{tag}</PageHeading>
+  <MetaText>
+    {posts.length}{" "}
+    {posts.length === 1 ? "archived post" : "archived posts"}
+    &middot;
+    <a
+      href={`/blog/archives/${slug}/tags/`}
+      class="text-accent hover:underline"
+    >
+      all {label} tags
+    </a>
+  </MetaText>
+
+  <div class="mt-8 space-y-8">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+</BlogLayout>

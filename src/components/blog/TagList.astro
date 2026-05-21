@@ -3,9 +3,11 @@ interface Props {
   tags: string[];
   /** Render as links (default) or plain text. */
   linked?: boolean;
+  /** Base URL for tag links, including trailing slash. */
+  tagBaseUrl?: string;
 }
 
-const { tags, linked = true } = Astro.props;
+const { tags, linked = true, tagBaseUrl = "/blog/tags/" } = Astro.props;
 ---
 
 <ul class="flex flex-wrap gap-2" aria-label="Tags">
@@ -14,7 +16,7 @@ const { tags, linked = true } = Astro.props;
       linked ? (
         <li>
           <a
-            href={`/blog/tags/${tag}/`}
+            href={`${tagBaseUrl}${tag}/`}
             class="text-muted hover:text-accent border-border hover:border-accent block rounded-full border px-3.5 py-1.5 text-sm transition-colors"
           >
             {tag}

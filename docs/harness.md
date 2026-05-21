@@ -47,5 +47,6 @@ The built-site smoke check protects the static deploy surface:
 
 - root, blog, tag, RSS, sitemap, favicon, and profile image outputs exist;
 - every post has a canonical built page at `/blog/:year/:slug/`;
-- every post appears in RSS and sitemap with its canonical URL;
-- year and tag archive pages exist.
+- main posts appear in RSS, while archived posts are omitted;
+- every post appears in the sitemap with its canonical URL;
+- year, current tag, archive, and archive tag pages exist.

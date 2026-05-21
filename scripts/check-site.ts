@@ -92,7 +92,9 @@ export function builtSiteFailures(
 
   const years = new Set<string>();
   const tags = new Set<string>();
+  const archiveTags = new Set<string>();
   const archives = new Set<string>();
+  const namedArchiveTags = new Map<string, Set<string>>();
   let archiveCount = 0;
 
   for (const post of posts) {
@@ -115,15 +117,24 @@ export function builtSiteFailures(
 
     if (isArchived) {
       archiveCount += 1;
+      const postTags = frontmatterStringArray(frontmatterBody, "tags");
       if (archive !== "true") {
-        archives.add(archiveSlug(archive));
+        const slug = archiveSlug(archive);
+        archives.add(slug);
+        const tags = namedArchiveTags.get(slug) ?? new Set<string>();
+        for (const tag of postTags) {
+          tags.add(tag);
+        }
+        namedArchiveTags.set(slug, tags);
+      } else {
+        for (const tag of postTags) {
+          archiveTags.add(tag);
+        }
       }
     } else {
       years.add(route.year);
-      if (frontmatterBody) {
-        for (const tag of frontmatterStringArray(frontmatterBody, "tags")) {
-          tags.add(tag);
-        }
+      for (const tag of frontmatterStringArray(frontmatterBody, "tags")) {
+        tags.add(tag);
       }
     }
 
@@ -150,14 +161,26 @@ export function builtSiteFailures(
 
   if (archiveCount > 0) {
     assertFile("blog/archives/index.html");
+    assertFile("blog/archives/tags/index.html");
   }
 
   for (const archive of archives) {
     assertFile(`blog/archives/${archive}/index.html`);
+    assertFile(`blog/archives/${archive}/tags/index.html`);
   }
 
   for (const tag of tags) {
     assertFile(`blog/tags/${tag}/index.html`);
+  }
+
+  for (const tag of archiveTags) {
+    assertFile(`blog/archives/tags/${tag}/index.html`);
+  }
+
+  for (const [archive, tags] of namedArchiveTags) {
+    for (const tag of tags) {
+      assertFile(`blog/archives/${archive}/tags/${tag}/index.html`);
+    }
   }
 
   return failures;

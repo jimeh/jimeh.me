@@ -43,7 +43,11 @@ tests are configured.
 - Page content: data-driven from typed exports. Grep `siteConfig`, `siteLinks`.
 - Blog URLs: use `src/utils/blog-url.ts` helpers.
 - Blog ordering: use `src/utils/blog-sort.ts` comparators.
-- Blog tags are site-wide, including archives. Prefer broad tags that group
+- Blog page data helpers live in `src/utils/blog-page-data.ts`; page tests live
+  in `src/page-tests`. Keep non-route helpers and tests out of `src/pages`
+  because Astro treats `.ts` files there as routable endpoints.
+- Blog tags are scoped by context: current posts, general archives, and named
+  archives each have independent tag pages. Prefer broad tags that group
   multiple posts over one-off detail tags.
 - Email: ROT13 obfuscation decoded client-side in `SiteLink.astro`.
 - SEO: Open Graph, Twitter Card, JSON-LD via `SEOHead.astro`.

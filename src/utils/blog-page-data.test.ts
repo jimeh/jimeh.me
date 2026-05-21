@@ -1,8 +1,10 @@
 import { describe, expect, test } from "vitest";
 
-import { blogPost } from "../../components/blog/test-helpers";
+import { blogPost } from "../components/blog/test-helpers";
 import {
   archivePageData,
+  archiveTagPosts,
+  archiveTagStaticPaths,
   archiveStaticPaths,
   archivesIndexData,
   blogIndexData,
@@ -11,11 +13,16 @@ import {
   blogTagStaticPaths,
   blogYearPosts,
   blogYearStaticPaths,
+  namedArchiveTagIndexStaticPaths,
+  namedArchiveTagPosts,
+  namedArchiveTagStaticPaths,
+  sortedArchiveTagCounts,
+  sortedNamedArchiveTagCounts,
   postPageNavigation,
   sortedTagCounts,
   yearRange,
-} from "./page-data";
-import type { BlogPost } from "./page-data";
+} from "./blog-page-data";
+import type { BlogPost } from "./blog-page-data";
 
 function post(id: string, data: Partial<BlogPost["data"]> = {}): BlogPost {
   return blogPost({
@@ -45,7 +52,7 @@ describe("blog page data", () => {
       archive: true,
       date: "2023-01-01",
       slug: "archive",
-      tags: ["archive"],
+      tags: ["astro", "archive"],
     }),
     post("2022/named/index", {
       archive: "Zydev.info",
@@ -82,14 +89,12 @@ describe("blog page data", () => {
     ]);
 
     expect(sortedTagCounts(posts)).toEqual([
-      ["archive", 1],
       ["astro", 2],
-      ["testing", 2],
+      ["testing", 1],
     ]);
     expect(blogTagStaticPaths(posts)).toEqual([
       { params: { tag: "astro" }, props: { tag: "astro" } },
       { params: { tag: "testing" }, props: { tag: "testing" } },
-      { params: { tag: "archive" }, props: { tag: "archive" } },
     ]);
     expect(blogTagPosts(posts, "astro").map((post) => post.id)).toEqual([
       "2025/newest/index",
@@ -97,8 +102,42 @@ describe("blog page data", () => {
     ]);
     expect(blogTagPosts(posts, "testing").map((post) => post.id)).toEqual([
       "2025/newest/index",
-      "2022/named/index",
     ]);
+  });
+
+  test("builds independent archive tag paths and filtered post lists", () => {
+    expect(sortedArchiveTagCounts(posts)).toEqual([
+      ["archive", 1],
+      ["astro", 1],
+    ]);
+    expect(archiveTagStaticPaths(posts)).toEqual([
+      { params: { tag: "astro" }, props: { tag: "astro" } },
+      { params: { tag: "archive" }, props: { tag: "archive" } },
+    ]);
+    expect(archiveTagPosts(posts, "astro").map((post) => post.id)).toEqual([
+      "2023/archive/index",
+    ]);
+
+    expect(namedArchiveTagIndexStaticPaths(posts)).toEqual([
+      {
+        params: { archive: "zydev-info" },
+        props: { label: "Zydev.info", slug: "zydev-info" },
+      },
+    ]);
+    expect(sortedNamedArchiveTagCounts(posts, "zydev-info")).toEqual([
+      ["testing", 1],
+    ]);
+    expect(namedArchiveTagStaticPaths(posts)).toEqual([
+      {
+        params: { archive: "zydev-info", tag: "testing" },
+        props: { label: "Zydev.info", slug: "zydev-info", tag: "testing" },
+      },
+    ]);
+    expect(
+      namedArchiveTagPosts(posts, "zydev-info", "testing").map(
+        (post) => post.id,
+      ),
+    ).toEqual(["2022/named/index"]);
   });
 
   test("builds archive index and named archive page data", () => {

@@ -4,7 +4,7 @@ import BlogLayout from "../../../layouts/BlogLayout.astro";
 import PostCard from "@components/blog/PostCard.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
-import { blogTagPosts, blogTagStaticPaths } from "../page-data";
+import { blogTagPosts, blogTagStaticPaths } from "@utils/blog-page-data";
 
 export async function getStaticPaths() {
   return blogTagStaticPaths(await getCollection("blog"));

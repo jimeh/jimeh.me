@@ -13,7 +13,7 @@ import { blogArchiveInfo } from "@utils/blog-archive";
 import { blogPostUrl } from "@utils/blog-url";
 import { darkImage, lightImage } from "@utils/image-source";
 import { readingTime } from "@utils/reading-time";
-import { blogPostStaticPaths, postPageNavigation } from "./page-data";
+import { blogPostStaticPaths, postPageNavigation } from "@utils/blog-page-data";
 
 export async function getStaticPaths() {
   return blogPostStaticPaths(await getCollection("blog"));
@@ -37,6 +37,11 @@ const archiveMetaLabel = archive
     ? "archive"
     : `${archive.label} archive`
   : undefined;
+const tagBaseUrl = archive
+  ? archive.isGeneral
+    ? "/blog/archives/tags/"
+    : `${archive.url}tags/`
+  : "/blog/tags/";
 const readTime = readingTime(post.body ?? "");
 const { Content } = await render(post);
 const imageLight = image ? lightImage(image.src) : undefined;
@@ -152,7 +157,7 @@ const { prevPost, nextPost } = postPageNavigation(
   {
     tags && tags.length > 0 && (
       <div class="mt-10">
-        <TagList tags={tags} />
+        <TagList tags={tags} tagBaseUrl={tagBaseUrl} />
       </div>
     )
   }

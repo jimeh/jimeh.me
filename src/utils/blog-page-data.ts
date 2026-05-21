@@ -1,12 +1,13 @@
 import type { CollectionEntry } from "astro:content";
 import {
   blogArchiveInfo,
+  isGeneralArchivePost,
   isArchivedPost,
   isMainBlogPost,
   sameBlogArchiveContext,
-} from "@utils/blog-archive";
-import { compareBlogPostsAsc, compareBlogPostsDesc } from "@utils/blog-sort";
-import { blogPostRoute, blogPostYear } from "@utils/blog-url";
+} from "./blog-archive";
+import { compareBlogPostsAsc, compareBlogPostsDesc } from "./blog-sort";
+import { blogPostRoute, blogPostYear } from "./blog-url";
 
 export type BlogPost = CollectionEntry<"blog">;
 
@@ -43,10 +44,18 @@ export interface ArchivePageData {
   years: string[];
 }
 
+export interface NamedArchiveTagStaticPathProps {
+  label: string;
+  slug: string;
+  tag: string;
+}
+
 export interface PostPageNavigation {
   nextPost: BlogPost | null;
   prevPost: BlogPost | null;
 }
+
+type BlogPostFilter = (post: BlogPost) => boolean;
 
 /** Groups blog posts by their canonical year, preserving input order. */
 export function groupPostsByYear(posts: BlogPost[]): Map<string, BlogPost[]> {
@@ -87,11 +96,14 @@ export function blogYearPosts(posts: BlogPost[], year: string): BlogPost[] {
     .sort(compareBlogPostsDesc);
 }
 
-/** Counts tags across all blog posts. */
-export function tagCounts(posts: BlogPost[]): Map<string, number> {
+/** Counts tags across filtered blog posts. */
+export function tagCounts(
+  posts: BlogPost[],
+  filter: BlogPostFilter = isMainBlogPost,
+): Map<string, number> {
   const counts = new Map<string, number>();
 
-  for (const post of posts) {
+  for (const post of posts.filter(filter)) {
     for (const tag of post.data.tags ?? []) {
       counts.set(tag, (counts.get(tag) ?? 0) + 1);
     }
@@ -101,25 +113,114 @@ export function tagCounts(posts: BlogPost[]): Map<string, number> {
 }
 
 /** Returns tag counts sorted alphabetically by tag. */
-export function sortedTagCounts(posts: BlogPost[]): Array<[string, number]> {
-  return [...tagCounts(posts).entries()].sort((a, b) =>
+export function sortedTagCounts(
+  posts: BlogPost[],
+  filter: BlogPostFilter = isMainBlogPost,
+): Array<[string, number]> {
+  return [...tagCounts(posts, filter).entries()].sort((a, b) =>
     a[0].localeCompare(b[0]),
   );
 }
 
-/** Returns all blog tags for static path generation. */
+/** Returns general archive tag counts sorted alphabetically by tag. */
+export function sortedArchiveTagCounts(
+  posts: BlogPost[],
+): Array<[string, number]> {
+  return sortedTagCounts(posts, isGeneralArchivePost);
+}
+
+/** Returns named archive tag counts sorted alphabetically by tag. */
+export function sortedNamedArchiveTagCounts(
+  posts: BlogPost[],
+  archiveSlug: string,
+): Array<[string, number]> {
+  return sortedTagCounts(posts, namedArchivePostFilter(archiveSlug));
+}
+
+/** Returns main blog tags for static path generation. */
 export function blogTagStaticPaths(posts: BlogPost[]) {
-  return [...tagCounts(posts).keys()].map((tag) => ({
+  return tagStaticPaths(posts, isMainBlogPost);
+}
+
+/** Returns general archive tags for static path generation. */
+export function archiveTagStaticPaths(posts: BlogPost[]) {
+  return tagStaticPaths(posts, isGeneralArchivePost);
+}
+
+/** Returns named archive tag paths for static path generation. */
+export function namedArchiveTagStaticPaths(posts: BlogPost[]) {
+  const paths: Array<{
+    params: { archive: string; tag: string };
+    props: NamedArchiveTagStaticPathProps;
+  }> = [];
+
+  for (const archive of namedArchiveGroups(posts.filter(isArchivedPost))) {
+    for (const tag of tagCounts(
+      archive.posts,
+      namedArchivePostFilter(archive.slug),
+    ).keys()) {
+      paths.push({
+        params: { archive: archive.slug, tag },
+        props: { label: archive.label, slug: archive.slug, tag },
+      });
+    }
+  }
+
+  return paths;
+}
+
+/** Returns named archive paths for tag index static path generation. */
+export function namedArchiveTagIndexStaticPaths(posts: BlogPost[]) {
+  return namedArchiveGroups(posts.filter(isArchivedPost)).map(
+    ({ label, slug }) => ({
+      params: { archive: slug },
+      props: { label, slug },
+    }),
+  );
+}
+
+/** Returns sorted main blog posts for a specific tag. */
+export function blogTagPosts(posts: BlogPost[], tag: string): BlogPost[] {
+  return tagPosts(posts, tag, isMainBlogPost);
+}
+
+/** Returns sorted general archive posts for a specific tag. */
+export function archiveTagPosts(posts: BlogPost[], tag: string): BlogPost[] {
+  return tagPosts(posts, tag, isGeneralArchivePost);
+}
+
+/** Returns sorted named archive posts for a specific tag. */
+export function namedArchiveTagPosts(
+  posts: BlogPost[],
+  archiveSlug: string,
+  tag: string,
+): BlogPost[] {
+  return tagPosts(posts, tag, namedArchivePostFilter(archiveSlug));
+}
+
+function tagStaticPaths(posts: BlogPost[], filter: BlogPostFilter) {
+  return [...tagCounts(posts, filter).keys()].map((tag) => ({
     params: { tag },
     props: { tag },
   }));
 }
 
-/** Returns sorted posts for a specific tag. */
-export function blogTagPosts(posts: BlogPost[], tag: string): BlogPost[] {
+function tagPosts(
+  posts: BlogPost[],
+  tag: string,
+  filter: BlogPostFilter,
+): BlogPost[] {
   return posts
-    .filter((post) => post.data.tags?.includes(tag))
+    .filter((post) => filter(post) && post.data.tags?.includes(tag))
     .sort(compareBlogPostsDesc);
+}
+
+function namedArchivePostFilter(archiveSlug: string): BlogPostFilter {
+  return (post) => {
+    const archive = blogArchiveInfo(post);
+
+    return !!archive && !archive.isGeneral && archive.slug === archiveSlug;
+  };
 }
 
 /** Builds the blog index data model. */

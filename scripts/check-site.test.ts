@@ -94,6 +94,7 @@ describe("builtSiteFailures", () => {
     const siteUrl = "https://example.com";
     const mainUrl = `${siteUrl}/blog/2025/main/`;
     const archiveUrl = `${siteUrl}/blog/2024/archive/`;
+    const generalArchiveUrl = `${siteUrl}/blog/2023/general-archive/`;
     const posts = [
       post("2025/main/index", {
         title: "Main",
@@ -108,18 +109,36 @@ describe("builtSiteFailures", () => {
         description: "Archive description",
         date: "2024-01-01",
         slug: "archive",
+        tags: ["php"],
+      }),
+      post("2023/general-archive/index", {
+        archive: true,
+        title: "General Archive",
+        description: "General archive description",
+        date: "2023-01-01",
+        slug: "general-archive",
+        tags: ["life"],
       }),
     ];
 
     writeRequiredSiteFiles(distDir);
     writeFile(distDir, "rss.xml", mainUrl);
-    writeFile(distDir, "sitemap-0.xml", `${mainUrl}\n${archiveUrl}`);
+    writeFile(
+      distDir,
+      "sitemap-0.xml",
+      `${mainUrl}\n${archiveUrl}\n${generalArchiveUrl}`,
+    );
     writeFile(distDir, "blog/2025/main/index.html");
     writeFile(distDir, "blog/2024/archive/index.html");
+    writeFile(distDir, "blog/2023/general-archive/index.html");
     writeFile(distDir, "blog/2025/index.html");
     writeFile(distDir, "blog/tags/astro/index.html");
     writeFile(distDir, "blog/archives/index.html");
+    writeFile(distDir, "blog/archives/tags/index.html");
+    writeFile(distDir, "blog/archives/tags/life/index.html");
     writeFile(distDir, "blog/archives/zydev-info/index.html");
+    writeFile(distDir, "blog/archives/zydev-info/tags/index.html");
+    writeFile(distDir, "blog/archives/zydev-info/tags/php/index.html");
 
     expect(builtSiteFailures({ distDir, posts, siteUrl })).toEqual([]);
   });

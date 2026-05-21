@@ -36,8 +36,12 @@ Optional fields:
 
 - `updatedDate`: later revision date; must not be earlier than `date`.
 - `tags`: inline array of lowercase tag slugs, e.g. `["macos", "apple"]`. Tags
-  are site-wide and include archived posts; prefer broad labels that can group
-  multiple posts.
+  are scoped by context: current posts, general archives, and named archives
+  each have independent tag pages. Prefer broad labels that can group multiple
+  posts.
+- `archive`: `true` for the general archive, or a source name for named
+  archives. Named archive slugs must not collide with reserved archive routes
+  such as `tags`.
 - `image`: primary image rendered above the post unless hidden.
 
 Image options:

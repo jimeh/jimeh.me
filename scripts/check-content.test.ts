@@ -154,4 +154,22 @@ describe("collectContentFailures", () => {
       ]),
     );
   });
+
+  test("reports archive names that resolve to reserved route slugs", () => {
+    const failures = collectContentFailures([
+      post(`
+        title: Reserved Archive
+        description: Reserved archive description
+        date: 2025-06-09
+        slug: reserved-archive
+        archive: Tags!
+      `),
+    ]);
+
+    expect(failures).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('archive "Tags!" uses a reserved route slug'),
+      ]),
+    );
+  });
 });

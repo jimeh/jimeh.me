@@ -118,4 +118,19 @@ describe("createBlogFrontmatterSchema", () => {
 
     expect(result.success).toBe(false);
   });
+
+  test("rejects archive names that resolve to reserved route slugs", () => {
+    const result = schema.safeParse({
+      title: "Post",
+      description: "Description",
+      date: "2025-06-09",
+      slug: "post-slug",
+      archive: "Tags!",
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.error?.issues.map((issue) => issue.path.join("."))).toEqual([
+      "archive",
+    ]);
+  });
 });

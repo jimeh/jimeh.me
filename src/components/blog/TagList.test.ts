@@ -36,4 +36,15 @@ describe("TagList", () => {
       ),
     ).toEqual(["archive", "legacy"]);
   });
+
+  test("uses a custom tag link base URL", async () => {
+    const document = await renderComponent(TagList, {
+      tags: ["macos"],
+      tagBaseUrl: "/blog/archives/zydev-info/tags/",
+    });
+
+    expect(document.querySelector("a")?.getAttribute("href")).toBe(
+      "/blog/archives/zydev-info/tags/macos/",
+    );
+  });
 });

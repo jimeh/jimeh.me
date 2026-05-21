@@ -6,7 +6,7 @@ import PostFeatured from "@components/blog/PostFeatured.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { siteConfig } from "../../data/site";
-import { blogIndexData } from "./page-data";
+import { blogIndexData } from "@utils/blog-page-data";
 
 const allPosts = await getCollection("blog");
 const {

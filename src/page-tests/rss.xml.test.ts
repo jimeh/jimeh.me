@@ -2,7 +2,7 @@ import type { APIContext } from "astro";
 import { describe, expect, test } from "vitest";
 
 import { siteConfig } from "../data/site";
-import { GET } from "./rss.xml";
+import { GET } from "../pages/rss.xml";
 
 describe("RSS feed", () => {
   test("returns feed metadata and main blog posts only", async () => {

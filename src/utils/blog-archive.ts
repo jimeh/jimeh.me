@@ -9,6 +9,8 @@ export interface BlogArchiveInfo {
   isGeneral: boolean;
 }
 
+export const RESERVED_BLOG_ARCHIVE_SLUGS = new Set(["tags"]);
+
 /** Returns true when a post belongs to any archive. */
 export function isArchivedPost(post: BlogPost): boolean {
   return post.data.archive === true || typeof post.data.archive === "string";
@@ -30,6 +32,11 @@ export function blogArchiveSlug(name: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+/** Returns true when an archive name would collide with reserved routes. */
+export function isReservedBlogArchiveSlug(name: string): boolean {
+  return RESERVED_BLOG_ARCHIVE_SLUGS.has(blogArchiveSlug(name));
 }
 
 /** Returns the canonical site-relative URL for a named archive. */

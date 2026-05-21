@@ -1,6 +1,7 @@
 import { pathToFileURL } from "node:url";
 
 import { BLOG_POST_SLUG_PATTERN } from "../src/utils/blog-route.ts";
+import { isReservedBlogArchiveSlug } from "../src/utils/blog-archive.ts";
 import {
   type BlogPostFile,
   blogPostRoute,
@@ -77,6 +78,13 @@ export function collectContentFailures(
     const updatedDate = frontmatterScalar(body, "updatedDate");
     if (date && updatedDate && updatedDate < date) {
       failures.push(`${label}: updatedDate must not be earlier than date.`);
+    }
+
+    const archive = frontmatterScalar(body, "archive");
+    if (archive && archive !== "true" && isReservedBlogArchiveSlug(archive)) {
+      failures.push(
+        `${label}: archive "${archive}" uses a reserved route slug.`,
+      );
     }
 
     if (/^tags:/m.test(body)) {
