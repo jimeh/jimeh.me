@@ -35,7 +35,9 @@ Required fields:
 Optional fields:
 
 - `updatedDate`: later revision date; must not be earlier than `date`.
-- `tags`: inline array of lowercase tag slugs, e.g. `["macos", "apple"]`.
+- `tags`: inline array of lowercase tag slugs, e.g. `["macos", "apple"]`. Tags
+  are site-wide and include archived posts; prefer broad labels that can group
+  multiple posts.
 - `image`: primary image rendered above the post unless hidden.
 
 Image options:

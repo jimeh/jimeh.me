@@ -8,7 +8,7 @@ date: 2007-12-13
 slug: litemysql-a-quick-and-simple-mysql-class-for-php5
 archive: zydev.info
 updatedDate: 2008-02-06
-tags: ["development", "php"]
+tags: ["development", "php", "open-source"]
 ---
 
 Today I released a small and quick side-project called

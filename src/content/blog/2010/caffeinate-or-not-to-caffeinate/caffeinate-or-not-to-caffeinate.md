@@ -4,7 +4,7 @@ description: >-
   I used to be a caffeine junkie.
 date: 2010-02-14
 slug: caffeinate-or-not-to-caffeinate
-tags: ["productivity", "quality-of-life", "caffeine"]
+tags: ["productivity", "life"]
 image:
   src: ./yogesh-pedamkar-DZLJGd8V1mg-unsplash.jpg
   size: wide

@@ -8,7 +8,7 @@ date: 2007-12-03
 slug: safari-doesnt-always-like-bz2-compressed-dmg-files
 archive: zydev.info
 updatedDate: 2007-12-13
-tags: ["mac-os-x"]
+tags: ["macos", "software"]
 ---
 
 I noticed something weird this morning about the recent

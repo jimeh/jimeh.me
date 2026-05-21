@@ -45,11 +45,13 @@ describe("blog page data", () => {
       archive: true,
       date: "2023-01-01",
       slug: "archive",
+      tags: ["archive"],
     }),
     post("2022/named/index", {
       archive: "Zydev.info",
       date: "2022-01-01",
       slug: "named",
+      tags: ["testing"],
     }),
   ];
 
@@ -80,16 +82,22 @@ describe("blog page data", () => {
     ]);
 
     expect(sortedTagCounts(posts)).toEqual([
+      ["archive", 1],
       ["astro", 2],
-      ["testing", 1],
+      ["testing", 2],
     ]);
     expect(blogTagStaticPaths(posts)).toEqual([
       { params: { tag: "astro" }, props: { tag: "astro" } },
       { params: { tag: "testing" }, props: { tag: "testing" } },
+      { params: { tag: "archive" }, props: { tag: "archive" } },
     ]);
     expect(blogTagPosts(posts, "astro").map((post) => post.id)).toEqual([
       "2025/newest/index",
       "2024/older/index",
+    ]);
+    expect(blogTagPosts(posts, "testing").map((post) => post.id)).toEqual([
+      "2025/newest/index",
+      "2022/named/index",
     ]);
   });
 

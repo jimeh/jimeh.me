@@ -87,11 +87,11 @@ export function blogYearPosts(posts: BlogPost[], year: string): BlogPost[] {
     .sort(compareBlogPostsDesc);
 }
 
-/** Counts tags across main blog posts. */
+/** Counts tags across all blog posts. */
 export function tagCounts(posts: BlogPost[]): Map<string, number> {
   const counts = new Map<string, number>();
 
-  for (const post of posts.filter(isMainBlogPost)) {
+  for (const post of posts) {
     for (const tag of post.data.tags ?? []) {
       counts.set(tag, (counts.get(tag) ?? 0) + 1);
     }
@@ -107,7 +107,7 @@ export function sortedTagCounts(posts: BlogPost[]): Array<[string, number]> {
   );
 }
 
-/** Returns all main blog tags for static path generation. */
+/** Returns all blog tags for static path generation. */
 export function blogTagStaticPaths(posts: BlogPost[]) {
   return [...tagCounts(posts).keys()].map((tag) => ({
     params: { tag },
@@ -115,10 +115,10 @@ export function blogTagStaticPaths(posts: BlogPost[]) {
   }));
 }
 
-/** Returns sorted main posts for a specific tag. */
+/** Returns sorted posts for a specific tag. */
 export function blogTagPosts(posts: BlogPost[], tag: string): BlogPost[] {
   return posts
-    .filter((post) => isMainBlogPost(post) && post.data.tags?.includes(tag))
+    .filter((post) => post.data.tags?.includes(tag))
     .sort(compareBlogPostsDesc);
 }
 

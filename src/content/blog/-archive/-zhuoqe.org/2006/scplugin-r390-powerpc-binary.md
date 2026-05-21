@@ -5,7 +5,7 @@ date: 2006-11-17
 slug: scplugin-r390-powerpc-binary
 archive: zhuoqe.org
 updatedDate: 2007-05-18
-tags: ["mac-os-x"]
+tags: ["macos", "software"]
 ---
 
 Download: **\[link removed, binary out of date and very buggy\]**

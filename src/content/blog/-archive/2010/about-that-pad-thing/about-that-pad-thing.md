@@ -4,7 +4,7 @@ description: >-
   Why the iPad backlash missed the point: it was never really meant for geeks.
 date: 2010-02-06
 slug: about-that-pad-thing
-tags: ["technology", "ipad", "opinion"]
+tags: ["technology", "apple", "opinion"]
 archive: true
 image:
   src: ./firmbee-com-OP2EQ5g-Zkw-unsplash.jpg

@@ -6,7 +6,7 @@ date: 2007-10-31
 slug: leopard-spaces-bug
 archive: zydev.info
 updatedDate: 2007-12-03
-tags: ["mac-os-x"]
+tags: ["macos"]
 ---
 
 **\*UPDATE:** If you're using Proteron's

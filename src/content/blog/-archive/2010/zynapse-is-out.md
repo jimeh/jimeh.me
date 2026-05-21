@@ -5,7 +5,7 @@ description:
   perfectionism-induced delays."
 date: 2010-02-25
 slug: zynapse-is-out
-tags: ["php", "open-source"]
+tags: ["php", "open-source", "projects"]
 archive: true
 ---
 

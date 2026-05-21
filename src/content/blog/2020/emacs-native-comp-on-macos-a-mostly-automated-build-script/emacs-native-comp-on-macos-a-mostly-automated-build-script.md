@@ -6,7 +6,7 @@ description: >-
 date: 2020-08-26
 slug: emacs-native-comp-on-macos-a-mostly-automated-build-script
 updatedDate: 2020-10-04
-tags: ["emacs", "text-editor", "macos", "gcc"]
+tags: ["emacs", "development", "macos", "open-source"]
 image:
   src: ./EmacsLG1.png
   alt: EmacsLG1 Icon

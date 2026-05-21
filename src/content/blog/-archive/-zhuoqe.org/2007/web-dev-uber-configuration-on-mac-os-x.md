@@ -8,7 +8,7 @@ date: 2007-02-18
 slug: web-dev-uber-configuration-on-mac-os-x
 archive: zhuoqe.org
 updatedDate: 2007-05-07
-tags: ["development", "mac-os-x", "php"]
+tags: ["development", "macos", "php"]
 ---
 
 Mac OS X is an excellent web-development platform if you ask most (except if you

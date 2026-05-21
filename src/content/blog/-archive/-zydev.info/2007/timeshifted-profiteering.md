@@ -5,7 +5,7 @@ description:
 date: 2007-06-18
 slug: timeshifted-profiteering
 archive: zydev.info
-tags: ["geeksteria"]
+tags: ["opinion"]
 ---
 
 Let me kick off the new Geeksteria category with this most awesome gem:

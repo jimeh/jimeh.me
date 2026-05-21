@@ -7,7 +7,7 @@ description:
 date: 2007-06-03
 slug: greek-blogger-camp-2007
 archive: zydev.info
-tags: ["other"]
+tags: ["blogging"]
 ---
 
 As probably none of you (poor souls) who read this blog know, i'm of Swedish

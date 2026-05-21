@@ -5,7 +5,7 @@ description:
   Homebrew."
 date: 2011-11-01
 slug: my-ruby-development-environment
-tags: ["ruby", "development", "tooling"]
+tags: ["ruby", "development"]
 image:
   src: ./D19D9049-DA3F-4E52-8544-54203F80F099.jpg
   size: wide

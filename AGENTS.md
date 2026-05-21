@@ -43,6 +43,8 @@ tests are configured.
 - Page content: data-driven from typed exports. Grep `siteConfig`, `siteLinks`.
 - Blog URLs: use `src/utils/blog-url.ts` helpers.
 - Blog ordering: use `src/utils/blog-sort.ts` comparators.
+- Blog tags are site-wide, including archives. Prefer broad tags that group
+  multiple posts over one-off detail tags.
 - Email: ROT13 obfuscation decoded client-side in `SiteLink.astro`.
 - SEO: Open Graph, Twitter Card, JSON-LD via `SEOHead.astro`.
 - Markdown alerts: GitHub-style `> [!NOTE]` / `> [!WARNING]` through

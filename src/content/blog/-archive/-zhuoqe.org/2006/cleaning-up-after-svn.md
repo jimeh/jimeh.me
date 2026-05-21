@@ -8,7 +8,7 @@ date: 2006-12-12
 slug: cleaning-up-after-svn
 archive: zhuoqe.org
 updatedDate: 2007-06-13
-tags: ["development", "mac-os-x", "unix"]
+tags: ["development", "macos"]
 ---
 
 If you're using SVN for keeping your source safe for web apps, you may notice

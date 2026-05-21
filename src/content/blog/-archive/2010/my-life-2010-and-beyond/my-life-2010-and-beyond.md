@@ -5,7 +5,7 @@ description: >-
   tell from this year than 2009.
 date: 2010-04-25
 slug: my-life-2010-and-beyond
-tags: ["life", "moving-overseas", "work"]
+tags: ["life"]
 archive: true
 image:
   src: ./sergee-bee-R5gRnZC4iio-unsplash.jpg

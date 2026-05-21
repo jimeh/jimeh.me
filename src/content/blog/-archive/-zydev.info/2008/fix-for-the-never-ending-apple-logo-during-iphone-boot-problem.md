@@ -8,7 +8,7 @@ date: 2008-08-30
 slug: fix-for-the-never-ending-apple-logo-during-iphone-boot-problem
 archive: zydev.info
 updatedDate: 2008-09-28
-tags: ["iphone"]
+tags: ["apple", "software"]
 ---
 
 So, the last few days, I've had a quite weird issue with my iPhone. It locks up,

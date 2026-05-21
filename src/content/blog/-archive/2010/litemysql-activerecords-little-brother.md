@@ -5,7 +5,7 @@ description:
   queries are too tedious."
 date: 2010-04-23
 slug: litemysql-activerecords-little-brother
-tags: ["php", "database", "open-source"]
+tags: ["development", "php", "open-source"]
 archive: true
 ---
 

@@ -3,7 +3,7 @@ title: "How Are You?"
 description: "How Are You?"
 date: 2010-02-26
 slug: how-are-you
-tags: ["geeking-out", "funny"]
+tags: ["life"]
 image:
   src: ./how-are-you.png
   size: wide

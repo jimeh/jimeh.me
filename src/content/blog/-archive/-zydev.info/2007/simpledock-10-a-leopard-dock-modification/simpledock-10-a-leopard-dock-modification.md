@@ -7,7 +7,7 @@ description: >-
 date: 2007-12-03
 slug: simpledock-10-a-leopard-dock-modification
 archive: zydev.info
-tags: ["mac-os-x"]
+tags: ["macos", "design"]
 image:
   src: ./before-after.jpg
   alt: "Before & After"

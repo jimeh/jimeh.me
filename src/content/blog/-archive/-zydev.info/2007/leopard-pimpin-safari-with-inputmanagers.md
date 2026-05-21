@@ -8,7 +8,7 @@ date: 2007-11-02
 slug: leopard-pimpin-safari-with-inputmanagers
 archive: zydev.info
 updatedDate: 2007-11-07
-tags: ["mac-os-x"]
+tags: ["macos", "software"]
 ---
 
 We all heard the rumors that InputManagers were completely removed from Leopard.

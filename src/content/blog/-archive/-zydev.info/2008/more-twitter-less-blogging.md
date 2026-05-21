@@ -7,7 +7,7 @@ date: 2008-07-22
 slug: more-twitter-less-blogging
 archive: zydev.info
 updatedDate: 2008-08-02
-tags: ["other"]
+tags: ["blogging", "social-media"]
 ---
 
 Has anyone else noticed that they tend to blog less since becoming a

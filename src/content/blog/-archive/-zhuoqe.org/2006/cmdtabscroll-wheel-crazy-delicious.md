@@ -7,7 +7,7 @@ description:
 date: 2006-12-05
 slug: cmdtabscroll-wheel-crazy-delicious
 archive: zhuoqe.org
-tags: ["mac-os-x"]
+tags: ["macos"]
 ---
 
 I usually hit cmd+tab and then mouse over the app icon i'm looking for and let

@@ -8,7 +8,7 @@ date: 2007-08-13
 slug: parsecsv-030-google-code
 archive: zydev.info
 updatedDate: 2007-12-03
-tags: ["development", "php"]
+tags: ["development", "php", "open-source"]
 ---
 
 It's been a long while since i last updated here, life's been crazy. But i'm not

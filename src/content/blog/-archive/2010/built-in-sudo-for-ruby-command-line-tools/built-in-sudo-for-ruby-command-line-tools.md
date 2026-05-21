@@ -5,7 +5,7 @@ description:
   needs root access."
 date: 2010-02-22
 slug: built-in-sudo-for-ruby-command-line-tools
-tags: ["ruby", "cli", "gist"]
+tags: ["ruby", "development"]
 archive: true
 image:
   src: ./gabriel-heinzer-4Mw7nkQDByk-unsplash.jpg

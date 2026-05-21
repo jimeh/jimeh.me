@@ -8,7 +8,7 @@ date: 2007-01-01
 slug: parsecsv-020
 archive: zhuoqe.org
 updatedDate: 2007-04-11
-tags: ["development", "php"]
+tags: ["development", "php", "open-source"]
 ---
 
 I have to get some real work done, that i can post about, cause this is starting
