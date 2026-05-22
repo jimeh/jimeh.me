@@ -24,8 +24,8 @@ mise run fix           # format + lint-fix
 mise run verify        # check + build + smoke
 ```
 
-Husky runs `pnpm precommit` before commits. That executes `lint-staged` against
-staged files first, then `pnpm check` across the whole project.
+Lefthook runs staged-file checks before commits. It runs `pnpm check` before
+pushes.
 
 Node 24 and pnpm 11 are managed via mise. Prefer `mise run <task>` for common
 workflows; use `pnpm` directly when you need package-manager details. No unit
