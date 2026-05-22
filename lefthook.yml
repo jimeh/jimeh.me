@@ -27,8 +27,3 @@ pre-commit:
           - name: stylelint
             glob: "src/**/*.css"
             run: pnpm exec stylelint {staged_files}
-
-pre-push:
-  jobs:
-    - name: check
-      run: pnpm check

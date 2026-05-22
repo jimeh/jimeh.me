@@ -8,7 +8,6 @@
     "preview": "astro preview",
     "prepare": "lefthook install --reset-hooks-path",
     "precommit": "lefthook run pre-commit",
-    "prepush": "lefthook run pre-push",
     "test": "vitest run",
     "lint": "eslint . && stylelint 'src/**/*.css' && pnpm lint:markdown && pnpm lint:mdx",
     "lint:fix": "eslint --fix . && stylelint --fix 'src/**/*.css'",

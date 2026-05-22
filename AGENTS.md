@@ -24,8 +24,7 @@ mise run fix           # format + lint-fix
 mise run verify        # check + build + smoke
 ```
 
-Lefthook runs staged-file checks before commits. It runs `pnpm check` before
-pushes.
+Lefthook runs staged-file checks before commits.
 
 Node 24 and pnpm 11 are managed via mise. Prefer `mise run <task>` for common
 workflows; use `pnpm` directly when you need package-manager details. No unit
