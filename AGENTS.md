@@ -146,3 +146,6 @@ tests are configured.
   route context. For post-page render tests, use a fixture post that avoids
   image-derived OG URL generation, or cover the URL-building branch through a
   smaller helper.
+- With Astro `ClientRouter`, keep Fancybox `Hash: false` for blog images.
+  Fancybox hash cleanup triggers Astro history/hash handling during close, which
+  can remove the lightbox DOM before the thumbnail return animation completes.

@@ -1,12 +1,21 @@
 ---
 // Client-side Fancybox initialization for blog post images.
 // Binds lightbox behavior to all [data-fancybox] elements.
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
 ---
 
 <script>
   import { Fancybox } from "@fancyapps/ui/dist/fancybox/";
-  import "@fancyapps/ui/dist/fancybox/fancybox.css";
   import { initBlogFancybox } from "./fancybox-init";
 
-  initBlogFancybox(document, Fancybox);
+  function init() {
+    initBlogFancybox(document, Fancybox);
+  }
+
+  document.addEventListener("astro:page-load", init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
 </script>

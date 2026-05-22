@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 import SEOHead from "@components/SEOHead.astro";
 import SiteHeader from "@components/SiteHeader.astro";
 import { siteConfig } from "../data/site";
@@ -72,19 +73,25 @@ const appleTouchHash = fileHash("apple-touch-icon.png");
       title="Jim Myhrberg's Blog"
       href="/rss.xml"
     />
+    <ClientRouter />
     <script is:inline>
       (function () {
-        let t = null;
-        try {
-          t = localStorage.getItem("theme");
-        } catch {
-          /* localStorage unavailable */
+        function applyTheme() {
+          let t = null;
+          try {
+            t = localStorage.getItem("theme");
+          } catch {
+            /* localStorage unavailable */
+          }
+          const d =
+            t === "dark" ||
+            (t !== "light" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", d);
         }
-        const d =
-          t === "dark" ||
-          (t !== "light" &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches);
-        if (d) document.documentElement.classList.add("dark");
+
+        document.addEventListener("astro:after-swap", applyTheme);
+        applyTheme();
       })();
     </script>
   </head>

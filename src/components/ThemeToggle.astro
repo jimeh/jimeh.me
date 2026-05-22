@@ -30,12 +30,14 @@ const tooltipId = `theme-toggle-tooltip-${crypto.randomUUID()}`;
 <script>
   import { initThemeToggle } from "./theme-toggle";
 
-  // Run on initial load
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      initThemeToggle(document, window, localStorage);
-    });
-  } else {
+  function init() {
     initThemeToggle(document, window, localStorage);
+  }
+
+  document.addEventListener("astro:page-load", init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
   }
 </script>

@@ -188,4 +188,15 @@ describe("theme-toggle helpers", () => {
     listeners[0]?.();
     expect(document.documentElement.classList.contains("dark")).toBe(true);
   });
+
+  test("does not add duplicate system preference listeners", () => {
+    const document = themeDocument();
+    const storage = new MemoryStorage();
+    const { win, listeners } = themeWindow(true);
+
+    initThemeToggle(document, win, storage);
+    initThemeToggle(document, win, storage);
+
+    expect(listeners).toHaveLength(1);
+  });
 });

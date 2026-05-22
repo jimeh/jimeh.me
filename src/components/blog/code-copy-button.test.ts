@@ -82,6 +82,27 @@ describe("initCodeCopyButtons", () => {
     ).toBeNull();
   });
 
+  test("does not add duplicate buttons when initialized again", () => {
+    const { document } = parseHTML(`
+      <template id="code-copy-btn-tpl">
+        <button type="button">
+          <span data-icon="copy"></span>
+          <span data-icon="check"></span>
+        </button>
+      </template>
+      <figure data-rehype-pretty-code-figure>
+        <pre><code>pnpm test</code></pre>
+      </figure>
+    `);
+
+    initCodeCopyButtons(document, { writeText: vi.fn() });
+    initCodeCopyButtons(document, { writeText: vi.fn() });
+
+    expect(document.querySelectorAll("[data-code-copy-button]")).toHaveLength(
+      1,
+    );
+  });
+
   test("throws when the template is missing", () => {
     const { document } = parseHTML("<main></main>");
 

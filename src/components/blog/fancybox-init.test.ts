@@ -48,11 +48,14 @@ describe("initBlogFancybox", () => {
 
   test("binds Fancybox with the expected options", () => {
     const { document } = parseHTML("<main></main>");
-    const fancybox = { bind: vi.fn() };
+    const fancybox = { bind: vi.fn(), unbind: vi.fn() };
 
     initBlogFancybox(document, fancybox);
 
+    expect(fancybox.unbind).toHaveBeenCalledWith("[data-fancybox]");
     expect(fancybox.bind).toHaveBeenCalledWith("[data-fancybox]", {
+      closeExisting: true,
+      Hash: false,
       Carousel: {
         transition: "crossfade",
         Thumbs: {
@@ -60,5 +63,20 @@ describe("initBlogFancybox", () => {
         },
       },
     });
+  });
+
+  test("binds only once for the same rendered body", () => {
+    const { document } = parseHTML(`
+      <main>
+        <a data-fancybox="gallery" href="/one.jpg"></a>
+      </main>
+    `);
+    const fancybox = { bind: vi.fn(), unbind: vi.fn() };
+
+    initBlogFancybox(document, fancybox);
+    initBlogFancybox(document, fancybox);
+
+    expect(fancybox.unbind).toHaveBeenCalledTimes(1);
+    expect(fancybox.bind).toHaveBeenCalledTimes(1);
   });
 });

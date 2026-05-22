@@ -27,5 +27,14 @@ import { Icon } from "astro-icon/components";
 <script>
   import { initCodeCopyButtons } from "./code-copy-button";
 
-  initCodeCopyButtons(document, navigator.clipboard);
+  function init() {
+    initCodeCopyButtons(document, navigator.clipboard);
+  }
+
+  document.addEventListener("astro:page-load", init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
 </script>

@@ -16,12 +16,14 @@ export function initCodeCopyButtons(
   for (const figure of figures) {
     const pre = figure.querySelector("pre");
     if (!pre) continue;
+    if (figure.querySelector("[data-code-copy-button]")) continue;
 
     figure.style.position = "relative";
 
     const button = tpl.content.firstElementChild!.cloneNode(
       true,
     ) as HTMLButtonElement;
+    button.dataset.codeCopyButton = "true";
 
     const offset = 10;
     button.style.top = `${(pre.offsetTop || 0) + offset}px`;

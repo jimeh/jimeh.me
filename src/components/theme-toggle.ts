@@ -116,6 +116,9 @@ export function initThemeToggle(
     });
   }
 
+  if (document.documentElement.dataset.themeMediaInitialized) return;
+  document.documentElement.dataset.themeMediaInitialized = "true";
+
   win
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", () => {
