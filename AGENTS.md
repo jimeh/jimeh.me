@@ -42,6 +42,9 @@ tests are configured.
 
 - Page content: data-driven from typed exports. Grep `siteConfig`, `siteLinks`.
 - Blog URLs: use `src/utils/blog-url.ts` helpers.
+- Internal blog post links in Markdown/MDX should use canonical site-relative
+  `/blog/:year/:slug/` URLs; `mise run check-content` validates same-site post
+  links against generated routes.
 - Blog ordering: use `src/utils/blog-sort.ts` comparators.
 - Blog page data helpers live in `src/utils/blog-page-data.ts`; page tests live
   in `src/page-tests`. Keep non-route helpers and tests out of `src/pages`

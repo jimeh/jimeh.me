@@ -25,6 +25,7 @@ export function collectContentFailures(
 ): string[] {
   const failures: string[] = [];
   const routes = new Map<string, string>();
+  const canonicalPostPaths = new Set<string>();
 
   for (const post of posts) {
     const label = postLabel(post);
@@ -72,6 +73,7 @@ export function collectContentFailures(
         );
       } else {
         routes.set(route.path, label);
+        canonicalPostPaths.add(route.path);
       }
     }
 
@@ -143,6 +145,27 @@ export function collectContentFailures(
     }
   }
 
+  for (const post of posts) {
+    for (const link of blogPostLinks(post.source)) {
+      const normalizedPath = normalizedBlogPostPath(link.href);
+      if (!normalizedPath) continue;
+
+      const canonicalHref = `/blog/${normalizedPath}/`;
+      if (
+        canonicalPostPaths.has(normalizedPath) &&
+        isCanonicalBlogPostHref(link.href, canonicalHref)
+      ) {
+        continue;
+      }
+
+      const label = postLabel(post);
+      failures.push(
+        `${label}: blog post link "${link.href}" does not match a ` +
+          `canonical post URL. Use ${canonicalHref} if that post exists.`,
+      );
+    }
+  }
+
   return failures;
 }
 
@@ -168,4 +191,75 @@ export function runContentCheck(): void {
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   runContentCheck();
+}
+
+interface BlogLink {
+  href: string;
+}
+
+function blogPostLinks(source: string): BlogLink[] {
+  const links: BlogLink[] = [];
+
+  const inlineLinks = source.matchAll(
+    /!?\[[^\]]*]\(\s*(?<href><[^>\s]+>|[^)\s]+)(?:\s+["'][^"']*["'])?\s*\)/g,
+  );
+  for (const match of inlineLinks) {
+    pushBlogLink(links, match.groups?.href);
+  }
+
+  const referenceLinks = source.matchAll(
+    /^\s*\[[^\]]+]:\s*(?<href><[^>\s]+>|[^\s]+)(?:\s+["'][^"']*["'])?\s*$/gm,
+  );
+  for (const match of referenceLinks) {
+    pushBlogLink(links, match.groups?.href);
+  }
+
+  const hrefAttributes = source.matchAll(/\bhref=(["'])(?<href>.*?)\1/g);
+  for (const match of hrefAttributes) {
+    pushBlogLink(links, match.groups?.href);
+  }
+
+  return links;
+}
+
+function pushBlogLink(links: BlogLink[], rawHref: string | undefined): void {
+  const href = rawHref?.trim().replace(/^<|>$/g, "");
+  if (!href || !normalizedBlogPostPath(href)) return;
+
+  links.push({ href });
+}
+
+function normalizedBlogPostPath(href: string): string | null {
+  const path = sameSitePath(href);
+  if (!path) return null;
+
+  const match = path.match(/^\/blog\/(?<year>\d{4})\/(?<slug>[^/?#]+)\/?$/);
+  if (!match?.groups?.year || !match.groups.slug) return null;
+
+  return `${match.groups.year}/${match.groups.slug}`;
+}
+
+function isCanonicalBlogPostHref(href: string, canonicalHref: string): boolean {
+  return (
+    href === canonicalHref ||
+    href.startsWith(`${canonicalHref}#`) ||
+    href.startsWith(`${canonicalHref}?`)
+  );
+}
+
+function sameSitePath(href: string): string | null {
+  if (href.startsWith("/")) {
+    return href.split(/[?#]/, 1)[0] ?? "";
+  }
+
+  try {
+    const url = new URL(href);
+    if (url.hostname !== "jimeh.me" || !/^https?:$/.test(url.protocol)) {
+      return null;
+    }
+
+    return url.pathname;
+  } catch {
+    return null;
+  }
 }

@@ -172,4 +172,93 @@ describe("collectContentFailures", () => {
       ]),
     );
   });
+
+  test("accepts canonical same-site blog post links", () => {
+    const sourcePost = post(
+      `
+      title: Source
+      description: Source description
+      date: 2025-06-09
+      slug: source
+      `,
+      {
+        id: "2025/source/index",
+        source:
+          source(`
+            title: Source
+            description: Source description
+            date: 2025-06-09
+            slug: source
+          `) +
+          "\n" +
+          [
+            "[Target](/blog/2025/target/)",
+            "[Target section](/blog/2025/target/#section)",
+          ].join("\n"),
+      },
+    );
+    const targetPost = post(
+      `
+      title: Target
+      description: Target description
+      date: 2025-06-10
+      slug: target
+      `,
+      { id: "2025/target/index" },
+    );
+
+    expect(collectContentFailures([sourcePost, targetPost])).toEqual([]);
+  });
+
+  test("reports same-site blog post links that miss canonical routes", () => {
+    const sourcePost = post(
+      `
+      title: Source
+      description: Source description
+      date: 2025-06-09
+      slug: source
+      `,
+      {
+        id: "2025/source/index",
+        source:
+          source(`
+            title: Source
+            description: Source description
+            date: 2025-06-09
+            slug: source
+          `) +
+          "\n" +
+          [
+            "[Missing](/blog/2025/missing/)",
+            "[No Slash](/blog/2025/target)",
+            "[Absolute](https://jimeh.me/blog/2025/target/)",
+          ].join("\n"),
+      },
+    );
+    const targetPost = post(
+      `
+      title: Target
+      description: Target description
+      date: 2025-06-10
+      slug: target
+      `,
+      { id: "2025/target/index" },
+    );
+
+    const failures = collectContentFailures([sourcePost, targetPost]);
+
+    expect(failures).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          'blog post link "/blog/2025/missing/" does not match',
+        ),
+        expect.stringContaining(
+          'blog post link "/blog/2025/target" does not match',
+        ),
+        expect.stringContaining(
+          'blog post link "https://jimeh.me/blog/2025/target/"',
+        ),
+      ]),
+    );
+  });
 });

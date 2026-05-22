@@ -13,6 +13,11 @@ Public URLs use `/blog/:year/:slug/`. The year comes from frontmatter `date`.
 The slug comes from frontmatter `slug`, so files and folders can be reorganized
 without changing canonical URLs.
 
+When linking to another post from Markdown or MDX, use the canonical
+site-relative URL with a trailing slash, for example
+`[related post](/blog/2025/example-post/)`. Content checks validate same-site
+post links against generated canonical routes.
+
 The blog frontmatter JSON Schema is generated from the shared Zod definition in
 `src/content/blog-schema.ts`:
 
