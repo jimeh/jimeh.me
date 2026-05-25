@@ -3,7 +3,7 @@ title: "How to add Apple's new Liquid Glass icons to applications"
 description: "Without Xcode, almost."
 date: 2025-06-29
 slug: how-to-add-apples-new-liquid-glass-icons-to-applications
-tags: ["emacs", "macos", "apple", "design"]
+tags: ["emacs", "macos", "apple", "design", "icons"]
 image:
   src: ./Apple-WWDC25-Liquid-Glass-Icon-Composer.jpg
   alt: "Liquid Glass icon in Icon Composer"

@@ -3,7 +3,7 @@ title: "Fan Boys & Haters, Seriously?"
 description: "Fan Boys and Haters have been equally annoying me as of late."
 date: 2010-06-15
 slug: fan-boys-haters-seriously
-tags: ["technology", "opinion"]
+tags: ["technology", "apple", "opinion"]
 archive: true
 image:
   src: ./anthony-delanoix-hzgs56Ze49s-unsplash.jpg

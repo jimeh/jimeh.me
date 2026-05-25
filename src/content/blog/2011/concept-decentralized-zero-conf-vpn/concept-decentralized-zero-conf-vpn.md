@@ -5,7 +5,7 @@ description:
   configuration and magically just works without a central server."
 date: 2011-01-06
 slug: concept-decentralized-zero-conf-vpn
-tags: ["technology", "open-source"]
+tags: ["networking", "technology", "open-source"]
 image:
   src: ./harvey-abayasiri-VpLemecHS-4-unsplash.jpg
   size: wide
