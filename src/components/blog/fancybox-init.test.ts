@@ -65,7 +65,7 @@ describe("initBlogFancybox", () => {
     });
   });
 
-  test("binds only once for the same rendered body", () => {
+  test("rebinds cleanly for repeated page-load initialization", () => {
     const { document } = parseHTML(`
       <main>
         <a data-fancybox="gallery" href="/one.jpg"></a>
@@ -76,7 +76,7 @@ describe("initBlogFancybox", () => {
     initBlogFancybox(document, fancybox);
     initBlogFancybox(document, fancybox);
 
-    expect(fancybox.unbind).toHaveBeenCalledTimes(1);
-    expect(fancybox.bind).toHaveBeenCalledTimes(1);
+    expect(fancybox.unbind).toHaveBeenCalledTimes(2);
+    expect(fancybox.bind).toHaveBeenCalledTimes(2);
   });
 });

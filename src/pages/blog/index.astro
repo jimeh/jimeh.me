@@ -7,6 +7,7 @@ import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { siteConfig } from "../../data/site";
 import { blogIndexData } from "@utils/blog-page-data";
+import { blogArchivesUrl, blogYearUrl } from "@utils/blog-url";
 
 const allPosts = await getCollection("blog");
 const {
@@ -40,7 +41,7 @@ const {
       <section class="mt-12">
         <PageHeading as="h2" size="section" class="text-muted mb-6 opacity-75">
           <a
-            href={`/blog/${year}/`}
+            href={blogYearUrl(year)}
             class="hover:text-accent transition-colors"
           >
             {year}
@@ -61,7 +62,7 @@ const {
   {
     archivePosts.length > 0 && (
       <nav class="border-border mt-14 border-t pt-6" aria-label="Archives">
-        <a href="/blog/archives/" class="group inline-block">
+        <a href={blogArchivesUrl()} class="group inline-block">
           <span class="text-heading group-hover:text-accent block text-lg font-bold [font-stretch:75%] transition-colors">
             Archives
           </span>

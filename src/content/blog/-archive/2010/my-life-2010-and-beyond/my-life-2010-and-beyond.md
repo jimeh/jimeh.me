@@ -55,9 +55,9 @@ worthwhile experience on more than just the financial level this summer.
 
 ## So Far This Year
 
-Like I mentioned earlier, a lot as happened in the past four months. Among other
-things, my girlfriend of three and a half years is now my ex-girlfriend as of
-February 13th. I've had to deal with a bunch of seriously fucked up family
+Like I mentioned earlier, a lot has happened in the past four months. Among
+other things, my girlfriend of three and a half years is now my ex-girlfriend as
+of February 13th. I've had to deal with a bunch of seriously fucked up family
 issues. I'm starting my own company with two friends, and it's the first time
 serious effort is put into a project of my own. I've had to learn to manage both
 my time and my money a lot better since I started freelancing in November. I've

@@ -20,3 +20,53 @@ export function blogPostRoute(post: BlogPost): string {
 export function blogPostUrl(post: BlogPost): string {
   return `/blog/${blogPostRoute(post)}/`;
 }
+
+/** Returns the blog index URL. */
+export function blogIndexUrl(): string {
+  return "/blog/";
+}
+
+/** Returns the URL for a blog year listing. */
+export function blogYearUrl(year: string): string {
+  return `/blog/${year}/`;
+}
+
+/** Returns the URL for the top-level blog tag index. */
+export function blogTagsUrl(): string {
+  return `${blogIndexUrl()}tags/`;
+}
+
+/** Returns the URL for a top-level blog tag page. */
+export function blogTagUrl(tag: string): string {
+  return `${blogTagsUrl()}${tag}/`;
+}
+
+/** Returns the URL for the blog archive index. */
+export function blogArchivesUrl(): string {
+  return `${blogIndexUrl()}archives/`;
+}
+
+/** Returns the URL for a named blog archive. */
+export function blogArchiveUrl(archive: string): string {
+  return `${blogArchivesUrl()}${archive}/`;
+}
+
+/** Returns the URL for the general archive tag index. */
+export function blogArchiveTagsUrl(): string {
+  return `${blogArchivesUrl()}tags/`;
+}
+
+/** Returns the URL for a general archive tag page. */
+export function blogArchiveTagUrl(tag: string): string {
+  return `${blogArchiveTagsUrl()}${tag}/`;
+}
+
+/** Returns the URL for a named archive tag index. */
+export function blogNamedArchiveTagsUrl(archive: string): string {
+  return `${blogArchiveUrl(archive)}tags/`;
+}
+
+/** Returns the URL for a named archive tag page. */
+export function blogNamedArchiveTagUrl(archive: string, tag: string): string {
+  return `${blogNamedArchiveTagsUrl(archive)}${tag}/`;
+}

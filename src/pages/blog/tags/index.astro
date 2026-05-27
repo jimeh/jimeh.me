@@ -4,6 +4,7 @@ import BlogLayout from "../../../layouts/BlogLayout.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { sortedTagCounts } from "@utils/blog-page-data";
+import { blogTagUrl } from "@utils/blog-url";
 
 const sortedTags = sortedTagCounts(await getCollection("blog"));
 ---
@@ -16,7 +17,7 @@ const sortedTags = sortedTagCounts(await getCollection("blog"));
     {
       sortedTags.map(([tag, count]) => (
         <a
-          href={`/blog/tags/${tag}/`}
+          href={blogTagUrl(tag)}
           class="text-muted hover:text-accent border-border hover:border-accent rounded-full border px-3.5 py-1.5 text-sm transition-colors"
         >
           {tag}

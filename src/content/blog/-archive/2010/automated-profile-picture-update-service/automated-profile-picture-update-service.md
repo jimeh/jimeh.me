@@ -38,7 +38,7 @@ about it a bit more, there are three problems with building such a service:
 - Will people actually trust such a service with passwords for all of their
   online social networking accounts?
 
-The later problem, trust, is definitely the biggest one. And I'm not sure you
+The latter problem, trust, is definitely the biggest one. And I'm not sure you
 could overcome it unless the service is officially sponsored and/or operated by
 Google or somebody. I do think it could be a fun project to undertake, but I
 think it's pretty doomed right from the start unfortunately. Although if I

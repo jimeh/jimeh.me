@@ -8,7 +8,11 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
   import { Fancybox } from "@fancyapps/ui/dist/fancybox/";
   import { initBlogFancybox } from "./fancybox-init";
 
+  let initialized = false;
+
   function init() {
+    if (initialized) return;
+    initialized = true;
     initBlogFancybox(document, Fancybox);
   }
 

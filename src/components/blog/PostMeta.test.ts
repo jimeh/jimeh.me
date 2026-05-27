@@ -15,7 +15,7 @@ describe("PostMeta", () => {
     expect(times).toHaveLength(1);
     expect(times[0]?.getAttribute("datetime")).toBe("2025-06-09");
     expect(times[0]?.textContent).toBe("June 9, 2025");
-    expect(readTime?.getAttribute("aria-label")).toBe("3 minute read");
+    expect(readTime?.getAttribute("aria-label")).toBe("3 minutes read");
     expect(readTime?.textContent?.trim()).toBe("3 min read");
   });
 

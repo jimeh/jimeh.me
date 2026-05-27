@@ -5,11 +5,12 @@ import PostCard from "@components/blog/PostCard.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { archivesIndexData, yearRange } from "@utils/blog-page-data";
+import { blogArchivesUrl, blogIndexUrl } from "@utils/blog-url";
 
 const breadcrumbs = [
   { href: "/", label: "jimeh" },
-  { href: "/blog/", label: "Blog" },
-  { href: "/blog/archives/", label: "Archives" },
+  { href: blogIndexUrl(), label: "Blog" },
+  { href: blogArchivesUrl(), label: "Archives" },
 ];
 
 const {

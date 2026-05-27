@@ -67,6 +67,8 @@ const hasExplicitDimensions = hasWidth && hasHeight;
 const isStringSource = typeof src === "string";
 const isRemoteSource = isStringSource && /^https?:\/\//i.test(src);
 const hasDarkSource = darkSrc !== undefined;
+const isDarkStringSource = typeof darkSrc === "string";
+const isDarkRemoteSource = isDarkStringSource && /^https?:\/\//i.test(darkSrc);
 const imageHref = isStringSource ? src : src.src;
 
 if (hasWidth !== hasHeight) {
@@ -74,6 +76,10 @@ if (hasWidth !== hasHeight) {
 }
 
 if (isStringSource && !isRemoteSource && !hasExplicitDimensions) {
+  throw new Error("String image sources must provide width and height.");
+}
+
+if (isDarkStringSource && !isDarkRemoteSource && !hasExplicitDimensions) {
   throw new Error("String image sources must provide width and height.");
 }
 

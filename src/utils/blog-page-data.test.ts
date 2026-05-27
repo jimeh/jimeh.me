@@ -183,6 +183,13 @@ describe("blog page data", () => {
     expect(nextPost?.id).toBe("2025/newest/index");
   });
 
+  test("returns empty navigation when the current post is missing", () => {
+    expect(postPageNavigation(posts, post("2025/missing/index"))).toEqual({
+      prevPost: null,
+      nextPost: null,
+    });
+  });
+
   test("formats single-year and multi-year ranges", () => {
     expect(yearRange([posts[0]!, posts[1]!])).toBe("2024-2025");
     expect(yearRange([posts[0]!])).toBe("2025");

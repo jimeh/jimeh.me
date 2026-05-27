@@ -19,7 +19,7 @@ const {
   gallery,
 } = Astro.props;
 
-const isPercentage = /^\d+%$/.test(size);
+const isPercentage = /^\d+(?:\.\d+)?%$/.test(size);
 
 const figureClasses = ["mdx-image-grid", isPercentage && "mx-auto"]
   .filter(Boolean)

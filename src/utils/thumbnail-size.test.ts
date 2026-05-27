@@ -39,4 +39,7 @@ test("returns responsive sizes scaled from base viewport hints", () => {
   expect(scaledResponsiveSize(960, 100, 3, "50%")).toBe(
     "(min-width: 1008px) 480px, calc(50vw - 1.5rem)",
   );
+  expect(scaledResponsiveSize(720, 100, 3, "50%")).toBe(
+    "(min-width: 768px) 360px, calc(50vw - 1.5rem)",
+  );
 });

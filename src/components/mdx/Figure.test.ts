@@ -24,6 +24,7 @@ describe("Figure", () => {
     expect(figure?.querySelector("img")?.getAttribute("src")).toBe(
       "/image.jpg",
     );
+    expect(figure?.className).toContain("mdx-figure");
     expect(caption?.textContent).toContain("Caption text");
     expect(credit?.textContent).toContain("Credit");
     expect(credit?.className).toContain("text-left");

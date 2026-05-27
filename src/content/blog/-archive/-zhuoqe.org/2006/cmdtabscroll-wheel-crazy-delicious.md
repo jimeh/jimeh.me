@@ -12,8 +12,8 @@ tags: ["macos"]
 
 I usually hit cmd+tab and then mouse over the app icon i'm looking for and let
 go to switch to that app; it's faster than cmd+tab+tab+(repeat for every app
-open). I randomly (read: accidentally) scrolled with the mouse while while doing
-this once, and surprisingly, it scrolled through the app icons. :D
+open). I randomly (read: accidentally) scrolled with the mouse while doing this
+once, and surprisingly, it scrolled through the app icons. :D
 
 I had no idea it would work like this, nor have I read any thing that hinted to
 that behavior, but it seems really handy for people with multiple displays who

@@ -44,6 +44,16 @@ describe("ImageGrid", () => {
     expect(document.querySelector("figure")?.className).toContain("mx-auto");
   });
 
+  test("centers decimal percentage-sized grids", async () => {
+    const document = await renderComponent(
+      ImageGrid,
+      { size: "80.5%" },
+      { default: '<img src="/one.jpg" alt="One">' },
+    );
+
+    expect(document.querySelector("figure")?.className).toContain("mx-auto");
+  });
+
   test("renders caption prop and caption slot variants", async () => {
     const withProp = await renderComponent(
       ImageGrid,

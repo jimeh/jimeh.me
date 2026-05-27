@@ -56,6 +56,12 @@ export function scaledResponsiveSize(
   const desktopSize = Math.ceil(desktopWidth * scale);
   const viewportSize = Number((viewportWidth * scale).toFixed(3));
   const offsetSize = Number((viewportRemOffset * scale).toFixed(3));
+  const minWidthPx =
+    viewportWidth > 0
+      ? Math.ceil(
+          ((desktopWidth + viewportRemOffset * 16) * 100) / viewportWidth,
+        )
+      : 0;
 
-  return `(min-width: 1008px) ${desktopSize}px, calc(${viewportSize}vw - ${offsetSize}rem)`;
+  return `(min-width: ${minWidthPx}px) ${desktopSize}px, calc(${viewportSize}vw - ${offsetSize}rem)`;
 }

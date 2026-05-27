@@ -12,8 +12,8 @@ tags: ["development", "php", "open-source"]
 ---
 
 Today I released a small and quick side-project called
-[LiteMySQL](http://code.google.com/p/litemysql/). It's basically a PHP5 class
-which is designed to automate the boring repetitive tasks of opening and
+[LiteMySQL](dead+http://code.google.com/p/litemysql/). It's basically a PHP5
+class which is designed to automate the boring repetitive tasks of opening and
 managing database connections, looping through the query result resource to get
 an array and so on.
 

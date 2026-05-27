@@ -332,6 +332,12 @@ export function postPageNavigation(
   const currentIndex = contextPosts.findIndex((candidate) => {
     return candidate.id === post.id;
   });
+  if (currentIndex === -1) {
+    return {
+      prevPost: null,
+      nextPost: null,
+    };
+  }
 
   return {
     prevPost: currentIndex > 0 ? contextPosts[currentIndex - 1]! : null,

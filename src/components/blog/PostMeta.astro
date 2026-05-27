@@ -33,7 +33,9 @@ function formatDate(dateStr: string): string {
     )
   }
   <span>&middot;</span>
-  <span aria-label={`${readingTime} minute read`}>
+  <span
+    aria-label={`${readingTime} minute${readingTime === 1 ? "" : "s"} read`}
+  >
     {readingTime} min read
   </span>
   {

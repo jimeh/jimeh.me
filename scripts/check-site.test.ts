@@ -30,7 +30,7 @@ function writeFile(root: string, path: string, source = ""): void {
 
 function post(
   id: string,
-  frontmatter: Record<string, string | true | string[]>,
+  frontmatter: Record<string, boolean | string | string[]>,
 ): BlogPostFile {
   const source = [
     "---",
@@ -106,6 +106,7 @@ describe("builtSiteFailures", () => {
     const generalArchiveUrl = `${siteUrl}/blog/2023/general-archive/`;
     const posts = [
       post("2025/main/index", {
+        archive: false,
         title: "Main",
         description: "Main description",
         date: "2025-06-09",

@@ -4,13 +4,19 @@ import BlogLayout from "../../../../layouts/BlogLayout.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { sortedArchiveTagCounts } from "@utils/blog-page-data";
+import {
+  blogArchiveTagsUrl,
+  blogArchiveTagUrl,
+  blogArchivesUrl,
+  blogIndexUrl,
+} from "@utils/blog-url";
 
 const sortedTags = sortedArchiveTagCounts(await getCollection("blog"));
 const breadcrumbs = [
   { href: "/", label: "jimeh" },
-  { href: "/blog/", label: "Blog" },
-  { href: "/blog/archives/", label: "Archives" },
-  { href: "/blog/archives/tags/", label: "Tags" },
+  { href: blogIndexUrl(), label: "Blog" },
+  { href: blogArchivesUrl(), label: "Archives" },
+  { href: blogArchiveTagsUrl(), label: "Tags" },
 ];
 ---
 
@@ -22,7 +28,7 @@ const breadcrumbs = [
   <PageHeading as="h1" size="page" uppercase>Archive Tags</PageHeading>
   <MetaText>
     {sortedTags.length} tags &middot;
-    <a href="/blog/archives/" class="text-accent hover:underline">
+    <a href={blogArchivesUrl()} class="text-accent hover:underline">
       all archives
     </a>
   </MetaText>
@@ -31,7 +37,7 @@ const breadcrumbs = [
     {
       sortedTags.map(([tag, count]) => (
         <a
-          href={`/blog/archives/tags/${tag}/`}
+          href={blogArchiveTagUrl(tag)}
           class="text-muted hover:text-accent border-border hover:border-accent rounded-full border px-3.5 py-1.5 text-sm transition-colors"
         >
           {tag}

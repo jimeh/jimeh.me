@@ -8,6 +8,13 @@ import {
   namedArchiveTagPosts,
   namedArchiveTagStaticPaths,
 } from "@utils/blog-page-data";
+import {
+  blogArchiveUrl,
+  blogArchivesUrl,
+  blogIndexUrl,
+  blogNamedArchiveTagUrl,
+  blogNamedArchiveTagsUrl,
+} from "@utils/blog-url";
 
 interface Props {
   label: string;
@@ -23,11 +30,11 @@ const { label, slug, tag } = Astro.props;
 const posts = namedArchiveTagPosts(await getCollection("blog"), slug, tag);
 const breadcrumbs = [
   { href: "/", label: "jimeh" },
-  { href: "/blog/", label: "Blog" },
-  { href: "/blog/archives/", label: "Archives" },
-  { href: `/blog/archives/${slug}/`, label },
-  { href: `/blog/archives/${slug}/tags/`, label: "Tags" },
-  { href: `/blog/archives/${slug}/tags/${tag}/`, label: tag },
+  { href: blogIndexUrl(), label: "Blog" },
+  { href: blogArchivesUrl(), label: "Archives" },
+  { href: blogArchiveUrl(slug), label },
+  { href: blogNamedArchiveTagsUrl(slug), label: "Tags" },
+  { href: blogNamedArchiveTagUrl(slug, tag), label: tag },
 ];
 ---
 
@@ -41,10 +48,7 @@ const breadcrumbs = [
     {posts.length}{" "}
     {posts.length === 1 ? "archived post" : "archived posts"}
     &middot;
-    <a
-      href={`/blog/archives/${slug}/tags/`}
-      class="text-accent hover:underline"
-    >
+    <a href={blogNamedArchiveTagsUrl(slug)} class="text-accent hover:underline">
       all {label} tags
     </a>
   </MetaText>

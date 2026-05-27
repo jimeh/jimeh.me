@@ -22,6 +22,10 @@ describe("blogRuntimeDate", () => {
   test("leaves string dates untouched for Astro runtime parsing", () => {
     expect(blogRuntimeDate.parse("2025-06-09")).toBe("2025-06-09");
   });
+
+  test("rejects invalid runtime date strings", () => {
+    expect(() => blogRuntimeDate.parse("not-a-date")).toThrow();
+  });
 });
 
 describe("createBlogFrontmatterSchema", () => {
@@ -117,6 +121,21 @@ describe("createBlogFrontmatterSchema", () => {
     });
 
     expect(result.success).toBe(false);
+  });
+
+  test("rejects updatedDate values earlier than date", () => {
+    const result = schema.safeParse({
+      title: "Post",
+      description: "Description",
+      date: "2025-06-09",
+      updatedDate: "2025-06-08",
+      slug: "post-slug",
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.error?.issues.map((issue) => issue.path.join("."))).toEqual([
+      "updatedDate",
+    ]);
   });
 
   test("rejects archive names that resolve to reserved route slugs", () => {

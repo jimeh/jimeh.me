@@ -21,6 +21,15 @@ describe("Image", () => {
     ).rejects.toThrow("String image sources must provide width and height.");
   });
 
+  test("requires dimensions for non-remote dark string sources", async () => {
+    await expect(
+      renderComponent(Image, {
+        src: "https://example.com/light.jpg",
+        darkSrc: "/dark.jpg",
+      }),
+    ).rejects.toThrow("String image sources must provide width and height.");
+  });
+
   test("renders non-lightboxed images with captions and sizing", async () => {
     const document = await renderComponent(Image, {
       src: "/image.jpg",
@@ -91,6 +100,7 @@ describe("Image", () => {
     expect(link?.getAttribute("href")).toBe("/image.jpg");
     expect(link?.getAttribute("data-fancybox")).toBe("post-gallery");
     expect(link?.getAttribute("data-caption")).toBe("Caption");
+    expect(link?.className).toContain("mdx-fancybox-link");
   });
 
   test("uses the default gallery name for lightboxed images", async () => {

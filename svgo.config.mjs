@@ -58,8 +58,15 @@ export default {
                   children[0].name === "g"
                 ) {
                   const index = parentNode.children.indexOf(node);
+                  const group = children[0];
+                  const hasGroupAttributes =
+                    Object.keys(group.attributes ?? {}).length > 0;
 
-                  parentNode.children.splice(index, 1, ...children[0].children);
+                  parentNode.children.splice(
+                    index,
+                    1,
+                    ...(hasGroupAttributes ? [group] : group.children),
+                  );
                 } else {
                   node.children = children;
                 }

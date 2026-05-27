@@ -10,7 +10,14 @@ import CodeCopyButton from "@components/blog/CodeCopyButton.astro";
 import FancyboxInit from "@components/blog/FancyboxInit.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { blogArchiveInfo } from "@utils/blog-archive";
-import { blogPostUrl } from "@utils/blog-url";
+import {
+  blogArchiveTagsUrl,
+  blogArchivesUrl,
+  blogIndexUrl,
+  blogNamedArchiveTagsUrl,
+  blogPostUrl,
+  blogTagsUrl,
+} from "@utils/blog-url";
 import { darkImage, lightImage } from "@utils/image-source";
 import { readingTime } from "@utils/reading-time";
 import { blogPostStaticPaths, postPageNavigation } from "@utils/blog-page-data";
@@ -24,10 +31,10 @@ const { title, description, date, updatedDate, tags, image } = post.data;
 const archive = blogArchiveInfo(post);
 const breadcrumbs = [
   { href: "/", label: "jimeh" },
-  { href: "/blog/", label: "Blog" },
+  { href: blogIndexUrl(), label: "Blog" },
 ];
 if (archive) {
-  breadcrumbs.push({ href: "/blog/archives/", label: "Archives" });
+  breadcrumbs.push({ href: blogArchivesUrl(), label: "Archives" });
   if (!archive.isGeneral) {
     breadcrumbs.push({ href: archive.url, label: archive.label });
   }
@@ -39,9 +46,9 @@ const archiveMetaLabel = archive
   : undefined;
 const tagBaseUrl = archive
   ? archive.isGeneral
-    ? "/blog/archives/tags/"
-    : `${archive.url}tags/`
-  : "/blog/tags/";
+    ? blogArchiveTagsUrl()
+    : blogNamedArchiveTagsUrl(archive.slug)
+  : blogTagsUrl();
 const readTime = readingTime(post.body ?? "");
 const { Content } = await render(post);
 const imageLight = image ? lightImage(image.src) : undefined;
@@ -67,7 +74,7 @@ const showImage = image && !image.hidden;
 
 // Percentage-sized images float, so they must live inside the prose
 // flow context for text to wrap around them.
-const imageFloats = showImage && /^\d+%$/.test(image.size);
+const imageFloats = showImage && /^\d+(?:\.\d+)?%$/.test(image.size);
 
 // Sorted posts for prev/next navigation
 const { prevPost, nextPost } = postPageNavigation(
@@ -118,7 +125,7 @@ const { prevPost, nextPost } = postPageNavigation(
           aspect={image.aspect}
           objectPosition={image.objectPosition}
           flush={image.flush}
-          noLightbox={image.noLightbox ?? true}
+          noLightbox={image.noLightbox ?? false}
           gallery={image.gallery}
           darkSrc={imageDark}
           loading="eager"
@@ -141,7 +148,7 @@ const { prevPost, nextPost } = postPageNavigation(
             aspect={image.aspect}
             objectPosition={image.objectPosition}
             flush={image.flush}
-            noLightbox={image.noLightbox ?? true}
+            noLightbox={image.noLightbox ?? false}
             gallery={image.gallery}
             darkSrc={imageDark}
             loading="eager"

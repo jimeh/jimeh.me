@@ -123,7 +123,7 @@ export function builtSiteFailures(
     const archive = frontmatterBody
       ? frontmatterScalar(frontmatterBody, "archive")
       : null;
-    const isArchived = archive !== null;
+    const isArchived = archive !== null && archive !== "false";
 
     if (isArchived) {
       archiveCount += 1;

@@ -87,6 +87,10 @@ describe("Medium import feed and metadata helpers", () => {
     expect(items[0]?.title).toBe("Post");
   });
 
+  test("returns an empty item list when RSS contains no items", () => {
+    expect(parseItems("<rss><channel></channel></rss>")).toEqual([]);
+  });
+
   test("removes Medium hash suffixes from slugs", () => {
     expect(
       deriveSlug("https://jimeh.io/my-post-abcd", "https://medium.com/p/abcd"),
@@ -95,6 +99,7 @@ describe("Medium import feed and metadata helpers", () => {
 
   test("formats publication dates and omits unchanged updated dates", () => {
     expect(formatDate("Fri, 26 Feb 2010 00:00:00 GMT")).toBe("2010-02-26");
+    expect(formatDate("Fri, 26 Feb 2010 23:30:00 GMT")).toBe("2010-02-26");
     expect(
       getUpdatedDate(
         "Fri, 26 Feb 2010 00:00:00 GMT",

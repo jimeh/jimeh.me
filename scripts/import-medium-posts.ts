@@ -12,7 +12,7 @@
  *   --force  Overwrite existing files (default: skip)
  */
 
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import {
   existsSync,
   mkdirSync,
@@ -57,7 +57,7 @@ export interface FeedItem {
 
 function curlFetch(url: string): string {
   try {
-    return execSync(`curl -sL '${url}'`, {
+    return execFileSync("curl", ["-sL", url], {
       encoding: "utf-8",
       maxBuffer: 10 * 1024 * 1024,
     });
@@ -76,10 +76,14 @@ function curlFetch(url: string): string {
  */
 function curlDownload(url: string, outPath: string): string {
   try {
-    return execSync(`curl -sL -w '%{content_type}' -o '${outPath}' '${url}'`, {
-      encoding: "utf-8",
-      maxBuffer: 50 * 1024 * 1024,
-    }).trim();
+    return execFileSync(
+      "curl",
+      ["-sL", "-w", "%{content_type}", "-o", outPath, url],
+      {
+        encoding: "utf-8",
+        maxBuffer: 50 * 1024 * 1024,
+      },
+    ).trim();
   } catch (err) {
     throw new Error(`Failed to download ${url}`, { cause: err });
   }
@@ -214,7 +218,8 @@ export function parseItems(xml: string): FeedItem[] {
     ignorePiTags: true,
   });
   const feed = parser.parse(xml);
-  const items = feed.rss.channel.item;
+  const items = feed?.rss?.channel?.item;
+  if (!items) return [];
   return Array.isArray(items) ? items : [items];
 }
 
@@ -645,10 +650,7 @@ export function extractFallbackDescription(
 
 export function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd}`;
+  return d.toISOString().slice(0, 10);
 }
 
 export function getUpdatedDate(

@@ -27,8 +27,8 @@ mise run verify        # check + build + smoke
 Lefthook runs staged-file checks before commits.
 
 Node 24 and pnpm 11 are managed via mise. Prefer `mise run <task>` for common
-workflows; use `pnpm` directly when you need package-manager details. No unit
-tests are configured.
+workflows; use `pnpm` directly when you need package-manager details. Unit tests
+are configured and can be run with `mise run test`.
 
 ## Project Map
 
@@ -92,6 +92,8 @@ tests are configured.
 - pnpm 11 uses `strictDepBuilds: true` by default. Keep reviewed dependency
   build scripts in `pnpm-workspace.yaml` `allowBuilds`; otherwise clean installs
   fail with `ERR_PNPM_IGNORED_BUILDS`.
+- pnpm 11 `allowBuilds` package matchers require exact versions; semver ranges
+  like `lefthook@^2.1.6` fail with `ERR_PNPM_INVALID_VERSION_UNION`.
 - `pnpm-workspace.yaml` sets `minimumReleaseAge: 10080`, so pnpm will avoid
   resolving package versions published less than seven days ago as a
   supply-chain hardening measure.

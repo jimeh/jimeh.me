@@ -27,3 +27,12 @@ test("strips markdown, html, and code block artifacts before counting", () => {
 
   expect(readingTime(text)).toBe(1);
 });
+
+test("keeps linked text while stripping markdown link syntax", () => {
+  const linkedWords = Array.from(
+    { length: 226 },
+    (_, index) => `[word${index}](https://example.com/)`,
+  ).join(" ");
+
+  expect(readingTime(linkedWords)).toBe(2);
+});

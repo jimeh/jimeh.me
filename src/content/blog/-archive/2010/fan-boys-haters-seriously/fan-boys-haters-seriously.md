@@ -40,8 +40,8 @@ In more recent years, Microsoft created it's Windows Media-based PlaysForSure™
 standard for portable music players, and got the whole industry (except Apple)
 to adopt the standard. Little than a year later, Microsoft releases it's own
 portable music player — the Zune — which is not compatible with PlaysForSure™
-devices, but uses a new Zune-specific DRM standard. In the mist of this, all the
-PlaysForSure™ partners were left hanging with a standard abandoned by the
+devices, but uses a new Zune-specific DRM standard. In the midst of this, all
+the PlaysForSure™ partners were left hanging with a standard abandoned by the
 company that created it and owned the rights to it.
 
 Even Google, with their _"Don't be evil"_ corporate motto don't get away without

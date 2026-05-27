@@ -42,5 +42,5 @@ beginning, but they eventually will.
 > Subversion 1.4.x. My previous installation of svn 1.4 turned out to not work
 > correctly, and old copies of 1.3.2 were still being used. Now i've made sure
 > 1.4 is installed properly, and SCPlugin just flips out with errors locking up
-> the finder for about 20-30 seconds. > I'll look into a 1.4.x compatible copy
-> as soon as i have some free time :)
+> the finder for about 20-30 seconds. I'll look into a 1.4.x compatible copy as
+> soon as i have some free time :)

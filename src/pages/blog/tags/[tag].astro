@@ -5,6 +5,7 @@ import PostCard from "@components/blog/PostCard.astro";
 import MetaText from "@components/ui/MetaText.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
 import { blogTagPosts, blogTagStaticPaths } from "@utils/blog-page-data";
+import { blogTagsUrl } from "@utils/blog-url";
 
 export async function getStaticPaths() {
   return blogTagStaticPaths(await getCollection("blog"));
@@ -23,7 +24,7 @@ const posts = blogTagPosts(await getCollection("blog"), tag);
     {posts.length}{" "}
     {posts.length === 1 ? "post" : "posts"}
     &middot;
-    <a href="/blog/tags/" class="text-accent hover:underline"> all tags </a>
+    <a href={blogTagsUrl()} class="text-accent hover:underline"> all tags </a>
   </MetaText>
 
   <div class="mt-8 space-y-8">

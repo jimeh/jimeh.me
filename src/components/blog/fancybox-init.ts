@@ -8,10 +8,6 @@ export function initBlogFancybox(
   root: ParentNode,
   fancybox: FancyboxLike,
 ): void {
-  const body = root.ownerDocument?.body ?? (root as Document).body;
-  if (body?.dataset.blogFancyboxInitialized) return;
-  if (body) body.dataset.blogFancyboxInitialized = "true";
-
   const galleries = root.querySelectorAll<HTMLElement>("[data-gallery]");
   for (const container of galleries) {
     const gallery = container.dataset.gallery;
