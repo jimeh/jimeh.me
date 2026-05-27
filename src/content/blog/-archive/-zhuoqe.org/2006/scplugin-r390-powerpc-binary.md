@@ -1,0 +1,46 @@
+---
+title: "SCPlugin r390, PowerPC Binary"
+description: "Download: \\[link removed, binary out of date and very buggy\\]"
+date: 2006-11-17
+slug: scplugin-r390-powerpc-binary
+archive: zhuoqe.org
+updatedDate: 2007-05-18
+tags: ["macos", "software"]
+---
+
+Download: **\[link removed, binary out of date and very buggy\]**
+
+A lot of you probably use Subversion, and a quite useful little thing for OSX
+users is [SCPlugin](dead+http://scplugin.tigris.org/). Its a finder plugin which
+offers quite a lot of svn features directly in the finder. But its only
+available from source, or some quite outdated binaries, so I went about to build
+my own binary from the latest svn revision.
+
+Personally I use SCPlugin solely for its small icon badges on files in the
+finder indicating their current status, which I find quite useful. As for actual
+svn actions, I mainly use
+[svnX](dead+http://www.lachoseinteractive.net/en/community/subversion/svnx/features/),
+which is a very nice, simple but yet advanced Subversion client. It gets rid of
+some of headache you can have using the shell command :)
+
+Download the above file, extract `SCFinderPlugin.plugin`, place it in
+`~/Library/Contextual Menu Items` and relaunch finder. Its a PowerPC only build,
+since I'm not exactly an OSX developer, and building OSX apps ain't something I
+really do, nor know much about...
+
+So if you're looking for an Intel binary, best i can do is refer you here:
+
+[http://funkatron.com/wp/archives/os-x/binary-build-of-scplugin/](dead+http://funkatron.com/wp/archives/os-x/binary-build-of-scplugin/)
+
+**I would like to point out that I'm not fully sure how good this build works.**
+Myself I tested updating a working dir, which didn't really work as expected,
+but that might be cause I've got the new Subversion 1.4 installed which heavily
+changed the work dir database. The icon badges doesn't always appear from the
+beginning, but they eventually will.
+
+> **Update:** This binary does **not** work with working directories handled by
+> Subversion 1.4.x. My previous installation of svn 1.4 turned out to not work
+> correctly, and old copies of 1.3.2 were still being used. Now i've made sure
+> 1.4 is installed properly, and SCPlugin just flips out with errors locking up
+> the finder for about 20-30 seconds. I'll look into a 1.4.x compatible copy as
+> soon as i have some free time :)

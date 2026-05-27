@@ -1,0 +1,29 @@
+pre-commit:
+  jobs:
+    - name: staged checks
+      group:
+        parallel: true
+        jobs:
+          - name: prettier
+            glob: "*"
+            run: pnpm exec prettier --check --ignore-unknown {staged_files}
+
+          - name: eslint
+            glob: "*.{astro,js,mjs,cjs,ts,tsx}"
+            run: pnpm exec eslint {staged_files}
+
+          - name: markdownlint
+            glob: "*.md"
+            run: pnpm exec markdownlint-cli2 --no-globs {staged_files}
+
+          - name: mdxlint
+            glob: "*.mdx"
+            run: pnpm exec mdxlint --quiet {staged_files}
+
+          - name: eslint-mdx
+            glob: "*.mdx"
+            run: pnpm exec eslint {staged_files}
+
+          - name: stylelint
+            glob: "src/**/*.css"
+            run: pnpm exec stylelint {staged_files}

@@ -1,0 +1,61 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "./BaseLayout.astro";
+import NavTextLink from "@components/ui/NavTextLink.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogType?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  tags?: string[];
+  ogImage?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  width?: "2xl" | "3xl";
+}
+
+interface BreadcrumbItem {
+  href: string;
+  label: string;
+}
+
+const {
+  breadcrumbs = [
+    { href: "/", label: "jimeh" },
+    { href: "/blog/", label: "Blog" },
+  ],
+  width = "3xl",
+  ...props
+} = Astro.props;
+
+const widthClassMap = {
+  "2xl": "max-w-2xl",
+  "3xl": "max-w-3xl",
+};
+const widthClass = widthClassMap[width];
+---
+
+<BaseLayout {...props}>
+  <Fragment slot="header-nav">
+    {
+      breadcrumbs.map((item, index) => (
+        <>
+          {index > 0 && (
+            <Icon
+              name="heroicons:chevron-right"
+              class="text-muted mx-1.5 size-3.5"
+            />
+          )}
+          <NavTextLink href={item.href}>{item.label}</NavTextLink>
+        </>
+      ))
+    }
+  </Fragment>
+
+  <div class:list={["mx-auto px-6 pt-16 pb-12", widthClass]}>
+    <main>
+      <slot />
+    </main>
+  </div>
+</BaseLayout>

@@ -1,0 +1,37 @@
+config:
+  default: true
+  MD010:
+    ignore_code_languages:
+      - caddyfile
+      - go
+      - makefile
+  MD013:
+    line_length: 80
+    code_blocks: true
+    ignore_code_blocks: true
+    code_block_line_length: 280
+    tables: false
+  MD026: false
+  MD031:
+    list_items: false
+  MD033:
+    allowed_elements:
+      - Credit
+      - DeadLink
+      - Download
+      - Figure
+      - Image
+      - ImageGrid
+      - YouTube
+  MD036: false
+
+gitignore: true
+globs:
+  - "**/*.md"
+ignores:
+  - ".astro/**"
+  - ".claude/**"
+  - ".husky/**"
+  - "CLAUDE.md"
+  - "dist/**"
+  - "node_modules/**"

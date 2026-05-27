@@ -8,3 +8,6 @@ _site/
 .sass-cache/
 .jekyll-metadata
 .jekyll-cache/
+
+# VSCode
+.vscode/settings.json

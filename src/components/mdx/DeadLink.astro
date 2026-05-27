@@ -1,0 +1,70 @@
+---
+import { parseHTML } from "linkedom";
+import { micromark } from "micromark";
+
+interface Props {
+  /** Historical URL retained as metadata, but never rendered as a link. */
+  href?: string;
+  /** Markdown label. Use this when an inline MDX slot would format poorly. */
+  text?: string;
+  /** Tooltip and assistive text explaining why the link is inactive. */
+  reason?: string;
+  class?: string;
+}
+
+const {
+  href,
+  text,
+  reason = "This link is dead and no longer works.",
+  class: className,
+}: Props = Astro.props;
+const descriptionId = `dead-link-${crypto.randomUUID()}`;
+const content =
+  text !== undefined
+    ? inlineSlotContent(micromark(text))
+    : Astro.slots.has("default")
+      ? inlineSlotContent(await Astro.slots.render("default"))
+      : href !== undefined
+        ? inlineSlotContent(micromark(href))
+        : "";
+
+function inlineSlotContent(html: string): string {
+  const { document } = parseHTML(`<dead-link-root>${html}</dead-link-root>`);
+  const root = document.querySelector("dead-link-root");
+
+  if (!root) return html;
+
+  for (const paragraph of root.querySelectorAll("p")) {
+    paragraph.replaceWith(...paragraph.childNodes);
+  }
+
+  for (const link of root.querySelectorAll("a")) {
+    link.replaceWith(...link.childNodes);
+  }
+
+  return root.innerHTML;
+}
+---
+
+<span class="group relative inline-block">
+  <span
+    role="link"
+    aria-disabled="true"
+    aria-describedby={descriptionId}
+    tabindex="0"
+    class:list={[
+      "text-accent hover:decoration-accent focus-visible:decoration-accent focus-visible:outline-accent cursor-help underline decoration-transparent underline-offset-2 transition-colors focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2",
+      className,
+    ]}
+    data-dead-link-href={href}
+  >
+    <Fragment set:html={content} />
+  </span>
+  <span
+    id={descriptionId}
+    role="tooltip"
+    class="bg-on-surface text-surface pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-max max-w-[min(22rem,calc(100vw-2rem))] -translate-x-1/2 rounded-md px-2 py-1 text-center text-xs leading-snug font-medium whitespace-normal opacity-0 shadow-sm transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100"
+  >
+    {reason}
+  </span>
+</span>

@@ -1,0 +1,83 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../layouts/BlogLayout.astro";
+import PostCard from "@components/blog/PostCard.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
+import { archivesIndexData, yearRange } from "@utils/blog-page-data";
+import { blogArchivesUrl, blogIndexUrl } from "@utils/blog-url";
+
+const breadcrumbs = [
+  { href: "/", label: "jimeh" },
+  { href: blogIndexUrl(), label: "Blog" },
+  { href: blogArchivesUrl(), label: "Archives" },
+];
+
+const {
+  archivedPosts,
+  generalPosts,
+  generalPostsByYear,
+  generalYears,
+  namedArchives,
+} = archivesIndexData(await getCollection("blog"));
+---
+
+<BlogLayout
+  title="Archives - Blog - Jim Myhrberg"
+  description="Archived blog posts by Jim Myhrberg"
+  breadcrumbs={breadcrumbs}
+>
+  <PageHeading as="h1" size="page" uppercase>Archives</PageHeading>
+  <MetaText>{archivedPosts.length} archived posts</MetaText>
+
+  {
+    generalPosts.length > 0 && (
+      <section class="mt-8">
+        {generalYears.map((year) => (
+          <section class="mt-8">
+            <PageHeading
+              as="h2"
+              size="section"
+              class="text-muted mb-6 opacity-75"
+            >
+              {year}
+            </PageHeading>
+            <div class="space-y-6">
+              {generalPostsByYear.get(year)!.map((post) => (
+                <PostCard post={post} />
+              ))}
+            </div>
+          </section>
+        ))}
+      </section>
+    )
+  }
+
+  {
+    namedArchives.length > 0 && (
+      <section class="mt-10">
+        <PageHeading as="h2" size="section" class="text-muted mb-4 opacity-75">
+          Older Archives
+        </PageHeading>
+        <div class="border-border divide-border divide-y border-y">
+          {namedArchives.map((archive) => (
+            <a
+              href={archive.url}
+              class="group flex items-baseline justify-between gap-4 py-4"
+            >
+              <span class="text-heading group-hover:text-accent text-lg font-bold [font-stretch:75%] transition-colors">
+                {archive.label}
+              </span>
+              <span class="text-muted shrink-0 text-sm">
+                {archive.posts.length}{" "}
+                {archive.posts.length === 1 ? "post" : "posts"}
+                {" · "}
+                {yearRange(archive.posts)}
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</BlogLayout>

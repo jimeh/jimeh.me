@@ -2,65 +2,108 @@
 import "../styles/main.css";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { Font } from "astro:assets";
-import SEOHead from "../components/SEOHead.astro";
-import ThemeToggle from "../components/ThemeToggle.astro";
+import { ClientRouter } from "astro:transitions";
+import SEOHead from "@components/SEOHead.astro";
+import SiteHeader from "@components/SiteHeader.astro";
 import { siteConfig } from "../data/site";
 
 interface Props {
   title?: string;
+  description?: string;
+  ogType?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  tags?: string[];
+  ogImage?: string;
 }
 
 /** Short content hash for cache busting a public/ asset. */
 function fileHash(path: string): string {
-  const data = readFileSync(new URL(path, import.meta.url));
+  const data = readFileSync(join(process.cwd(), "public", path));
   return createHash("sha256")
     .update(new Uint8Array(data))
     .digest("hex")
     .slice(0, 8);
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description,
+  ogType,
+  publishedTime,
+  modifiedTime,
+  tags,
+  ogImage,
+} = Astro.props;
 const pageTitle = title || siteConfig.title;
-const faviconHash = fileHash("../../public/favicon.ico");
-const appleTouchHash = fileHash("../../public/apple-touch-icon.png");
+const hasHeaderNav = Astro.slots.has("header-nav");
+const faviconHash = fileHash("favicon.ico");
+const appleTouchHash = fileHash("apple-touch-icon.png");
 ---
 
 <!doctype html>
-<html class="h-full">
+<html class="bg-surface h-full">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="only light" />
     <title>{pageTitle}</title>
 
-    <SEOHead />
+    <SEOHead
+      title={pageTitle}
+      description={description}
+      ogType={ogType}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+      tags={tags}
+      ogImage={ogImage}
+    />
     <Font cssVariable="--font-open-sans" preload />
     <link rel="icon" href={`/favicon.ico?v=${faviconHash}`} />
     <link
       rel="apple-touch-icon"
       href={`/apple-touch-icon.png?v=${appleTouchHash}`}
     />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Jim Myhrberg's Blog"
+      href="/rss.xml"
+    />
+    <ClientRouter />
     <script is:inline>
       (function () {
-        let t = null;
-        try {
-          t = localStorage.getItem("theme");
-        } catch {
-          /* localStorage unavailable */
+        function applyTheme() {
+          let t = null;
+          try {
+            t = localStorage.getItem("theme");
+          } catch {
+            /* localStorage unavailable */
+          }
+          const d =
+            t === "dark" ||
+            (t !== "light" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", d);
         }
-        const d =
-          t === "dark" ||
-          (t !== "light" &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches);
-        if (d) document.documentElement.classList.add("dark");
+
+        document.addEventListener("astro:after-swap", applyTheme);
+        applyTheme();
       })();
     </script>
   </head>
   <body
-    class="bg-surface text-on-surface h-full font-sans text-sm leading-normal"
+    class:list={[
+      "text-on-surface min-h-full font-sans text-sm leading-normal",
+      "bg-surface",
+    ]}
   >
-    <ThemeToggle />
+    <SiteHeader hasNav={hasHeaderNav}>
+      <slot name="header-nav" />
+    </SiteHeader>
     <slot />
   </body>
 </html>

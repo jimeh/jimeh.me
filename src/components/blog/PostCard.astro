@@ -1,0 +1,54 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BlogThumbnail from "@components/blog/BlogThumbnail.astro";
+import { blogPostUrl } from "@utils/blog-url";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  imageLoading?: "eager" | "lazy";
+}
+
+const { post, imageLoading = "lazy" } = Astro.props;
+const { title, description, date, image } = post.data;
+const href = blogPostUrl(post);
+const linkLabel = `Read "${title}"`;
+const thumbnail = image?.thumbnail;
+const thumbnailSource = thumbnail?.src ?? image?.src;
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<article class="group">
+  <div class="flex gap-4 sm:gap-5">
+    <BlogThumbnail
+      href={href}
+      label={linkLabel}
+      loading={imageLoading}
+      objectPosition={thumbnail?.objectPosition ?? image?.objectPosition}
+      source={thumbnailSource}
+      thumbnail={thumbnail}
+    />
+    <div class="min-w-0 flex-1">
+      <a href={href} class="block">
+        <h3
+          class="text-heading group-hover:text-accent text-lg leading-snug font-bold [font-stretch:75%] transition-colors"
+        >
+          {title}
+        </h3>
+        <p class="text-subheading mt-1.5 line-clamp-2 text-sm leading-relaxed">
+          {description}
+        </p>
+        <div class="text-muted mt-1 text-sm">
+          <time datetime={date}>{formatDate(date)}</time>
+        </div>
+      </a>
+    </div>
+  </div>
+</article>

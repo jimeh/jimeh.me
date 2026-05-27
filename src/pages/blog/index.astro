@@ -1,0 +1,74 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import PostCard from "@components/blog/PostCard.astro";
+import PostFeatured from "@components/blog/PostFeatured.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
+import { siteConfig } from "../../data/site";
+import { blogIndexData } from "@utils/blog-page-data";
+import { blogArchivesUrl, blogYearUrl } from "@utils/blog-url";
+
+const allPosts = await getCollection("blog");
+const {
+  archivePosts,
+  archiveSummary,
+  eagerThumbnailIds,
+  featuredPost,
+  posts,
+  postsByYear,
+  years,
+} = blogIndexData(allPosts, new URL(siteConfig.url).hostname);
+---
+
+<BlogLayout
+  title="Blog - Jim Myhrberg"
+  description="Blog posts by Jim Myhrberg"
+>
+  <PageHeading as="h1" size="page" uppercase>Blog</PageHeading>
+  <MetaText>{posts.length} posts</MetaText>
+
+  {
+    featuredPost && (
+      <section class="mt-8" aria-label="Latest post">
+        <PostFeatured post={featuredPost} />
+      </section>
+    )
+  }
+
+  {
+    years.map((year) => (
+      <section class="mt-12">
+        <PageHeading as="h2" size="section" class="text-muted mb-6 opacity-75">
+          <a
+            href={blogYearUrl(year)}
+            class="hover:text-accent transition-colors"
+          >
+            {year}
+          </a>
+        </PageHeading>
+        <div class="space-y-6">
+          {postsByYear.get(year)!.map((post) => (
+            <PostCard
+              post={post}
+              imageLoading={eagerThumbnailIds.has(post.id) ? "eager" : "lazy"}
+            />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+
+  {
+    archivePosts.length > 0 && (
+      <nav class="border-border mt-14 border-t pt-6" aria-label="Archives">
+        <a href={blogArchivesUrl()} class="group inline-block">
+          <span class="text-heading group-hover:text-accent block text-lg font-bold [font-stretch:75%] transition-colors">
+            Archives
+          </span>
+          <span class="text-muted mt-1 block text-sm">{archiveSummary}</span>
+        </a>
+      </nav>
+    )
+  }
+</BlogLayout>

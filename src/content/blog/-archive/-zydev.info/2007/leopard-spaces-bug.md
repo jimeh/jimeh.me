@@ -1,0 +1,75 @@
+---
+title: "Leopard: Spaces Bug"
+description: >-
+  Unwanted space switching when using cmd+tab application switching.
+date: 2007-10-31
+slug: leopard-spaces-bug
+archive: zydev.info
+updatedDate: 2007-12-03
+tags: ["macos"]
+---
+
+**\*UPDATE:** If you're using Proteron's
+[LiteSwitch X](dead+http://www.proteron.com/liteswitchx/) you wont be effected
+by this bug. Hopefully Apple will fix this issue in the upcoming 10.5.1
+update.\*
+
+**\*UPDATE 2:** I just installed the 10.5.1 update, and it seems like this bug
+has been fixed, as far as I can tell so far, I'll update further in a few days
+if I still have issues.\*
+
+**\*UPDATE 3:** With quite some delay, I have to say that the issue hasn't been
+fixed, just improved a bit, it happens less than half the time when switching to
+apps with windows on multiple desktops now, rather than the 80-90%? of the time
+it did before.\*
+
+I've been running [Mac OS X 10.5 Leopard](dead+http://www.apple.com/macosx/) now
+for 3-4 days and surprise surprise, I'm (mostly) loving it :)
+
+One thing that's been annoying me though, is a bug in
+[Spaces](dead+http://www.apple.com/macosx/features/spaces.html). When you've got
+multiple windows from a single application you can get some very unwanted space
+switching when using cmd+tab application switching.
+
+If you're running Leopard, try it yourself. You'll need three running
+applications, I'll use Safari, TextEdit and Finder for this example. Also note
+this bug doesn't seem to happen EVERY time, but at least most of the time the
+following steps are done:
+
+1. In space 1, open a Safari, a TextEdit and a Finder window.
+2. In space 2 open a new Safari window and switch back to space 1.
+3. Click on the Safari window in space 1 making it the active application.
+4. Using cmd+tab switch from Safari to Finder, and then back to Safari again the
+   same way, then switch from Safari to TextEdit, and back to Safari again.
+   Works fine.
+
+5. Now however, switch from Safari to Finder, then from Finder to TextEdit, and
+   then from TextEdit to Safari....errr what just happened?
+
+What happened was that you switched back to Safari, but you've also been
+automagically transported to space 2, even if you wanted to stay put in space 1.
+
+This happens thanks to a feature of Spaces which obviously isn't working
+perfectly as it should. When you switch to an application which is in another
+space using the dock or cmd+tab Spaces will automatically switch to that space.
+
+So, simply put, Spaces doesn't always properly detect which is the active window
+of an application, and wrongfully switches you to the wrong window on the wrong
+desktop.
+
+One more thing...
+
+...which I find annoying, but which I imagine is a feature rather than a bug, is
+how Spaces handles the restoration of minimized windows. Lets say you minimize a
+window in space 1, and then you move on to space 3 to do some other work. Then
+you wanna work on the minimized window in space 3 so you restore it. But this
+switches you back to space 1 (where you minimized the window in the first place)
+and restores the window there. I can see the logic behind this cause minimizing
+is not meant to be a way to move windows between spaces, its merely a way to get
+windows you don't need right now out of the way. However, personally I'd like
+the window to just pop back up in whatever space I'm in right now.
+
+So my final thoughts of Spaces is that it needs some bug fixing, and more
+settings in the Spaces System Preferences pane for customizing a few behaviors.
+Oh and a menubar pager like ye ol' Desktop Manager which gives you an overview
+of all desktops would be awesome. Its the one thing i miss from Desktop Manager.

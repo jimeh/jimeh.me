@@ -1,0 +1,40 @@
+---
+// Adds a copy-to-clipboard button to all rehype-pretty-code blocks.
+import { Icon } from "astro-icon/components";
+---
+
+<template id="code-copy-btn-tpl">
+  <button
+    type="button"
+    class:list={[
+      "absolute right-[0.625rem] flex items-center justify-center",
+      "cursor-pointer rounded border-none p-2",
+      "bg-(--surface-code-block) text-(--color-copy-btn)",
+      "hover:bg-(--surface-code-block-hover) hover:text-(--color-copy-btn-hover)",
+      "transition-colors duration-150",
+    ]}
+    aria-label="Copy code"
+  >
+    <Icon name="octicon:copy-16" class="size-4" data-icon="copy" />
+    <Icon
+      name="octicon:check-16"
+      class="hidden size-4 text-(--alert-tip)"
+      data-icon="check"
+    />
+  </button>
+</template>
+
+<script>
+  import { initCodeCopyButtons } from "./code-copy-button";
+
+  function init() {
+    initCodeCopyButtons(document, navigator.clipboard);
+  }
+
+  document.addEventListener("astro:page-load", init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+</script>

@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../layouts/BlogLayout.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
+import { sortedTagCounts } from "@utils/blog-page-data";
+import { blogTagUrl } from "@utils/blog-url";
+
+const sortedTags = sortedTagCounts(await getCollection("blog"));
+---
+
+<BlogLayout title="Tags - Blog - Jim Myhrberg" description="All blog post tags">
+  <PageHeading as="h1" size="page" uppercase>Tags</PageHeading>
+  <MetaText>{sortedTags.length} tags</MetaText>
+
+  <div class="mt-8 flex flex-wrap gap-2">
+    {
+      sortedTags.map(([tag, count]) => (
+        <a
+          href={blogTagUrl(tag)}
+          class="text-muted hover:text-accent border-border hover:border-accent rounded-full border px-3.5 py-1.5 text-sm transition-colors"
+        >
+          {tag}
+          <span class="ml-1 opacity-60">{count}</span>
+        </a>
+      ))
+    }
+  </div>
+</BlogLayout>

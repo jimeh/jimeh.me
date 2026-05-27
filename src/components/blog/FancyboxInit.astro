@@ -1,0 +1,12 @@
+---
+// Client-side Fancybox initialization for blog post images.
+// Binds lightbox behavior to all [data-fancybox] elements.
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
+---
+
+<script>
+  import { Fancybox } from "@fancyapps/ui/dist/fancybox/";
+  import { setupBlogFancybox } from "./fancybox-page-load";
+
+  setupBlogFancybox(document, Fancybox);
+</script>

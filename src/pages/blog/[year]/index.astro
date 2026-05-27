@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../layouts/BlogLayout.astro";
+import PostCard from "@components/blog/PostCard.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
+import { blogYearPosts, blogYearStaticPaths } from "@utils/blog-page-data";
+import { blogIndexUrl } from "@utils/blog-url";
+
+interface Props {
+  year: string;
+}
+
+export async function getStaticPaths() {
+  return blogYearStaticPaths(await getCollection("blog"));
+}
+
+const { year } = Astro.props;
+const posts = blogYearPosts(await getCollection("blog"), year);
+---
+
+<BlogLayout
+  title={`${year} posts - Blog - Jim Myhrberg`}
+  description={`Blog posts from ${year} by Jim Myhrberg`}
+>
+  <PageHeading as="h1" size="page" uppercase>{year}</PageHeading>
+  <MetaText>
+    {posts.length}{" "}
+    {posts.length === 1 ? "post" : "posts"}
+    &middot;
+    <a href={blogIndexUrl()} class="text-accent hover:underline"> all posts </a>
+  </MetaText>
+
+  <div class="mt-8 space-y-8">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+</BlogLayout>

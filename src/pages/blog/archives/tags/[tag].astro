@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../../layouts/BlogLayout.astro";
+import PostCard from "@components/blog/PostCard.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
+import { archiveTagPosts, archiveTagStaticPaths } from "@utils/blog-page-data";
+import {
+  blogArchiveTagsUrl,
+  blogArchiveTagUrl,
+  blogArchivesUrl,
+  blogIndexUrl,
+} from "@utils/blog-url";
+
+export async function getStaticPaths() {
+  return archiveTagStaticPaths(await getCollection("blog"));
+}
+
+const { tag } = Astro.props;
+const posts = archiveTagPosts(await getCollection("blog"), tag);
+const breadcrumbs = [
+  { href: "/", label: "jimeh" },
+  { href: blogIndexUrl(), label: "Blog" },
+  { href: blogArchivesUrl(), label: "Archives" },
+  { href: blogArchiveTagsUrl(), label: "Tags" },
+  { href: blogArchiveTagUrl(tag), label: tag },
+];
+---
+
+<BlogLayout
+  title={`Archive "${tag}" posts - Blog - Jim Myhrberg`}
+  description={`Archived blog posts tagged "${tag}"`}
+  breadcrumbs={breadcrumbs}
+>
+  <PageHeading as="h1" size="page" uppercase>{tag}</PageHeading>
+  <MetaText>
+    {posts.length}{" "}
+    {posts.length === 1 ? "archived post" : "archived posts"}
+    &middot;
+    <a href={blogArchiveTagsUrl()} class="text-accent hover:underline">
+      all archive tags
+    </a>
+  </MetaText>
+
+  <div class="mt-8 space-y-8">
+    {posts.map((post) => <PostCard post={post} />)}
+  </div>
+</BlogLayout>

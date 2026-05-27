@@ -1,0 +1,70 @@
+---
+import Figure from "./Figure.astro";
+
+interface Props {
+  src: string;
+  title?: string;
+  caption?: string;
+  size?: "default" | "wide" | "full" | (string & {});
+  position?: "center" | "left" | "right";
+  /** Percentage of the embed width that hangs outside a left/right float. */
+  overhang?: `${number}%` | "outside";
+  /** Remove block margins so the figure sits flush with surrounding content. */
+  flush?: boolean;
+}
+
+function extractVideoId(src: string): string {
+  try {
+    const url = new URL(src);
+    if (url.hostname === "youtu.be") return url.pathname.slice(1);
+    const v = url.searchParams.get("v");
+    if (v) return v;
+    const match = url.pathname.match(/^\/(embed|shorts|v)\/([^/?&]+)/);
+    if (match) return match[2];
+  } catch {
+    // Not a URL — treat as bare video ID
+  }
+  return src;
+}
+
+const {
+  src,
+  title = "YouTube video",
+  caption,
+  size = "default",
+  position,
+  overhang,
+  flush,
+} = Astro.props;
+
+const videoId = extractVideoId(src);
+if (!videoId) {
+  throw new Error(`YouTube: could not extract video ID from "${src}"`);
+}
+
+const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}`;
+---
+
+<Figure
+  class="mdx-figure"
+  size={size}
+  position={position}
+  overhang={overhang}
+  flush={flush}
+  caption={caption}
+>
+  <iframe
+    src={embedUrl}
+    title={title}
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+    loading="lazy"></iframe>
+  {
+    Astro.slots.has("default") && (
+      <Fragment slot="caption">
+        <slot />
+      </Fragment>
+    )
+  }
+</Figure>

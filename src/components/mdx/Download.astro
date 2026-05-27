@@ -1,0 +1,35 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  /** Built asset URL or public URL for the downloadable file. */
+  href: string;
+  /** Filename suggested to the browser when saving the download. */
+  filename?: string;
+  /** Native title attribute for the download link. */
+  title?: string;
+  class?: string;
+}
+
+const { href, filename, title, class: className }: Props = Astro.props;
+---
+
+<a
+  href={href}
+  download={filename}
+  title={title}
+  class:list={[
+    "not-prose border-border hover:border-accent group flex items-center gap-3 rounded-md border px-4 py-3 transition-colors",
+    className,
+  ]}
+>
+  <Icon
+    name="heroicons:arrow-down-tray"
+    class="text-muted group-hover:text-accent size-5 shrink-0 transition-colors"
+  />
+  <div
+    class="text-heading group-hover:text-accent font-bold [font-stretch:75%] transition-colors"
+  >
+    <slot />
+  </div>
+</a>

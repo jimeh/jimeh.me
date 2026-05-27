@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BlogThumbnail from "@components/blog/BlogThumbnail.astro";
+import { blogPostUrl } from "@utils/blog-url";
+import { readingTime } from "@utils/reading-time";
+import { lightImage } from "@utils/image-source";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { title, description, date, image } = post.data;
+const readTime = readingTime(post.body ?? "");
+const href = blogPostUrl(post);
+const thumbnail = image?.thumbnail;
+const thumbnailSource = thumbnail?.src ?? image?.src;
+const thumbnailLight = thumbnailSource
+  ? lightImage(thumbnailSource)
+  : undefined;
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+---
+
+<article class="group">
+  <a href={href} class="block">
+    <BlogThumbnail
+      alt={image?.alt}
+      href={href}
+      label={`Read "${title}"`}
+      loading="eager"
+      objectPosition={thumbnail?.objectPosition ?? image?.objectPosition}
+      source={thumbnailSource}
+      thumbnail={thumbnail}
+      variant="featured"
+    />
+    <div class={thumbnailLight ? "mt-4" : ""}>
+      <h3
+        class="text-heading group-hover:text-accent text-xl leading-snug font-bold [font-stretch:75%] transition-colors sm:text-2xl"
+      >
+        {title}
+      </h3>
+      <p
+        class="text-subheading mt-2 text-sm leading-relaxed sm:text-base sm:leading-relaxed"
+      >
+        {description}
+      </p>
+      <div class="text-muted mt-2 flex items-center gap-2 text-sm">
+        <time datetime={date}>{formatDate(date)}</time>
+        <span>&middot;</span>
+        <span>{readTime} min read</span>
+      </div>
+    </div>
+  </a>
+</article>

@@ -1,0 +1,250 @@
+---
+import type { ImageMetadata } from "astro";
+import AssetImage from "@components/ui/AssetImage.astro";
+import Figure from "./Figure.astro";
+import "./Image.css";
+
+interface Props {
+  src: ImageMetadata | string;
+  darkSrc?: ImageMetadata | string;
+  alt?: string;
+  caption?: string;
+  /** Attribution / credit line shown below the caption. */
+  credit?: {
+    text: string;
+    href?: string;
+    position?: "left" | "center" | "right";
+  };
+  size?: "default" | "wide" | "full" | (string & {});
+  position?: "center" | "left" | "right";
+  /** Percentage of the image width that hangs outside a left/right float. */
+  overhang?: `${number}%` | "outside";
+  /** CSS aspect-ratio for the displayed image box (e.g. "16/9"). */
+  aspect?: string;
+  /** CSS object-position when aspect is set (e.g. "top", "center"). */
+  objectPosition?: string;
+  /** Intrinsic width for remote or public string image sources. */
+  width?: number | `${number}`;
+  /** Intrinsic height for remote or public string image sources. */
+  height?: number | `${number}`;
+  /** Remove block margins so the figure sits flush with surrounding content. */
+  flush?: boolean;
+  /** Lightbox gallery group name. Images sharing the same gallery form a set. */
+  gallery?: string;
+  /** Disable the Fancybox lightbox for this image. */
+  noLightbox?: boolean;
+  /** Browser image loading behavior. */
+  loading?: "eager" | "lazy";
+}
+
+const {
+  src,
+  darkSrc,
+  caption,
+  credit,
+  size = "default",
+  position = "center",
+  overhang,
+  aspect,
+  objectPosition = "center",
+  width,
+  height,
+  flush,
+  gallery = "gallery",
+  noLightbox = false,
+  loading = "lazy",
+} = Astro.props;
+
+const alt = Astro.props.alt ?? caption ?? "";
+const contentMaxWidth = 720;
+const contentBreakpoint = 768;
+const contentGutterRem = 3;
+const wideMaxWidth = 1200;
+const imageWidths = uniqueSortedWidths([640, 960, wideMaxWidth, 1280, 1600]);
+const hasWidth = width !== undefined;
+const hasHeight = height !== undefined;
+const hasExplicitDimensions = hasWidth && hasHeight;
+const isStringSource = typeof src === "string";
+const isRemoteSource = isStringSource && /^https?:\/\//i.test(src);
+const hasDarkSource = darkSrc !== undefined;
+const isDarkStringSource = typeof darkSrc === "string";
+const isDarkRemoteSource = isDarkStringSource && /^https?:\/\//i.test(darkSrc);
+const imageHref = isStringSource ? src : src.src;
+
+if (hasWidth !== hasHeight) {
+  throw new Error("Image width and height must be provided together.");
+}
+
+if (isStringSource && !isRemoteSource && !hasExplicitDimensions) {
+  throw new Error("String image sources must provide width and height.");
+}
+
+if (isDarkStringSource && !isDarkRemoteSource && !hasExplicitDimensions) {
+  throw new Error("String image sources must provide width and height.");
+}
+
+const sizeMatch = size.match(/^(\d+(?:\.\d+)?)%$/);
+const isPercentage = !!sizeMatch;
+const sizePercent = sizeMatch ? Number.parseFloat(sizeMatch[1]) : 0;
+
+const imgClasses = isPercentage
+  ? "block"
+  : `block ${
+      {
+        center: "mx-auto",
+        left: "mr-auto",
+        right: "ml-auto",
+      }[position]
+    }`;
+
+const sizes = isPercentage
+  ? contentRelativeSizes(sizePercent)
+  : size === "full"
+    ? "100vw"
+    : size === "wide"
+      ? `(min-width: ${wideMaxWidth}px) ${wideMaxWidth}px, 100vw`
+      : contentRelativeSizes();
+
+const imgStyle = aspect
+  ? `aspect-ratio: ${aspect}; object-position: ${objectPosition}`
+  : undefined;
+
+// Figure.css owns spacing/caption layout for this component, so opt its image
+// out of Tailwind Typography's generic `.prose img` margins.
+const proseOptOutClass = "not-prose";
+
+function imageProps(source: ImageMetadata | string) {
+  if (typeof source !== "string") {
+    return { src: source };
+  }
+
+  if (width !== undefined && height !== undefined) {
+    return { src: source, width, height };
+  }
+
+  return { src: source, inferSize: true as const };
+}
+
+function contentRelativeSizes(percent = 100): string {
+  const desktopWidth = contentMaxWidth * (percent / 100);
+  const mobileGutter = contentGutterRem * (percent / 100);
+
+  if (percent > 100 && position === "center") {
+    const breakpoint = desktopWidth + contentGutterRem * 16;
+
+    return [
+      `(min-width: ${formatSizeValue(breakpoint)}px)`,
+      `${formatSizeValue(desktopWidth)}px,`,
+      `calc(100vw - ${contentGutterRem}rem)`,
+    ].join(" ");
+  }
+
+  return [
+    `(min-width: ${contentBreakpoint}px)`,
+    `${formatSizeValue(desktopWidth)}px,`,
+    `calc(${formatSizeValue(percent)}vw - ${formatSizeValue(mobileGutter)}rem)`,
+  ].join(" ");
+}
+
+function formatSizeValue(value: number): string {
+  return Number.isInteger(value)
+    ? value.toString()
+    : value.toFixed(3).replace(/\.?0+$/, "");
+}
+
+function uniqueSortedWidths(widths: number[]): number[] {
+  return [...new Set(widths)].sort((a, b) => a - b);
+}
+---
+
+<Figure
+  class="mdx-figure"
+  size={size}
+  position={position}
+  overhang={overhang}
+  flush={flush}
+  caption={caption}
+  credit={credit}
+>
+  {
+    noLightbox ? (
+      <>
+        <AssetImage
+          {...imageProps(src)}
+          alt={alt}
+          classList={[
+            proseOptOutClass,
+            imgClasses,
+            aspect && "object-cover",
+            hasDarkSource && "dark:hidden",
+          ]}
+          style={imgStyle}
+          widths={imageWidths}
+          sizes={sizes}
+          loading={loading}
+        />
+        {darkSrc && (
+          <AssetImage
+            {...imageProps(darkSrc)}
+            alt={alt}
+            classList={[
+              proseOptOutClass,
+              imgClasses,
+              aspect && "object-cover",
+              "hidden dark:block",
+            ]}
+            style={imgStyle}
+            widths={imageWidths}
+            sizes={sizes}
+            loading={loading}
+          />
+        )}
+      </>
+    ) : (
+      <a
+        href={imageHref}
+        data-fancybox={gallery}
+        data-caption={caption}
+        class="mdx-fancybox-link"
+      >
+        <AssetImage
+          {...imageProps(src)}
+          alt={alt}
+          classList={[
+            proseOptOutClass,
+            imgClasses,
+            aspect && "object-cover",
+            hasDarkSource && "dark:hidden",
+          ]}
+          style={imgStyle}
+          widths={imageWidths}
+          sizes={sizes}
+          loading={loading}
+        />
+        {darkSrc && (
+          <AssetImage
+            {...imageProps(darkSrc)}
+            alt={alt}
+            classList={[
+              proseOptOutClass,
+              imgClasses,
+              aspect && "object-cover",
+              "hidden dark:block",
+            ]}
+            style={imgStyle}
+            widths={imageWidths}
+            sizes={sizes}
+            loading={loading}
+          />
+        )}
+      </a>
+    )
+  }
+  {
+    Astro.slots.has("default") && (
+      <Fragment slot="caption">
+        <slot />
+      </Fragment>
+    )
+  }
+</Figure>

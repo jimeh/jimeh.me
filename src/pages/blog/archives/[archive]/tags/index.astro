@@ -1,0 +1,69 @@
+---
+import { getCollection } from "astro:content";
+import BlogLayout from "../../../../../layouts/BlogLayout.astro";
+import MetaText from "@components/ui/MetaText.astro";
+import PageHeading from "@components/ui/PageHeading.astro";
+import {
+  namedArchiveTagIndexStaticPaths,
+  sortedNamedArchiveTagCounts,
+} from "@utils/blog-page-data";
+import {
+  blogArchiveUrl,
+  blogArchivesUrl,
+  blogIndexUrl,
+  blogNamedArchiveTagUrl,
+  blogNamedArchiveTagsUrl,
+} from "@utils/blog-url";
+
+interface Props {
+  label: string;
+  slug: string;
+}
+
+export async function getStaticPaths() {
+  return namedArchiveTagIndexStaticPaths(await getCollection("blog"));
+}
+
+const { label, slug } = Astro.props;
+const sortedTags = sortedNamedArchiveTagCounts(
+  await getCollection("blog"),
+  slug,
+);
+const breadcrumbs = [
+  { href: "/", label: "jimeh" },
+  { href: blogIndexUrl(), label: "Blog" },
+  { href: blogArchivesUrl(), label: "Archives" },
+  { href: blogArchiveUrl(slug), label },
+  { href: blogNamedArchiveTagsUrl(slug), label: "Tags" },
+];
+---
+
+<BlogLayout
+  title={`Archive Tags: ${label} - Blog - Jim Myhrberg`}
+  description={`Tags for archived ${label} blog posts`}
+  breadcrumbs={breadcrumbs}
+>
+  <PageHeading as="h1" size="page" uppercase>
+    Archive Tags: {label}
+  </PageHeading>
+  <MetaText>
+    {sortedTags.length} tags &middot;
+    <a href={blogArchiveUrl(slug)} class="text-accent hover:underline">
+      archive
+    </a>
+  </MetaText>
+
+  <div class="mt-8 flex flex-wrap gap-2">
+    {
+      sortedTags.map(([tag, count]) => (
+        <a
+          href={blogNamedArchiveTagUrl(slug, tag)}
+          class="text-muted hover:text-accent border-border hover:border-accent rounded-full border px-3.5 py-1.5 text-sm transition-colors"
+        >
+          {tag}
+          <span class="ml-1 opacity-60">{count}</span>
+        </a>
+      ))
+    }
+  </div>
+</BlogLayout>
