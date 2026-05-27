@@ -12,8 +12,9 @@ import {
   getRepoRoot,
   readBlogPostFiles,
 } from "./blog-content.ts";
+import { siteConfig } from "../src/data/site.ts";
 
-const siteUrl = "https://jimeh.me";
+const siteUrl = siteConfig.url;
 const repoRoot = getRepoRoot();
 const distDir = join(repoRoot, "dist");
 
@@ -89,6 +90,15 @@ export function builtSiteFailures(
   assertFile("favicon.ico");
   assertFile("apple-touch-icon.png");
   assertFile("img/jimeh-4.2.0.jpg");
+  assertIncludes("blog/index.html", 'aria-label="Latest post"');
+  assertIncludes("blog/index.html", 'href="/blog/archives/"');
+  assertIncludes("rss.xml", `<title>${siteConfig.title}</title>`);
+  assertIncludes(
+    "rss.xml",
+    `<description>${siteConfig.description}</description>`,
+  );
+  assertIncludes("rss.xml", `<link>${checkSiteUrl}/</link>`);
+  assertNotIncludes("rss.xml", "/blog/archives/");
 
   const years = new Set<string>();
   const tags = new Set<string>();
@@ -148,6 +158,12 @@ export function builtSiteFailures(
     }
     assertIncludes("sitemap-0.xml", canonicalUrl);
 
+    if (route.path === "2006/cleaning-up-after-svn") {
+      assertIncludes(canonicalPath, "SVN");
+      assertIncludes(canonicalPath, `datetime="${date}"`);
+      assertIncludes(canonicalPath, 'aria-label="Post navigation"');
+    }
+
     if (isArchived) {
       assertNotIncludes("rss.xml", canonicalUrl);
     } else {
@@ -156,7 +172,10 @@ export function builtSiteFailures(
   }
 
   for (const year of years) {
-    assertFile(`blog/${year}/index.html`);
+    const yearPath = `blog/${year}/index.html`;
+    assertFile(yearPath);
+    assertIncludes(yearPath, 'href="/blog/"');
+    assertIncludes(yearPath, "<article");
   }
 
   if (archiveCount > 0) {
@@ -165,21 +184,43 @@ export function builtSiteFailures(
   }
 
   for (const archive of archives) {
-    assertFile(`blog/archives/${archive}/index.html`);
-    assertFile(`blog/archives/${archive}/tags/index.html`);
+    const archivePath = `blog/archives/${archive}/index.html`;
+    const archiveTagsPath = `blog/archives/${archive}/tags/index.html`;
+    assertIncludes(
+      "blog/archives/index.html",
+      `href="/blog/archives/${archive}/"`,
+    );
+    assertFile(archivePath);
+    assertIncludes(archivePath, "<article");
+    assertFile(archiveTagsPath);
   }
 
   for (const tag of tags) {
-    assertFile(`blog/tags/${tag}/index.html`);
+    const tagPath = `blog/tags/${tag}/index.html`;
+    assertIncludes("blog/tags/index.html", `href="/blog/tags/${tag}/"`);
+    assertFile(tagPath);
+    assertIncludes(tagPath, "<article");
   }
 
   for (const tag of archiveTags) {
-    assertFile(`blog/archives/tags/${tag}/index.html`);
+    const tagPath = `blog/archives/tags/${tag}/index.html`;
+    assertIncludes(
+      "blog/archives/tags/index.html",
+      `href="/blog/archives/tags/${tag}/"`,
+    );
+    assertFile(tagPath);
+    assertIncludes(tagPath, "<article");
   }
 
   for (const [archive, tags] of namedArchiveTags) {
     for (const tag of tags) {
-      assertFile(`blog/archives/${archive}/tags/${tag}/index.html`);
+      const tagPath = `blog/archives/${archive}/tags/${tag}/index.html`;
+      assertIncludes(
+        `blog/archives/${archive}/tags/index.html`,
+        `href="/blog/archives/${archive}/tags/${tag}/"`,
+      );
+      assertFile(tagPath);
+      assertIncludes(tagPath, "<article");
     }
   }
 

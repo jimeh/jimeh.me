@@ -55,19 +55,28 @@ function post(
 }
 
 function writeRequiredSiteFiles(root: string): void {
-  for (const path of [
-    "index.html",
-    "blog/index.html",
-    "blog/tags/index.html",
-    "rss.xml",
-    "sitemap-index.xml",
-    "sitemap-0.xml",
-    "favicon.ico",
-    "apple-touch-icon.png",
-    "img/jimeh-4.2.0.jpg",
-  ]) {
+  for (const path of ["index.html", "sitemap-index.xml"]) {
     writeFile(root, path);
   }
+  writeFile(
+    root,
+    "blog/index.html",
+    '<a href="/blog/archives/">Archives</a><article aria-label="Latest post">',
+  );
+  writeFile(root, "blog/tags/index.html", '<a href="/blog/tags/astro/">');
+  writeFile(
+    root,
+    "rss.xml",
+    [
+      "<title>Jim Myhrberg (jimeh)</title>",
+      "<description>Software Engineering Mercenary</description>",
+      "<link>https://example.com/</link>",
+    ].join(""),
+  );
+  writeFile(root, "sitemap-0.xml");
+  writeFile(root, "favicon.ico");
+  writeFile(root, "apple-touch-icon.png");
+  writeFile(root, "img/jimeh-4.2.0.jpg");
 }
 
 describe("archiveSlug", () => {
@@ -122,7 +131,16 @@ describe("builtSiteFailures", () => {
     ];
 
     writeRequiredSiteFiles(distDir);
-    writeFile(distDir, "rss.xml", mainUrl);
+    writeFile(
+      distDir,
+      "rss.xml",
+      [
+        "<title>Jim Myhrberg (jimeh)</title>",
+        "<description>Software Engineering Mercenary</description>",
+        "<link>https://example.com/</link>",
+        mainUrl,
+      ].join(""),
+    );
     writeFile(
       distDir,
       "sitemap-0.xml",
@@ -131,14 +149,30 @@ describe("builtSiteFailures", () => {
     writeFile(distDir, "blog/2025/main/index.html");
     writeFile(distDir, "blog/2024/archive/index.html");
     writeFile(distDir, "blog/2023/general-archive/index.html");
-    writeFile(distDir, "blog/2025/index.html");
-    writeFile(distDir, "blog/tags/astro/index.html");
-    writeFile(distDir, "blog/archives/index.html");
-    writeFile(distDir, "blog/archives/tags/index.html");
-    writeFile(distDir, "blog/archives/tags/life/index.html");
-    writeFile(distDir, "blog/archives/zydev-info/index.html");
-    writeFile(distDir, "blog/archives/zydev-info/tags/index.html");
-    writeFile(distDir, "blog/archives/zydev-info/tags/php/index.html");
+    writeFile(distDir, "blog/2025/index.html", '<a href="/blog/"><article');
+    writeFile(distDir, "blog/tags/astro/index.html", "<article");
+    writeFile(
+      distDir,
+      "blog/archives/index.html",
+      '<a href="/blog/archives/zydev-info/">',
+    );
+    writeFile(
+      distDir,
+      "blog/archives/tags/index.html",
+      '<a href="/blog/archives/tags/life/">',
+    );
+    writeFile(distDir, "blog/archives/tags/life/index.html", "<article");
+    writeFile(distDir, "blog/archives/zydev-info/index.html", "<article");
+    writeFile(
+      distDir,
+      "blog/archives/zydev-info/tags/index.html",
+      '<a href="/blog/archives/zydev-info/tags/php/">',
+    );
+    writeFile(
+      distDir,
+      "blog/archives/zydev-info/tags/php/index.html",
+      "<article",
+    );
 
     expect(builtSiteFailures({ distDir, posts, siteUrl })).toEqual([]);
   });
