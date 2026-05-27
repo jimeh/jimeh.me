@@ -19,6 +19,7 @@ import {
   blogTagsUrl,
 } from "@utils/blog-url";
 import { darkImage, lightImage } from "@utils/image-source";
+import { postImageNoLightbox } from "@utils/post-image-lightbox";
 import { readingTime } from "@utils/reading-time";
 import { blogPostStaticPaths, postPageNavigation } from "@utils/blog-page-data";
 
@@ -53,6 +54,7 @@ const readTime = readingTime(post.body ?? "");
 const { Content } = await render(post);
 const imageLight = image ? lightImage(image.src) : undefined;
 const imageDark = image ? darkImage(image.src) : undefined;
+const noImageLightbox = postImageNoLightbox(image?.noLightbox);
 
 // Resolve absolute URL for OG/Twitter image meta tags.
 let ogImageUrl: string | undefined;
@@ -125,7 +127,7 @@ const { prevPost, nextPost } = postPageNavigation(
           aspect={image.aspect}
           objectPosition={image.objectPosition}
           flush={image.flush}
-          noLightbox={image.noLightbox ?? true}
+          noLightbox={noImageLightbox}
           gallery={image.gallery}
           darkSrc={imageDark}
           loading="eager"
@@ -148,7 +150,7 @@ const { prevPost, nextPost } = postPageNavigation(
             aspect={image.aspect}
             objectPosition={image.objectPosition}
             flush={image.flush}
-            noLightbox={image.noLightbox ?? true}
+            noLightbox={noImageLightbox}
             gallery={image.gallery}
             darkSrc={imageDark}
             loading="eager"

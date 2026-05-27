@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
+import { parseHTML } from "linkedom";
 
 import {
   type BlogPostFile,
@@ -78,6 +79,42 @@ export function builtSiteFailures(
     const source = readFileSync(fullPath, "utf8");
     if (source.includes(value)) {
       failures.push(`${path}: expected to omit ${value}.`);
+    }
+  }
+
+  function parseBuiltHtml(path: string): Document | null {
+    const fullPath = join(checkDistDir, path);
+    if (!existsSync(fullPath)) {
+      failures.push(`${path}: cannot inspect missing file.`);
+      return null;
+    }
+
+    return parseHTML(readFileSync(fullPath, "utf8")).document;
+  }
+
+  function assertFeaturedImageHasNoFancybox(path: string): void {
+    const document = parseBuiltHtml(path);
+    if (!document) return;
+
+    const firstFigure = document.querySelector("article figure");
+    if (!firstFigure) {
+      failures.push(`${path}: expected article to include a featured figure.`);
+      return;
+    }
+
+    if (firstFigure.querySelector("a[data-fancybox]")) {
+      failures.push(`${path}: expected featured figure to omit Fancybox.`);
+    }
+  }
+
+  function assertArticleHasFancyboxImages(path: string): void {
+    const document = parseBuiltHtml(path);
+    if (!document) return;
+
+    if (!document.querySelector("article a[data-fancybox]")) {
+      failures.push(
+        `${path}: expected article body to include Fancybox image links.`,
+      );
     }
   }
 
@@ -162,6 +199,18 @@ export function builtSiteFailures(
       assertIncludes(canonicalPath, "SVN");
       assertIncludes(canonicalPath, `datetime="${date}"`);
       assertIncludes(canonicalPath, 'aria-label="Post navigation"');
+    }
+
+    if (
+      route.path ===
+      "2020/emacs-native-comp-on-macos-a-mostly-automated-build-script"
+    ) {
+      assertFeaturedImageHasNoFancybox(canonicalPath);
+    }
+
+    if (route.path === "2015/my-website-remade") {
+      assertFeaturedImageHasNoFancybox(canonicalPath);
+      assertArticleHasFancyboxImages(canonicalPath);
     }
 
     if (isArchived) {

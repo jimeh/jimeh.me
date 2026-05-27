@@ -6,16 +6,7 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 <script>
   import { Fancybox } from "@fancyapps/ui/dist/fancybox/";
-  import { initBlogFancybox } from "./fancybox-init";
+  import { setupBlogFancybox } from "./fancybox-page-load";
 
-  function init() {
-    initBlogFancybox(document, Fancybox);
-  }
-
-  document.addEventListener("astro:page-load", init);
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init, { once: true });
-  } else {
-    init();
-  }
+  setupBlogFancybox(document, Fancybox);
 </script>

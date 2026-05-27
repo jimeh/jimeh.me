@@ -1,4 +1,4 @@
-interface FancyboxLike {
+export interface FancyboxLike {
   bind(selector: string, options: unknown): void;
   unbind?(selector: string): void;
 }

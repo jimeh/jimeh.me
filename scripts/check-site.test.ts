@@ -177,4 +177,54 @@ describe("builtSiteFailures", () => {
 
     expect(builtSiteFailures({ distDir, posts, siteUrl })).toEqual([]);
   });
+
+  test("reports lightboxed featured post images", () => {
+    const distDir = tempDir();
+    const posts = [
+      post("2020/emacs-native-comp-on-macos-a-mostly-automated-build-script", {
+        title: "Emacs",
+        description: "Emacs description",
+        date: "2020-08-26",
+        slug: "emacs-native-comp-on-macos-a-mostly-automated-build-script",
+        tags: ["emacs"],
+      }),
+    ];
+
+    writeFile(
+      distDir,
+      "blog/2020/emacs-native-comp-on-macos-a-mostly-automated-build-script/index.html",
+      '<article><figure><a data-fancybox="gallery"><img></a></figure></article>',
+    );
+
+    expect(builtSiteFailures({ distDir, posts })).toEqual(
+      expect.arrayContaining([
+        "blog/2020/emacs-native-comp-on-macos-a-mostly-automated-build-script/index.html: expected featured figure to omit Fancybox.",
+      ]),
+    );
+  });
+
+  test("reports missing body Fancybox links on image gallery posts", () => {
+    const distDir = tempDir();
+    const posts = [
+      post("2015/my-website-remade", {
+        title: "My Website, Remade",
+        description: "Website description",
+        date: "2015-10-26",
+        slug: "my-website-remade",
+        tags: ["blogging"],
+      }),
+    ];
+
+    writeFile(
+      distDir,
+      "blog/2015/my-website-remade/index.html",
+      "<article><figure><img></figure></article>",
+    );
+
+    expect(builtSiteFailures({ distDir, posts })).toEqual(
+      expect.arrayContaining([
+        "blog/2015/my-website-remade/index.html: expected article body to include Fancybox image links.",
+      ]),
+    );
+  });
 });
