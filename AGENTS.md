@@ -148,6 +148,11 @@ tests are configured.
   route context. For post-page render tests, use a fixture post that avoids
   image-derived OG URL generation, or cover the URL-building branch through a
   smaller helper.
+- Vitest resolves `astro:content` through Astro's dev data store at
+  `.astro/data-store.json`; `astro sync` writes the production store under
+  `node_modules/.astro`. Keep `pretest` running
+  `scripts/prepare-vitest-content.ts` so clean CI runners see blog entries in
+  page/RSS tests.
 - With Astro `ClientRouter`, keep Fancybox `Hash: false` for blog images.
   Fancybox hash cleanup triggers Astro history/hash handling during close, which
   can remove the lightbox DOM before the thumbnail return animation completes.

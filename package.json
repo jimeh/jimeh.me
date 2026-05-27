@@ -7,6 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "prepare": "lefthook install --reset-hooks-path",
+    "pretest": "tsx scripts/prepare-vitest-content.ts",
     "precommit": "lefthook run pre-commit",
     "test": "vitest run",
     "lint": "eslint . && stylelint 'src/**/*.css' && pnpm lint:markdown && pnpm lint:mdx",
