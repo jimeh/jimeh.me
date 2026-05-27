@@ -23,9 +23,12 @@ test("converts dead+ links into inert dead-link markup", () => {
 
   const wrapper = childAt(tree, 0);
   const deadLink = childAt(wrapper, 0);
+  const icon = childAt(deadLink, 1);
+  const path = childAt(icon, 0);
   const tooltip = childAt(wrapper, 1);
   const wrapperProperties = propertiesOf(wrapper);
   const deadLinkProperties = propertiesOf(deadLink);
+  const iconProperties = propertiesOf(icon);
   const tooltipProperties = propertiesOf(tooltip);
 
   expect(wrapper.tagName).toBe("span");
@@ -41,7 +44,14 @@ test("converts dead+ links into inert dead-link markup", () => {
   expect(deadLinkProperties.dataDeadLinkHref).toBe(
     "https://example.com/old-page",
   );
-  expect(deadLink.children).toEqual([text("old page")]);
+  expect(deadLink.children?.[0]).toEqual(text("old page"));
+  expect(icon.tagName).toBe("svg");
+  expect(iconProperties.ariaHidden).toBe("true");
+  expect(iconProperties.className).toEqual(["dead-link-icon"]);
+  expect(iconProperties.dataIcon).toBe("fa6-solid:link-slash");
+  expect(iconProperties.dataDeadLinkIcon).toBe("");
+  expect(path.tagName).toBe("path");
+  expect(propertiesOf(path).fill).toBe("currentColor");
   expect(tooltip.tagName).toBe("span");
   expect(tooltipProperties.role).toBe("tooltip");
   expect(deadLinkProperties.ariaDescribedBy).toBe(tooltipProperties.id);
@@ -60,9 +70,9 @@ test("strips dead+ from autolink text that falls back to href", () => {
   expect(deadLinkProperties.dataDeadLinkHref).toBe(
     "http://zhuoqe.org/svn/adiumlogs/trunk/",
   );
-  expect(deadLink.children).toEqual([
+  expect(deadLink.children?.[0]).toEqual(
     text("http://zhuoqe.org/svn/adiumlogs/trunk/"),
-  ]);
+  );
 });
 
 test("keeps explicit link text for dead+ links", () => {
@@ -76,7 +86,7 @@ test("keeps explicit link text for dead+ links", () => {
 
   const deadLink = childAt(childAt(tree, 0), 0);
 
-  expect(deadLink.children).toEqual([text("Adium logs repository")]);
+  expect(deadLink.children?.[0]).toEqual(text("Adium logs repository"));
 });
 
 test("uses the default tooltip reason when no title is present", () => {

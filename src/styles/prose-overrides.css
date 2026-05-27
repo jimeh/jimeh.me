@@ -24,6 +24,30 @@
   text-decoration-color: var(--accent);
 }
 
+.prose
+  :where(a[data-external-link] > .external-link-icon):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 0.2em;
+  opacity: 0.75;
+  vertical-align: -0.08em;
+}
+
+.prose
+  :where([data-dead-link-href] > .dead-link-icon):not(
+    :where([class~="not-prose"], [class~="not-prose"] *)
+  ) {
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 0.2em;
+  opacity: 0.75;
+  vertical-align: -0.08em;
+}
+
 /* Inline code */
 
 .prose

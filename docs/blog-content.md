@@ -151,6 +151,11 @@ Regular Markdown links, lists, headings, tables, and images work as expected.
 For local post assets that need layout control, prefer MDX media components over
 plain Markdown images.
 
+External HTTP(S) links in Markdown and MDX prose automatically render with the
+`fa6-solid:up-right-from-square` icon. Same-site absolute links such as
+`https://jimeh.me/blog/`, site-relative links such as `/blog/`, and image links
+stay unmarked.
+
 ## MDX Components
 
 MDX media components are exported from `@mdx/index`:
@@ -293,7 +298,8 @@ omits the `dead+` prefix:
 
 The original `href` is kept only as build output metadata. It is not rendered as
 a clickable destination. Hovering or focusing the text shows the default
-dead-link message; use the Markdown link title to customize it:
+dead-link message. Dead links render with the `fa6-solid:link-slash` icon. Use
+the Markdown link title to customize the message:
 
 ```md
 [old download](dead+http://example.com/old-download.zip "This archive is gone.")

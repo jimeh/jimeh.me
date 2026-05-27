@@ -1,5 +1,8 @@
+import { icons as fa6SolidIcons } from "@iconify-json/fa6-solid";
+
 const DEAD_LINK_PATTERN = /^dead\+([a-z][a-z0-9+.-]*:\/\/.+)$/i;
 const DEFAULT_REASON = "This link is dead and no longer works.";
+const DEAD_LINK_ICON = "link-slash";
 
 const DEAD_LINK_CLASS =
   "text-accent hover:decoration-accent focus-visible:decoration-accent " +
@@ -53,6 +56,7 @@ export function rehypeDeadLinks() {
         textContent(node.children) === href
           ? [{ type: "text", value: originalHref }]
           : node.children;
+      const linkChildren = [...(children ?? []), deadLinkIcon()];
 
       node.tagName = "span";
       node.properties = {
@@ -70,7 +74,7 @@ export function rehypeDeadLinks() {
             className: DEAD_LINK_CLASS.split(" "),
             dataDeadLinkHref: originalHref,
           },
-          children,
+          children: linkChildren,
         },
         {
           type: "element",
@@ -85,6 +89,61 @@ export function rehypeDeadLinks() {
       ];
     });
   };
+}
+
+function deadLinkIcon(): HastNode {
+  const icon = fa6SolidIcons.icons[DEAD_LINK_ICON];
+
+  if (!icon) {
+    throw new Error(`Unable to locate fa6-solid:${DEAD_LINK_ICON}`);
+  }
+
+  const width = icon.width ?? 640;
+  const height = icon.height ?? 512;
+
+  return {
+    type: "element",
+    tagName: "svg",
+    properties: {
+      ariaHidden: "true",
+      className: ["dead-link-icon"],
+      dataDeadLinkIcon: "",
+      dataIcon: `fa6-solid:${DEAD_LINK_ICON}`,
+      focusable: "false",
+      height,
+      viewBox: `0 0 ${width} ${height}`,
+      width,
+    },
+    children: iconBodyChildren(icon.body),
+  };
+}
+
+function iconBodyChildren(body: string): HastNode[] {
+  const children: HastNode[] = [];
+
+  for (const match of body.matchAll(/<path\b([^>]*)\/?>/g)) {
+    children.push({
+      type: "element",
+      tagName: "path",
+      properties: iconAttributes(match[1] ?? ""),
+      children: [],
+    });
+  }
+
+  return children;
+}
+
+function iconAttributes(attributes: string): Record<string, string> {
+  const properties: Record<string, string> = {};
+
+  for (const match of attributes.matchAll(/([\w:-]+)="([^"]*)"/g)) {
+    const [, name, value] = match;
+    if (!name || value === undefined) continue;
+
+    properties[name] = value;
+  }
+
+  return properties;
 }
 
 function deadLinkFileId(file: VFileLike) {
