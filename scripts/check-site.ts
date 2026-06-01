@@ -119,7 +119,9 @@ export function builtSiteFailures(
   }
 
   assertFile("index.html");
+  assertFile("llms.txt");
   assertFile("blog/index.html");
+  assertFile("blog/index.md");
   assertFile("blog/tags/index.html");
   assertFile("rss.xml");
   assertFile("sitemap-index.xml");
@@ -136,6 +138,12 @@ export function builtSiteFailures(
   );
   assertIncludes("rss.xml", `<link>${checkSiteUrl}/</link>`);
   assertNotIncludes("rss.xml", "/blog/archives/");
+  assertIncludes("llms.txt", "## Profile");
+  assertIncludes("llms.txt", "## Links");
+  assertNotIncludes("llms.txt", "mailto:");
+  assertNotIncludes("llms.txt", siteConfig.email.rot13Text);
+  assertIncludes("sitemap-0.xml", `${checkSiteUrl}/llms.txt`);
+  assertNotIncludes("sitemap-0.xml", ".md");
 
   const years = new Set<string>();
   const tags = new Set<string>();
@@ -186,10 +194,15 @@ export function builtSiteFailures(
     }
 
     const canonicalPath = `blog/${route.path}/index.html`;
+    const canonicalMarkdownPath = `blog/${route.path}.md`;
     const sourcePath = `blog/${route.sourceSlug}/index.html`;
     const canonicalUrl = `${checkSiteUrl}/blog/${route.path}/`;
 
     assertFile(canonicalPath);
+    assertFile(canonicalMarkdownPath);
+    assertIncludes(canonicalMarkdownPath, `Source: ${canonicalUrl}`);
+    assertNotIncludes(canonicalMarkdownPath, "import ");
+    assertNotIncludes(canonicalMarkdownPath, "<Image");
     if (sourcePath !== canonicalPath) {
       assertNoFile(sourcePath);
     }
@@ -229,6 +242,7 @@ export function builtSiteFailures(
 
   if (archiveCount > 0) {
     assertFile("blog/archives/index.html");
+    assertFile("blog/archives/index.md");
     assertFile("blog/archives/tags/index.html");
   }
 
@@ -240,6 +254,7 @@ export function builtSiteFailures(
       `href="/blog/archives/${archive}/"`,
     );
     assertFile(archivePath);
+    assertFile(`blog/archives/${archive}.md`);
     assertIncludes(archivePath, "<article");
     assertFile(archiveTagsPath);
   }

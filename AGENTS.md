@@ -156,3 +156,6 @@ are configured and can be run with `mise run test`.
 - With Astro `ClientRouter`, keep Fancybox `Hash: false` for blog images.
   Fancybox hash cleanup triggers Astro history/hash handling during close, which
   can remove the lightbox DOM before the thumbnail return animation completes.
+- Astro content collection entries expose source-relative paths through
+  `filePath`; `id` is not enough to reconstruct nested content directories when
+  resolving local assets for non-HTML exports.
