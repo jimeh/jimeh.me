@@ -20,6 +20,8 @@ const defaultOptions: Required<MarkdownMdxOptions> = {
   resolveAsset: (src) => src,
   transparentComponents: mdxMarkdownTransparentComponents,
 };
+const localDefaultImportPattern =
+  /^import\s+(?<name>[A-Za-z_$][\w$]*)\s+from\s+["'](?<path>(?:\.{1,2}\/)+[^"']+)["'];?$/gm;
 
 /** Renders the supported Markdown-compatible subset of blog MDX to Markdown. */
 export function renderMarkdownMdx(
@@ -209,9 +211,7 @@ function isResolvableAsset(value: string): boolean {
 
 function localDefaultImports(source: string): Map<string, string> {
   const imports = new Map<string, string>();
-  const matches = source.matchAll(
-    /^import\s+(?<name>[A-Za-z_$][\w$]*)\s+from\s+["'](?<path>\.\/[^"']+)["'];?$/gm,
-  );
+  const matches = source.matchAll(localDefaultImportPattern);
 
   for (const match of matches) {
     const name = match.groups?.name;

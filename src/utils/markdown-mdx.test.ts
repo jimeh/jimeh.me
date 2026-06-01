@@ -29,6 +29,22 @@ describe("renderMarkdownMdx", () => {
     expect(markdown).not.toContain("<Image");
   });
 
+  test("resolves parent-relative imported assets", () => {
+    const markdown = renderMarkdownMdx(
+      [
+        'import photo from "../assets/photo one).webp";',
+        "",
+        '<Image src={photo} alt="Photo" />',
+      ].join("\n"),
+      { resolveAsset: (src) => `/resolved/${src}` },
+    );
+
+    expect(markdown).toContain(
+      "![Photo](/resolved/../assets/photo%20one%29.webp)",
+    );
+    expect(markdown).not.toContain("import photo");
+  });
+
   test("renders dead links with visible dead-link text", () => {
     expect(
       renderMarkdownMdx("[Cow](dead+http://cow.example/reflection/)"),

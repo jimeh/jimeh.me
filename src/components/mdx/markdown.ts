@@ -33,5 +33,19 @@ function escapeMarkdownLinkLabel(value: string): string {
 }
 
 function escapeMarkdownUrl(value: string): string {
-  return value.replaceAll(")", "%29").replaceAll(" ", "%20");
+  let encoded: string;
+
+  try {
+    encoded = encodeURI(value);
+  } catch {
+    encoded = value.replaceAll(" ", "%20");
+  }
+
+  return encoded
+    .replaceAll("(", "%28")
+    .replaceAll(")", "%29")
+    .replaceAll('"', "%22")
+    .replaceAll("'", "%27")
+    .replaceAll("<", "%3C")
+    .replaceAll(">", "%3E");
 }

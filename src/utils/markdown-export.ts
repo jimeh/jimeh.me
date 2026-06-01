@@ -12,6 +12,11 @@ export interface BlogPostMarkdownOptions {
   resolveAsset?: (post: BlogPost, src: string) => string;
 }
 
+export interface NamedArchiveMarkdownLink {
+  label: string;
+  slug: string;
+}
+
 /** Returns a Markdown response suitable for static text endpoints. */
 export function markdownResponse(markdown: string): Response {
   return new Response(markdown, {
@@ -51,6 +56,56 @@ ${siteLinks
 `);
 }
 
+/** Returns the llms.txt directory for public Markdown entry points. */
+export function llmsDirectoryMarkdown(
+  mainPosts: BlogPost[],
+  namedArchives: NamedArchiveMarkdownLink[],
+): string {
+  const archiveLinks = namedArchives
+    .map((archive) => {
+      const href = absoluteSiteUrl(blogNamedArchiveMarkdownUrl(archive.slug));
+
+      return `- [${archive.label} archive](${href})`;
+    })
+    .join("\n");
+  const blogLinks = mainPosts
+    .slice()
+    .sort(compareBlogPostsDesc)
+    .map((post) => {
+      const href = absoluteSiteUrl(blogPostMarkdownUrl(post));
+      const description = post.data.description
+        ? `: ${post.data.description}`
+        : "";
+
+      return `- [${post.data.title}](${href})${description}`;
+    })
+    .join("\n");
+
+  return normalizeMarkdown(`
+# ${siteConfig.title}
+
+> ${siteConfig.description}
+
+Personal site and blog for Jim Myhrberg, also known as jimeh.
+
+${publicProfileMarkdown()}
+
+## Core
+
+- [Blog](${absoluteSiteUrl("/blog/index.md")}): Current blog posts.
+
+## Blog Posts
+
+${blogLinks}
+
+## Optional
+
+- [Blog archives](${absoluteSiteUrl("/blog/archives/index.md")}): Historical
+  and imported posts.
+${archiveLinks}
+`);
+}
+
 /** Returns Markdown for the main blog index. */
 export function blogIndexMarkdown(posts: BlogPost[]): string {
   const mainPosts = posts.filter(isMainBlogPost).sort(compareBlogPostsDesc);
@@ -71,7 +126,7 @@ ${postListMarkdown(mainPosts)}
 /** Returns Markdown for the archive index and general archived posts. */
 export function archiveIndexMarkdown(
   generalPosts: BlogPost[],
-  namedArchives: Array<{ label: string; slug: string }>,
+  namedArchives: NamedArchiveMarkdownLink[],
 ): string {
   const archiveLinks = namedArchives
     .map((archive) => {
@@ -123,14 +178,16 @@ export function blogPostMarkdown(
     ? `\nTags: ${post.data.tags.join(", ")}`
     : "";
   const archiveLine = archive ? `\nArchive: ${archive.label}` : "";
+  const description = post.data.description
+    ? `\n${post.data.description}\n`
+    : "";
 
   return normalizeMarkdown(`
 # ${post.data.title}
 
 Source: ${absoluteSiteUrl(blogPostUrl(post))}
 Date: ${post.data.date}${post.data.updatedDate ? `\nUpdated: ${post.data.updatedDate}` : ""}${archiveLine}${tags}
-
-${post.data.description}
+${description}
 
 ${featuredImage}
 
@@ -145,6 +202,8 @@ export function postListMarkdown(posts: BlogPost[]): string {
   }
 
   return posts
+    .slice()
+    .sort(compareBlogPostsDesc)
     .map((post) => {
       const href = absoluteSiteUrl(blogPostMarkdownUrl(post));
       const description = post.data.description
