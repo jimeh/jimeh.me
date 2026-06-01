@@ -197,9 +197,11 @@ export function builtSiteFailures(
     const canonicalMarkdownPath = `blog/${route.path}.md`;
     const sourcePath = `blog/${route.sourceSlug}/index.html`;
     const canonicalUrl = `${checkSiteUrl}/blog/${route.path}/`;
+    const canonicalMarkdownUrl = `/blog/${route.path}.md`;
 
     assertFile(canonicalPath);
     assertFile(canonicalMarkdownPath);
+    assertIncludes(canonicalPath, `href="${canonicalMarkdownUrl}"`);
     assertIncludes(canonicalMarkdownPath, `Source: ${canonicalUrl}`);
     assertNotIncludes(canonicalMarkdownPath, "import ");
     assertNotIncludes(canonicalMarkdownPath, "<Image");

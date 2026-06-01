@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import { getImage } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import { Image } from "@mdx/index";
 import PostPagerLink from "@components/blog/PostPagerLink.astro";
@@ -15,6 +16,7 @@ import {
   blogArchivesUrl,
   blogIndexUrl,
   blogNamedArchiveTagsUrl,
+  blogPostMarkdownUrl,
   blogPostUrl,
   blogTagsUrl,
 } from "@utils/blog-url";
@@ -83,6 +85,7 @@ const { prevPost, nextPost } = postPageNavigation(
   await getCollection("blog"),
   post,
 );
+const markdownTooltipId = `post-markdown-tooltip-${crypto.randomUUID()}`;
 ---
 
 <BlogLayout
@@ -103,7 +106,7 @@ const { prevPost, nextPost } = postPageNavigation(
           <p class="text-subheading mt-2 text-lg leading-snug">{description}</p>
         )
       }
-      <div class="mt-4">
+      <div class="mt-4 flex flex-wrap items-center justify-between gap-3">
         <PostMeta
           date={date}
           updatedDate={updatedDate}
@@ -111,6 +114,23 @@ const { prevPost, nextPost } = postPageNavigation(
           archiveLabel={archiveMetaLabel}
           archiveHref={archive?.url}
         />
+        <span class="group relative inline-block">
+          <a
+            href={blogPostMarkdownUrl(post)}
+            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex rounded-full border p-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+            aria-label="View Markdown version of this post"
+            aria-describedby={markdownTooltipId}
+          >
+            <Icon name="octicon:markdown-16" class="size-4" />
+          </a>
+          <span
+            id={markdownTooltipId}
+            role="tooltip"
+            class="bg-on-surface text-surface pointer-events-none absolute top-full left-1/2 z-20 mt-2 -translate-x-1/2 rounded-md px-2 py-1 text-xs font-medium whitespace-nowrap opacity-0 shadow-sm transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100"
+          >
+            Markdown
+          </span>
+        </span>
       </div>
       <hr class="border-border mt-6" />
     </header>

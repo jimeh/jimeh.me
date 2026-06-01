@@ -153,11 +153,23 @@ describe("builtSiteFailures", () => {
       "sitemap-0.xml",
       `${siteUrl}/llms.txt\n${mainUrl}\n${archiveUrl}\n${generalArchiveUrl}`,
     );
-    writeFile(distDir, "blog/2025/main/index.html");
+    writeFile(
+      distDir,
+      "blog/2025/main/index.html",
+      'href="/blog/2025/main.md"',
+    );
     writeFile(distDir, "blog/2025/main.md", `Source: ${mainUrl}`);
-    writeFile(distDir, "blog/2024/archive/index.html");
+    writeFile(
+      distDir,
+      "blog/2024/archive/index.html",
+      'href="/blog/2024/archive.md"',
+    );
     writeFile(distDir, "blog/2024/archive.md", `Source: ${archiveUrl}`);
-    writeFile(distDir, "blog/2023/general-archive/index.html");
+    writeFile(
+      distDir,
+      "blog/2023/general-archive/index.html",
+      'href="/blog/2023/general-archive.md"',
+    );
     writeFile(
       distDir,
       "blog/2023/general-archive.md",

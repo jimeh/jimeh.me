@@ -2,7 +2,11 @@ import type { CollectionEntry } from "astro:content";
 import { siteConfig, siteLinks } from "../data/site";
 import { blogArchiveInfo, isMainBlogPost } from "./blog-archive";
 import { compareBlogPostsDesc } from "./blog-sort";
-import { blogPostRoute, blogPostUrl } from "./blog-url";
+import {
+  blogNamedArchiveMarkdownUrl,
+  blogPostMarkdownUrl,
+  blogPostUrl,
+} from "./blog-url";
 import { lightImage } from "./image-source";
 import { renderMarkdownMdx } from "./markdown-mdx";
 
@@ -27,16 +31,6 @@ export function markdownResponse(markdown: string): Response {
 /** Returns an absolute site URL for a site-relative path. */
 export function absoluteSiteUrl(path: string): string {
   return new URL(path, siteConfig.url).href;
-}
-
-/** Returns the public Markdown URL for a blog post. */
-export function blogPostMarkdownUrl(post: BlogPost): string {
-  return `/blog/${blogPostRoute(post)}.md`;
-}
-
-/** Returns the public Markdown URL for a named blog archive list. */
-export function blogNamedArchiveMarkdownUrl(slug: string): string {
-  return `/blog/archives/${slug}.md`;
 }
 
 /** Returns public profile details suitable for llms.txt. */
