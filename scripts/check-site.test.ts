@@ -28,6 +28,18 @@ function writeFile(root: string, path: string, source = ""): void {
   writeFileSync(filePath, source);
 }
 
+function postHtml(markdownUrl: string): string {
+  return [
+    "data-post-markdown-toggle",
+    "data-post-markdown-view",
+    "data-post-markdown-code",
+    "data-post-markdown-raw",
+    "data-post-markdown-download",
+    'data-language="markdown"',
+    `href="${markdownUrl}"`,
+  ].join(" ");
+}
+
 function post(
   id: string,
   frontmatter: Record<string, boolean | string | string[]>,
@@ -156,19 +168,19 @@ describe("builtSiteFailures", () => {
     writeFile(
       distDir,
       "blog/2025/main/index.html",
-      'href="/blog/2025/main.md"',
+      postHtml("/blog/2025/main.md"),
     );
     writeFile(distDir, "blog/2025/main.md", `Source: ${mainUrl}`);
     writeFile(
       distDir,
       "blog/2024/archive/index.html",
-      'href="/blog/2024/archive.md"',
+      postHtml("/blog/2024/archive.md"),
     );
     writeFile(distDir, "blog/2024/archive.md", `Source: ${archiveUrl}`);
     writeFile(
       distDir,
       "blog/2023/general-archive/index.html",
-      'href="/blog/2023/general-archive.md"',
+      postHtml("/blog/2023/general-archive.md"),
     );
     writeFile(
       distDir,

@@ -201,6 +201,12 @@ export function builtSiteFailures(
 
     assertFile(canonicalPath);
     assertFile(canonicalMarkdownPath);
+    assertIncludes(canonicalPath, "data-post-markdown-toggle");
+    assertIncludes(canonicalPath, "data-post-markdown-view");
+    assertIncludes(canonicalPath, "data-post-markdown-code");
+    assertIncludes(canonicalPath, "data-post-markdown-raw");
+    assertIncludes(canonicalPath, "data-post-markdown-download");
+    assertIncludes(canonicalPath, 'data-language="markdown"');
     assertIncludes(canonicalPath, `href="${canonicalMarkdownUrl}"`);
     assertIncludes(canonicalMarkdownPath, `Source: ${canonicalUrl}`);
     assertNotIncludes(canonicalMarkdownPath, "import ");

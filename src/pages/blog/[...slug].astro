@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import { getImage } from "astro:assets";
+import { Code } from "astro:components";
 import { Icon } from "astro-icon/components";
 import BlogLayout from "../../layouts/BlogLayout.astro";
 import { Image } from "@mdx/index";
@@ -21,6 +22,8 @@ import {
   blogTagsUrl,
 } from "@utils/blog-url";
 import { darkImage, lightImage } from "@utils/image-source";
+import { blogPostMarkdown } from "@utils/markdown-export";
+import { resolveBlogMarkdownAsset } from "@utils/markdown-assets";
 import { postImageNoLightbox } from "@utils/post-image-lightbox";
 import { readingTime } from "@utils/reading-time";
 import { blogPostStaticPaths, postPageNavigation } from "@utils/blog-page-data";
@@ -86,6 +89,11 @@ const { prevPost, nextPost } = postPageNavigation(
   post,
 );
 const markdownTooltipId = `post-markdown-tooltip-${crypto.randomUUID()}`;
+const markdownUrl = blogPostMarkdownUrl(post);
+const postMarkdown = blogPostMarkdown(post, {
+  resolveAsset: resolveBlogMarkdownAsset,
+});
+const markdownFilename = `${post.data.slug}.md`;
 ---
 
 <BlogLayout
@@ -115,51 +123,41 @@ const markdownTooltipId = `post-markdown-tooltip-${crypto.randomUUID()}`;
           archiveHref={archive?.url}
         />
         <span class="group relative inline-block">
-          <a
-            href={blogPostMarkdownUrl(post)}
+          <button
+            type="button"
+            data-post-markdown-toggle
             class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex rounded-full border p-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
-            aria-label="View Markdown version of this post"
+            aria-label="Show Markdown view"
             aria-describedby={markdownTooltipId}
+            aria-pressed="false"
           >
-            <Icon name="octicon:markdown-16" class="size-4" />
-          </a>
+            <Icon
+              name="octicon:markdown-16"
+              class="size-4"
+              data-post-view-icon="markdown"
+            />
+            <Icon
+              name="heroicons:document-text"
+              class="hidden size-4"
+              data-post-view-icon="article"
+            />
+          </button>
           <span
             id={markdownTooltipId}
             role="tooltip"
             class="bg-on-surface text-surface pointer-events-none absolute top-full left-1/2 z-20 mt-2 -translate-x-1/2 rounded-md px-2 py-1 text-xs font-medium whitespace-nowrap opacity-0 shadow-sm transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100"
           >
-            Markdown
+            <span data-post-view-tooltip="markdown">Markdown</span>
+            <span data-post-view-tooltip="article" class="hidden">Article</span>
           </span>
         </span>
       </div>
       <hr class="border-border mt-6" />
     </header>
 
-    {
-      showImage && imageLight && !imageFloats && (
-        <Image
-          src={imageLight}
-          alt={image.alt}
-          caption={image.caption}
-          credit={image.credit}
-          size={image.size}
-          position={image.position}
-          aspect={image.aspect}
-          objectPosition={image.objectPosition}
-          flush={image.flush}
-          noLightbox={noImageLightbox}
-          gallery={image.gallery}
-          darkSrc={imageDark}
-          loading="eager"
-        />
-      )
-    }
-
-    <div
-      class="prose dark:prose-invert mt-8 max-w-none after:clear-both after:block"
-    >
+    <div data-post-html-view>
       {
-        showImage && imageLight && imageFloats && (
+        showImage && imageLight && !imageFloats && (
           <Image
             src={imageLight}
             alt={image.alt}
@@ -177,48 +175,150 @@ const markdownTooltipId = `post-markdown-tooltip-${crypto.randomUUID()}`;
           />
         )
       }
-      <Content />
+
+      <div
+        class="prose dark:prose-invert mt-8 max-w-none after:clear-both after:block"
+      >
+        {
+          showImage && imageLight && imageFloats && (
+            <Image
+              src={imageLight}
+              alt={image.alt}
+              caption={image.caption}
+              credit={image.credit}
+              size={image.size}
+              position={image.position}
+              aspect={image.aspect}
+              objectPosition={image.objectPosition}
+              flush={image.flush}
+              noLightbox={noImageLightbox}
+              gallery={image.gallery}
+              darkSrc={imageDark}
+              loading="eager"
+            />
+          )
+        }
+        <Content />
+      </div>
+      <FancyboxInit />
+      <CodeCopyButton />
     </div>
-    <FancyboxInit />
-    <CodeCopyButton />
+
+    <section
+      id="markdown"
+      data-post-markdown-view
+      class="mt-8 hidden"
+      aria-label="Markdown source"
+    >
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+        <p class="text-muted text-sm">Markdown source</p>
+        <div class="flex flex-wrap gap-2">
+          <button
+            type="button"
+            data-post-markdown-copy
+            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            <Icon
+              name="octicon:copy-16"
+              class="size-4"
+              data-post-markdown-copy-icon="copy"
+            />
+            <Icon
+              name="octicon:check-16"
+              class="hidden size-4 text-(--alert-tip)"
+              data-post-markdown-copy-icon="copied"
+            />
+            <span data-post-markdown-copy-label="copy">Copy</span>
+            <span data-post-markdown-copy-label="copied" class="hidden">
+              Copied
+            </span>
+          </button>
+          <a
+            href={markdownUrl}
+            data-post-markdown-download
+            download={markdownFilename}
+            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            <Icon name="heroicons:arrow-down-tray" class="size-4" />
+            <span>Download</span>
+          </a>
+          <a
+            href={markdownUrl}
+            data-post-markdown-raw
+            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            <Icon name="octicon:link-external-16" class="size-4" />
+            <span>Raw</span>
+          </a>
+        </div>
+      </div>
+      <div class="prose dark:prose-invert max-w-none">
+        <div data-rehype-pretty-code-figure data-post-markdown-code>
+          <Code
+            code={postMarkdown}
+            lang="markdown"
+            themes={{ light: "one-light", dark: "one-dark-pro" }}
+            defaultColor={false}
+            wrap={false}
+          />
+        </div>
+      </div>
+    </section>
   </article>
 
-  {
-    tags && tags.length > 0 && (
-      <div class="mt-10">
-        <TagList tags={tags} tagBaseUrl={tagBaseUrl} />
-      </div>
-    )
+  <div data-post-html-view>
+    {
+      tags && tags.length > 0 && (
+        <div class="mt-10">
+          <TagList tags={tags} tagBaseUrl={tagBaseUrl} />
+        </div>
+      )
+    }
+
+    <hr class="border-border mt-8" />
+
+    <nav
+      class="mt-6 flex justify-between gap-4 text-sm"
+      aria-label="Post navigation"
+    >
+      {
+        prevPost ? (
+          <PostPagerLink
+            href={blogPostUrl(prevPost)}
+            label="Previous"
+            title={prevPost.data.title}
+          />
+        ) : (
+          <div />
+        )
+      }
+      {
+        nextPost ? (
+          <PostPagerLink
+            href={blogPostUrl(nextPost)}
+            label="Next"
+            title={nextPost.data.title}
+            align="right"
+          />
+        ) : (
+          <div />
+        )
+      }
+    </nav>
+  </div>
+</BlogLayout>
+
+<script>
+  import { initPostMarkdownView } from "@components/blog/post-markdown-view";
+
+  function init() {
+    initPostMarkdownView(document, navigator.clipboard);
   }
 
-  <hr class="border-border mt-8" />
-
-  <nav
-    class="mt-6 flex justify-between gap-4 text-sm"
-    aria-label="Post navigation"
-  >
-    {
-      prevPost ? (
-        <PostPagerLink
-          href={blogPostUrl(prevPost)}
-          label="Previous"
-          title={prevPost.data.title}
-        />
-      ) : (
-        <div />
-      )
-    }
-    {
-      nextPost ? (
-        <PostPagerLink
-          href={blogPostUrl(nextPost)}
-          label="Next"
-          title={nextPost.data.title}
-          align="right"
-        />
-      ) : (
-        <div />
-      )
-    }
-  </nav>
-</BlogLayout>
+  document.addEventListener("astro:page-load", init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+</script>
