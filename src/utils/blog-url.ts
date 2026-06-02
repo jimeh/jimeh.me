@@ -34,7 +34,7 @@ export function blogPostSourceUrl(post: BlogPost): string {
   const filePath = (post as BlogPost & { filePath?: string }).filePath;
   const sourcePath = filePath ?? `src/content/blog/${post.id}`;
 
-  return [
+  const url = [
     sourceRepositoryUrl,
     "blob",
     sourceRepositoryRef,
@@ -44,6 +44,8 @@ export function blogPostSourceUrl(post: BlogPost): string {
       .map((segment) => encodeURIComponent(segment))
       .join("/"),
   ].join("/");
+
+  return `${url}?plain=1`;
 }
 
 /** Returns the blog index URL. */

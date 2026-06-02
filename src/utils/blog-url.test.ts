@@ -58,7 +58,8 @@ test("returns the GitHub source URL for a blog post file", () => {
 
   expect(blogPostSourceUrl(sourcePost)).toBe(
     "https://github.com/jimeh/jimeh.me/blob/main/" +
-      "src/content/blog/2025/liquid-glass/liquid%20glass%20source.mdx",
+      "src/content/blog/2025/liquid-glass/liquid%20glass%20source.mdx" +
+      "?plain=1",
   );
 });
 

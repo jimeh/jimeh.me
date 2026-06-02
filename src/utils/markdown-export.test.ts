@@ -27,8 +27,8 @@ function post(
 }
 
 describe("publicProfileMarkdown", () => {
-  test("omits email address details", () => {
-    const markdown = publicProfileMarkdown();
+  test("omits email address details", async () => {
+    const markdown = await publicProfileMarkdown();
 
     expect(markdown).not.toContain("mailto:");
     expect(markdown).not.toContain(siteConfig.email.rot13Href);

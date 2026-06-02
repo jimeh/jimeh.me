@@ -48,8 +48,8 @@ export function absoluteSiteUrl(path: string): string {
 }
 
 /** Returns public profile details suitable for llms.txt. */
-export function publicProfileMarkdown(): string {
-  return normalizeMarkdown(`
+export function publicProfileMarkdown(): Promise<string> {
+  return formatMarkdown(`
 ## Profile
 
 Jim Myhrberg, also known as jimeh, is a software engineer. This is his personal
@@ -89,6 +89,8 @@ export async function llmsDirectoryMarkdown(
     })
     .join("\n");
 
+  const profile = await publicProfileMarkdown();
+
   return formatMarkdown(`
 # ${siteConfig.title}
 
@@ -96,7 +98,7 @@ export async function llmsDirectoryMarkdown(
 
 Personal site and blog for Jim Myhrberg, also known as jimeh.
 
-${publicProfileMarkdown()}
+${profile}
 
 ## Core
 
@@ -270,8 +272,4 @@ function isResolvableMarkdownAsset(source: string): boolean {
     source.startsWith("/@fs/") ||
     source.startsWith("/src/content/")
   );
-}
-
-function normalizeMarkdown(markdown: string): string {
-  return `${markdown.trim().replace(/\n{3,}/g, "\n\n")}\n`;
 }
