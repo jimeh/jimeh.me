@@ -69,6 +69,34 @@ export function builtSiteFailures(
     }
   }
 
+  function assertIncludesBefore(
+    path: string,
+    first: string,
+    second: string,
+  ): void {
+    const fullPath = join(checkDistDir, path);
+    if (!existsSync(fullPath)) {
+      failures.push(`${path}: cannot inspect missing file.`);
+      return;
+    }
+
+    const source = readFileSync(fullPath, "utf8");
+    const firstIndex = source.indexOf(first);
+    const secondIndex = source.indexOf(second);
+
+    if (firstIndex === -1) {
+      failures.push(`${path}: expected to include ${first}.`);
+      return;
+    }
+    if (secondIndex === -1) {
+      failures.push(`${path}: expected to include ${second}.`);
+      return;
+    }
+    if (firstIndex > secondIndex) {
+      failures.push(`${path}: expected ${first} before ${second}.`);
+    }
+  }
+
   function assertNotIncludes(path: string, value: string): void {
     const fullPath = join(checkDistDir, path);
     if (!existsSync(fullPath)) {
@@ -208,6 +236,16 @@ export function builtSiteFailures(
     assertIncludes(canonicalPath, "data-post-markdown-download");
     assertIncludes(canonicalPath, 'data-language="markdown"');
     assertIncludes(canonicalPath, `href="${canonicalMarkdownUrl}"`);
+    assertIncludesBefore(
+      canonicalPath,
+      'symbol id="ai:octicon:copy-16"',
+      'id="code-copy-btn-tpl"',
+    );
+    assertIncludesBefore(
+      canonicalPath,
+      'symbol id="ai:octicon:check-16"',
+      'id="code-copy-btn-tpl"',
+    );
     assertIncludes(canonicalMarkdownPath, `Source: ${canonicalUrl}`);
     assertNotIncludes(canonicalMarkdownPath, "import ");
     assertNotIncludes(canonicalMarkdownPath, "<Image");

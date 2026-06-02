@@ -37,6 +37,9 @@ function postHtml(markdownUrl: string): string {
     "data-post-markdown-download",
     'data-language="markdown"',
     `href="${markdownUrl}"`,
+    'symbol id="ai:octicon:copy-16"',
+    'symbol id="ai:octicon:check-16"',
+    'id="code-copy-btn-tpl"',
   ].join(" ");
 }
 

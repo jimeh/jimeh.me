@@ -126,7 +126,7 @@ const markdownFilename = `${post.data.slug}.md`;
           <button
             type="button"
             data-post-markdown-toggle
-            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex rounded-full border p-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex cursor-pointer rounded-full border p-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
             aria-label="Show Markdown view"
             aria-describedby={markdownTooltipId}
             aria-pressed="false"
@@ -154,6 +154,14 @@ const markdownFilename = `${post.data.slug}.md`;
       </div>
       <hr class="border-border mt-6" />
     </header>
+
+    <span
+      class="pointer-events-none absolute size-0 overflow-hidden"
+      aria-hidden="true"
+    >
+      <Icon name="octicon:copy-16" class="size-4" />
+      <Icon name="octicon:check-16" class="size-4" />
+    </span>
 
     <div data-post-html-view>
       {
