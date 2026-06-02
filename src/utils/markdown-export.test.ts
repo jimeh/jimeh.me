@@ -37,8 +37,8 @@ describe("publicProfileMarkdown", () => {
 });
 
 describe("llmsDirectoryMarkdown", () => {
-  test("sorts posts and omits missing descriptions", () => {
-    const markdown = llmsDirectoryMarkdown(
+  test("sorts posts and omits missing descriptions", async () => {
+    const markdown = await llmsDirectoryMarkdown(
       [
         post("older", { date: "2024-01-01", title: "Older" }),
         post("newer", {
@@ -61,15 +61,17 @@ describe("llmsDirectoryMarkdown", () => {
 });
 
 describe("blogPostMarkdown", () => {
-  test("omits missing descriptions", () => {
-    const markdown = blogPostMarkdown(post("post-title", { title: "Post" }));
+  test("omits missing descriptions", async () => {
+    const markdown = await blogPostMarkdown(
+      post("post-title", { title: "Post" }),
+    );
 
     expect(markdown).toContain("# Post");
     expect(markdown).not.toContain("undefined");
   });
 
-  test("places descriptions after frontmatter and title", () => {
-    const markdown = blogPostMarkdown(
+  test("places descriptions after frontmatter and title", async () => {
+    const markdown = await blogPostMarkdown(
       post("post-title", {
         description: "Post description.",
         title: "Post",
@@ -85,8 +87,8 @@ describe("blogPostMarkdown", () => {
     );
   });
 
-  test("renders post metadata as YAML frontmatter", () => {
-    const markdown = blogPostMarkdown(
+  test("renders post metadata as YAML frontmatter", async () => {
+    const markdown = await blogPostMarkdown(
       post("post-title", {
         archive: "zydev.info",
         tags: ["macos", "liquid-glass"],
@@ -115,8 +117,8 @@ describe("blogPostMarkdown", () => {
     expect(markdown).not.toContain("\nTags:");
   });
 
-  test("labels general archive posts as jimeh.me in frontmatter", () => {
-    const markdown = blogPostMarkdown(
+  test("labels general archive posts as jimeh.me in frontmatter", async () => {
+    const markdown = await blogPostMarkdown(
       post("post-title", {
         archive: true,
         title: "Post",
@@ -127,8 +129,8 @@ describe("blogPostMarkdown", () => {
     expect(markdown).not.toContain("archive: Archives");
   });
 
-  test("resolves featured image assets through the asset resolver", () => {
-    const markdown = blogPostMarkdown(
+  test("resolves featured image assets through the asset resolver", async () => {
+    const markdown = await blogPostMarkdown(
       post("post-title", {
         image: {
           src: imageMetadata(
@@ -158,8 +160,8 @@ describe("blogPostMarkdown", () => {
     expect(markdown).not.toContain("/@fs/");
   });
 
-  test("keeps already-built featured image asset URLs", () => {
-    const markdown = blogPostMarkdown(
+  test("keeps already-built featured image asset URLs", async () => {
+    const markdown = await blogPostMarkdown(
       post("post-title", {
         image: {
           src: imageMetadata("/_astro/cover.hash.jpg"),
@@ -180,6 +182,32 @@ describe("blogPostMarkdown", () => {
     expect(markdown).toContain(
       "![Cover](https://jimeh.me/_astro/cover.hash.jpg)",
     );
+  });
+
+  test("formats generated Markdown from transparent MDX wrappers", async () => {
+    const markdown = await blogPostMarkdown(
+      post(
+        "post-title",
+        { title: "Post" },
+        [
+          'import { Image, ImageGrid } from "@mdx/index";',
+          "",
+          "Before.",
+          "",
+          '<ImageGrid columns={2} size="wide">',
+          '  <Image src="./one.jpg" alt="One" />',
+          '  <Image src="./two.jpg" alt="Two" />',
+          "</ImageGrid>",
+        ].join("\n"),
+      ),
+      { resolveAsset: (_post, src) => `/assets/${src.split("/").pop()}` },
+    );
+
+    expect(markdown).toContain(
+      "Before.\n\n![One](/assets/one.jpg)\n\n![Two](/assets/two.jpg)",
+    );
+    expect(markdown).not.toMatch(/\n[ \t]+\n/);
+    expect(markdown).not.toMatch(/\n{3,}/);
   });
 });
 

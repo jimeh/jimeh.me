@@ -11,8 +11,10 @@ export async function getStaticPaths() {
   return blogPostStaticPaths(await getCollection("blog"));
 }
 
-export function GET({ props }: { props: { post: BlogPost } }) {
+export async function GET({ props }: { props: { post: BlogPost } }) {
   return markdownResponse(
-    blogPostMarkdown(props.post, { resolveAsset: resolveBlogMarkdownAsset }),
+    await blogPostMarkdown(props.post, {
+      resolveAsset: resolveBlogMarkdownAsset,
+    }),
   );
 }

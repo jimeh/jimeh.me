@@ -93,7 +93,7 @@ const { prevPost, nextPost } = postPageNavigation(
 const markdownTooltipId = `post-markdown-tooltip-${crypto.randomUUID()}`;
 const markdownUrl = blogPostMarkdownUrl(post);
 const markdownSourceUrl = blogPostSourceUrl(post);
-const postMarkdown = blogPostMarkdown(post, {
+const postMarkdown = await blogPostMarkdown(post, {
   resolveAsset: resolveBlogMarkdownAsset,
 });
 const markdownFilename = `${post.data.slug}.md`;

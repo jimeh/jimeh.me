@@ -13,5 +13,5 @@ export async function GET({
 }) {
   const data = archivePageData(await getCollection("blog"), props.slug);
 
-  return markdownResponse(namedArchiveMarkdown(props.label, data.posts));
+  return markdownResponse(await namedArchiveMarkdown(props.label, data.posts));
 }

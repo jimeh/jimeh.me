@@ -6,6 +6,6 @@ export async function GET() {
   const data = archivesIndexData(await getCollection("blog"));
 
   return markdownResponse(
-    archiveIndexMarkdown(data.generalPosts, data.namedArchives),
+    await archiveIndexMarkdown(data.generalPosts, data.namedArchives),
   );
 }

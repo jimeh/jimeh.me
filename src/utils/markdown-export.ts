@@ -1,4 +1,5 @@
 import type { CollectionEntry } from "astro:content";
+import prettier from "prettier";
 import { stringify as stringifyYaml } from "yaml";
 import { siteConfig, siteLinks } from "../data/site";
 import { blogArchiveInfo, isMainBlogPost } from "./blog-archive";
@@ -22,10 +23,22 @@ export interface NamedArchiveMarkdownLink {
   slug: string;
 }
 
+const prettierConfigFile = "generated.md";
+
 /** Returns a Markdown response suitable for static text endpoints. */
 export function markdownResponse(markdown: string): Response {
   return new Response(markdown, {
     headers: { "content-type": "text/markdown; charset=utf-8" },
+  });
+}
+
+/** Formats generated Markdown with the same Prettier config as project files. */
+export async function formatMarkdown(markdown: string): Promise<string> {
+  const config = await prettier.resolveConfig(prettierConfigFile);
+
+  return prettier.format(markdown, {
+    ...config,
+    parser: "markdown",
   });
 }
 
@@ -52,10 +65,10 @@ ${siteLinks
 }
 
 /** Returns the llms.txt directory for public Markdown entry points. */
-export function llmsDirectoryMarkdown(
+export async function llmsDirectoryMarkdown(
   mainPosts: BlogPost[],
   namedArchives: NamedArchiveMarkdownLink[],
-): string {
+): Promise<string> {
   const archiveLinks = namedArchives
     .map((archive) => {
       const href = absoluteSiteUrl(blogNamedArchiveMarkdownUrl(archive.slug));
@@ -76,7 +89,7 @@ export function llmsDirectoryMarkdown(
     })
     .join("\n");
 
-  return normalizeMarkdown(`
+  return formatMarkdown(`
 # ${siteConfig.title}
 
 > ${siteConfig.description}
@@ -102,10 +115,10 @@ ${archiveLinks}
 }
 
 /** Returns Markdown for the main blog index. */
-export function blogIndexMarkdown(posts: BlogPost[]): string {
+export async function blogIndexMarkdown(posts: BlogPost[]): Promise<string> {
   const mainPosts = posts.filter(isMainBlogPost).sort(compareBlogPostsDesc);
 
-  return normalizeMarkdown(`
+  return formatMarkdown(`
 # Blog
 
 Current blog posts by Jim Myhrberg.
@@ -119,10 +132,10 @@ ${postListMarkdown(mainPosts)}
 }
 
 /** Returns Markdown for the archive index and general archived posts. */
-export function archiveIndexMarkdown(
+export async function archiveIndexMarkdown(
   generalPosts: BlogPost[],
   namedArchives: NamedArchiveMarkdownLink[],
-): string {
+): Promise<string> {
   const archiveLinks = namedArchives
     .map((archive) => {
       const href = blogNamedArchiveMarkdownUrl(archive.slug);
@@ -131,7 +144,7 @@ export function archiveIndexMarkdown(
     })
     .join("\n");
 
-  return normalizeMarkdown(`
+  return formatMarkdown(`
 # Blog Archives
 
 Historical and imported blog posts.
@@ -147,8 +160,11 @@ ${postListMarkdown(generalPosts)}
 }
 
 /** Returns Markdown for a named archive list. */
-export function namedArchiveMarkdown(label: string, posts: BlogPost[]): string {
-  return normalizeMarkdown(`
+export async function namedArchiveMarkdown(
+  label: string,
+  posts: BlogPost[],
+): Promise<string> {
+  return formatMarkdown(`
 # ${label} Archive
 
 Archived blog posts imported from ${label}.
@@ -158,10 +174,10 @@ ${postListMarkdown(posts)}
 }
 
 /** Returns Markdown for a full blog post. */
-export function blogPostMarkdown(
+export async function blogPostMarkdown(
   post: BlogPost,
   options: BlogPostMarkdownOptions = {},
-): string {
+): Promise<string> {
   const archive = blogArchiveInfo(post);
   const body = renderMarkdownMdx(post.body ?? "", {
     resolveAsset: (src) => {
@@ -174,7 +190,7 @@ export function blogPostMarkdown(
     ? `${post.data.description}\n\n`
     : "";
 
-  return normalizeMarkdown(`
+  return formatMarkdown(`
 ${frontmatter}
 
 # ${post.data.title}

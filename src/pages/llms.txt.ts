@@ -12,6 +12,6 @@ export async function GET() {
   const archiveData = archivesIndexData(posts);
 
   return markdownResponse(
-    llmsDirectoryMarkdown(mainPosts, archiveData.namedArchives),
+    await llmsDirectoryMarkdown(mainPosts, archiveData.namedArchives),
   );
 }
