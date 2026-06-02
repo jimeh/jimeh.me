@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+import type { ImageMetadata } from "astro";
 import { siteConfig } from "../data/site";
 import {
   type BlogPost,
@@ -66,6 +67,53 @@ describe("blogPostMarkdown", () => {
     expect(markdown).toContain("# Post");
     expect(markdown).not.toContain("undefined");
   });
+
+  test("resolves featured image assets through the asset resolver", () => {
+    const markdown = blogPostMarkdown(
+      post("post-title", {
+        image: {
+          src: imageMetadata(
+            "/@fs/Users/jimeh/project/src/content/blog/post/cover.jpg",
+          ),
+          alt: "Cover",
+        },
+      }),
+      {
+        resolveAsset: (_post, source) => {
+          expect(source).toBe(
+            "/@fs/Users/jimeh/project/src/content/blog/post/cover.jpg",
+          );
+
+          return "/_astro/cover.hash.jpg";
+        },
+      },
+    );
+
+    expect(markdown).toContain(
+      "![Cover](https://jimeh.me/_astro/cover.hash.jpg)",
+    );
+    expect(markdown).not.toContain("/@fs/");
+  });
+
+  test("keeps already-built featured image asset URLs", () => {
+    const markdown = blogPostMarkdown(
+      post("post-title", {
+        image: {
+          src: imageMetadata("/_astro/cover.hash.jpg"),
+          alt: "Cover",
+        },
+      }),
+      {
+        resolveAsset: () => {
+          throw new Error("Unexpected asset resolver call.");
+        },
+      },
+    );
+
+    expect(markdown).toContain(
+      "![Cover](https://jimeh.me/_astro/cover.hash.jpg)",
+    );
+  });
 });
 
 describe("postListMarkdown", () => {
@@ -84,3 +132,12 @@ describe("postListMarkdown", () => {
     );
   });
 });
+
+function imageMetadata(src: string): ImageMetadata {
+  return {
+    src,
+    width: 800,
+    height: 400,
+    format: "jpg",
+  } as ImageMetadata;
+}

@@ -28,8 +28,10 @@ export function resolveBlogMarkdownAsset(
 }
 
 function assetKey(post: BlogPost, source: string): string {
-  if (source.startsWith("/src/content/")) {
-    return source;
+  const contentSource = contentSourcePath(source);
+
+  if (contentSource.startsWith("/src/content/")) {
+    return contentSource;
   }
 
   const filePath = (post as BlogPost & { filePath?: string }).filePath;
@@ -37,5 +39,15 @@ function assetKey(post: BlogPost, source: string): string {
     ? posix.dirname(`/${filePath}`)
     : posix.dirname(`/src/content/blog/${post.id}`);
 
-  return posix.normalize(posix.join(postDir, source));
+  return posix.normalize(posix.join(postDir, contentSource));
+}
+
+function contentSourcePath(source: string): string {
+  if (!source.startsWith("/@fs/")) {
+    return source;
+  }
+
+  const contentIndex = source.indexOf("/src/content/");
+
+  return contentIndex === -1 ? source : source.slice(contentIndex);
 }

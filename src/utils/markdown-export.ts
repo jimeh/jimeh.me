@@ -167,7 +167,7 @@ export function blogPostMarkdown(
       return options.resolveAsset?.(post, src) ?? src;
     },
   });
-  const featuredImage = featuredImageMarkdown(post);
+  const featuredImage = featuredImageMarkdown(post, options);
   const tags = post.data.tags?.length
     ? `\nTags: ${post.data.tags.join(", ")}`
     : "";
@@ -209,16 +209,32 @@ export function postListMarkdown(posts: BlogPost[]): string {
     .join("\n");
 }
 
-function featuredImageMarkdown(post: BlogPost): string {
+function featuredImageMarkdown(
+  post: BlogPost,
+  options: BlogPostMarkdownOptions,
+): string {
   const image = post.data.image;
   if (!image || image.hidden) {
     return "";
   }
 
   const src = lightImage(image.src).src;
+  const href =
+    options.resolveAsset && isResolvableMarkdownAsset(src)
+      ? options.resolveAsset(post, src)
+      : src;
   const alt = image.alt || image.caption || post.data.title;
 
-  return `![${alt}](${absoluteSiteUrl(src)})`;
+  return `![${alt}](${absoluteSiteUrl(href)})`;
+}
+
+function isResolvableMarkdownAsset(source: string): boolean {
+  return (
+    source.startsWith("./") ||
+    source.startsWith("../") ||
+    source.startsWith("/@fs/") ||
+    source.startsWith("/src/content/")
+  );
 }
 
 function normalizeMarkdown(markdown: string): string {

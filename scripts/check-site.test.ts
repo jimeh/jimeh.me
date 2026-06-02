@@ -33,7 +33,10 @@ function postHtml(markdownUrl: string): string {
   return [
     '<button data-post-markdown-toggle aria-describedby="post-tooltip">',
     "</button>",
-    `<span id="post-tooltip" class="${tooltipClass({ layer: "content" })}">`,
+    `<span id="post-tooltip" class="${tooltipClass({
+      layer: "content",
+      placement: "bottom",
+    })}">`,
     "</span>",
     "<section data-post-markdown-view>",
     '<div data-post-markdown-code data-language="markdown"></div>',

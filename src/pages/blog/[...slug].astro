@@ -123,7 +123,7 @@ const markdownFilename = `${post.data.slug}.md`;
           archiveLabel={archiveMetaLabel}
           archiveHref={archive?.url}
         />
-        <Tooltip id={markdownTooltipId} layer="content">
+        <Tooltip id={markdownTooltipId} layer="content" placement="bottom">
           <button
             slot="trigger"
             type="button"
@@ -220,7 +220,7 @@ const markdownFilename = `${post.data.slug}.md`;
           <button
             type="button"
             data-post-markdown-copy
-            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             <Icon
               name="octicon:copy-16"

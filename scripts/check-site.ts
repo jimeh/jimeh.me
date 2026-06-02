@@ -155,7 +155,10 @@ export function builtSiteFailures(
     const tooltipId = toggle?.getAttribute("aria-describedby");
     const tooltip = tooltipId ? document.getElementById(tooltipId) : null;
     const className = tooltip?.getAttribute("class") ?? "";
-    const expectedClassName = tooltipClass({ layer: "content" });
+    const expectedClassName = tooltipClass({
+      layer: "content",
+      placement: "bottom",
+    });
 
     if (!tooltip) {
       failures.push(`${path}: expected Markdown toggle tooltip.`);
