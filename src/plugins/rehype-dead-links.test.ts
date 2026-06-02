@@ -54,6 +54,15 @@ test("converts dead+ links into inert dead-link markup", () => {
   expect(propertiesOf(path).fill).toBe("currentColor");
   expect(tooltip.tagName).toBe("span");
   expect(tooltipProperties.role).toBe("tooltip");
+  expect(tooltipProperties.className).toEqual(
+    expect.arrayContaining([
+      "bottom-full",
+      "group-focus-within:opacity-100",
+      "group-hover:opacity-100",
+      "whitespace-normal",
+      "z-20",
+    ]),
+  );
   expect(deadLinkProperties.ariaDescribedBy).toBe(tooltipProperties.id);
   expect(tooltip.children).toEqual([text("Archived elsewhere.")]);
 });

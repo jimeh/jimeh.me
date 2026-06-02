@@ -11,6 +11,7 @@ import TagList from "@components/blog/TagList.astro";
 import CodeCopyButton from "@components/blog/CodeCopyButton.astro";
 import FancyboxInit from "@components/blog/FancyboxInit.astro";
 import PageHeading from "@components/ui/PageHeading.astro";
+import Tooltip from "@components/ui/Tooltip.astro";
 import { blogArchiveInfo } from "@utils/blog-archive";
 import {
   blogArchiveTagsUrl,
@@ -122,8 +123,9 @@ const markdownFilename = `${post.data.slug}.md`;
           archiveLabel={archiveMetaLabel}
           archiveHref={archive?.url}
         />
-        <span class="group relative inline-block">
+        <Tooltip id={markdownTooltipId} layer="content">
           <button
+            slot="trigger"
             type="button"
             data-post-markdown-toggle
             class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex cursor-pointer rounded-full border p-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -142,15 +144,9 @@ const markdownFilename = `${post.data.slug}.md`;
               data-post-view-icon="article"
             />
           </button>
-          <span
-            id={markdownTooltipId}
-            role="tooltip"
-            class="bg-on-surface text-surface pointer-events-none absolute top-full left-1/2 z-20 mt-2 -translate-x-1/2 rounded-md px-2 py-1 text-xs font-medium whitespace-nowrap opacity-0 shadow-sm transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100"
-          >
-            <span data-post-view-tooltip="markdown">Markdown</span>
-            <span data-post-view-tooltip="article" class="hidden">Article</span>
-          </span>
-        </span>
+          <span data-post-view-tooltip="markdown">Markdown</span>
+          <span data-post-view-tooltip="article" class="hidden">Article</span>
+        </Tooltip>
       </div>
       <hr class="border-border mt-6" />
     </header>

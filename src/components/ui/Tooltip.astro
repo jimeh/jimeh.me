@@ -1,0 +1,32 @@
+---
+import {
+  tooltipClass,
+  tooltipTriggerClass,
+  type TooltipClassOptions,
+} from "./tooltip";
+
+interface Props extends Omit<TooltipClassOptions, "className"> {
+  /** ID referenced by the trigger element's aria-describedby attribute. */
+  id: string;
+  class?: string;
+  wrapperClass?: string;
+}
+
+const {
+  id,
+  class: className,
+  wrapperClass,
+  ...tooltipOptions
+}: Props = Astro.props;
+---
+
+<span class={tooltipTriggerClass(wrapperClass)}>
+  <slot name="trigger" />
+  <span
+    id={id}
+    role="tooltip"
+    class={tooltipClass({ ...tooltipOptions, className })}
+  >
+    <slot />
+  </span>
+</span>

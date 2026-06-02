@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseHTML } from "linkedom";
 
+import { tooltipClass } from "../src/components/ui/tooltip.ts";
 import {
   type BlogPostFile,
   blogPostRoute,
@@ -146,6 +147,28 @@ export function builtSiteFailures(
     }
   }
 
+  function assertMarkdownToggleTooltipHoverOnly(path: string): void {
+    const document = parseBuiltHtml(path);
+    if (!document) return;
+
+    const toggle = document.querySelector("[data-post-markdown-toggle]");
+    const tooltipId = toggle?.getAttribute("aria-describedby");
+    const tooltip = tooltipId ? document.getElementById(tooltipId) : null;
+    const className = tooltip?.getAttribute("class") ?? "";
+    const expectedClassName = tooltipClass({ layer: "content" });
+
+    if (!tooltip) {
+      failures.push(`${path}: expected Markdown toggle tooltip.`);
+      return;
+    }
+    if (className !== expectedClassName) {
+      failures.push(`${path}: expected shared Markdown tooltip classes.`);
+    }
+    if (className.includes("group-focus-within:opacity-100")) {
+      failures.push(`${path}: expected Markdown tooltip to ignore focus.`);
+    }
+  }
+
   assertFile("index.html");
   assertFile("llms.txt");
   assertFile("blog/index.html");
@@ -236,6 +259,7 @@ export function builtSiteFailures(
     assertIncludes(canonicalPath, "data-post-markdown-download");
     assertIncludes(canonicalPath, 'data-language="markdown"');
     assertIncludes(canonicalPath, `href="${canonicalMarkdownUrl}"`);
+    assertMarkdownToggleTooltipHoverOnly(canonicalPath);
     assertIncludesBefore(
       canonicalPath,
       'symbol id="ai:octicon:copy-16"',

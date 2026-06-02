@@ -65,10 +65,10 @@ are configured and can be run with `mise run test`.
 - UI styling: prefer existing Tailwind utilities, variants, and design tokens
   before adding component-scoped CSS or hand-rolled selectors. Use built-in
   utilities for layout behavior such as floats, clears, pseudo-elements,
-  spacing, and responsive states when they fit. For tooltip-like UI, follow the
-  `ThemeToggle.astro` / `DeadLink.astro` pattern: `group`, absolute tooltip,
-  `group-hover` + `group-focus-within`, `aria-describedby`, and
-  `role="tooltip"`; avoid native `title` when a custom tooltip is rendered.
+  spacing, and responsive states when they fit. For tooltip-like UI, use
+  `Tooltip.astro` and `tooltip.ts`; avoid native `title` when a custom tooltip
+  is rendered. Use `group-focus-within` only when focus-visible tooltip behavior
+  is intentional.
 
 ## Domain Concepts
 
@@ -159,3 +159,8 @@ are configured and can be run with `mise run test`.
 - Astro content collection entries expose source-relative paths through
   `filePath`; `id` is not enough to reconstruct nested content directories when
   resolving local assets for non-HTML exports.
+- Interactive button tooltips such as theme and Markdown view toggles should not
+  use `group-focus-within`; click focus otherwise keeps the tooltip visible
+  after pointer hover ends.
+- `DeadLink.astro` was removed; author dead links with Markdown `dead+` URLs so
+  `rehypeDeadLinks` handles rendering consistently.

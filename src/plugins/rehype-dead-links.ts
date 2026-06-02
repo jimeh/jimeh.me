@@ -1,4 +1,8 @@
 import { icons as fa6SolidIcons } from "@iconify-json/fa6-solid";
+import {
+  tooltipClassList,
+  tooltipTriggerClass,
+} from "../components/ui/tooltip";
 
 const DEAD_LINK_PATTERN = /^dead\+([a-z][a-z0-9+.-]*:\/\/.+)$/i;
 const DEFAULT_REASON = "This link is dead and no longer works.";
@@ -9,12 +13,6 @@ const DEAD_LINK_CLASS =
   "focus-visible:outline-accent cursor-help underline decoration-transparent " +
   "underline-offset-2 transition-colors focus-visible:rounded-sm " +
   "focus-visible:outline-2 focus-visible:outline-offset-2";
-const TOOLTIP_CLASS =
-  "bg-on-surface text-surface pointer-events-none absolute bottom-full " +
-  "left-1/2 z-20 mb-2 w-max max-w-[min(22rem,calc(100vw-2rem))] " +
-  "-translate-x-1/2 rounded-md px-2 py-1 text-center text-xs leading-snug " +
-  "font-medium whitespace-normal opacity-0 shadow-sm transition-opacity " +
-  "duration-200 group-focus-within:opacity-100 group-hover:opacity-100";
 
 interface HastNode {
   type?: string;
@@ -60,7 +58,7 @@ export function rehypeDeadLinks() {
 
       node.tagName = "span";
       node.properties = {
-        className: ["group", "relative", "inline-block"],
+        className: tooltipTriggerClass().split(" "),
       };
       node.children = [
         {
@@ -82,7 +80,12 @@ export function rehypeDeadLinks() {
           properties: {
             id: descriptionId,
             role: "tooltip",
-            className: TOOLTIP_CLASS.split(" "),
+            className: tooltipClassList({
+              layer: "content",
+              placement: "bottom",
+              visibility: "hover-focus",
+              wrap: "normal",
+            }),
           },
           children: [{ type: "text", value: reason }],
         },

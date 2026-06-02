@@ -90,6 +90,10 @@ describe("ThemeToggle", () => {
     expect(button?.getAttribute("aria-describedby")).toBe(
       tooltip?.getAttribute("id"),
     );
+    expect(tooltip?.classList.contains("group-hover:opacity-100")).toBe(true);
+    expect(tooltip?.classList.contains("group-focus-within:opacity-100")).toBe(
+      false,
+    );
     expect(document.querySelectorAll("[data-theme-icon]")).toHaveLength(3);
     expect(document.querySelectorAll("[data-tooltip-text]")).toHaveLength(3);
   });

@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 
 import { afterEach, describe, expect, test } from "vitest";
 
+import { tooltipClass } from "../src/components/ui/tooltip.ts";
 import type { BlogPostFile } from "./blog-content.ts";
 import { archiveSlug, builtSiteFailures } from "./check-site.ts";
 
@@ -30,13 +31,15 @@ function writeFile(root: string, path: string, source = ""): void {
 
 function postHtml(markdownUrl: string): string {
   return [
-    "data-post-markdown-toggle",
-    "data-post-markdown-view",
-    "data-post-markdown-code",
-    "data-post-markdown-raw",
-    "data-post-markdown-download",
-    'data-language="markdown"',
-    `href="${markdownUrl}"`,
+    '<button data-post-markdown-toggle aria-describedby="post-tooltip">',
+    "</button>",
+    `<span id="post-tooltip" class="${tooltipClass({ layer: "content" })}">`,
+    "</span>",
+    "<section data-post-markdown-view>",
+    '<div data-post-markdown-code data-language="markdown"></div>',
+    '<script type="application/json" data-post-markdown-raw></script>',
+    `<a data-post-markdown-download href="${markdownUrl}"></a>`,
+    "</section>",
     'symbol id="ai:octicon:copy-16"',
     'symbol id="ai:octicon:check-16"',
     'id="code-copy-btn-tpl"',
