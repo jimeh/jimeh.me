@@ -1,4 +1,4 @@
-import { copyText, type ClipboardWriter } from "./copy-text";
+import { copyText, rootDocument, type ClipboardWriter } from "./copy-text";
 
 type ResetTimeout = (callback: () => void, delay: number) => unknown;
 
@@ -116,19 +116,6 @@ function updateUrlState(win: Window | null, enabled: boolean): void {
   if (url.href === win.location.href) return;
 
   win.history.pushState({ postMarkdownView: enabled }, "", url.href);
-}
-
-function rootDocument(root: ParentNode): Document {
-  if ((root as Node).nodeType === 9) {
-    return root as Document;
-  }
-
-  const doc = (root as Node).ownerDocument;
-  if (!doc) {
-    throw new Error("Unable to resolve owner document for Markdown copy.");
-  }
-
-  return doc;
 }
 
 interface PostMarkdownRoot extends HTMLElement {

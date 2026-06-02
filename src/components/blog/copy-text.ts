@@ -43,7 +43,7 @@ function legacyCopyText(root: ParentNode, text: string): boolean {
   }
 }
 
-function rootDocument(root: ParentNode): Document {
+export function rootDocument(root: ParentNode): Document {
   if ((root as Node).nodeType === 9) {
     return root as Document;
   }

@@ -191,6 +191,9 @@ describe("postListMarkdown", () => {
       post("newer-a", { date: "2025-01-01", title: "Newer A" }),
     ]);
 
+    expect(markdown).toContain("[Newer B]");
+    expect(markdown).toContain("[Newer A]");
+    expect(markdown).toContain("[Older]");
     expect(markdown.indexOf("[Newer B]")).toBeLessThan(
       markdown.indexOf("[Newer A]"),
     );

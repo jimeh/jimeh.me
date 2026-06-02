@@ -49,12 +49,14 @@ export function initCodeCopyButtons(
 
       iconCopy.classList.add("hidden");
       iconCheck.classList.remove("hidden");
+      if (status) status.textContent = "Copied!";
       status?.classList.remove("opacity-0");
       status?.classList.add("opacity-100");
 
       setResetTimeout(() => {
         iconCheck.classList.add("hidden");
         iconCopy.classList.remove("hidden");
+        if (status) status.textContent = "";
         status?.classList.add("opacity-0");
         status?.classList.remove("opacity-100");
       }, 2000);

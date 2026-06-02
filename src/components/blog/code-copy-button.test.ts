@@ -20,7 +20,7 @@ describe("CodeCopyButton", () => {
     expect(
       button?.querySelector('[data-icon="check"]')?.getAttribute("class"),
     ).toContain("hidden");
-    expect(status?.textContent?.trim()).toBe("Copied!");
+    expect(status?.textContent?.trim()).toBe("");
     expect(status?.getAttribute("class")).toContain("opacity-0");
   });
 });
@@ -30,7 +30,7 @@ describe("initCodeCopyButtons", () => {
     const { document, window } = parseHTML(`
       <template id="code-copy-btn-tpl">
         <div>
-          <span data-code-copy-status class="opacity-0">Copied!</span>
+          <span data-code-copy-status class="opacity-0"></span>
           <button type="button" aria-label="Copy code">
             <span data-icon="copy"></span>
             <span data-icon="check" class="hidden"></span>
@@ -66,6 +66,7 @@ describe("initCodeCopyButtons", () => {
     expect(writeText).toHaveBeenCalledWith("pnpm test");
     expect(copyIcon.classList.contains("hidden")).toBe(true);
     expect(checkIcon.classList.contains("hidden")).toBe(false);
+    expect(status.textContent).toBe("Copied!");
     expect(status.classList.contains("opacity-0")).toBe(false);
     expect(status.classList.contains("opacity-100")).toBe(true);
 
@@ -73,6 +74,7 @@ describe("initCodeCopyButtons", () => {
 
     expect(copyIcon.classList.contains("hidden")).toBe(false);
     expect(checkIcon.classList.contains("hidden")).toBe(true);
+    expect(status.textContent).toBe("");
     expect(status.classList.contains("opacity-0")).toBe(true);
     expect(status.classList.contains("opacity-100")).toBe(false);
   });
@@ -81,7 +83,7 @@ describe("initCodeCopyButtons", () => {
     const { document, window } = parseHTML(`
       <template id="code-copy-btn-tpl">
         <div>
-          <span data-code-copy-status class="opacity-0">Copied!</span>
+          <span data-code-copy-status class="opacity-0"></span>
           <button type="button" aria-label="Copy code">
             <span data-icon="copy"></span>
             <span data-icon="check" class="hidden"></span>
@@ -121,6 +123,9 @@ describe("initCodeCopyButtons", () => {
         .querySelector("[data-code-copy-status]")
         ?.classList.contains("opacity-100"),
     ).toBe(true);
+    expect(document.querySelector("[data-code-copy-status]")?.textContent).toBe(
+      "Copied!",
+    );
   });
 
   test("skips figures without pre elements", () => {
