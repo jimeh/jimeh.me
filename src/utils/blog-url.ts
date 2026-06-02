@@ -3,6 +3,9 @@ import { blogRoutePath, blogRouteYear } from "./blog-route";
 
 type BlogPost = CollectionEntry<"blog">;
 
+const sourceRepositoryUrl = "https://github.com/jimeh/jimeh.me";
+const sourceRepositoryRef = "main";
+
 /** Returns the year segment for a blog post URL. */
 export function blogPostYear(post: BlogPost): string {
   return blogRouteYear(post.data.date);
@@ -24,6 +27,23 @@ export function blogPostUrl(post: BlogPost): string {
 /** Returns the public Markdown URL for a blog post. */
 export function blogPostMarkdownUrl(post: BlogPost): string {
   return `/blog/${blogPostRoute(post)}.md`;
+}
+
+/** Returns the GitHub source URL for a blog post content file. */
+export function blogPostSourceUrl(post: BlogPost): string {
+  const filePath = (post as BlogPost & { filePath?: string }).filePath;
+  const sourcePath = filePath ?? `src/content/blog/${post.id}`;
+
+  return [
+    sourceRepositoryUrl,
+    "blob",
+    sourceRepositoryRef,
+    sourcePath
+      .replace(/^\/+/, "")
+      .split("/")
+      .map((segment) => encodeURIComponent(segment))
+      .join("/"),
+  ].join("/");
 }
 
 /** Returns the blog index URL. */

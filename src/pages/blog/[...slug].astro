@@ -19,6 +19,7 @@ import {
   blogIndexUrl,
   blogNamedArchiveTagsUrl,
   blogPostMarkdownUrl,
+  blogPostSourceUrl,
   blogPostUrl,
   blogTagsUrl,
 } from "@utils/blog-url";
@@ -91,6 +92,7 @@ const { prevPost, nextPost } = postPageNavigation(
 );
 const markdownTooltipId = `post-markdown-tooltip-${crypto.randomUUID()}`;
 const markdownUrl = blogPostMarkdownUrl(post);
+const markdownSourceUrl = blogPostSourceUrl(post);
 const postMarkdown = blogPostMarkdown(post, {
   resolveAsset: resolveBlogMarkdownAsset,
 });
@@ -251,8 +253,18 @@ const markdownFilename = `${post.data.slug}.md`;
             data-post-markdown-raw
             class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
           >
-            <Icon name="octicon:link-external-16" class="size-4" />
+            <Icon name="octicon:file-code-16" class="size-4" />
             <span>Raw</span>
+          </a>
+          <a
+            href={markdownSourceUrl}
+            data-post-markdown-source
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            <Icon name="fa6-brands:github" class="size-4" />
+            <span>Source</span>
           </a>
         </div>
       </div>
