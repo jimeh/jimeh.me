@@ -1,3 +1,5 @@
+import { copyText, type ClipboardWriter } from "./copy-text";
+
 type ResetTimeout = (callback: () => void, delay: number) => unknown;
 
 const ARTICLE_LABEL = "Show rendered post";
@@ -7,7 +9,7 @@ const MARKDOWN_LABEL = "Show Markdown view";
 /** Initializes the rendered/Markdown view toggle for blog post pages. */
 export function initPostMarkdownView(
   root: ParentNode,
-  clipboard?: Pick<Clipboard, "writeText">,
+  clipboard?: ClipboardWriter,
   setResetTimeout: ResetTimeout = setTimeout,
 ): void {
   const doc = rootDocument(root);
@@ -116,52 +118,6 @@ function updateUrlState(win: Window | null, enabled: boolean): void {
   win.history.pushState({ postMarkdownView: enabled }, "", url.href);
 }
 
-interface PostMarkdownRoot extends HTMLElement {
-  __postMarkdownCleanup?: () => void;
-}
-
-async function copyText(
-  root: ParentNode,
-  text: string,
-  clipboard?: Pick<Clipboard, "writeText">,
-): Promise<boolean> {
-  if (clipboard?.writeText) {
-    try {
-      await clipboard.writeText(text);
-      return true;
-    } catch {
-      // Fall back for browser contexts where the async Clipboard API is denied.
-    }
-  }
-
-  return legacyCopyText(root, text);
-}
-
-function legacyCopyText(root: ParentNode, text: string): boolean {
-  const doc = rootDocument(root);
-  const textarea = doc.createElement("textarea");
-
-  textarea.value = text;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.top = "0";
-  textarea.style.left = "-9999px";
-  doc.body.append(textarea);
-  textarea.focus?.();
-  textarea.select?.();
-
-  try {
-    const execCommand = (doc as unknown as LegacyCopyDocument).execCommand;
-    if (typeof execCommand !== "function") return false;
-
-    return execCommand.call(doc, "copy");
-  } catch {
-    return false;
-  } finally {
-    textarea.remove();
-  }
-}
-
 function rootDocument(root: ParentNode): Document {
   if ((root as Node).nodeType === 9) {
     return root as Document;
@@ -175,8 +131,8 @@ function rootDocument(root: ParentNode): Document {
   return doc;
 }
 
-interface LegacyCopyDocument {
-  execCommand?: (commandId: string) => boolean;
+interface PostMarkdownRoot extends HTMLElement {
+  __postMarkdownCleanup?: () => void;
 }
 
 function updateStateElements(

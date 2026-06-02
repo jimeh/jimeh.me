@@ -4,24 +4,36 @@ import { Icon } from "astro-icon/components";
 ---
 
 <template id="code-copy-btn-tpl">
-  <button
-    type="button"
-    class:list={[
-      "absolute right-[0.625rem] flex items-center justify-center",
-      "cursor-pointer rounded border-none p-2",
-      "bg-(--surface-code-block) text-(--color-copy-btn)",
-      "hover:bg-(--surface-code-block-hover) hover:text-(--color-copy-btn-hover)",
-      "transition-colors duration-150",
-    ]}
-    aria-label="Copy code"
-  >
-    <Icon name="octicon:copy-16" class="size-4" data-icon="copy" />
-    <Icon
-      name="octicon:check-16"
-      class="hidden size-4 text-(--alert-tip)"
-      data-icon="check"
-    />
-  </button>
+  <div class:list={["absolute right-[0.625rem] flex items-center gap-2"]}>
+    <span
+      data-code-copy-status
+      class:list={[
+        "pointer-events-none text-xs font-medium text-(--alert-tip)",
+        "opacity-0 transition-opacity duration-150",
+      ]}
+      aria-live="polite"
+    >
+      Copied!
+    </span>
+    <button
+      type="button"
+      class:list={[
+        "flex items-center justify-center",
+        "cursor-pointer rounded border-none p-2",
+        "bg-(--surface-code-block) text-(--color-copy-btn)",
+        "hover:bg-(--surface-code-block-hover) hover:text-(--color-copy-btn-hover)",
+        "transition-colors duration-150",
+      ]}
+      aria-label="Copy code"
+    >
+      <Icon name="octicon:copy-16" class="size-4" data-icon="copy" />
+      <Icon
+        name="octicon:check-16"
+        class="hidden size-4 text-(--alert-tip)"
+        data-icon="check"
+      />
+    </button>
+  </div>
 </template>
 
 <script>
