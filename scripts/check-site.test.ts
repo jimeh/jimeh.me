@@ -179,13 +179,13 @@ describe("builtSiteFailures", () => {
       "blog/2025/main/index.html",
       postHtml("/blog/2025/main.md"),
     );
-    writeFile(distDir, "blog/2025/main.md", `Source: ${mainUrl}`);
+    writeFile(distDir, "blog/2025/main.md", `source: ${mainUrl}`);
     writeFile(
       distDir,
       "blog/2024/archive/index.html",
       postHtml("/blog/2024/archive.md"),
     );
-    writeFile(distDir, "blog/2024/archive.md", `Source: ${archiveUrl}`);
+    writeFile(distDir, "blog/2024/archive.md", `source: ${archiveUrl}`);
     writeFile(
       distDir,
       "blog/2023/general-archive/index.html",
@@ -194,7 +194,7 @@ describe("builtSiteFailures", () => {
     writeFile(
       distDir,
       "blog/2023/general-archive.md",
-      `Source: ${generalArchiveUrl}`,
+      `source: ${generalArchiveUrl}`,
     );
     writeFile(distDir, "blog/2025/index.html", '<a href="/blog/"><article');
     writeFile(distDir, "blog/tags/astro/index.html", "<article");

@@ -273,7 +273,7 @@ export function builtSiteFailures(
       'symbol id="ai:octicon:check-16"',
       'id="code-copy-btn-tpl"',
     );
-    assertIncludes(canonicalMarkdownPath, `Source: ${canonicalUrl}`);
+    assertIncludes(canonicalMarkdownPath, `source: ${canonicalUrl}`);
     assertNotIncludes(canonicalMarkdownPath, "import ");
     assertNotIncludes(canonicalMarkdownPath, "<Image");
     if (sourcePath !== canonicalPath) {

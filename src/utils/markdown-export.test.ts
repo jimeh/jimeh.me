@@ -135,6 +135,10 @@ describe("blogPostMarkdown", () => {
             "/@fs/Users/jimeh/project/src/content/blog/post/cover.jpg",
           ),
           alt: "Cover",
+          size: "default",
+          position: "center",
+          objectPosition: "center",
+          hidden: false,
         },
       }),
       {
@@ -160,6 +164,10 @@ describe("blogPostMarkdown", () => {
         image: {
           src: imageMetadata("/_astro/cover.hash.jpg"),
           alt: "Cover",
+          size: "default",
+          position: "center",
+          objectPosition: "center",
+          hidden: false,
         },
       }),
       {
