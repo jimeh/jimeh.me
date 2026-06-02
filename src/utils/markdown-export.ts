@@ -1,4 +1,5 @@
 import type { CollectionEntry } from "astro:content";
+import { stringify as stringifyYaml } from "yaml";
 import { siteConfig, siteLinks } from "../data/site";
 import { blogArchiveInfo, isMainBlogPost } from "./blog-archive";
 import { compareBlogPostsDesc } from "./blog-sort";
@@ -167,22 +168,18 @@ export function blogPostMarkdown(
       return options.resolveAsset?.(post, src) ?? src;
     },
   });
+  const frontmatter = postFrontmatterMarkdown(post, archive);
   const featuredImage = featuredImageMarkdown(post, options);
-  const tags = post.data.tags?.length
-    ? `\nTags: ${post.data.tags.join(", ")}`
-    : "";
-  const archiveLine = archive ? `\nArchive: ${archive.label}` : "";
   const description = post.data.description
-    ? `\n${post.data.description}\n`
+    ? `${post.data.description}\n\n`
     : "";
 
   return normalizeMarkdown(`
+${frontmatter}
+
 # ${post.data.title}
 
-Source: ${absoluteSiteUrl(blogPostUrl(post))}
-Date: ${post.data.date}${post.data.updatedDate ? `\nUpdated: ${post.data.updatedDate}` : ""}${archiveLine}${tags}
 ${description}
-
 ${featuredImage}
 
 ${body}
@@ -207,6 +204,28 @@ export function postListMarkdown(posts: BlogPost[]): string {
       return `- [${post.data.title}](${href}) (${post.data.date})${description}`;
     })
     .join("\n");
+}
+
+function postFrontmatterMarkdown(
+  post: BlogPost,
+  archive: ReturnType<typeof blogArchiveInfo>,
+): string {
+  const metadata: Record<string, string | string[]> = {
+    source: absoluteSiteUrl(blogPostUrl(post)),
+    date: post.data.date,
+  };
+
+  if (post.data.updatedDate) {
+    metadata.updatedDate = post.data.updatedDate;
+  }
+  if (archive) {
+    metadata.archive = archive.isGeneral ? "jimeh.me" : archive.label;
+  }
+  if (post.data.tags?.length) {
+    metadata.tags = post.data.tags;
+  }
+
+  return `---\n${stringifyYaml(metadata).trimEnd()}\n---`;
 }
 
 function featuredImageMarkdown(

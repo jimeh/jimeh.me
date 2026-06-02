@@ -68,6 +68,65 @@ describe("blogPostMarkdown", () => {
     expect(markdown).not.toContain("undefined");
   });
 
+  test("places descriptions after frontmatter and title", () => {
+    const markdown = blogPostMarkdown(
+      post("post-title", {
+        description: "Post description.",
+        title: "Post",
+      }),
+    );
+
+    expect(markdown).toContain(
+      "---\nsource: https://jimeh.me/blog/2025/post-title/\n" +
+        "date: 2025-01-01\n---\n\n# Post\n\nPost description.",
+    );
+    expect(markdown.indexOf("# Post")).toBeLessThan(
+      markdown.indexOf("Post description."),
+    );
+  });
+
+  test("renders post metadata as YAML frontmatter", () => {
+    const markdown = blogPostMarkdown(
+      post("post-title", {
+        archive: "zydev.info",
+        tags: ["macos", "liquid-glass"],
+        title: "Post",
+        updatedDate: "2025-02-02",
+      }),
+    );
+
+    expect(markdown).toContain(
+      [
+        "---",
+        "source: https://jimeh.me/blog/2025/post-title/",
+        "date: 2025-01-01",
+        "updatedDate: 2025-02-02",
+        "archive: zydev.info",
+        "tags:",
+        "  - macos",
+        "  - liquid-glass",
+        "---",
+        "",
+        "# Post",
+      ].join("\n"),
+    );
+    expect(markdown).not.toContain("\nSource:");
+    expect(markdown).not.toContain("\nDate:");
+    expect(markdown).not.toContain("\nTags:");
+  });
+
+  test("labels general archive posts as jimeh.me in frontmatter", () => {
+    const markdown = blogPostMarkdown(
+      post("post-title", {
+        archive: true,
+        title: "Post",
+      }),
+    );
+
+    expect(markdown).toContain("archive: jimeh.me");
+    expect(markdown).not.toContain("archive: Archives");
+  });
+
   test("resolves featured image assets through the asset resolver", () => {
     const markdown = blogPostMarkdown(
       post("post-title", {

@@ -39,7 +39,8 @@
     "rehype-pretty-code": "^0.14.3",
     "remark-github-blockquote-alert": "^2.1.0",
     "sharp": "^0.34.5",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "yaml": "2.8.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
