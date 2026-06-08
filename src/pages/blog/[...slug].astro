@@ -130,24 +130,14 @@ const markdownFilename = `${post.data.slug}.md`;
             slot="trigger"
             type="button"
             data-post-markdown-toggle
-            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent inline-flex cursor-pointer rounded-full border p-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2"
-            aria-label="Show Markdown view"
+            class="text-muted hover:text-accent border-border hover:border-accent focus-visible:outline-accent aria-pressed:border-accent aria-pressed:text-accent inline-flex cursor-pointer rounded-full border p-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 aria-pressed:bg-[oklch(from_var(--accent)_l_c_h_/_12%)]"
+            aria-label="Markdown view"
             aria-describedby={markdownTooltipId}
             aria-pressed="false"
           >
-            <Icon
-              name="octicon:markdown-16"
-              class="size-4"
-              data-post-view-icon="markdown"
-            />
-            <Icon
-              name="heroicons:document-text"
-              class="hidden size-4"
-              data-post-view-icon="article"
-            />
+            <Icon name="octicon:markdown-16" class="size-4" />
           </button>
-          <span data-post-view-tooltip="markdown">Markdown</span>
-          <span data-post-view-tooltip="article" class="hidden">Article</span>
+          <span>Show Markdown</span>
         </Tooltip>
       </div>
       <hr class="border-border mt-6" />
@@ -217,7 +207,10 @@ const markdownFilename = `${post.data.slug}.md`;
       aria-label="Markdown source"
     >
       <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
-        <p class="text-muted text-sm">Markdown source</p>
+        <p class="text-muted inline-flex items-center gap-1.5 text-sm">
+          <Icon name="octicon:markdown-16" class="size-4" aria-hidden="true" />
+          <span>Markdown source</span>
+        </p>
         <div class="flex flex-wrap gap-2">
           <button
             type="button"

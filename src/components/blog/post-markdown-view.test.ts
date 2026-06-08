@@ -12,14 +12,12 @@ function postViewDocument(): Document {
     <main>
       <button
         data-post-markdown-toggle
-        aria-label="Show Markdown view"
+        aria-label="Markdown view"
         aria-pressed="false"
       >
-        <span data-post-view-icon="markdown"></span>
-        <span data-post-view-icon="article" class="hidden"></span>
+        <span></span>
       </button>
-      <span data-post-view-tooltip="markdown">Markdown</span>
-      <span data-post-view-tooltip="article" class="hidden">Article</span>
+      <span>Markdown view</span>
       <section data-post-html-view>Rendered post</section>
       <nav data-post-html-view>Post navigation</nav>
       <section data-post-markdown-view class="hidden">
@@ -63,7 +61,7 @@ function setupBrowserState(document: Document, href: string): TestWindow {
 }
 
 describe("initPostMarkdownView", () => {
-  test("toggles between rendered and Markdown source views", () => {
+  test("toggles Markdown source view as a pressed Markdown button", () => {
     const document = postViewDocument();
     const toggle = document.querySelector("[data-post-markdown-toggle]")!;
     const markdownView = document.querySelector("[data-post-markdown-view]")!;
@@ -72,18 +70,13 @@ describe("initPostMarkdownView", () => {
     initPostMarkdownView(document, { writeText: vi.fn() });
 
     expect(markdownView.classList.contains("hidden")).toBe(true);
-    expect(toggle.getAttribute("aria-label")).toBe("Show Markdown view");
+    expect(toggle.getAttribute("aria-label")).toBe("Markdown view");
 
     toggle.dispatchEvent(new document.defaultView!.Event("click"));
 
     expect(markdownView.classList.contains("hidden")).toBe(false);
-    expect(toggle.getAttribute("aria-label")).toBe("Show rendered post");
+    expect(toggle.getAttribute("aria-label")).toBe("Markdown view");
     expect(toggle.getAttribute("aria-pressed")).toBe("true");
-    expect(
-      document
-        .querySelector('[data-post-view-icon="article"]')
-        ?.classList.contains("hidden"),
-    ).toBe(false);
     for (const view of htmlViews) {
       expect(view.classList.contains("hidden")).toBe(true);
       expect(view.hasAttribute("aria-hidden")).toBe(true);
@@ -92,7 +85,7 @@ describe("initPostMarkdownView", () => {
     toggle.dispatchEvent(new document.defaultView!.Event("click"));
 
     expect(markdownView.classList.contains("hidden")).toBe(true);
-    expect(toggle.getAttribute("aria-label")).toBe("Show Markdown view");
+    expect(toggle.getAttribute("aria-label")).toBe("Markdown view");
     expect(toggle.getAttribute("aria-pressed")).toBe("false");
   });
 

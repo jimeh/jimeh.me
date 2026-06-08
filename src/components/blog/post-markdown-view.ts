@@ -2,9 +2,8 @@ import { copyText, rootDocument, type ClipboardWriter } from "./copy-text";
 
 type ResetTimeout = (callback: () => void, delay: number) => unknown;
 
-const ARTICLE_LABEL = "Show rendered post";
 const MARKDOWN_HASH = "#markdown";
-const MARKDOWN_LABEL = "Show Markdown view";
+const MARKDOWN_LABEL = "Markdown view";
 
 /** Initializes the rendered/Markdown view toggle for blog post pages. */
 export function initPostMarkdownView(
@@ -39,13 +38,7 @@ export function initPostMarkdownView(
     sourceView.classList.toggle("hidden", !enabled);
     sourceView.toggleAttribute("aria-hidden", !enabled);
     toggleButton.setAttribute("aria-pressed", String(enabled));
-    toggleButton.setAttribute(
-      "aria-label",
-      enabled ? ARTICLE_LABEL : MARKDOWN_LABEL,
-    );
-
-    updateStateElements(root, "[data-post-view-icon]", enabled);
-    updateStateElements(root, "[data-post-view-tooltip]", enabled);
+    toggleButton.setAttribute("aria-label", MARKDOWN_LABEL);
   }
 
   if (!toggleButton.dataset.initialized) {
@@ -120,20 +113,6 @@ function updateUrlState(win: Window | null, enabled: boolean): void {
 
 interface PostMarkdownRoot extends HTMLElement {
   __postMarkdownCleanup?: () => void;
-}
-
-function updateStateElements(
-  root: ParentNode,
-  selector: string,
-  markdownMode: boolean,
-): void {
-  const active = markdownMode ? "article" : "markdown";
-
-  for (const el of root.querySelectorAll<HTMLElement>(selector)) {
-    const value =
-      el.dataset.postViewIcon ?? el.dataset.postViewTooltip ?? undefined;
-    el.classList.toggle("hidden", value !== active);
-  }
 }
 
 function setCopiedState(root: ParentNode, copied: boolean): void {
