@@ -6,6 +6,7 @@ import { join } from "node:path";
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
 import SEOHead from "@components/SEOHead.astro";
+import type { AlternateLink } from "@components/SEOHead.astro";
 import SiteHeader from "@components/SiteHeader.astro";
 import { siteConfig } from "../data/site";
 
@@ -17,6 +18,7 @@ interface Props {
   modifiedTime?: string;
   tags?: string[];
   ogImage?: string;
+  alternateLinks?: AlternateLink[];
 }
 
 /** Short content hash for cache busting a public/ asset. */
@@ -36,6 +38,7 @@ const {
   modifiedTime,
   tags,
   ogImage,
+  alternateLinks,
 } = Astro.props;
 const pageTitle = title || siteConfig.title;
 const hasHeaderNav = Astro.slots.has("header-nav");
@@ -60,6 +63,7 @@ const appleTouchHash = fileHash("apple-touch-icon.png");
       modifiedTime={modifiedTime}
       tags={tags}
       ogImage={ogImage}
+      alternateLinks={alternateLinks}
     />
     <Font cssVariable="--font-open-sans" preload />
     <link rel="icon" href={`/favicon.ico?v=${faviconHash}`} />

@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import BaseLayout from "./BaseLayout.astro";
+import type { AlternateLink } from "@components/SEOHead.astro";
 import NavTextLink from "@components/ui/NavTextLink.astro";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
   modifiedTime?: string;
   tags?: string[];
   ogImage?: string;
+  alternateLinks?: AlternateLink[];
   breadcrumbs?: BreadcrumbItem[];
   width?: "2xl" | "3xl";
 }
