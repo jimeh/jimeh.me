@@ -11,7 +11,6 @@ import {
   blogNamedArchiveTagsUrl,
   blogPostMarkdownUrl,
   blogPostRoute,
-  blogPostSourceUrl,
   blogPostUrl,
   blogPostYear,
   blogTagUrl,
@@ -48,18 +47,6 @@ test("returns the canonical site-relative blog URL", () => {
 test("returns the public Markdown URL for a blog post", () => {
   expect(blogPostMarkdownUrl(post("2025-06-09", "liquid-glass"))).toBe(
     "/blog/2025/liquid-glass.md",
-  );
-});
-
-test("returns the GitHub source URL for a blog post file", () => {
-  const sourcePost = post("2025-06-09", "liquid-glass", {
-    filePath: "src/content/blog/2025/liquid-glass/liquid glass source.mdx",
-  } as Partial<BlogPost>);
-
-  expect(blogPostSourceUrl(sourcePost)).toBe(
-    "https://github.com/jimeh/jimeh.me/blob/main/" +
-      "src/content/blog/2025/liquid-glass/liquid%20glass%20source.mdx" +
-      "?plain=1",
   );
 });
 
