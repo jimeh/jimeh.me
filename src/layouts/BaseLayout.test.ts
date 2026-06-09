@@ -7,7 +7,17 @@ describe("BaseLayout", () => {
   test("renders document metadata, hashed public assets, and body slot", async () => {
     const document = await renderComponent(
       BaseLayout,
-      { title: "Custom page", description: "Custom description" },
+      {
+        title: "Custom page",
+        description: "Custom description",
+        alternateLinks: [
+          {
+            href: "/custom.md",
+            type: "text/markdown",
+            title: "Markdown",
+          },
+        ],
+      },
       { default: "<main>Body content</main>" },
       { request: new Request("https://jimeh.me/custom/") },
     );
@@ -31,6 +41,11 @@ describe("BaseLayout", () => {
         .querySelector('link[type="application/rss+xml"]')
         ?.getAttribute("href"),
     ).toBe("/rss.xml");
+    expect(
+      document
+        .querySelector('link[rel="alternate"][type="text/markdown"]')
+        ?.getAttribute("href"),
+    ).toBe("/custom.md");
     expect(document.querySelector("main")?.textContent).toBe("Body content");
   });
 

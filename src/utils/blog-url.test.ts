@@ -6,8 +6,10 @@ import {
   blogArchivesUrl,
   blogArchiveUrl,
   blogIndexUrl,
+  blogNamedArchiveMarkdownUrl,
   blogNamedArchiveTagUrl,
   blogNamedArchiveTagsUrl,
+  blogPostMarkdownUrl,
   blogPostRoute,
   blogPostUrl,
   blogPostYear,
@@ -18,8 +20,12 @@ import {
 
 type BlogPost = Parameters<typeof blogPostRoute>[0];
 
-function post(date: string, slug: string): BlogPost {
-  return { data: { date, slug } } as BlogPost;
+function post(
+  date: string,
+  slug: string,
+  extra: Partial<BlogPost> = {},
+): BlogPost {
+  return { data: { date, slug }, ...extra } as BlogPost;
 }
 
 test("returns the year from a post date", () => {
@@ -38,6 +44,12 @@ test("returns the canonical site-relative blog URL", () => {
   );
 });
 
+test("returns the public Markdown URL for a blog post", () => {
+  expect(blogPostMarkdownUrl(post("2025-06-09", "liquid-glass"))).toBe(
+    "/blog/2025/liquid-glass.md",
+  );
+});
+
 test("returns listing and tag URLs", () => {
   expect(blogIndexUrl()).toBe("/blog/");
   expect(blogYearUrl("2025")).toBe("/blog/2025/");
@@ -48,6 +60,9 @@ test("returns listing and tag URLs", () => {
 test("returns archive URLs", () => {
   expect(blogArchivesUrl()).toBe("/blog/archives/");
   expect(blogArchiveUrl("zydev-info")).toBe("/blog/archives/zydev-info/");
+  expect(blogNamedArchiveMarkdownUrl("zydev-info")).toBe(
+    "/blog/archives/zydev-info.md",
+  );
   expect(blogArchiveTagsUrl()).toBe("/blog/archives/tags/");
   expect(blogArchiveTagUrl("php")).toBe("/blog/archives/tags/php/");
   expect(blogNamedArchiveTagsUrl("zydev-info")).toBe(

@@ -2,6 +2,7 @@ import { pathToFileURL } from "node:url";
 
 import { BLOG_POST_SLUG_PATTERN } from "../src/utils/blog-route.ts";
 import { isReservedBlogArchiveSlug } from "../src/utils/blog-archive.ts";
+import { markdownMdxFailures } from "../src/utils/markdown-mdx.ts";
 import {
   type BlogPostFile,
   blogPostRoute,
@@ -142,6 +143,10 @@ export function collectContentFailures(
           `${label}: static import points at missing local asset ${importPath}.`,
         );
       }
+    }
+
+    for (const failure of markdownMdxFailures(post.source)) {
+      failures.push(`${label}: ${failure}`);
     }
   }
 

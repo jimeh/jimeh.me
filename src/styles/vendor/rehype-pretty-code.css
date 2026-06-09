@@ -15,6 +15,7 @@
 }
 
 [data-rehype-pretty-code-figure] [data-line] > span,
+[data-rehype-pretty-code-figure] .line > span,
 [data-rehype-pretty-code-figure] [data-highlighted-chars] span {
   color: var(--shiki-light) !important;
   background-color: transparent !important;
@@ -35,6 +36,7 @@
 }
 
 .dark [data-rehype-pretty-code-figure] [data-line] > span,
+.dark [data-rehype-pretty-code-figure] .line > span,
 .dark [data-rehype-pretty-code-figure] [data-highlighted-chars] span {
   color: var(--shiki-dark) !important;
   background-color: transparent !important;

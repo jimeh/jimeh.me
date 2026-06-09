@@ -1,9 +1,11 @@
+import { copyText, type ClipboardWriter } from "./copy-text";
+
 type ResetTimeout = (callback: () => void, delay: number) => unknown;
 
 /** Adds copy-to-clipboard buttons to all rehype-pretty-code blocks. */
 export function initCodeCopyButtons(
   root: ParentNode,
-  clipboard: Pick<Clipboard, "writeText">,
+  clipboard?: ClipboardWriter,
   setResetTimeout: ResetTimeout = setTimeout,
 ): void {
   const tpl = root.querySelector<HTMLTemplateElement>("#code-copy-btn-tpl");
@@ -20,32 +22,46 @@ export function initCodeCopyButtons(
 
     figure.style.position = "relative";
 
-    const button = tpl.content.firstElementChild!.cloneNode(
+    const control = tpl.content.firstElementChild!.cloneNode(
       true,
-    ) as HTMLButtonElement;
+    ) as HTMLElement;
+    const button = control.querySelector<HTMLButtonElement>("button");
+    if (!button) continue;
+
+    control.dataset.codeCopyControl = "true";
     button.dataset.codeCopyButton = "true";
 
     const offset = 10;
-    button.style.top = `${(pre.offsetTop || 0) + offset}px`;
+    control.style.top = `${(pre.offsetTop || 0) + offset}px`;
 
     const iconCopy = button.querySelector('[data-icon="copy"]')!;
     const iconCheck = button.querySelector('[data-icon="check"]')!;
+    const status = control.querySelector<HTMLElement>(
+      "[data-code-copy-status]",
+    );
 
     button.addEventListener("click", async () => {
       const code = pre.querySelector("code");
       if (!code) return;
 
-      await clipboard.writeText(code.textContent ?? "");
+      const copied = await copyText(root, code.textContent ?? "", clipboard);
+      if (!copied) return;
 
       iconCopy.classList.add("hidden");
       iconCheck.classList.remove("hidden");
+      if (status) status.textContent = "Copied!";
+      status?.classList.remove("opacity-0");
+      status?.classList.add("opacity-100");
 
       setResetTimeout(() => {
         iconCheck.classList.add("hidden");
         iconCopy.classList.remove("hidden");
+        if (status) status.textContent = "";
+        status?.classList.add("opacity-0");
+        status?.classList.remove("opacity-100");
       }, 2000);
     });
 
-    figure.appendChild(button);
+    figure.appendChild(control);
   }
 }

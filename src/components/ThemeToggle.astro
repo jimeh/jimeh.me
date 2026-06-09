@@ -1,11 +1,13 @@
 ---
 import { Icon } from "astro-icon/components";
+import Tooltip from "./ui/Tooltip.astro";
 
 const tooltipId = `theme-toggle-tooltip-${crypto.randomUUID()}`;
 ---
 
-<div class="group relative inline-block">
+<Tooltip id={tooltipId}>
   <button
+    slot="trigger"
     data-theme-toggle
     type="button"
     class="text-muted hover:text-accent cursor-pointer rounded-full p-2"
@@ -16,16 +18,10 @@ const tooltipId = `theme-toggle-tooltip-${crypto.randomUUID()}`;
     <Icon name="heroicons:sun" data-theme-icon="light" class="hidden size-5" />
     <Icon name="heroicons:moon" data-theme-icon="dark" class="hidden size-5" />
   </button>
-  <div
-    id={tooltipId}
-    role="tooltip"
-    class="bg-on-surface text-surface pointer-events-none absolute top-full left-1/2 mt-2 -translate-x-1/2 rounded-md px-2 py-1 text-xs font-medium whitespace-nowrap opacity-0 shadow-sm transition-opacity duration-200 group-focus-within:opacity-100 group-hover:opacity-100"
-  >
-    <span data-tooltip-text="system" class="hidden">System</span>
-    <span data-tooltip-text="light" class="hidden">Light</span>
-    <span data-tooltip-text="dark" class="hidden">Dark</span>
-  </div>
-</div>
+  <span data-tooltip-text="system" class="hidden">System</span>
+  <span data-tooltip-text="light" class="hidden">Light</span>
+  <span data-tooltip-text="dark" class="hidden">Dark</span>
+</Tooltip>
 
 <script>
   import { initThemeToggle } from "./theme-toggle";

@@ -15,7 +15,14 @@ export default defineConfig({
     dangerouslyProcessSVG: true,
     remotePatterns: [{ protocol: "https" }],
   },
-  integrations: [mdx(), sitemap(), icon()],
+  integrations: [
+    mdx(),
+    sitemap({
+      customPages: [`${siteConfig.url}/llms.txt`],
+      filter: (page) => !page.endsWith(".md"),
+    }),
+    icon(),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

@@ -56,6 +56,13 @@ describe("SEOHead", () => {
         modifiedTime: "2025-06-10",
         tags: ["astro", "testing"],
         ogImage: "https://jimeh.me/image.jpg",
+        alternateLinks: [
+          {
+            href: "/blog/post.md",
+            type: "text/markdown",
+            title: "Markdown",
+          },
+        ],
       },
       {},
       { request: new Request("https://jimeh.me/blog/post/") },
@@ -74,6 +81,11 @@ describe("SEOHead", () => {
         .querySelector('meta[name="twitter:card"]')
         ?.getAttribute("content"),
     ).toBe("summary_large_image");
+    const markdownAlternate = document.querySelector(
+      'link[rel="alternate"][type="text/markdown"]',
+    );
+    expect(markdownAlternate?.getAttribute("href")).toBe("/blog/post.md");
+    expect(markdownAlternate?.getAttribute("title")).toBe("Markdown");
     expect(
       [...document.querySelectorAll('meta[property="article:tag"]')].map(
         (tag) => tag.getAttribute("content"),

@@ -21,6 +21,11 @@ export function blogPostUrl(post: BlogPost): string {
   return `/blog/${blogPostRoute(post)}/`;
 }
 
+/** Returns the public Markdown URL for a blog post. */
+export function blogPostMarkdownUrl(post: BlogPost): string {
+  return `/blog/${blogPostRoute(post)}.md`;
+}
+
 /** Returns the blog index URL. */
 export function blogIndexUrl(): string {
   return "/blog/";
@@ -49,6 +54,11 @@ export function blogArchivesUrl(): string {
 /** Returns the URL for a named blog archive. */
 export function blogArchiveUrl(archive: string): string {
   return `${blogArchivesUrl()}${archive}/`;
+}
+
+/** Returns the public Markdown URL for a named blog archive list. */
+export function blogNamedArchiveMarkdownUrl(archive: string): string {
+  return `${blogArchivesUrl()}${archive}.md`;
 }
 
 /** Returns the URL for the general archive tag index. */

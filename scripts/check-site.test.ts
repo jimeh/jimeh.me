@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 
 import { afterEach, describe, expect, test } from "vitest";
 
+import { tooltipClass } from "../src/components/ui/tooltip.ts";
 import type { BlogPostFile } from "./blog-content.ts";
 import { archiveSlug, builtSiteFailures } from "./check-site.ts";
 
@@ -26,6 +27,26 @@ function writeFile(root: string, path: string, source = ""): void {
   const filePath = join(root, path);
   mkdirSync(dirname(filePath), { recursive: true });
   writeFileSync(filePath, source);
+}
+
+function postHtml(markdownUrl: string): string {
+  return [
+    '<button data-post-markdown-toggle aria-describedby="post-tooltip">',
+    "</button>",
+    `<span id="post-tooltip" class="${tooltipClass({
+      layer: "content",
+      placement: "bottom",
+    })}">`,
+    "</span>",
+    "<section data-post-markdown-view>",
+    '<div data-post-markdown-code data-language="markdown"></div>',
+    '<script type="application/json" data-post-markdown-raw></script>',
+    `<a data-post-markdown-download href="${markdownUrl}"></a>`,
+    "</section>",
+    'symbol id="ai:octicon:copy-16"',
+    'symbol id="ai:octicon:check-16"',
+    'id="code-copy-btn-tpl"',
+  ].join(" ");
 }
 
 function post(
@@ -55,14 +76,20 @@ function post(
 }
 
 function writeRequiredSiteFiles(root: string): void {
-  for (const path of ["index.html", "sitemap-index.xml"]) {
+  for (const path of ["index.html", "llms.txt", "sitemap-index.xml"]) {
     writeFile(root, path);
   }
+  writeFile(
+    root,
+    "llms.txt",
+    ["## Profile", "## Links", "https://github.com/jimeh"].join("\n"),
+  );
   writeFile(
     root,
     "blog/index.html",
     '<a href="/blog/archives/">Archives</a><article aria-label="Latest post">',
   );
+  writeFile(root, "blog/index.md");
   writeFile(root, "blog/tags/index.html", '<a href="/blog/tags/astro/">');
   writeFile(
     root,
@@ -73,7 +100,7 @@ function writeRequiredSiteFiles(root: string): void {
       "<link>https://example.com/</link>",
     ].join(""),
   );
-  writeFile(root, "sitemap-0.xml");
+  writeFile(root, "sitemap-0.xml", "https://example.com/llms.txt");
   writeFile(root, "favicon.ico");
   writeFile(root, "apple-touch-icon.png");
   writeFile(root, "img/jimeh-4.2.0.jpg");
@@ -145,11 +172,30 @@ describe("builtSiteFailures", () => {
     writeFile(
       distDir,
       "sitemap-0.xml",
-      `${mainUrl}\n${archiveUrl}\n${generalArchiveUrl}`,
+      `${siteUrl}/llms.txt\n${mainUrl}\n${archiveUrl}\n${generalArchiveUrl}`,
     );
-    writeFile(distDir, "blog/2025/main/index.html");
-    writeFile(distDir, "blog/2024/archive/index.html");
-    writeFile(distDir, "blog/2023/general-archive/index.html");
+    writeFile(
+      distDir,
+      "blog/2025/main/index.html",
+      postHtml("/blog/2025/main.md"),
+    );
+    writeFile(distDir, "blog/2025/main.md", `source: ${mainUrl}`);
+    writeFile(
+      distDir,
+      "blog/2024/archive/index.html",
+      postHtml("/blog/2024/archive.md"),
+    );
+    writeFile(distDir, "blog/2024/archive.md", `source: ${archiveUrl}`);
+    writeFile(
+      distDir,
+      "blog/2023/general-archive/index.html",
+      postHtml("/blog/2023/general-archive.md"),
+    );
+    writeFile(
+      distDir,
+      "blog/2023/general-archive.md",
+      `source: ${generalArchiveUrl}`,
+    );
     writeFile(distDir, "blog/2025/index.html", '<a href="/blog/"><article');
     writeFile(distDir, "blog/tags/astro/index.html", "<article");
     writeFile(
@@ -157,6 +203,7 @@ describe("builtSiteFailures", () => {
       "blog/archives/index.html",
       '<a href="/blog/archives/zydev-info/">',
     );
+    writeFile(distDir, "blog/archives/index.md");
     writeFile(
       distDir,
       "blog/archives/tags/index.html",
@@ -164,6 +211,7 @@ describe("builtSiteFailures", () => {
     );
     writeFile(distDir, "blog/archives/tags/life/index.html", "<article");
     writeFile(distDir, "blog/archives/zydev-info/index.html", "<article");
+    writeFile(distDir, "blog/archives/zydev-info.md");
     writeFile(
       distDir,
       "blog/archives/zydev-info/tags/index.html",
