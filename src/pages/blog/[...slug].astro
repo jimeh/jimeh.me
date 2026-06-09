@@ -91,7 +91,6 @@ const { prevPost, nextPost } = postPageNavigation(
 );
 const markdownTooltipId = `post-markdown-tooltip-${crypto.randomUUID()}`;
 const markdownUrl = blogPostMarkdownUrl(post);
-const markdownAbsoluteUrl = new URL(markdownUrl, Astro.site).href;
 const postMarkdown = await blogPostMarkdown(post, {
   resolveAsset: resolveBlogMarkdownAsset,
 });
@@ -108,7 +107,7 @@ const markdownFilename = `${post.data.slug}.md`;
   ogImage={ogImageUrl}
   alternateLinks={[
     {
-      href: markdownAbsoluteUrl,
+      href: markdownUrl,
       type: "text/markdown",
       title: "Markdown",
     },

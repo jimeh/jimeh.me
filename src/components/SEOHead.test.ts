@@ -58,7 +58,7 @@ describe("SEOHead", () => {
         ogImage: "https://jimeh.me/image.jpg",
         alternateLinks: [
           {
-            href: "https://jimeh.me/blog/post.md",
+            href: "/blog/post.md",
             type: "text/markdown",
             title: "Markdown",
           },
@@ -84,9 +84,7 @@ describe("SEOHead", () => {
     const markdownAlternate = document.querySelector(
       'link[rel="alternate"][type="text/markdown"]',
     );
-    expect(markdownAlternate?.getAttribute("href")).toBe(
-      "https://jimeh.me/blog/post.md",
-    );
+    expect(markdownAlternate?.getAttribute("href")).toBe("/blog/post.md");
     expect(markdownAlternate?.getAttribute("title")).toBe("Markdown");
     expect(
       [...document.querySelectorAll('meta[property="article:tag"]')].map(

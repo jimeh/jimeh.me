@@ -12,7 +12,7 @@ describe("BaseLayout", () => {
         description: "Custom description",
         alternateLinks: [
           {
-            href: "https://jimeh.me/custom.md",
+            href: "/custom.md",
             type: "text/markdown",
             title: "Markdown",
           },
@@ -45,7 +45,7 @@ describe("BaseLayout", () => {
       document
         .querySelector('link[rel="alternate"][type="text/markdown"]')
         ?.getAttribute("href"),
-    ).toBe("https://jimeh.me/custom.md");
+    ).toBe("/custom.md");
     expect(document.querySelector("main")?.textContent).toBe("Body content");
   });
 
